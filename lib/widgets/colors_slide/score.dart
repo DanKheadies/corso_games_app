@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:corso_games_app/widgets/colors_slide/controller.dart';
+import 'package:corso_games_app/widgets/colors_slide/game_piece.dart';
 
 class ScoreModel extends ChangeNotifier {
   ScoreModel();
@@ -14,9 +15,19 @@ class ScoreModel extends ChangeNotifier {
   }
 }
 
-class ScoreView extends StatelessWidget {
-  const ScoreView({Key? key}) : super(key: key);
+class ScoreView extends StatefulWidget {
+  const ScoreView({
+    Key? key,
+    required this.pieces,
+  }) : super(key: key);
 
+  final List<GamePiece> pieces;
+
+  @override
+  State<ScoreView> createState() => _ScoreViewState();
+}
+
+class _ScoreViewState extends State<ScoreView> {
   @override
   Widget build(BuildContext context) {
     // TextStyle style = Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.w300,);
@@ -26,15 +37,17 @@ class ScoreView extends StatelessWidget {
         builder: (context, model, child) {
           return Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(
+              Padding(
+                padding: const EdgeInsets.only(
                   top: 24,
                   bottom: 12,
                 ),
-                child: Text('score:'),
+                child: Text(
+                  widget.pieces.isNotEmpty ? 'score:' : 'tap or swipe to start',
+                ),
               ),
               Text(
-                model.value.toString(),
+                widget.pieces.isNotEmpty ? model.value.toString() : '',
                 // style: style,
               ),
             ],

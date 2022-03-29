@@ -20,7 +20,7 @@ class GamesScreen extends StatelessWidget {
       infoTitle: 'Corso Games',
       infoDetails:
           'Enjoy the games, and if you have a problem, send an email to support@holisticgaming.com. \n\nGood luck, have fun!',
-      children: GridView.count(
+      content: GridView.count(
         padding: const EdgeInsets.all(25),
         mainAxisSpacing: 10,
         crossAxisSpacing: 25,
@@ -68,6 +68,7 @@ class GamesScreen extends StatelessWidget {
           ),
         ],
       ),
+      bottomBar: const BottomAppBar(),
     );
   }
 }

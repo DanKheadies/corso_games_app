@@ -14,7 +14,8 @@ class SlideToSlideScreen extends StatelessWidget {
       title: 'Slide to Slide',
       infoTitle: 'Slide to Slide',
       infoDetails: 'Good luck, have fun!',
-      children: ComingSoon(),
+      content: ComingSoon(),
+      bottomBar: BottomAppBar(),
     );
   }
 }

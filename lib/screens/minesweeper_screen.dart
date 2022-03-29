@@ -14,7 +14,8 @@ class MinesweeperScreen extends StatelessWidget {
       title: 'Minesweeper',
       infoTitle: 'Minesweeper',
       infoDetails: 'Good luck, have fun!',
-      children: ComingSoon(),
+      content: ComingSoon(),
+      bottomBar: BottomAppBar(),
     );
   }
 }

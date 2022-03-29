@@ -9,13 +9,19 @@ class ScreenWrapper extends StatelessWidget {
     required this.title,
     required this.infoTitle,
     required this.infoDetails,
-    required this.children,
+    required this.content,
+    required this.bottomBar,
+    this.floatingButton,
+    this.floatingButtonLoc,
   }) : super(key: key);
 
   final String title;
   final String infoTitle;
   final String infoDetails;
-  final Widget children;
+  final Widget content;
+  final Widget bottomBar;
+  final Widget? floatingButton;
+  final FloatingActionButtonLocation? floatingButtonLoc;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,10 @@ class ScreenWrapper extends StatelessWidget {
         ],
       ),
       drawer: const GamesDrawer(),
-      body: children,
+      body: content,
+      bottomNavigationBar: bottomBar,
+      floatingActionButton: floatingButton,
+      floatingActionButtonLocation: floatingButtonLoc,
     );
   }
 }

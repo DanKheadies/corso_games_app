@@ -20,6 +20,8 @@ class Controller {
   static List<GamePiece> _pieces = [];
   static Map<Point, GamePiece> index = {};
 
+  static int gridSize = 5;
+
   static get pieces => _pieces;
 
   static StreamController bus = StreamController.broadcast();
@@ -72,13 +74,14 @@ class Controller {
 
     bus.add(null);
 
-    if (_pieces.length > 48) {
-      start();
-    } // Game Over
+    if (_pieces.length == (gridSize * gridSize)) {
+      print('Can\'t move anymore.');
+      return;
+    }
 
-    Point p = const Point(0, 0);
-    while (p == const Point(0, 0) || index.containsKey(p)) {
-      p = Point(rnd.nextInt(6), rnd.nextInt(6));
+    Point p = Point(rnd.nextInt(gridSize), rnd.nextInt(gridSize));
+    while (index.containsKey(p)) {
+      p = Point(rnd.nextInt(gridSize), rnd.nextInt(gridSize));
     }
 
     addPiece(
@@ -94,16 +97,16 @@ class Controller {
   static void process(Direction direction) {
     switch (direction) {
       case (Direction.up):
-        scan(0, 7, 1, Axis.vertical);
+        scan(0, gridSize, 1, Axis.vertical);
         break;
       case (Direction.down):
-        scan(6, -1, -1, Axis.vertical);
+        scan(gridSize - 1, -1, -1, Axis.vertical);
         break;
       case Direction.left:
-        scan(0, 7, 1, Axis.horizontal);
+        scan(0, gridSize, 1, Axis.horizontal);
         break;
       case Direction.right:
-        scan(6, -1, -1, Axis.horizontal);
+        scan(gridSize - 1, -1, -1, Axis.horizontal);
         break;
 
       default:
@@ -118,7 +121,7 @@ class Controller {
     Axis axis,
   ) {
     for (int j = start; j != end; j += op) {
-      for (int k = 0; k != 7; k++) {
+      for (int k = 0; k != gridSize; k++) {
         Point p = axis == Axis.vertical ? Point(k, j) : Point(j, k);
         if (index.containsKey(p)) {
           check(start, op, axis, index[p]);
@@ -159,7 +162,9 @@ class Controller {
   }
 
   static void merge(GamePiece source, GamePiece? target) {
-    if (source.value == 6) {
+    // see final List<Color> colors = const [ (in game_piece.dart)
+    // [totalColors] - 1 = numBelow
+    if (source.value == 12) {
       index.remove(source.position);
       index.remove(target!.position);
       _pieces.remove(source);
@@ -184,6 +189,13 @@ class Controller {
   static void start() {
     _pieces = [];
     index = {};
+    on(const Offset(1, 0));
+  }
+
+  static void restart() {
+    _pieces = [];
+    index = {};
+    score.value = 0;
     on(const Offset(1, 0));
   }
 }

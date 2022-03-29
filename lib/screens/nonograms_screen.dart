@@ -14,7 +14,8 @@ class NonogramsScreen extends StatelessWidget {
       title: 'Nonograms',
       infoTitle: 'Nonograms',
       infoDetails: 'Good luck, have fun!',
-      children: ComingSoon(),
+      content: ComingSoon(),
+      bottomBar: BottomAppBar(),
     );
   }
 }

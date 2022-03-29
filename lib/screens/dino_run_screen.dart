@@ -14,7 +14,8 @@ class DinoRunScreen extends StatelessWidget {
       title: 'Dino Run',
       infoTitle: 'Dino Run',
       infoDetails: 'Good luck, have fun!',
-      children: ComingSoon(),
+      content: ComingSoon(),
+      bottomBar: BottomAppBar(),
     );
   }
 }

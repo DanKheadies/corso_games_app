@@ -13,6 +13,8 @@ class GamePieceModel extends ChangeNotifier {
     prev = initialPoint(initialDirection);
   }
 
+  int gridSize = Controller.gridSize;
+
   late int value;
   late Point position;
   late Point prev;
@@ -22,13 +24,13 @@ class GamePieceModel extends ChangeNotifier {
   Point initialPoint(Direction direction) {
     switch (initialDirection) {
       case Direction.up:
-        return Point(position.x, 6);
+        return Point(position.x, gridSize - 1);
 
       case Direction.down:
         return Point(position.x, 0);
 
       case Direction.left:
-        return Point(6, position.y);
+        return Point(gridSize - 1, position.y);
 
       case Direction.right:
         return Point(0, position.y);
@@ -94,9 +96,15 @@ class GamePieceView extends AnimatedWidget {
     Colors.orange,
     Colors.yellow,
     Colors.green,
+    Colors.cyan,
     Colors.blue,
     Colors.indigo,
     Colors.purple,
+    Colors.black,
+    Colors.pinkAccent,
+    Colors.lime,
+    Colors.teal,
+    Colors.grey,
   ];
 
   @override
@@ -104,12 +112,12 @@ class GamePieceView extends AnimatedWidget {
     model.prev = model.position;
 
     Size size = MediaQuery.of(context).size;
-    double itemSize = size.width / 7;
+    double itemSize = size.width / model.gridSize;
 
     return Align(
       alignment: FractionalOffset(
-        x.value / 6,
-        y.value / 6,
+        x.value / (model.gridSize - 1),
+        y.value / (model.gridSize - 1),
       ),
       child: Container(
         constraints: BoxConstraints(
@@ -121,12 +129,11 @@ class GamePieceView extends AnimatedWidget {
         child: Align(
           alignment: Alignment.center,
           child: Container(
-            height: itemSize * .7,
-            width: itemSize * .7,
+            height: itemSize * .8, // .7   (model.gridSize / 10)
+            width: itemSize * .8, // .7   (model.gridSize / 10)
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              color: colors[model.value].withOpacity(0.25),
-              // color: Colors.black,
+              color: colors[model.value].withOpacity(0.5),
               border: Border.all(
                 color: colors[model.value],
                 width: 1,
