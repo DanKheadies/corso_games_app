@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:corso_games_app/screens/colors_slide/cs_settings_screen.dart';
 import 'package:corso_games_app/widgets/colors_slide/controller.dart';
 import 'package:corso_games_app/widgets/colors_slide/game_board.dart';
 import 'package:corso_games_app/widgets/colors_slide/game_piece.dart';
 import 'package:corso_games_app/widgets/colors_slide/score.dart';
+import 'package:corso_games_app/widgets/screen_info.dart';
 import 'package:corso_games_app/widgets/screen_wrapper.dart';
 
 class ColorsSlideScreen extends StatefulWidget {
@@ -28,13 +30,31 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       pieces = [];
     });
     _eventStream = Controller.listen(onAction);
-    Controller.start();
+    Controller.start(context);
   }
 
   void onAction(dynamic data) {
     setState(() {
       pieces = Controller.pieces;
     });
+  }
+
+  void setDifficulty(String difficulty) {
+    if (difficulty == 'ColorsSlideDifficulty.easy') {
+      Controller.gridSize = 7;
+    } else if (difficulty == 'ColorsSlideDifficulty.medium') {
+      Controller.gridSize = 5;
+    } else if (difficulty == 'ColorsSlideDifficulty.hard') {
+      Controller.gridSize = 4;
+    } else if (difficulty == 'ColorsSlideDifficulty.harder') {
+      Controller.gridSize = 10;
+    } else if (difficulty == 'ColorsSlideDifficulty.wtf') {
+      Controller.gridSize = 3;
+    }
+
+    if (difficulty != 'ColorsSlideDifficulty.tbd') {
+      Controller.restart(context);
+    }
   }
 
   @override
@@ -56,6 +76,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
           ScoreView(pieces: pieces),
           GameBoard(pieces: pieces),
           const SizedBox(),
+          const SizedBox(),
         ],
       ),
       bottomBar: BottomAppBar(
@@ -71,16 +92,26 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                 color: Colors.white,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () async {
+                final result = await Navigator.pushNamed(
+                  context,
+                  CSSettingsScreen.id,
+                );
+                setDifficulty(result.toString());
+              },
             ),
             IconButton(
-              tooltip: 'Restart',
+              tooltip: 'Share',
               icon: const Icon(
                 Icons.ios_share_outlined,
                 color: Colors.white,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () => showScreenInfo(
+                context,
+                'Coming Soon',
+                'You\'ll be able to share your high score soon!',
+              ),
             ),
           ],
         ),
@@ -89,31 +120,19 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         onPressed: () {},
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
-        child: pieces.isNotEmpty
-            ? IconButton(
-                tooltip: 'Restart',
-                icon: const Icon(
-                  Icons.settings_backup_restore_rounded,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () {
-                  setState(() {
-                    pieces = [];
-                  });
-                  Controller.restart();
-                },
-              )
-            : IconButton(
-                highlightColor: Theme.of(context).colorScheme.tertiary,
-                tooltip: '',
-                icon: Icon(
-                  Icons.settings_backup_restore_rounded,
-                  color: Theme.of(context).colorScheme.tertiary,
-                  size: 40,
-                ),
-                onPressed: () {},
-              ),
+        child: IconButton(
+          icon: const Icon(
+            Icons.settings_backup_restore_rounded,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () {
+            setState(() {
+              pieces = [];
+            });
+            Controller.restart(context);
+          },
+        ),
       ),
       floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
     );

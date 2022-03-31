@@ -37,17 +37,15 @@ class _ScoreViewState extends State<ScoreView> {
         builder: (context, model, child) {
           return Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   top: 24,
                   bottom: 12,
                 ),
-                child: Text(
-                  widget.pieces.isNotEmpty ? 'score:' : 'tap or swipe to start',
-                ),
+                child: Text('score:'),
               ),
               Text(
-                widget.pieces.isNotEmpty ? model.value.toString() : '',
+                model.value.toString(),
                 // style: style,
               ),
             ],

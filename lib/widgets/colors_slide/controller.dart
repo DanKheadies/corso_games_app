@@ -20,7 +20,7 @@ class Controller {
   static List<GamePiece> _pieces = [];
   static Map<Point, GamePiece> index = {};
 
-  static int gridSize = 5;
+  static int gridSize = 7;
 
   static get pieces => _pieces;
 
@@ -68,14 +68,24 @@ class Controller {
     );
   }
 
-  static void on(Offset offset) {
+  static void on(Offset offset, BuildContext context) {
     lastDirection = parse(offset);
     process(lastDirection);
 
     bus.add(null);
 
     if (_pieces.length == (gridSize * gridSize)) {
-      print('Can\'t move anymore.');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+            SnackBar(
+              content: const Text('You can\'t add any more!'),
+              backgroundColor: Theme.of(context).colorScheme.tertiary,
+            ),
+          )
+          .closed
+          .then(
+            (value) => ScaffoldMessenger.of(context).clearSnackBars(),
+          );
       return;
     }
 
@@ -186,16 +196,16 @@ class Controller {
     index[piece.position] = piece;
   }
 
-  static void start() {
+  static void start(BuildContext context) {
     _pieces = [];
     index = {};
-    on(const Offset(1, 0));
+    on(const Offset(1, 0), context);
   }
 
-  static void restart() {
+  static void restart(BuildContext context) {
     _pieces = [];
     index = {};
     score.value = 0;
-    on(const Offset(1, 0));
+    on(const Offset(1, 0), context);
   }
 }

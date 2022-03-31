@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
 import './screens/colors_slide_screen.dart';
+import 'screens/colors_slide/cs_settings_screen.dart';
 import './screens/dino_run_screen.dart';
 import './screens/games_screen.dart';
 import './screens/minesweeper_screen.dart';
@@ -30,6 +31,7 @@ class CorsoGames extends StatelessWidget {
       initialRoute: SplashScreen.id,
       routes: {
         ColorsSlideScreen.id: (context) => const ColorsSlideScreen(),
+        CSSettingsScreen.id: (context) => const CSSettingsScreen(),
         DinoRunScreen.id: (context) => const DinoRunScreen(),
         GamesScreen.id: (context) => const GamesScreen(),
         MinesweeperScreen.id: (context) => const MinesweeperScreen(),

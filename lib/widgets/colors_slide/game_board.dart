@@ -28,7 +28,7 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   void onPanEnd(DragEndDetails ev) {
-    Controller.on(dragOffset);
+    Controller.on(dragOffset, context);
     Timer(
       const Duration(milliseconds: 300),
       () => dragOffset = const Offset(0, 0),
