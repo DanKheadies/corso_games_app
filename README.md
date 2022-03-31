@@ -3,13 +3,11 @@
 A collection of Flutter games. GLHF!
 
 ## Credits:
-- 2048 Color Slider Puzzle Game
-- Ken Reilly
-- https://github.com/kenreilly/flutter-puzzle-game-demo
+> [2048 Color Slider Puzzle Game](https://github.com/kenreilly/flutter-puzzle-game-demo)
+> Ken Reilly
 
-- Minesweeper
-- Deven Joshi
-- https://github.com/deven98/FlutterMinesweeper
+> [Minesweeper](https://github.com/deven98/FlutterMinesweeper)
+> Deven Joshi
 
 
 ### Special Thanks:
