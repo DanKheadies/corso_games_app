@@ -14,6 +14,7 @@ class DinoRunScreen extends StatelessWidget {
       title: 'Dino Run',
       infoTitle: 'Dino Run',
       infoDetails: 'Good luck, have fun!',
+      backgroundOverride: Colors.transparent,
       content: ComingSoon(),
       bottomBar: BottomAppBar(),
     );

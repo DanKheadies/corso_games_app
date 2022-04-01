@@ -14,6 +14,7 @@ class SlideToSlideScreen extends StatelessWidget {
       title: 'Slide to Slide',
       infoTitle: 'Slide to Slide',
       infoDetails: 'Good luck, have fun!',
+      backgroundOverride: Colors.transparent,
       content: ComingSoon(),
       bottomBar: BottomAppBar(),
     );

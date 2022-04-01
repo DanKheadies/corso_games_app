@@ -11,16 +11,16 @@ enum ColorsSlideDifficulty {
   wtf,
 }
 
-class CSSettingsScreen extends StatefulWidget {
-  static const String id = 'colors-slide-settings';
+class MSSettingsScreen extends StatefulWidget {
+  static const String id = 'minesweeper-settings';
 
-  const CSSettingsScreen({Key? key}) : super(key: key);
+  const MSSettingsScreen({Key? key}) : super(key: key);
 
   @override
-  State<CSSettingsScreen> createState() => _CSSettingsScreenState();
+  State<MSSettingsScreen> createState() => _MSSettingsScreenState();
 }
 
-class _CSSettingsScreenState extends State<CSSettingsScreen> {
+class _MSSettingsScreenState extends State<MSSettingsScreen> {
   ColorsSlideDifficulty? _difficulty = ColorsSlideDifficulty.tbd;
 
   NeumorphicRadioStyle _neumorphRadioStyle() {
@@ -48,7 +48,7 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
             onPressed: () => showScreenInfo(
               context,
               'Settings',
-              '''- Change your difficulty \n
+              '''- (Soon) Change your difficulty \n
                  - (Soon) Show timer \n\n
                  
                  Just know, if you select any difficulty, we\'ll reset your game. \n\n

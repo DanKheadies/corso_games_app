@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
 import './screens/colors_slide_screen.dart';
-import 'screens/colors_slide/cs_settings_screen.dart';
+import './screens/colors_slide/cs_settings_screen.dart';
 import './screens/dino_run_screen.dart';
 import './screens/games_screen.dart';
 import './screens/minesweeper_screen.dart';
+import './screens/minesweeper/ms_settings_screen.dart';
 import './screens/nonograms_screen.dart';
 import './screens/slide_to_slide_screen.dart';
 import './screens/splash_screen.dart';
@@ -35,6 +36,7 @@ class CorsoGames extends StatelessWidget {
         DinoRunScreen.id: (context) => const DinoRunScreen(),
         GamesScreen.id: (context) => const GamesScreen(),
         MinesweeperScreen.id: (context) => const MinesweeperScreen(),
+        MSSettingsScreen.id: (context) => const MSSettingsScreen(),
         NonogramsScreen.id: (context) => const NonogramsScreen(),
         SlideToSlideScreen.id: (context) => const SlideToSlideScreen(),
         SplashScreen.id: (context) => const SplashScreen(),

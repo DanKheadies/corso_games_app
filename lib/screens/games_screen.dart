@@ -15,11 +15,23 @@ class GamesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
+    // print('wX: $width');
+    // print('h0: $height');
+    // var padding = MediaQuery.of(context).viewPadding;
+    // double height1 = height - padding.top - padding.bottom;
+    // print('h1: $height1');
+    // double height2 = height - padding.top;
+    // print('h2: $height2');
+    // double height3 = height - padding.top - kToolbarHeight;
+    // print('h3: $height3');
     return ScreenWrapper(
       title: 'Games',
       infoTitle: 'Corso Games',
       infoDetails:
           'Enjoy the games, and if you have a problem, send an email to support@holisticgaming.com. \n\nGood luck, have fun!',
+      backgroundOverride: Colors.transparent,
       content: GridView.count(
         padding: const EdgeInsets.all(25),
         mainAxisSpacing: 10,

@@ -34,7 +34,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/corso-games-1.png'),
+                  image: AssetImage('assets/images/main/corso-games-1.png'),
                   fit: BoxFit.contain,
                 ),
               ),

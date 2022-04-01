@@ -9,6 +9,7 @@ class ScreenWrapper extends StatelessWidget {
     required this.title,
     required this.infoTitle,
     required this.infoDetails,
+    required this.backgroundOverride,
     required this.content,
     required this.bottomBar,
     this.floatingButton,
@@ -18,6 +19,7 @@ class ScreenWrapper extends StatelessWidget {
   final String title;
   final String infoTitle;
   final String infoDetails;
+  final Color backgroundOverride;
   final Widget content;
   final Widget bottomBar;
   final Widget? floatingButton;
@@ -26,7 +28,9 @@ class ScreenWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: backgroundOverride != Colors.transparent
+          ? backgroundOverride
+          : Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
         title: Text(title),
         backgroundColor: Theme.of(context).colorScheme.tertiary,

@@ -70,6 +70,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       infoTitle: 'Colors Slide',
       infoDetails:
           'Like 2048 but with colors! Tap to spawn a new circle. Swipe up, down, left or right to move and merge circles. Merging circles of similar colors gives you points and changes their combined color.\n\nGood luck, have fun!',
+      backgroundOverride: Colors.transparent,
       content: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

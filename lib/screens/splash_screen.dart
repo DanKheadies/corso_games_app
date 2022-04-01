@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen>
           child: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Image(
-              image: AssetImage('assets/images/corso-games-1.png'),
+              image: AssetImage('assets/images/main/corso-games-1.png'),
             ),
           ),
         ),

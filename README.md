@@ -4,10 +4,10 @@ A collection of Flutter games. GLHF!
 
 ## Credits:
 > [2048 Color Slider Puzzle Game](https://github.com/kenreilly/flutter-puzzle-game-demo)
-> Ken Reilly
+> via Ken Reilly
 
 > [Minesweeper](https://github.com/deven98/FlutterMinesweeper)
-> Deven Joshi
+> via Deven Joshi
 
 
 ### Special Thanks:
@@ -19,4 +19,4 @@ A collection of Flutter games. GLHF!
 
 ---
 
-`Compliments of DTFun LLC 2022`
+Compliments of DTFun LLC 2022
