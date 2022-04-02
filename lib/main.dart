@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
-import './screens/colors_slide_screen.dart';
+import 'screens/colors_slide/colors_slide_screen.dart';
 import './screens/colors_slide/cs_settings_screen.dart';
 import './screens/dino_run_screen.dart';
 import './screens/games_screen.dart';
-import './screens/minesweeper_screen.dart';
+import 'screens/minesweeper/minesweeper_screen.dart';
 import './screens/minesweeper/ms_settings_screen.dart';
 import './screens/nonograms_screen.dart';
 import './screens/slide_to_slide_screen.dart';

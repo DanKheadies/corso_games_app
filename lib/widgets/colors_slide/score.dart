@@ -15,8 +15,8 @@ class ScoreModel extends ChangeNotifier {
   }
 }
 
-class ScoreView extends StatefulWidget {
-  const ScoreView({
+class Score extends StatefulWidget {
+  const Score({
     Key? key,
     required this.pieces,
   }) : super(key: key);
@@ -24,10 +24,10 @@ class ScoreView extends StatefulWidget {
   final List<GamePiece> pieces;
 
   @override
-  State<ScoreView> createState() => _ScoreViewState();
+  State<Score> createState() => _Score();
 }
 
-class _ScoreViewState extends State<ScoreView> {
+class _Score extends State<Score> {
   @override
   Widget build(BuildContext context) {
     // TextStyle style = Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.w300,);

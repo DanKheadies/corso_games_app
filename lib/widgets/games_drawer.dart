@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/screens/colors_slide_screen.dart';
+import 'package:corso_games_app/screens/colors_slide/colors_slide_screen.dart';
 import 'package:corso_games_app/screens/dino_run_screen.dart';
 import 'package:corso_games_app/screens/games_screen.dart';
-import 'package:corso_games_app/screens/minesweeper_screen.dart';
+import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
 import 'package:corso_games_app/screens/nonograms_screen.dart';
 import 'package:corso_games_app/screens/slide_to_slide_screen.dart';
 

@@ -20,7 +20,8 @@ class Controller {
   static List<GamePiece> _pieces = [];
   static Map<Point, GamePiece> index = {};
 
-  static int gridSize = 7;
+  // TODO: set off difficulty
+  static int gridSize = 3;
 
   static get pieces => _pieces;
 

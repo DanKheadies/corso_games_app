@@ -1,14 +1,16 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
+import 'package:corso_games_app/models/colors/cs_settings_arguments.dart';
 import 'package:corso_games_app/widgets/screen_info.dart';
 
 enum ColorsSlideDifficulty {
   tbd,
-  easy,
-  medium,
-  hard,
-  harder,
-  wtf,
+  threeByThree,
+  fourByFour,
+  fiveByFive,
+  sevenBySeven,
+  tenByTen,
+  yolo,
 }
 
 class CSSettingsScreen extends StatefulWidget {
@@ -37,6 +39,9 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as CSSettingsArguments;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
@@ -69,14 +74,17 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
             children: [
               NeumorphicRadio(
                 child: const Text(
-                  'Easy',
+                  '3x3',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 padding: const EdgeInsets.all(15),
-                value: ColorsSlideDifficulty.easy,
-                groupValue: _difficulty,
+                value: ColorsSlideDifficulty.threeByThree,
+                // groupValue: args.difficulty,
+                groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                    ? args.difficulty
+                    : _difficulty,
                 onChanged: (ColorsSlideDifficulty? diff) {
                   setState(() {
                     _difficulty = diff;
@@ -86,14 +94,16 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
               ),
               NeumorphicRadio(
                 child: const Text(
-                  'Medium',
+                  '4x4',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 padding: const EdgeInsets.all(15),
-                value: ColorsSlideDifficulty.medium,
-                groupValue: _difficulty,
+                value: ColorsSlideDifficulty.fourByFour,
+                groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                    ? args.difficulty
+                    : _difficulty,
                 onChanged: (ColorsSlideDifficulty? diff) {
                   setState(() {
                     _difficulty = diff;
@@ -103,14 +113,16 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
               ),
               NeumorphicRadio(
                 child: const Text(
-                  'Hard',
+                  '5x5',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.hard,
-                groupValue: _difficulty,
+                value: ColorsSlideDifficulty.fiveByFive,
+                groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                    ? args.difficulty
+                    : _difficulty,
                 onChanged: (ColorsSlideDifficulty? diff) {
                   setState(() {
                     _difficulty = diff;
@@ -120,14 +132,16 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
               ),
               NeumorphicRadio(
                 child: const Text(
-                  'Harder',
+                  '7x7',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.harder,
-                groupValue: _difficulty,
+                value: ColorsSlideDifficulty.sevenBySeven,
+                groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                    ? args.difficulty
+                    : _difficulty,
                 onChanged: (ColorsSlideDifficulty? diff) {
                   setState(() {
                     _difficulty = diff;
@@ -137,14 +151,35 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
               ),
               NeumorphicRadio(
                 child: const Text(
-                  'WTF',
+                  '10x10',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.wtf,
-                groupValue: _difficulty,
+                value: ColorsSlideDifficulty.tenByTen,
+                groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                    ? args.difficulty
+                    : _difficulty,
+                onChanged: (ColorsSlideDifficulty? diff) {
+                  setState(() {
+                    _difficulty = diff;
+                  });
+                },
+                style: _neumorphRadioStyle(),
+              ),
+              NeumorphicRadio(
+                child: const Text(
+                  'YOLO',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                padding: const EdgeInsets.all(20),
+                value: ColorsSlideDifficulty.yolo,
+                groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                    ? args.difficulty
+                    : _difficulty,
                 onChanged: (ColorsSlideDifficulty? diff) {
                   setState(() {
                     _difficulty = diff;

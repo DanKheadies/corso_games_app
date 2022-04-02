@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:corso_games_app/models/colors/cs_settings_arguments.dart';
 import 'package:flutter/material.dart';
 
 import 'package:corso_games_app/screens/colors_slide/cs_settings_screen.dart';
@@ -7,6 +9,8 @@ import 'package:corso_games_app/widgets/colors_slide/controller.dart';
 import 'package:corso_games_app/widgets/colors_slide/game_board.dart';
 import 'package:corso_games_app/widgets/colors_slide/game_piece.dart';
 import 'package:corso_games_app/widgets/colors_slide/score.dart';
+import 'package:corso_games_app/widgets/colors_slide/size.dart';
+import 'package:corso_games_app/widgets/colors_slide/timer.dart';
 import 'package:corso_games_app/widgets/screen_info.dart';
 import 'package:corso_games_app/widgets/screen_wrapper.dart';
 
@@ -20,6 +24,7 @@ class ColorsSlideScreen extends StatefulWidget {
 }
 
 class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
+  ColorsSlideDifficulty currentDifficulty = ColorsSlideDifficulty.threeByThree;
   late StreamSubscription _eventStream;
   List<GamePiece> pieces = [];
 
@@ -39,20 +44,23 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
     });
   }
 
-  void setDifficulty(String difficulty) {
-    if (difficulty == 'ColorsSlideDifficulty.easy') {
-      Controller.gridSize = 7;
-    } else if (difficulty == 'ColorsSlideDifficulty.medium') {
-      Controller.gridSize = 5;
-    } else if (difficulty == 'ColorsSlideDifficulty.hard') {
-      Controller.gridSize = 4;
-    } else if (difficulty == 'ColorsSlideDifficulty.harder') {
-      Controller.gridSize = 10;
-    } else if (difficulty == 'ColorsSlideDifficulty.wtf') {
+  void setDifficulty(Object? difficulty) {
+    print(difficulty);
+    if (difficulty == ColorsSlideDifficulty.threeByThree) {
       Controller.gridSize = 3;
+    } else if (difficulty == ColorsSlideDifficulty.fourByFour) {
+      Controller.gridSize = 4;
+    } else if (difficulty == ColorsSlideDifficulty.fiveByFive) {
+      Controller.gridSize = 5;
+    } else if (difficulty == ColorsSlideDifficulty.sevenBySeven) {
+      Controller.gridSize = 7;
+    } else if (difficulty == ColorsSlideDifficulty.tenByTen) {
+      Controller.gridSize = 10;
+    } else if (difficulty == ColorsSlideDifficulty.yolo) {
+      Controller.gridSize = Random().nextInt(15);
     }
 
-    if (difficulty != 'ColorsSlideDifficulty.tbd') {
+    if (difficulty != ColorsSlideDifficulty.tbd) {
       Controller.restart(context);
     }
   }
@@ -74,7 +82,13 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       content: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ScoreView(pieces: pieces),
+          Row(
+            children: [
+              Size(),
+              Score(pieces: pieces),
+              Timer(),
+            ],
+          ),
           GameBoard(pieces: pieces),
           const SizedBox(),
           const SizedBox(),
@@ -97,8 +111,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                 final result = await Navigator.pushNamed(
                   context,
                   CSSettingsScreen.id,
+                  arguments: CSSettingsArguments(currentDifficulty),
                 );
-                setDifficulty(result.toString());
+                setDifficulty(result);
               },
             ),
             IconButton(
