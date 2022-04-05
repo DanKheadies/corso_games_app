@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:corso_games_app/models/colors/cs_settings_arguments.dart';
 import 'package:flutter/material.dart';
 
 import 'package:corso_games_app/screens/colors_slide/cs_settings_screen.dart';
@@ -10,7 +9,7 @@ import 'package:corso_games_app/widgets/colors_slide/game_board.dart';
 import 'package:corso_games_app/widgets/colors_slide/game_piece.dart';
 import 'package:corso_games_app/widgets/colors_slide/score.dart';
 import 'package:corso_games_app/widgets/colors_slide/size.dart';
-import 'package:corso_games_app/widgets/colors_slide/timer.dart';
+import 'package:corso_games_app/widgets/colors_slide/cs_timer.dart';
 import 'package:corso_games_app/widgets/screen_info.dart';
 import 'package:corso_games_app/widgets/screen_wrapper.dart';
 
@@ -24,18 +23,31 @@ class ColorsSlideScreen extends StatefulWidget {
 }
 
 class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
+  bool showTimer = false;
   ColorsSlideDifficulty currentDifficulty = ColorsSlideDifficulty.threeByThree;
+  ColorsSlideDifficulty oldDifficulty = ColorsSlideDifficulty.threeByThree;
   late StreamSubscription _eventStream;
   List<GamePiece> pieces = [];
+  String size = '3x3';
+  String timerStatus = '';
 
   @override
   void initState() {
     super.initState();
+
     setState(() {
       pieces = [];
     });
+
     _eventStream = Controller.listen(onAction);
-    Controller.start(context);
+
+    Timer(
+      const Duration(milliseconds: 100),
+      () {
+        Controller.gridSize = Controller.initGridSize;
+        Controller.restart(context);
+      },
+    );
   }
 
   void onAction(dynamic data) {
@@ -45,23 +57,58 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
   }
 
   void setDifficulty(Object? difficulty) {
-    print(difficulty);
     if (difficulty == ColorsSlideDifficulty.threeByThree) {
       Controller.gridSize = 3;
+      setState(() {
+        size = '3x3';
+      });
     } else if (difficulty == ColorsSlideDifficulty.fourByFour) {
       Controller.gridSize = 4;
+      setState(() {
+        size = '4x4';
+      });
     } else if (difficulty == ColorsSlideDifficulty.fiveByFive) {
       Controller.gridSize = 5;
+      setState(() {
+        size = '5x5';
+      });
     } else if (difficulty == ColorsSlideDifficulty.sevenBySeven) {
       Controller.gridSize = 7;
+      setState(() {
+        size = '7x7';
+      });
     } else if (difficulty == ColorsSlideDifficulty.tenByTen) {
       Controller.gridSize = 10;
+      setState(() {
+        size = '10x10';
+      });
     } else if (difficulty == ColorsSlideDifficulty.yolo) {
-      Controller.gridSize = Random().nextInt(15);
+      var rando = Random().nextInt(13) + 2;
+      Controller.gridSize = rando;
+      setState(() {
+        size = '${rando}x$rando';
+      });
     }
 
-    if (difficulty != ColorsSlideDifficulty.tbd) {
+    if (difficulty != oldDifficulty) {
       Controller.restart(context);
+      setState(() {
+        oldDifficulty = difficulty as ColorsSlideDifficulty;
+        timerStatus = 'reset';
+      });
+      Timer(const Duration(milliseconds: 100), () {
+        setState(() {
+          timerStatus = '';
+        });
+      });
+    }
+  }
+
+  void checkTimer(bool _showTimer) {
+    if (_showTimer != showTimer) {
+      Timer(const Duration(milliseconds: 100), () {
+        Controller.restart(context);
+      });
     }
   }
 
@@ -83,17 +130,46 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            children: [
-              Size(),
-              Score(pieces: pieces),
-              Timer(),
-            ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: showTimer
+                ? [
+                    Size(size: size),
+                    Score(pieces: pieces),
+                    CSTimer(
+                      timer: showTimer,
+                      timerStatus: timerStatus,
+                    ),
+                  ]
+                : [
+                    Size(size: size),
+                    Score(pieces: pieces),
+                  ],
           ),
           GameBoard(pieces: pieces),
           const SizedBox(),
           const SizedBox(),
         ],
       ),
+      screenFunction: (String _string) {
+        if (_string == 'drawerOpen') {
+          setState(() {
+            timerStatus = 'pause';
+          });
+        } else if (_string == 'drawerClose') {
+          setState(() {
+            timerStatus = 'resume';
+          });
+        } else if (_string == 'drawerNavigate') {
+          setState(() {
+            timerStatus = 'stop';
+          });
+        }
+        Timer(const Duration(milliseconds: 100), () {
+          setState(() {
+            timerStatus = '';
+          });
+        });
+      },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.tertiary,
         shape: const CircularNotchedRectangle(),
@@ -111,9 +187,19 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                 final result = await Navigator.pushNamed(
                   context,
                   CSSettingsScreen.id,
-                  arguments: CSSettingsArguments(currentDifficulty),
+                  arguments: {
+                    'difficulty': currentDifficulty,
+                    'timer': showTimer,
+                  },
                 );
-                setDifficulty(result);
+                result as Map;
+                setDifficulty(result['difficulty']);
+                checkTimer(result['timer']);
+                setState(() {
+                  currentDifficulty =
+                      result['difficulty'] as ColorsSlideDifficulty;
+                  showTimer = result['timer'];
+                });
               },
             ),
             IconButton(
@@ -145,8 +231,14 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
           onPressed: () {
             setState(() {
               pieces = [];
+              timerStatus = 'reset';
             });
             Controller.restart(context);
+            Timer(const Duration(milliseconds: 100), () {
+              setState(() {
+                timerStatus = '';
+              });
+            });
           },
         ),
       ),

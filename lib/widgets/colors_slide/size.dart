@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Size extends StatelessWidget {
-  const Size({Key? key}) : super(key: key);
+class Size extends StatefulWidget {
+  const Size({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
 
+  final String size;
+
+  @override
+  State<Size> createState() => _SizeState();
+}
+
+class _SizeState extends State<Size> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -12,12 +22,10 @@ class Size extends StatelessWidget {
             top: 24,
             bottom: 12,
           ),
-          child: Text('score:'),
+          child: Text('size:'),
         ),
         Text(
-          '',
-          // model.value.toString(),
-          // style: style,
+          widget.size,
         ),
       ],
     );

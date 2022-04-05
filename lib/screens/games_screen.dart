@@ -80,6 +80,7 @@ class GamesScreen extends StatelessWidget {
           ),
         ],
       ),
+      screenFunction: (String _string) {},
       bottomBar: const BottomAppBar(),
     );
   }

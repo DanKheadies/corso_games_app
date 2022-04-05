@@ -30,7 +30,6 @@ class Score extends StatefulWidget {
 class _Score extends State<Score> {
   @override
   Widget build(BuildContext context) {
-    // TextStyle style = Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.w300,);
     return ChangeNotifierProvider.value(
       value: Controller.score,
       child: Consumer<ScoreModel>(
@@ -46,7 +45,6 @@ class _Score extends State<Score> {
               ),
               Text(
                 model.value.toString(),
-                // style: style,
               ),
             ],
           );

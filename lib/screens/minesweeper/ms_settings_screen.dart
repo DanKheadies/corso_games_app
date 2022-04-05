@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'package:corso_games_app/widgets/screen_info.dart';
 
-enum ColorsSlideDifficulty {
+enum MinesweeperDifficulty {
   tbd,
   easy,
   medium,
@@ -21,11 +23,12 @@ class MSSettingsScreen extends StatefulWidget {
 }
 
 class _MSSettingsScreenState extends State<MSSettingsScreen> {
-  ColorsSlideDifficulty? _difficulty = ColorsSlideDifficulty.tbd;
+  bool argsTimer = false;
+  bool showTimer = false;
+  MinesweeperDifficulty? _difficulty = MinesweeperDifficulty.tbd;
 
   NeumorphicRadioStyle _neumorphRadioStyle() {
     return NeumorphicRadioStyle(
-      // selectedColor: Theme.of(context).colorScheme.primary,
       unselectedColor: Theme.of(context).colorScheme.secondary,
       selectedDepth: 4,
       unselectedDepth: -4,
@@ -36,11 +39,27 @@ class _MSSettingsScreenState extends State<MSSettingsScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(milliseconds: 100), () {
+      setState(() {
+        showTimer = argsTimer;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+
+    setState(() {
+      argsTimer = args['timer'];
+    });
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
-        title: const Text('CS Settings'),
+        title: const Text('MS Settings'),
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         actions: <Widget>[
           IconButton(
@@ -48,109 +67,151 @@ class _MSSettingsScreenState extends State<MSSettingsScreen> {
             onPressed: () => showScreenInfo(
               context,
               'Settings',
-              '''- (Soon) Change your difficulty \n
-                 - (Soon) Show timer \n\n
-                 
-                 Just know, if you select any difficulty, we\'ll reset your game. \n\n
-                 
-                 GLHF!''',
+              '''-Change your difficulty \n
+- (Soon) Show timer \n\n
+Heads up: changing any of the settings here will reset your game. \n\n
+GLHF!''',
             ),
           )
         ],
       ),
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.pop(context, _difficulty);
+          Navigator.pop(context, {
+            'difficulty': _difficulty == MinesweeperDifficulty.tbd
+                ? args['difficulty'] as MinesweeperDifficulty
+                : _difficulty,
+            'timer': showTimer,
+          });
           return true;
         },
         child: Center(
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              NeumorphicRadio(
-                child: const Text(
-                  'Easy',
-                  style: TextStyle(
-                    fontSize: 20,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('timer'),
+                  const SizedBox(height: 30),
+                  NeumorphicSwitch(
+                    style: NeumorphicSwitchStyle(
+                      activeThumbColor: Theme.of(context).colorScheme.primary,
+                      activeTrackColor: Theme.of(context).colorScheme.secondary,
+                      inactiveThumbColor:
+                          Theme.of(context).colorScheme.secondary,
+                      inactiveTrackColor:
+                          Theme.of(context).colorScheme.secondary,
+                    ),
+                    value: showTimer,
+                    onChanged: (value) {
+                      setState(() {
+                        showTimer = !showTimer;
+                      });
+                    },
                   ),
-                ),
-                padding: const EdgeInsets.all(15),
-                value: ColorsSlideDifficulty.easy,
-                groupValue: _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
+                ],
               ),
-              NeumorphicRadio(
-                child: const Text(
-                  'Medium',
-                  style: TextStyle(
-                    fontSize: 20,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text('difficulty'),
+                  NeumorphicRadio(
+                    child: const Text(
+                      'Easy',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    value: MinesweeperDifficulty.easy,
+                    groupValue: _difficulty == MinesweeperDifficulty.tbd
+                        ? args['difficulty'] as MinesweeperDifficulty
+                        : _difficulty,
+                    onChanged: (MinesweeperDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(15),
-                value: ColorsSlideDifficulty.medium,
-                groupValue: _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
-              ),
-              NeumorphicRadio(
-                child: const Text(
-                  'Hard',
-                  style: TextStyle(
-                    fontSize: 20,
+                  NeumorphicRadio(
+                    child: const Text(
+                      'Medium',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    value: MinesweeperDifficulty.medium,
+                    groupValue: _difficulty == MinesweeperDifficulty.tbd
+                        ? args['difficulty'] as MinesweeperDifficulty
+                        : _difficulty,
+                    onChanged: (MinesweeperDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.hard,
-                groupValue: _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
-              ),
-              NeumorphicRadio(
-                child: const Text(
-                  'Harder',
-                  style: TextStyle(
-                    fontSize: 20,
+                  NeumorphicRadio(
+                    child: const Text(
+                      'Hard',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    value: MinesweeperDifficulty.hard,
+                    groupValue: _difficulty == MinesweeperDifficulty.tbd
+                        ? args['difficulty'] as MinesweeperDifficulty
+                        : _difficulty,
+                    onChanged: (MinesweeperDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.harder,
-                groupValue: _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
-              ),
-              NeumorphicRadio(
-                child: const Text(
-                  'WTF',
-                  style: TextStyle(
-                    fontSize: 20,
+                  NeumorphicRadio(
+                    child: const Text(
+                      'Harder',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    value: MinesweeperDifficulty.harder,
+                    groupValue: _difficulty == MinesweeperDifficulty.tbd
+                        ? args['difficulty'] as MinesweeperDifficulty
+                        : _difficulty,
+                    onChanged: (MinesweeperDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.wtf,
-                groupValue: _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
+                  NeumorphicRadio(
+                    child: const Text(
+                      'WTF',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    value: MinesweeperDifficulty.wtf,
+                    groupValue: _difficulty == MinesweeperDifficulty.tbd
+                        ? args['difficulty'] as MinesweeperDifficulty
+                        : _difficulty,
+                    onChanged: (MinesweeperDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
+                  ),
+                ],
               ),
             ],
           ),

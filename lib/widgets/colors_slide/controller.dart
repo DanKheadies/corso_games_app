@@ -20,8 +20,10 @@ class Controller {
   static List<GamePiece> _pieces = [];
   static Map<Point, GamePiece> index = {};
 
-  // TODO: set off difficulty
-  static int gridSize = 3;
+  static int initGridSize = 3;
+  static int gridSize = initGridSize;
+
+  // TODO: add waterfall / tetris effect and spawn circles faster and faster
 
   static get pieces => _pieces;
 

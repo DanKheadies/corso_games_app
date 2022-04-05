@@ -8,13 +8,32 @@ import 'package:corso_games_app/screens/nonograms_screen.dart';
 import 'package:corso_games_app/screens/slide_to_slide_screen.dart';
 
 class GamesDrawer extends StatefulWidget {
-  const GamesDrawer({Key? key}) : super(key: key);
+  const GamesDrawer({
+    Key? key,
+    required this.handler,
+  }) : super(key: key);
+
+  final Function(String) handler;
 
   @override
   State<GamesDrawer> createState() => _GamesDrawerState();
 }
 
 class _GamesDrawerState extends State<GamesDrawer> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => widget.handler('drawerOpen'));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => widget.handler('drawerClose'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -23,10 +42,13 @@ class _GamesDrawerState extends State<GamesDrawer> {
         padding: EdgeInsets.zero,
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushNamed(
-              context,
-              GamesScreen.id,
-            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.pushNamed(
+                context,
+                GamesScreen.id,
+              );
+            },
             child: const DrawerHeader(
               margin: EdgeInsets.only(
                 bottom: 10,
@@ -65,6 +87,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
             ),
             onTap: () {
+              widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
                 ColorsSlideScreen.id,
@@ -80,6 +103,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
             ),
             onTap: () {
+              widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
                 DinoRunScreen.id,
@@ -95,6 +119,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
             ),
             onTap: () {
+              widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
                 MinesweeperScreen.id,
@@ -110,6 +135,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
             ),
             onTap: () {
+              widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
                 NonogramsScreen.id,
@@ -125,6 +151,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
             ),
             onTap: () {
+              widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
                 SlideToSlideScreen.id,

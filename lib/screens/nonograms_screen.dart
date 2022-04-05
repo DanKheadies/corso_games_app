@@ -10,13 +10,14 @@ class NonogramsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ScreenWrapper(
+    return ScreenWrapper(
       title: 'Nonograms',
       infoTitle: 'Nonograms',
       infoDetails: 'Good luck, have fun!',
       backgroundOverride: Colors.transparent,
-      content: ComingSoon(),
-      bottomBar: BottomAppBar(),
+      content: const ComingSoon(),
+      screenFunction: (String _string) {},
+      bottomBar: const BottomAppBar(),
     );
   }
 }

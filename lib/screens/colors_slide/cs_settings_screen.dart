@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'package:corso_games_app/models/colors/cs_settings_arguments.dart';
 import 'package:corso_games_app/widgets/screen_info.dart';
 
 enum ColorsSlideDifficulty {
@@ -23,11 +24,12 @@ class CSSettingsScreen extends StatefulWidget {
 }
 
 class _CSSettingsScreenState extends State<CSSettingsScreen> {
+  bool argsTimer = false;
+  bool showTimer = false;
   ColorsSlideDifficulty? _difficulty = ColorsSlideDifficulty.tbd;
 
   NeumorphicRadioStyle _neumorphRadioStyle() {
     return NeumorphicRadioStyle(
-      // selectedColor: Theme.of(context).colorScheme.primary,
       unselectedColor: Theme.of(context).colorScheme.secondary,
       selectedDepth: 4,
       unselectedDepth: -4,
@@ -38,9 +40,22 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(milliseconds: 100), () {
+      setState(() {
+        showTimer = argsTimer;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as CSSettingsArguments;
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+
+    setState(() {
+      argsTimer = args['timer'];
+    });
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -54,138 +69,170 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
               context,
               'Settings',
               '''- Change your difficulty \n
-                 - (Soon) Show timer \n\n
+- Show timer \n
+Heads up: changing any of the settings here will reset your game. \n\n
                  
-                 Just know, if you select any difficulty, we\'ll reset your game. \n\n
-                 
-                 GLHF!''',
+GLHF!''',
             ),
           )
         ],
       ),
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.pop(context, _difficulty);
+          Navigator.pop(context, {
+            'difficulty': _difficulty == ColorsSlideDifficulty.tbd
+                ? args['difficulty'] as ColorsSlideDifficulty
+                : _difficulty,
+            'timer': showTimer,
+          });
           return true;
         },
         child: Center(
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              NeumorphicRadio(
-                child: const Text(
-                  '3x3',
-                  style: TextStyle(
-                    fontSize: 20,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('timer'),
+                  const SizedBox(height: 30),
+                  NeumorphicSwitch(
+                    style: NeumorphicSwitchStyle(
+                      activeThumbColor: Theme.of(context).colorScheme.primary,
+                      activeTrackColor: Theme.of(context).colorScheme.secondary,
+                      inactiveThumbColor:
+                          Theme.of(context).colorScheme.secondary,
+                      inactiveTrackColor:
+                          Theme.of(context).colorScheme.secondary,
+                    ),
+                    value: showTimer,
+                    onChanged: (value) {
+                      setState(() {
+                        showTimer = !showTimer;
+                      });
+                    },
                   ),
-                ),
-                padding: const EdgeInsets.all(15),
-                value: ColorsSlideDifficulty.threeByThree,
-                // groupValue: args.difficulty,
-                groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                    ? args.difficulty
-                    : _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
+                ],
               ),
-              NeumorphicRadio(
-                child: const Text(
-                  '4x4',
-                  style: TextStyle(
-                    fontSize: 20,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text('size'),
+                  NeumorphicRadio(
+                    child: const Text(
+                      '3x3',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    value: ColorsSlideDifficulty.threeByThree,
+                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                        ? args['difficulty'] as ColorsSlideDifficulty
+                        : _difficulty,
+                    onChanged: (ColorsSlideDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(15),
-                value: ColorsSlideDifficulty.fourByFour,
-                groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                    ? args.difficulty
-                    : _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
-              ),
-              NeumorphicRadio(
-                child: const Text(
-                  '5x5',
-                  style: TextStyle(
-                    fontSize: 20,
+                  NeumorphicRadio(
+                    child: const Text(
+                      '4x4',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    value: ColorsSlideDifficulty.fourByFour,
+                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                        ? args['difficulty'] as ColorsSlideDifficulty
+                        : _difficulty,
+                    onChanged: (ColorsSlideDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.fiveByFive,
-                groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                    ? args.difficulty
-                    : _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
-              ),
-              NeumorphicRadio(
-                child: const Text(
-                  '7x7',
-                  style: TextStyle(
-                    fontSize: 20,
+                  NeumorphicRadio(
+                    child: const Text(
+                      '5x5',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    value: ColorsSlideDifficulty.fiveByFive,
+                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                        ? args['difficulty'] as ColorsSlideDifficulty
+                        : _difficulty,
+                    onChanged: (ColorsSlideDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.sevenBySeven,
-                groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                    ? args.difficulty
-                    : _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
-              ),
-              NeumorphicRadio(
-                child: const Text(
-                  '10x10',
-                  style: TextStyle(
-                    fontSize: 20,
+                  NeumorphicRadio(
+                    child: const Text(
+                      '7x7',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    value: ColorsSlideDifficulty.sevenBySeven,
+                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                        ? args['difficulty'] as ColorsSlideDifficulty
+                        : _difficulty,
+                    onChanged: (ColorsSlideDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.tenByTen,
-                groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                    ? args.difficulty
-                    : _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
-              ),
-              NeumorphicRadio(
-                child: const Text(
-                  'YOLO',
-                  style: TextStyle(
-                    fontSize: 20,
+                  NeumorphicRadio(
+                    child: const Text(
+                      '10x10',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    value: ColorsSlideDifficulty.tenByTen,
+                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                        ? args['difficulty'] as ColorsSlideDifficulty
+                        : _difficulty,
+                    onChanged: (ColorsSlideDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                value: ColorsSlideDifficulty.yolo,
-                groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                    ? args.difficulty
-                    : _difficulty,
-                onChanged: (ColorsSlideDifficulty? diff) {
-                  setState(() {
-                    _difficulty = diff;
-                  });
-                },
-                style: _neumorphRadioStyle(),
+                  NeumorphicRadio(
+                    child: const Text(
+                      'YOLO',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    value: ColorsSlideDifficulty.yolo,
+                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                        ? args['difficulty'] as ColorsSlideDifficulty
+                        : _difficulty,
+                    onChanged: (ColorsSlideDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
+                  ),
+                ],
               ),
             ],
           ),

@@ -10,13 +10,14 @@ class DinoRunScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ScreenWrapper(
+    return ScreenWrapper(
       title: 'Dino Run',
       infoTitle: 'Dino Run',
       infoDetails: 'Good luck, have fun!',
       backgroundOverride: Colors.transparent,
-      content: ComingSoon(),
-      bottomBar: BottomAppBar(),
+      content: const ComingSoon(),
+      screenFunction: (String _string) {},
+      bottomBar: const BottomAppBar(),
     );
   }
 }

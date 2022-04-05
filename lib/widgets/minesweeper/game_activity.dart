@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:corso_games_app/models/minesweeper/board_square.dart';
+import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
+import 'package:corso_games_app/widgets/minesweeper/ms_timer.dart';
 
 enum ImageType {
   zero,
@@ -22,7 +24,18 @@ enum ImageType {
 class GameActivity extends StatefulWidget {
   const GameActivity({
     Key? key,
+    required this.difficulty,
+    required this.resetGame,
+    required this.timer,
+    required this.timerStatus,
+    required this.timerReset,
   }) : super(key: key);
+
+  final MinesweeperDifficulty difficulty;
+  final bool resetGame;
+  final bool timer;
+  final String timerStatus;
+  final VoidCallback timerReset;
 
   @override
   State<GameActivity> createState() => _GameActivityState();
@@ -49,8 +62,12 @@ class _GameActivityState extends State<GameActivity> {
 
   // bomb / max = %
   // 3 / 15 = 0.2
+  // static int initBombProbability = 3;
+  // static int initMaxProbability = 30;
+  // int bombProbability = initBombProbability;
+  // int maxProbability = initMaxProbability;
   int bombProbability = 3;
-  int maxProbability = 15;
+  int maxProbability = 30;
 
   int bombCount = 0;
   int squaresLeft = 0;
@@ -62,10 +79,27 @@ class _GameActivityState extends State<GameActivity> {
   @override
   void initState() {
     super.initState();
-    initializeGame(bombProbability, maxProbability);
+    initializeGame();
   }
 
-  void initializeGame(int _bombProb, int _maxProb) {
+  void initializeGame() {
+    if (widget.difficulty == MinesweeperDifficulty.easy) {
+      bombProbability = 3;
+      maxProbability = 30;
+    } else if (widget.difficulty == MinesweeperDifficulty.medium) {
+      bombProbability = 3;
+      maxProbability = 20;
+    } else if (widget.difficulty == MinesweeperDifficulty.hard) {
+      bombProbability = 3;
+      maxProbability = 15;
+    } else if (widget.difficulty == MinesweeperDifficulty.harder) {
+      bombProbability = 5;
+      maxProbability = 20;
+    } else if (widget.difficulty == MinesweeperDifficulty.wtf) {
+      bombProbability = 5;
+      maxProbability = 15;
+    }
+
     board = List.generate(rowCount, (i) {
       return List.generate(columnCount, (j) {
         return BoardSquare();
@@ -208,7 +242,8 @@ class _GameActivityState extends State<GameActivity> {
           actions: [
             TextButton(
               onPressed: () {
-                initializeGame(bombProbability, maxProbability);
+                widget.timerReset();
+                initializeGame();
                 Navigator.pop(context);
               },
               child: const Text('Play Again'),
@@ -230,7 +265,8 @@ class _GameActivityState extends State<GameActivity> {
           actions: [
             TextButton(
               onPressed: () {
-                initializeGame(bombProbability, maxProbability);
+                widget.timerReset();
+                initializeGame();
                 Navigator.pop(context);
               },
               child: const Text('Play Again'),
@@ -299,8 +335,29 @@ class _GameActivityState extends State<GameActivity> {
     }
   }
 
+  InkWell smilieReset() {
+    return InkWell(
+      onTap: () {
+        widget.timerReset();
+        initializeGame();
+      },
+      child: const CircleAvatar(
+        child: Icon(
+          Icons.tag_faces,
+          color: Colors.black,
+          size: 40,
+        ),
+        backgroundColor: Colors.yellowAccent,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.resetGame) {
+      initializeGame();
+    }
+
     return Center(
       child: ListView(
         children: [
@@ -309,22 +366,18 @@ class _GameActivityState extends State<GameActivity> {
             height: headerHeight,
             width: double.infinity,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    initializeGame(bombProbability, maxProbability);
-                  },
-                  child: const CircleAvatar(
-                    child: Icon(
-                      Icons.tag_faces,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                    backgroundColor: Colors.yellowAccent,
-                  ),
-                ),
-              ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: widget.timer
+                  ? [
+                      smilieReset(),
+                      MSTimer(
+                        timer: widget.timer,
+                        timerStatus: widget.timerStatus,
+                      ),
+                    ]
+                  : [
+                      smilieReset(),
+                    ],
             ),
           ),
           GridView.builder(

@@ -9,6 +9,9 @@ A collection of Flutter games. GLHF!
 > [Minesweeper](https://github.com/deven98/FlutterMinesweeper)
 > via Deven Joshi
 
+> [Timer](https://github.com/realdiganta/Flutter-Stopwatch)
+> Diganta Kalita
+
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)

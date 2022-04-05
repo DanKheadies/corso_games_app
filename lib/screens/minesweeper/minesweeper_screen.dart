@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
 import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
+import 'package:flutter/material.dart';
+
 import 'package:corso_games_app/widgets/minesweeper/game_activity.dart';
 import 'package:corso_games_app/widgets/screen_wrapper.dart';
 import 'package:corso_games_app/widgets/screen_info.dart';
@@ -15,22 +17,72 @@ class MinesweeperScreen extends StatefulWidget {
 }
 
 class _MinesweeperScreenState extends State<MinesweeperScreen> {
-  void setDifficulty(String difficulty) {
-    // if (difficulty == 'ColorsSlideDifficulty.easy') {
-    //   Controller.gridSize = 7;
-    // } else if (difficulty == 'ColorsSlideDifficulty.medium') {
-    //   Controller.gridSize = 5;
-    // } else if (difficulty == 'ColorsSlideDifficulty.hard') {
-    //   Controller.gridSize = 4;
-    // } else if (difficulty == 'ColorsSlideDifficulty.harder') {
-    //   Controller.gridSize = 10;
-    // } else if (difficulty == 'ColorsSlideDifficulty.wtf') {
-    //   Controller.gridSize = 3;
-    // }
+  bool showTimer = false;
+  bool resetGame = false;
+  MinesweeperDifficulty currentDifficulty = MinesweeperDifficulty.easy;
+  MinesweeperDifficulty oldDifficulty = MinesweeperDifficulty.easy;
+  String timerStatus = '';
 
-    // if (difficulty != 'ColorsSlideDifficulty.tbd') {
-    //   Controller.restart(context);
-    // }
+  void setDifficulty(Object? difficulty) {
+    if (difficulty == MinesweeperDifficulty.easy) {
+      setState(() {
+        currentDifficulty = MinesweeperDifficulty.easy;
+      });
+    } else if (difficulty == MinesweeperDifficulty.medium) {
+      setState(() {
+        currentDifficulty = MinesweeperDifficulty.medium;
+      });
+    } else if (difficulty == MinesweeperDifficulty.hard) {
+      setState(() {
+        currentDifficulty = MinesweeperDifficulty.hard;
+      });
+    } else if (difficulty == MinesweeperDifficulty.harder) {
+      setState(() {
+        currentDifficulty = MinesweeperDifficulty.harder;
+      });
+    } else if (difficulty == MinesweeperDifficulty.wtf) {
+      setState(() {
+        currentDifficulty = MinesweeperDifficulty.wtf;
+      });
+    }
+
+    if (difficulty != oldDifficulty) {
+      setState(() {
+        oldDifficulty = difficulty as MinesweeperDifficulty;
+        resetGame = true;
+        timerStatus = 'reset';
+      });
+      Timer(const Duration(milliseconds: 100), () {
+        setState(() {
+          resetGame = false;
+          timerStatus = '';
+        });
+      });
+    }
+  }
+
+  void checkTimer(bool _showTimer) {
+    if (_showTimer != showTimer) {
+      setState(() {
+        resetGame = true;
+      });
+      Timer(const Duration(milliseconds: 100), () {
+        setState(() {
+          resetGame = false;
+        });
+      });
+    }
+  }
+
+  void handleTimer() {
+    setState(() {
+      timerStatus = 'reset';
+    });
+    Timer(const Duration(milliseconds: 100), () {
+      setState(() {
+        timerStatus = '';
+      });
+    });
   }
 
   @override
@@ -38,12 +90,40 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
     return ScreenWrapper(
       title: 'Minesweeper',
       infoTitle: 'Minesweeper',
-      infoDetails: 'Good luck, have fun!',
+      infoDetails:
+          'Press to pop a mine. Long press to set a flag. Good luck, have fun!',
       backgroundOverride: Colors.grey,
-      content: const GameActivity(),
+      content: GameActivity(
+        difficulty: currentDifficulty,
+        resetGame: resetGame,
+        timer: showTimer,
+        timerStatus: timerStatus,
+        timerReset: () {
+          handleTimer();
+        },
+      ),
+      screenFunction: (String _string) {
+        if (_string == 'drawerOpen') {
+          setState(() {
+            timerStatus = 'pause';
+          });
+        } else if (_string == 'drawerClose') {
+          setState(() {
+            timerStatus = 'resume';
+          });
+        } else if (_string == 'drawerNavigate') {
+          setState(() {
+            timerStatus = 'stop';
+          });
+        }
+        Timer(const Duration(milliseconds: 100), () {
+          setState(() {
+            timerStatus = '';
+          });
+        });
+      },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.tertiary,
-        // shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -54,18 +134,24 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                 color: Colors.white,
                 size: 30,
               ),
-              onPressed: () => showScreenInfo(
-                context,
-                'Coming Soon',
-                'You\'ll be able to adjust the difficulty and time yourself soon!',
-              ),
-              // onPressed: () async {
-              //   // final result = await Navigator.pushNamed(
-              //   //   context,
-              //   //   MSSettingsScreen.id,
-              //   // );
-              //   // setDifficulty(result.toString());
-              // },
+              onPressed: () async {
+                final result = await Navigator.pushNamed(
+                  context,
+                  MSSettingsScreen.id,
+                  arguments: {
+                    'difficulty': currentDifficulty,
+                    'timer': showTimer,
+                  },
+                );
+                result as Map;
+                setDifficulty(result['difficulty']);
+                checkTimer(result['timer']);
+                setState(() {
+                  currentDifficulty =
+                      result['difficulty'] as MinesweeperDifficulty;
+                  showTimer = result['timer'];
+                });
+              },
             ),
             IconButton(
               tooltip: 'Share',
