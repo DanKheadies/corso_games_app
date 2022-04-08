@@ -28,7 +28,7 @@ class GamesScreen extends StatelessWidget {
     // print('h3: $height3');
     return ScreenWrapper(
       title: 'Games',
-      infoTitle: 'Corso Games',
+      infoTitle: 'Corso Rules',
       infoDetails:
           'Enjoy the games, and if you have a problem, send an email to support@holisticgaming.com. \n\nGood luck, have fun!',
       backgroundOverride: Colors.transparent,
