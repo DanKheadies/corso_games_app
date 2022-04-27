@@ -10,7 +10,10 @@ A collection of Flutter games. GLHF!
 > via Deven Joshi
 
 > [Timer](https://github.com/realdiganta/Flutter-Stopwatch)
-> Diganta Kalita
+> via Diganta Kalita
+
+> [Chrome's Dino Run](https://github.com/AlabasterAxe/dino_game)
+> via Matthew Keller
 
 
 ### Special Thanks:

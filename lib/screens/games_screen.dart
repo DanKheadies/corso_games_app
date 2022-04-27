@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:corso_games_app/screens/colors_slide/colors_slide_screen.dart';
-import 'package:corso_games_app/screens/dino_run_screen.dart';
+import 'package:corso_games_app/screens/dino_dash_screen.dart';
 import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
 import 'package:corso_games_app/screens/nonograms_screen.dart';
 import 'package:corso_games_app/screens/slide_to_slide_screen.dart';
@@ -48,7 +48,7 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             icon: Icons.run_circle,
-            title: 'Dino Run',
+            title: 'Dino Dash',
             onPress: () => Navigator.pushNamed(
               context,
               DinoRunScreen.id,

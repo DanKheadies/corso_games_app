@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:corso_games_app/screens/colors_slide/colors_slide_screen.dart';
-import 'package:corso_games_app/screens/dino_run_screen.dart';
+import 'package:corso_games_app/screens/dino_dash_screen.dart';
 import 'package:corso_games_app/screens/games_screen.dart';
 import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
 import 'package:corso_games_app/screens/nonograms_screen.dart';
@@ -96,7 +96,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
-              'Dino Run',
+              'Dino Dash',
               style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,

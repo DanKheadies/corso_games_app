@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/colors_slide/colors_slide_screen.dart';
 import './screens/colors_slide/cs_settings_screen.dart';
-import './screens/dino_run_screen.dart';
+import 'screens/dino_dash_screen.dart';
 import './screens/games_screen.dart';
 import 'screens/minesweeper/minesweeper_screen.dart';
 import './screens/minesweeper/ms_settings_screen.dart';
