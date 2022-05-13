@@ -6,6 +6,7 @@ import 'package:corso_games_app/screens/games_screen.dart';
 import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
 import 'package:corso_games_app/screens/nonograms_screen.dart';
 import 'package:corso_games_app/screens/slide_to_slide_screen.dart';
+import 'package:corso_games_app/screens/wordle_screen.dart';
 
 class GamesDrawer extends StatefulWidget {
   const GamesDrawer({
@@ -155,6 +156,22 @@ class _GamesDrawerState extends State<GamesDrawer> {
               Navigator.pushNamed(
                 context,
                 SlideToSlideScreen.id,
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Wordle',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.pushNamed(
+                context,
+                WordleScreen.id,
               );
             },
           ),

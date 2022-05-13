@@ -15,6 +15,10 @@ A collection of Flutter games. GLHF!
 > [Chrome's Dino Run](https://github.com/AlabasterAxe/dino_game)
 > via Matthew Keller
 
+> [Timer Bloc](https://github.com/minhho89/flutter_bloc_countdown_app)
+> via Minh Ho
+
+
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)

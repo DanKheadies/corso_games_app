@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'screens/colors_slide/colors_slide_screen.dart';
-import './screens/colors_slide/cs_settings_screen.dart';
-import 'screens/dino_dash_screen.dart';
-import './screens/games_screen.dart';
-import 'screens/minesweeper/minesweeper_screen.dart';
-import './screens/minesweeper/ms_settings_screen.dart';
-import './screens/nonograms_screen.dart';
-import './screens/slide_to_slide_screen.dart';
-import './screens/splash_screen.dart';
+import 'package:corso_games_app/blocs/timer/timer_bloc.dart';
+import 'package:corso_games_app/models/ticker.dart';
+import 'package:corso_games_app/screens/colors_slide/colors_slide_screen.dart';
+import 'package:corso_games_app/screens/colors_slide/cs_settings_screen.dart';
+import 'package:corso_games_app/screens/dino_dash_screen.dart';
+import 'package:corso_games_app/screens/games_screen.dart';
+import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
+import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
+import 'package:corso_games_app/screens/nonograms_screen.dart';
+import 'package:corso_games_app/screens/slide_to_slide_screen.dart';
+import 'package:corso_games_app/screens/splash_screen.dart';
+import 'package:corso_games_app/screens/wordle_screen.dart';
 
 void main() {
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -21,27 +25,31 @@ class CorsoGames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color.fromARGB(255, 192, 65, 111),
-          secondary: Colors.amber[50],
-          tertiary: const Color.fromARGB(255, 245, 125, 129),
+    return BlocProvider(
+      create: (context) => TimerBloc(ticker: const Ticker()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: const Color.fromARGB(255, 192, 65, 111),
+            secondary: Colors.amber[50],
+            tertiary: const Color.fromARGB(255, 245, 125, 129),
+          ),
         ),
+        initialRoute: SplashScreen.id,
+        routes: {
+          ColorsSlideScreen.id: (context) => const ColorsSlideScreen(),
+          CSSettingsScreen.id: (context) => const CSSettingsScreen(),
+          DinoRunScreen.id: (context) => const DinoRunScreen(),
+          GamesScreen.id: (context) => const GamesScreen(),
+          MinesweeperScreen.id: (context) => const MinesweeperScreen(),
+          MSSettingsScreen.id: (context) => const MSSettingsScreen(),
+          NonogramsScreen.id: (context) => const NonogramsScreen(),
+          SlideToSlideScreen.id: (context) => const SlideToSlideScreen(),
+          SplashScreen.id: (context) => const SplashScreen(),
+          WordleScreen.id: (context) => const WordleScreen(),
+        },
       ),
-      initialRoute: SplashScreen.id,
-      routes: {
-        ColorsSlideScreen.id: (context) => const ColorsSlideScreen(),
-        CSSettingsScreen.id: (context) => const CSSettingsScreen(),
-        DinoRunScreen.id: (context) => const DinoRunScreen(),
-        GamesScreen.id: (context) => const GamesScreen(),
-        MinesweeperScreen.id: (context) => const MinesweeperScreen(),
-        MSSettingsScreen.id: (context) => const MSSettingsScreen(),
-        NonogramsScreen.id: (context) => const NonogramsScreen(),
-        SlideToSlideScreen.id: (context) => const SlideToSlideScreen(),
-        SplashScreen.id: (context) => const SplashScreen(),
-      },
     );
   }
 }
