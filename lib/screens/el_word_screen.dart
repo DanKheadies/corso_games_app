@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:corso_games_app/widgets/coming_soon.dart';
 import 'package:corso_games_app/widgets/screen_wrapper.dart';
 
-class WordleScreen extends StatelessWidget {
-  static const String id = 'worlde';
+class ElWordScreen extends StatelessWidget {
+  static const String id = 'el-word';
 
-  const WordleScreen({Key? key}) : super(key: key);
+  const ElWordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      title: 'Wordle',
-      infoTitle: 'Wordle',
+      title: 'El Word',
+      infoTitle: 'El Word',
       infoDetails: 'Good luck, have fun!',
       backgroundOverride: Colors.transparent,
       content: const ComingSoon(),

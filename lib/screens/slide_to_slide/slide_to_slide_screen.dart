@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/widgets/coming_soon.dart';
+import 'package:corso_games_app/screens/slide_to_slide/puzzle_screen.dart';
 import 'package:corso_games_app/widgets/screen_wrapper.dart';
 
 class SlideToSlideScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class SlideToSlideScreen extends StatelessWidget {
       infoTitle: 'Slide to Slide',
       infoDetails: 'Good luck, have fun!',
       backgroundOverride: Colors.transparent,
-      content: const ComingSoon(),
+      content: const PuzzleScreen(),
       screenFunction: (String _string) {},
       bottomBar: const BottomAppBar(),
     );

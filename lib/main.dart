@@ -7,13 +7,14 @@ import 'package:corso_games_app/models/ticker.dart';
 import 'package:corso_games_app/screens/colors_slide/colors_slide_screen.dart';
 import 'package:corso_games_app/screens/colors_slide/cs_settings_screen.dart';
 import 'package:corso_games_app/screens/dino_dash_screen.dart';
+import 'package:corso_games_app/screens/el_word_screen.dart';
 import 'package:corso_games_app/screens/games_screen.dart';
 import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
 import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
 import 'package:corso_games_app/screens/nonograms_screen.dart';
-import 'package:corso_games_app/screens/slide_to_slide_screen.dart';
+import 'package:corso_games_app/screens/slide_to_slide/slide_to_slide_screen.dart';
 import 'package:corso_games_app/screens/splash_screen.dart';
-import 'package:corso_games_app/screens/wordle_screen.dart';
+import 'package:corso_games_app/screens/tic_tac_toe_screen.dart';
 
 void main() {
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -41,13 +42,14 @@ class CorsoGames extends StatelessWidget {
           ColorsSlideScreen.id: (context) => const ColorsSlideScreen(),
           CSSettingsScreen.id: (context) => const CSSettingsScreen(),
           DinoRunScreen.id: (context) => const DinoRunScreen(),
+          ElWordScreen.id: (context) => const ElWordScreen(),
           GamesScreen.id: (context) => const GamesScreen(),
           MinesweeperScreen.id: (context) => const MinesweeperScreen(),
           MSSettingsScreen.id: (context) => const MSSettingsScreen(),
           NonogramsScreen.id: (context) => const NonogramsScreen(),
           SlideToSlideScreen.id: (context) => const SlideToSlideScreen(),
           SplashScreen.id: (context) => const SplashScreen(),
-          WordleScreen.id: (context) => const WordleScreen(),
+          TicTacToeScreen.id: (context) => const TicTacToeScreen(),
         },
       ),
     );

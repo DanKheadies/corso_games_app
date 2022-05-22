@@ -18,7 +18,8 @@ A collection of Flutter games. GLHF!
 > [Timer Bloc](https://github.com/minhho89/flutter_bloc_countdown_app)
 > via Minh Ho
 
-
+> [Slide Puzzle](https://github.com/kevmoo/slide_puzzle)
+> via Kevin Moore, et al.
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)
