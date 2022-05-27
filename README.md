@@ -21,6 +21,9 @@ A collection of Flutter games. GLHF!
 > [Slide Puzzle](https://github.com/kevmoo/slide_puzzle)
 > via Kevin Moore, et al.
 
+> [Wordle](https://github.com/maxonflutter/flutter_wordle)
+> via Massimo Del Pezzo
+
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)
 - [Flutter Mapp](https://www.youtube.com/c/FlutterMapp)
