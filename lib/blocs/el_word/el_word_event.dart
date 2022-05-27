@@ -14,15 +14,17 @@ class UpdateGuess extends ElWordEvent {
   final Word word;
   final bool isBackArrow;
   final bool isCheckBtn;
+  final bool isNormalBtn;
 
   const UpdateGuess({
     required this.word,
     this.isBackArrow = false,
     this.isCheckBtn = false,
+    this.isNormalBtn = false,
   });
 
   @override
-  List<Object> get props => [word, isBackArrow, isCheckBtn];
+  List<Object> get props => [word, isBackArrow, isCheckBtn, isNormalBtn];
 }
 
 class ValidateGuess extends ElWordEvent {

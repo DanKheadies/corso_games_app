@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/el_word/el_word_bloc.dart';
 import 'package:corso_games_app/models/el_word/letter.dart';
+// import 'package:corso_games_app/models/el_word/word.dart';
 import 'package:corso_games_app/widgets/el_word/custom_key.dart';
 
 class CustomKeyboard extends StatelessWidget {
@@ -13,6 +14,9 @@ class CustomKeyboard extends StatelessWidget {
     List<String> firstRow = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
     List<String> secondRow = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
     List<String> thirdRow = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
     return BlocBuilder<ElWordBloc, ElWordState>(
       builder: (context, state) {
@@ -41,27 +45,30 @@ class CustomKeyboard extends StatelessWidget {
                       text: letter,
                       evaluation: letters,
                       onTap: () {
-                        // print(state.letterCount);
-                        // if (state.letterCount >= 5) print('yolo');
-                        // if (missingLetters.contains(letter) ||
-                        //     state.letterCount >= 5) return;
                         if (missingLetters.contains(letter)) return;
 
                         var wordIndex = (state.letterCount / 5).floor();
-                        var letterIndex = state.letterCount % 5;
                         var letters = state.guesses[wordIndex].letters;
+                        var letterIndex = state.letterCount % 5;
 
-                        letters[letterIndex] = Letter(
-                          id: state.letterCount,
-                          letter: letter,
-                          evaluation: Evaluation.pending,
-                        );
+                        if (state.letterCount % 5 != 0 ||
+                            state.letterCount / 5 == state.letterCount % 5 ||
+                            state.isNewWord) {
+                          letters[letterIndex] = Letter(
+                            id: state.letterCount,
+                            letter: letter,
+                            evaluation: Evaluation.pending,
+                          );
+                        }
 
                         var updateWord =
                             state.guesses[wordIndex].copyWith(letters: letters);
 
                         context.read<ElWordBloc>().add(
-                              UpdateGuess(word: updateWord),
+                              UpdateGuess(
+                                word: updateWord,
+                                isNormalBtn: true,
+                              ),
                             );
                       },
                     ),
@@ -82,17 +89,24 @@ class CustomKeyboard extends StatelessWidget {
                         var letterIndex = state.letterCount % 5;
                         var letters = state.guesses[wordIndex].letters;
 
-                        letters[letterIndex] = Letter(
-                          id: state.letterCount,
-                          letter: letter,
-                          evaluation: Evaluation.pending,
-                        );
+                        if (state.letterCount % 5 != 0 ||
+                            state.letterCount / 5 == state.letterCount % 5 ||
+                            state.isNewWord) {
+                          letters[letterIndex] = Letter(
+                            id: state.letterCount,
+                            letter: letter,
+                            evaluation: Evaluation.pending,
+                          );
+                        }
 
                         var updateWord =
                             state.guesses[wordIndex].copyWith(letters: letters);
 
                         context.read<ElWordBloc>().add(
-                              UpdateGuess(word: updateWord),
+                              UpdateGuess(
+                                word: updateWord,
+                                isNormalBtn: true,
+                              ),
                             );
                       },
                     ),
@@ -117,30 +131,39 @@ class CustomKeyboard extends StatelessWidget {
                         var letterIndex = state.letterCount % 5;
                         var letters = state.guesses[wordIndex].letters;
 
-                        letters[letterIndex] = Letter(
-                          id: state.letterCount,
-                          letter: letter,
-                          evaluation: Evaluation.pending,
-                        );
+                        if (state.letterCount % 5 != 0 ||
+                            state.letterCount / 5 == state.letterCount % 5 ||
+                            state.isNewWord) {
+                          letters[letterIndex] = Letter(
+                            id: state.letterCount,
+                            letter: letter,
+                            evaluation: Evaluation.pending,
+                          );
+                        }
 
                         var updateWord =
                             state.guesses[wordIndex].copyWith(letters: letters);
 
                         context.read<ElWordBloc>().add(
-                              UpdateGuess(word: updateWord),
+                              UpdateGuess(
+                                word: updateWord,
+                                isNormalBtn: true,
+                              ),
                             );
                       },
                     ),
                   ),
                   Container(
-                    width: 55,
-                    height: 25,
+                    width: width * .15,
+                    height: height * .05,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.transparent,
                       boxShadow: [
                         BoxShadow(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: !state.isNewWord && state.letterCount != 0
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.grey[800] as Color,
                           blurRadius: 1,
                           spreadRadius: 1,
                         ),
@@ -149,11 +172,14 @@ class CustomKeyboard extends StatelessWidget {
                     margin: const EdgeInsets.all(4),
                     child: InkWell(
                       onTap: () {
-                        // if (state.letterCount % 5 != 0 ||
-                        //     state.letterCount == 5) {
-                        if (state.letterCount % 5 != 0) {
-                          print('mmeeeeee');
-                          var wordIndex = (state.letterCount / 5).floor();
+                        if (!state.isNewWord && state.letterCount != 0) {
+                          var wordIndex = 0;
+                          if (state.letterCount % 5 == 0) {
+                            wordIndex = (state.letterCount / 5).floor() - 1;
+                          } else {
+                            wordIndex = (state.letterCount / 5).floor();
+                          }
+
                           var letterIndex = (state.letterCount - 1) % 5;
                           var letters = state.guesses[wordIndex].letters;
 
@@ -175,8 +201,8 @@ class CustomKeyboard extends StatelessWidget {
                         child: Text(
                           'Erase',
                           style: TextStyle(
-                            // fontSize: 18,
-                            fontSize: 14,
+                            // fontSize: 14,
+                            fontSize: height * .0175,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
@@ -191,14 +217,20 @@ class CustomKeyboard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                      width: 80,
-                      height: 40,
+                      // width: 80,
+                      // height: 40,
+                      width: width * .333,
+                      height: height * .05,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.transparent,
                         boxShadow: [
                           BoxShadow(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: state.letterCount % 5 == 0 &&
+                                    !state.isNewWord &&
+                                    state.letterCount != 0
+                                ? Theme.of(context).colorScheme.primary
+                                : Colors.grey[800] as Color,
                             blurRadius: 1,
                             spreadRadius: 1,
                           ),
@@ -207,16 +239,11 @@ class CustomKeyboard extends StatelessWidget {
                       margin: const EdgeInsets.all(4),
                       child: InkWell(
                         onTap: () {
-                          print('check');
-                          print(state.letterCount);
-                          if (state.letterCount % 5 == 0) {
-                            print('kk');
-                            var wordIndex = (state.letterCount / 5).floor();
-                            // var letterIndex = (state.letterCount - 1) % 5;
+                          if (state.letterCount % 5 == 0 &&
+                              !state.isNewWord &&
+                              state.letterCount != 0) {
+                            var wordIndex = (state.letterCount / 5).floor() - 1;
                             var letters = state.guesses[wordIndex].letters;
-
-                            // letters.removeAt(letterIndex);
-                            // letters.add(null);
 
                             var updatedWord = state.guesses[wordIndex]
                                 .copyWith(letters: letters);
@@ -234,7 +261,8 @@ class CustomKeyboard extends StatelessWidget {
                             'Check',
                             style: TextStyle(
                               // fontSize: 18,
-                              fontSize: 14,
+                              // fontSize: 14,
+                              fontSize: height * .0175,
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                           ),

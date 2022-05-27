@@ -15,6 +15,7 @@ class ElWordLoaded extends ElWordState {
   final List<String> dictionary;
   final List<Word> guesses;
   final int letterCount;
+  final bool isNewWord;
   final bool isNotInDictionary;
 
   const ElWordLoaded({
@@ -22,6 +23,7 @@ class ElWordLoaded extends ElWordState {
     required this.dictionary,
     required this.guesses,
     this.letterCount = 0,
+    this.isNewWord = false,
     this.isNotInDictionary = false,
   });
 
@@ -31,6 +33,7 @@ class ElWordLoaded extends ElWordState {
         dictionary,
         guesses,
         letterCount,
+        isNewWord,
         isNotInDictionary,
       ];
 }

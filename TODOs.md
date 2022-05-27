@@ -5,11 +5,16 @@ A list of TODOs to improve Corso Games for all.
 1. Overall
     1. Accounts
     2. Aspect ratio
-2. El Word
-    1. Input key size / spacing
-    2. Play again after winning
-    3. Showing word in Snackbar (wrong guess)
-    4. Using a random word
+    3. BLoC timers for all games
+    4. High Score
+2. Dino Dash
+    1. Restarting bug
+3. Minesweeper
+    1. Scrollable area vs calculation
+4. Nonograms
+5. Tic Tac Toe
+6. Slide to Slide
+    1. Winning and showing
 
 ---
 

@@ -6,18 +6,19 @@ import 'package:corso_games_app/models/el_word/letter.dart';
 import 'package:corso_games_app/models/el_word/word.dart';
 import 'package:corso_games_app/widgets/el_word/custom_board_tile.dart';
 import 'package:corso_games_app/widgets/el_word/custom_keyboard.dart';
-// import 'package:corso_games_app/widgets/screen_wrapper.dart';
 
 class ElGameScreen extends StatelessWidget {
   static const String id = 'el-game';
 
   const ElGameScreen({Key? key}) : super(key: key);
 
-  Widget _buildBoard(ElWordLoaded state) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      height: 400,
-      width: 300,
+  Widget _buildBoard(BuildContext context, ElWordLoaded state) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return SizedBox(
+      height: height * .475,
+      width: width > 620 ? width * .5 : width * .8,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 5,
@@ -44,6 +45,9 @@ class ElGameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return BlocConsumer<ElWordBloc, ElWordState>(
       listenWhen: (previous, current) {
         if (current is ElWordLoaded) {
@@ -52,11 +56,10 @@ class ElGameScreen extends StatelessWidget {
         return false;
       },
       listener: (context, state) {
-        print(state.props[2]);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Word is not in the dictionary'),
-            duration: Duration(seconds: 2),
+            content: Text('That word is not in the Corso dictionary.'),
+            duration: Duration(seconds: 3),
           ),
         );
       },
@@ -74,8 +77,7 @@ class ElGameScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildBoard(state),
-              const SizedBox(height: 10),
+              _buildBoard(context, state),
               const CustomKeyboard(),
             ],
           );
@@ -90,30 +92,33 @@ class ElGameScreen extends StatelessWidget {
                   Text(
                     'Congrats, you won!',
                     style: TextStyle(
-                      fontSize: 32,
+                      // fontSize: 32,
+                      fontSize: height * .04,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
-                  const SizedBox(height: 35),
+                  SizedBox(height: height * 0.05),
                   Text(
                     'The word was ',
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: height * .04,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: height * 0.025),
                   Text(
                     state.solution,
                     style: TextStyle(
-                      fontSize: 42,
+                      // fontSize: 42,
+                      fontSize: height * .055,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  // const SizedBox(height: 50),
+                  SizedBox(height: height * 0.05),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(15)),
@@ -121,50 +126,15 @@ class ElGameScreen extends StatelessWidget {
                       'Play Again',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
-                        fontSize: 18,
+                        // fontSize: 18,
+                        fontSize: height * 0.025,
                       ),
                     ),
                     onPressed: () {
                       Word.resetGuesses();
                       context.read<ElWordBloc>().add(
                             LoadGame(),
-                            // const LoadGame(
-                            //   solution: Word(
-                            //     letters: <Letter>[
-                            //       Letter(
-                            //           letter: 'G',
-                            //           evaluation: Evaluation.correct),
-                            //       Letter(
-                            //           letter: 'A',
-                            //           evaluation: Evaluation.correct),
-                            //       Letter(
-                            //           letter: 'M',
-                            //           evaluation: Evaluation.correct),
-                            //       Letter(
-                            //           letter: 'E',
-                            //           evaluation: Evaluation.correct),
-                            //       Letter(
-                            //           letter: 'S',
-                            //           evaluation: Evaluation.correct),
-                            //     ],
-                            //   ),
-                            // ),
                           );
-
-                      // (context) => ElWordBloc()
-                      //   ..add(
-                      //     const LoadGame(
-                      //       solution: Word(
-                      //         letters: <Letter>[
-                      //           Letter(letter: 'G', evaluation: Evaluation.correct),
-                      //           Letter(letter: 'A', evaluation: Evaluation.correct),
-                      //           Letter(letter: 'M', evaluation: Evaluation.correct),
-                      //           Letter(letter: 'E', evaluation: Evaluation.correct),
-                      //           Letter(letter: 'S', evaluation: Evaluation.correct),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
                     },
                   ),
                 ],

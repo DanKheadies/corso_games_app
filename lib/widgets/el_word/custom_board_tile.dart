@@ -16,10 +16,13 @@ class CustomBoardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     // Set the color of the Board Tile
     Color color = (letterCount > letterIndex)
         // If the eval is equal to pending, no color.
-        ? letters[letterIndex]!.evaluation == Evaluation.pending
+        ? letters[letterIndex]!.evaluation == Evaluation.pending ||
+                letters[letterIndex]!.evaluation == null
             ? Colors.transparent
             // If the letter is correct, we use the primary red/pink.
             : letters[letterIndex]!.evaluation == Evaluation.correct
@@ -56,7 +59,8 @@ class CustomBoardTile extends StatelessWidget {
                 letters[letterIndex]!.letter,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 20,
+                  // fontSize: 20,
+                  fontSize: height * .025,
                 ),
               )
             : const Text(''),

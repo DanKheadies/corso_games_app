@@ -56,7 +56,8 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
       ],
     );
 
-    var dictionary = await rootBundle.loadString('assets/el_word/words.txt');
+    var dictionary =
+        await rootBundle.loadString('assets/el_word/words_full.txt');
 
     emit(
       ElWordLoaded(
@@ -71,27 +72,33 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
     UpdateGuess event,
     Emitter<ElWordState> emit,
   ) {
-    print('update');
     final state = this.state;
     if (state is ElWordLoaded) {
-      print('yea');
       int letterCount;
-      // if (!event.isCheckBtn) {
-      //   print('not check');
-      switch (event.isBackArrow) {
-        case true:
-          letterCount = state.letterCount - 1;
-          break;
-        default:
-          letterCount = state.letterCount + 1;
-      }
-      // } else {
-      //   letterCount = 5;
-      // }
 
       List<Word> guesses = (state.guesses.map((word) {
         return word.id == event.word.id ? event.word : word;
       })).toList();
+
+      var prevWordIndex = (state.letterCount / 5).floor() - 1;
+
+      if (prevWordIndex >= 0) {
+        if (guesses[prevWordIndex].letters[0]?.evaluation ==
+                Evaluation.pending &&
+            guesses[prevWordIndex].letters[4] != null &&
+            !event.isCheckBtn &&
+            !event.isBackArrow) {
+          return;
+        }
+      }
+
+      if (event.isBackArrow) {
+        letterCount = state.letterCount - 1;
+      } else if (event.isCheckBtn) {
+        letterCount = state.letterCount;
+      } else {
+        letterCount = state.letterCount + 1;
+      }
 
       emit(
         ElWordLoaded(
@@ -99,12 +106,11 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
           dictionary: state.dictionary,
           guesses: guesses,
           letterCount: letterCount,
+          isNewWord: letterCount % 5 == 0 && event.isBackArrow,
         ),
       );
 
-      if (letterCount % 5 == 0 && !event.isBackArrow) {
-        // if (letterCount % 5 == 0 && !event.isBackArrow && event.isCheckBtn) {
-        print('do the thing');
+      if (event.isCheckBtn) {
         if (state.dictionary.contains(
           event.word.letters
               .map((letter) => letter!.letter)
@@ -115,19 +121,14 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
             ValidateGuess(word: event.word),
           );
         } else {
-          List<Word> guesses = (state.guesses.map(
-            (word) {
-              return word.id == event.word.id
-                  ? Word(
-                      id: event.word.id,
-                      letters: List.generate(
-                        5,
-                        (index) => null,
-                      ),
-                    )
-                  : word;
-            },
-          )).toList();
+          List<Word> guesses = (state.guesses.map((word) {
+            return word.id == event.word.id
+                ? Word(
+                    id: event.word.id,
+                    letters: List.generate(5, (index) => null),
+                  )
+                : word;
+          })).toList();
 
           emit(
             ElWordLoaded(
@@ -135,6 +136,7 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
               dictionary: state.dictionary,
               guesses: guesses,
               letterCount: letterCount - 5,
+              isNewWord: true,
               isNotInDictionary: true,
             ),
           );
@@ -159,11 +161,12 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
       var evaluation = [];
 
       if (listEquals(solution, guess)) {
-        emit(ElWordSolved(solution: solution.join("")));
+        emit(
+          ElWordSolved(solution: solution.join("")),
+        );
       } else {
         guess.asMap().forEach(
           (index, value) {
-            // if (identical(guess[index], solution[index])) {
             if (guess[index] == solution[index]) {
               evaluation.add(Evaluation.correct);
               letters[index] = letters[index]!.copyWith(
@@ -182,7 +185,6 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
             }
           },
         );
-
         List<Word> validatedGuesses = state.guesses.map((guess) {
           return guess.id == event.word.id ? event.word : guess;
         }).toList();
@@ -193,6 +195,7 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
             solution: state.solution,
             guesses: validatedGuesses,
             letterCount: state.letterCount,
+            isNewWord: true,
           ),
         );
       }

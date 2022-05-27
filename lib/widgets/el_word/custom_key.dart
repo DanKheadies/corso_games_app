@@ -16,6 +16,9 @@ class CustomKey extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     List<Letter?> letterEvaluation =
         evaluation.where((letter) => letter!.letter == text).toList();
 
@@ -37,8 +40,10 @@ class CustomKey extends StatelessWidget {
     return Container(
       // width: 45,
       // height: 45,
-      width: 25,
-      height: 25,
+      // width: 25,
+      // height: 25,
+      width: width * .075,
+      height: height * .05,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: color,
@@ -58,7 +63,8 @@ class CustomKey extends StatelessWidget {
             text,
             style: TextStyle(
               // fontSize: 18,
-              fontSize: 14,
+              // fontSize: 14,
+              fontSize: height * .0175,
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
