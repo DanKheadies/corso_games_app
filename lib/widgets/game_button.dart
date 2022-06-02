@@ -19,38 +19,30 @@ class GameButton extends StatefulWidget {
 class _GameButtonState extends State<GameButton> {
   bool isPressed = false;
 
-  void derp() {
-    setState(() {
-      isPressed = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     return GestureDetector(
       onTapDown: (details) => {
         setState(() {
           isPressed = true;
         }),
       },
-      // onTapUp: (details) => {
-      //   setState(() {
-      //     isPressed = false;
-      //   }),
-      // },
       child: NeumorphicButton(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Icon(
               widget.icon,
-              size: 100,
+              size: 0.1 * height,
               color: Theme.of(context).colorScheme.primary,
             ),
             Text(
               widget.title,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
+                fontSize: 0.01875 * height,
               ),
             ),
           ],

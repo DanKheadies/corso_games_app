@@ -12,8 +12,7 @@ A list of TODOs to improve Corso Games for all.
 3. Minesweeper
     1. Scrollable area vs calculation
 4. Nonograms
-5. Tic Tac Toe
-6. Slide to Slide
+5. Slide to Slide
     1. Winning and showing
 
 ---
