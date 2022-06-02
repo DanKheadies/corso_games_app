@@ -24,6 +24,10 @@ A collection of Flutter games. GLHF!
 > [Wordle](https://github.com/maxonflutter/flutter_wordle)
 > via Massimo Del Pezzo
 
+> [Tic Tac Toe](https://github.com/jakubjaniec/tictactoe)
+> via Jakub Janiec
+
+
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)
 - [Flutter Mapp](https://www.youtube.com/c/FlutterMapp)

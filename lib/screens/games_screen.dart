@@ -6,7 +6,7 @@ import 'package:corso_games_app/screens/el_word/el_word_screen.dart';
 import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
 import 'package:corso_games_app/screens/nonograms_screen.dart';
 import 'package:corso_games_app/screens/slide_to_slide/slide_to_slide_screen.dart';
-import 'package:corso_games_app/screens/tic_tac_toe_screen.dart';
+import 'package:corso_games_app/screens/tic_tac_toe/tic_tac_toe_screen.dart';
 import 'package:corso_games_app/widgets/game_button.dart';
 import 'package:corso_games_app/widgets/screen_wrapper.dart';
 

@@ -14,7 +14,7 @@ import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
 import 'package:corso_games_app/screens/nonograms_screen.dart';
 import 'package:corso_games_app/screens/slide_to_slide/slide_to_slide_screen.dart';
 import 'package:corso_games_app/screens/splash_screen.dart';
-import 'package:corso_games_app/screens/tic_tac_toe_screen.dart';
+import 'package:corso_games_app/screens/tic_tac_toe/tic_tac_toe_screen.dart';
 
 void main() {
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
