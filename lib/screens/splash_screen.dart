@@ -23,12 +23,13 @@ class _SplashScreenState extends State<SplashScreen>
     parent: _controller,
     curve: Curves.fastOutSlowIn,
   );
+  late Timer timer;
 
   @override
   void initState() {
     super.initState();
 
-    Timer(
+    timer = Timer(
       const Duration(seconds: 4),
       () => Navigator.pushNamed(
         context,
@@ -39,21 +40,30 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.amber[50],
-      body: Center(
-        child: ScaleTransition(
-          scale: _animation,
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Image(
-              image: AssetImage('assets/images/main/corso-games-1.png'),
+      body: InkWell(
+        onTap: () {
+          timer.cancel();
+          Navigator.pushNamed(
+            context,
+            GamesScreen.id,
+          );
+        },
+        child: Center(
+          child: ScaleTransition(
+            scale: _animation,
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Image(
+                image: AssetImage('assets/images/main/corso-games-1.png'),
+              ),
             ),
           ),
         ),
