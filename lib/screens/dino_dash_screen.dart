@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/timer/timer_bloc.dart';
-// import 'package:corso_games_app/models/ticker.dart';
 import 'package:corso_games_app/widgets/dino_dash/cactus.dart';
 import 'package:corso_games_app/widgets/dino_dash/cloud.dart';
 import 'package:corso_games_app/widgets/dino_dash/constants.dart';
@@ -277,7 +276,8 @@ class _DinoRunScreenState extends State<DinoRunScreen>
         return ScreenWrapper(
           title: 'Dino Dash',
           infoTitle: 'Dino Dash',
-          infoDetails: 'Good luck, have fun!',
+          infoDetails:
+              'Run for your life! If you die, you may come back. Or go to Heaven. Or to Hell.. Or the mantle?.. Don\'t die!',
           backgroundOverride: Colors.transparent,
           content: GestureDetector(
             behavior: HitTestBehavior.translucent,

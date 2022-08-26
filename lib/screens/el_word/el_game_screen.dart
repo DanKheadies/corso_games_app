@@ -46,7 +46,7 @@ class ElGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
 
     return BlocConsumer<ElWordBloc, ElWordState>(
       listenWhen: (previous, current) {
@@ -72,7 +72,6 @@ class ElGameScreen extends StatelessWidget {
           );
         }
         if (state is ElWordLoaded) {
-          // print(state.solution);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -80,6 +79,66 @@ class ElGameScreen extends StatelessWidget {
               _buildBoard(context, state),
               const CustomKeyboard(),
             ],
+          );
+        }
+        if (state is ElWordWrong) {
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Sorry Charlie..',
+                    style: TextStyle(
+                      // fontSize: 32,
+                      fontSize: height * .04,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                  SizedBox(height: height * 0.05),
+                  Text(
+                    'The word was ',
+                    style: TextStyle(
+                      fontSize: height * .04,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                  SizedBox(height: height * 0.025),
+                  Text(
+                    state.solution,
+                    style: TextStyle(
+                      // fontSize: 42,
+                      fontSize: height * .055,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  // const SizedBox(height: 50),
+                  SizedBox(height: height * 0.05),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(15)),
+                    child: Text(
+                      'Play Again',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        // fontSize: 18,
+                        fontSize: height * 0.025,
+                      ),
+                    ),
+                    onPressed: () {
+                      Word.resetGuesses();
+                      context.read<ElWordBloc>().add(
+                            LoadGame(),
+                          );
+                    },
+                  ),
+                ],
+              ),
+            ),
           );
         }
         if (state is ElWordSolved) {

@@ -13,7 +13,9 @@ class NonogramsScreen extends StatelessWidget {
     return ScreenWrapper(
       title: 'Nonograms',
       infoTitle: 'Nonograms',
-      infoDetails: 'Good luck, have fun!',
+      infoDetails:
+          'Soon you\'ll be able to maths the numbers to make shapes and art.',
+      button: 'Oh Boy',
       backgroundOverride: Colors.transparent,
       content: const ComingSoon(),
       screenFunction: (String _string) {},

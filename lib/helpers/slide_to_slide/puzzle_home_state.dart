@@ -105,7 +105,8 @@ class PuzzleHomeState extends State
                   child: Image(
                     image:
                         // AssetImage('assets/images/slide_to_slide/seattle.jpg'),
-                        AssetImage('assets/images/slide_to_slide/lure.jpg'),
+                        // AssetImage('assets/images/slide_to_slide/lure.jpg'),
+                        AssetImage('assets/images/slide_to_slide/space.jpg'),
                   ),
                 ),
               ),

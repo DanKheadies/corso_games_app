@@ -26,7 +26,8 @@ class _ElWordScreenState extends State<ElWordScreen> {
       child: ScreenWrapper(
         title: 'El Word',
         infoTitle: 'El Word',
-        infoDetails: 'Good luck, have fun!',
+        infoDetails:
+            'Try to guess the word. Green is good. Pink is close but no cigar. Try it in another spot. The other pink (maroon) await their fate. And if it\'s in a dark, unreachable void, it means it\'s dead. Leave it..',
         backgroundOverride: Colors.transparent,
         content: const ElGameScreen(),
         screenFunction: (String _string) {},
@@ -50,7 +51,6 @@ class _ElWordScreenState extends State<ElWordScreen> {
                 tooltip: 'Share',
                 icon: Icon(
                   Icons.ios_share_outlined,
-                  // color: Colors.white,
                   color: Theme.of(context).colorScheme.tertiary,
                   size: 30,
                 ),

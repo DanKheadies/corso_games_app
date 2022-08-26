@@ -68,11 +68,13 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
             onPressed: () => showScreenInfo(
               context,
               'Settings',
-              '''- Change your difficulty \n
+              '''
+- Change your difficulty \n
 - Show timer \n
-Heads up: changing any of the settings here will reset your game. \n\n
-                 
-GLHF!''',
+Heads up: changing any of the settings here will reset your game.''',
+              false,
+              TextAlign.left,
+              'GLHF',
             ),
           )
         ],

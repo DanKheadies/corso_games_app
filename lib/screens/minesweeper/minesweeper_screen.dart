@@ -90,8 +90,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
     return ScreenWrapper(
       title: 'Minesweeper',
       infoTitle: 'Minesweeper',
-      infoDetails:
-          'Press to pop a mine. Long press to set a flag. Good luck, have fun!',
+      infoDetails: 'Press to pop a mine. Long press to set a flag.',
       backgroundOverride: Colors.grey,
       content: GameActivity(
         difficulty: currentDifficulty,
@@ -164,6 +163,9 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                 context,
                 'Coming Soon',
                 'You\'ll be able to share your high score soon!',
+                false,
+                TextAlign.center,
+                'Oh Boy',
               ),
             ),
           ],

@@ -48,3 +48,14 @@ class ElWordSolved extends ElWordState {
   @override
   List<Object> get props => [solution];
 }
+
+class ElWordWrong extends ElWordState {
+  final String solution;
+
+  const ElWordWrong({
+    required this.solution,
+  });
+
+  @override
+  List<Object> get props => [solution];
+}

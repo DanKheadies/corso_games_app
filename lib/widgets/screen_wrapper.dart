@@ -9,6 +9,9 @@ class ScreenWrapper extends StatefulWidget {
     required this.title,
     required this.infoTitle,
     required this.infoDetails,
+    this.showGLHF,
+    this.alignment,
+    this.button,
     required this.backgroundOverride,
     required this.content,
     required this.screenFunction,
@@ -20,6 +23,9 @@ class ScreenWrapper extends StatefulWidget {
   final String title;
   final String infoTitle;
   final String infoDetails;
+  final bool? showGLHF;
+  final TextAlign? alignment;
+  final String? button;
   final Color backgroundOverride;
   final Widget content;
   final Function(String) screenFunction;
@@ -48,6 +54,9 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
               context,
               widget.infoTitle,
               widget.infoDetails,
+              widget.showGLHF ?? false,
+              widget.alignment ?? TextAlign.left,
+              'GLHF',
             ),
           )
         ],

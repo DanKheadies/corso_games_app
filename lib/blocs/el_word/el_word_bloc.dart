@@ -162,7 +162,11 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
 
       if (listEquals(solution, guess)) {
         emit(
-          ElWordSolved(solution: solution.join("")),
+          ElWordSolved(solution: solution.join('')),
+        );
+      } else if (guess.length >= 6) {
+        emit(
+          ElWordWrong(solution: solution.join('')),
         );
       } else {
         guess.asMap().forEach(

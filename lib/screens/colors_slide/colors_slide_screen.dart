@@ -124,7 +124,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       title: 'Colors Slide',
       infoTitle: 'Colors Slide',
       infoDetails:
-          'Like 2048 but with colors! Tap to spawn a new circle. Swipe up, down, left or right to move and merge circles. Merging circles of similar colors gives you points and changes their combined color.\n\nGood luck, have fun!',
+          'Like 2048 but with colors!! Tap to add aother circle. Swipe up, down, left or right to move and merge circles. Merging circles of similar colors gives you points and changes their combined color.',
       backgroundOverride: Colors.transparent,
       content: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,6 +213,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                 context,
                 'Coming Soon',
                 'You\'ll be able to share your high score soon!',
+                false,
+                TextAlign.center,
+                'Oh Boy',
               ),
             ),
           ],

@@ -17,7 +17,7 @@ class TicTacToeScreen extends StatelessWidget {
     return ScreenWrapper(
       title: 'Tic Tac Toe',
       infoTitle: 'Tic Tac Toe',
-      infoDetails: 'Good luck, have fun!',
+      infoDetails: 'Play with a friend. Or don\'t..',
       backgroundOverride: Colors.transparent,
       content: ChangeNotifierProvider(
         create: (context) => GameProvider(),
