@@ -164,7 +164,7 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
         emit(
           ElWordSolved(solution: solution.join('')),
         );
-      } else if (guess.length >= 6) {
+      } else if (state.guesses[5].letters[0] != null) {
         emit(
           ElWordWrong(solution: solution.join('')),
         );
