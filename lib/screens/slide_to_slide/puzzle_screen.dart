@@ -5,8 +5,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/models/slide_to_slide/puzzle_animator.dart';
-import 'package:corso_games_app/helpers/slide_to_slide/puzzle_home_state.dart';
+import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/helpers/helpers.dart';
 
 class PuzzleScreen extends StatelessWidget {
   final int rows, columns;

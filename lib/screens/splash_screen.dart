@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import './games_screen.dart';
+import 'package:corso_games_app/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String id = 'splash';

@@ -3,15 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/screens/colors_slide/cs_settings_screen.dart';
-import 'package:corso_games_app/widgets/colors_slide/controller.dart';
-import 'package:corso_games_app/widgets/colors_slide/game_board.dart';
-import 'package:corso_games_app/widgets/colors_slide/game_piece.dart';
-import 'package:corso_games_app/widgets/colors_slide/score.dart';
-import 'package:corso_games_app/widgets/colors_slide/size.dart';
-import 'package:corso_games_app/widgets/colors_slide/cs_timer.dart';
-import 'package:corso_games_app/widgets/screen_info.dart';
-import 'package:corso_games_app/widgets/screen_wrapper.dart';
+import 'package:corso_games_app/screens/screens.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class ColorsSlideScreen extends StatefulWidget {
   static const String id = 'colors-slide';
@@ -133,7 +126,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: showTimer
                 ? [
-                    Size(size: size),
+                    CSSize(size: size),
                     Score(pieces: pieces),
                     CSTimer(
                       timer: showTimer,
@@ -141,7 +134,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                     ),
                   ]
                 : [
-                    Size(size: size),
+                    CSSize(size: size),
                     Score(pieces: pieces),
                   ],
           ),

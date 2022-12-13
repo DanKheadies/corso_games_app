@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/widgets/coming_soon.dart';
-import 'package:corso_games_app/widgets/screen_wrapper.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class NonogramsScreen extends StatelessWidget {
   static const String id = 'nonograms';

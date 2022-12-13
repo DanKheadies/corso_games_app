@@ -3,10 +3,10 @@ description: A Collection of Flutter Games
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.0+10
+version: 1.1.1+11
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ">=2.18.4 <3.0.0"
 
 dependencies:
   flutter:
@@ -16,16 +16,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
   flutter_bloc: ^8.0.1
+  flutter_launcher_icons: ^0.11.0
   flutter_neumorphic: ^3.2.0
+  font_awesome_flutter: ^10.3.0
   provider: ^6.0.2
-  stop_watch_timer: ^1.3.1
+  stop_watch_timer: ^2.0.0
   url_launcher: ^6.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 flutter:
   uses-material-design: true
@@ -45,3 +47,19 @@ flutter:
     - family: Plaster
       fonts:
         - asset: assets/fonts/slide_to_slide/Plaster-Regular.ttf
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/main/cg-1.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/main/cg-1.png"
+    background_color: "#FFFFF8"
+    theme_color: "#FFFFF8"
+  windows:
+    generate: true
+    image_path: "assets/images/main/cg-1.png"
+    icon_size: 48 # min:48, max:256, default: 48

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/screens/slide_to_slide/puzzle_screen.dart';
-import 'package:corso_games_app/widgets/screen_wrapper.dart';
+import 'package:corso_games_app/screens/screens.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class SlideToSlideScreen extends StatelessWidget {
   static const String id = 'slide-to-slide';

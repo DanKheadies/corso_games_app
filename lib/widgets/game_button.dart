@@ -87,6 +87,23 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
         child: NeumorphicButton(
+          style: NeumorphicStyle(
+            color: Theme.of(context).colorScheme.secondary,
+            depth: waitForAnim
+                ? _animationTween.value
+                : isPressed
+                    ? -4
+                    : 4,
+            intensity: 2.5,
+            shape: NeumorphicShape.flat,
+            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
+          ),
+          onPressed: () {
+            Timer(
+              const Duration(milliseconds: 200),
+              () => widget.onPress(),
+            );
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -104,24 +121,6 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
               ),
             ],
           ),
-          style: NeumorphicStyle(
-            color: Theme.of(context).colorScheme.secondary,
-            depth: waitForAnim
-                ? _animationTween.value
-                : isPressed
-                    ? -4
-                    : 4,
-            // depth: _animationTween.value,
-            intensity: 2.5,
-            shape: NeumorphicShape.flat,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
-          ),
-          onPressed: () {
-            Timer(
-              const Duration(milliseconds: 200),
-              () => widget.onPress(),
-            );
-          },
         ),
       ),
     );

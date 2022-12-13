@@ -2,19 +2,9 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:corso_games_app/blocs/timer/timer_bloc.dart';
-import 'package:corso_games_app/models/ticker.dart';
-import 'package:corso_games_app/screens/colors_slide/colors_slide_screen.dart';
-import 'package:corso_games_app/screens/colors_slide/cs_settings_screen.dart';
-import 'package:corso_games_app/screens/dino_dash_screen.dart';
-import 'package:corso_games_app/screens/el_word/el_word_screen.dart';
-import 'package:corso_games_app/screens/games_screen.dart';
-import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
-import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
-import 'package:corso_games_app/screens/nonograms_screen.dart';
-import 'package:corso_games_app/screens/slide_to_slide/slide_to_slide_screen.dart';
-import 'package:corso_games_app/screens/splash_screen.dart';
-import 'package:corso_games_app/screens/tic_tac_toe/tic_tac_toe_screen.dart';
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/screens/screens.dart';
 
 void main() {
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -47,6 +37,8 @@ class CorsoGames extends StatelessWidget {
           MinesweeperScreen.id: (context) => const MinesweeperScreen(),
           MSSettingsScreen.id: (context) => const MSSettingsScreen(),
           NonogramsScreen.id: (context) => const NonogramsScreen(),
+          PuzzlesAndDragginScreen.id: (context) =>
+              const PuzzlesAndDragginScreen(),
           SlideToSlideScreen.id: (context) => const SlideToSlideScreen(),
           SplashScreen.id: (context) => const SplashScreen(),
           TicTacToeScreen.id: (context) => const TicTacToeScreen(),

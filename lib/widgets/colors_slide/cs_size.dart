@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Size extends StatefulWidget {
-  const Size({
+class CSSize extends StatefulWidget {
+  const CSSize({
     Key? key,
     required this.size,
   }) : super(key: key);
@@ -9,10 +9,10 @@ class Size extends StatefulWidget {
   final String size;
 
   @override
-  State<Size> createState() => _SizeState();
+  State<CSSize> createState() => _CSSizeState();
 }
 
-class _SizeState extends State<Size> {
+class _CSSizeState extends State<CSSize> {
   @override
   Widget build(BuildContext context) {
     return Column(

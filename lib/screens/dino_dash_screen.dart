@@ -8,9 +8,10 @@ import 'package:corso_games_app/widgets/dino_dash/cactus.dart';
 import 'package:corso_games_app/widgets/dino_dash/cloud.dart';
 import 'package:corso_games_app/widgets/dino_dash/constants.dart';
 import 'package:corso_games_app/widgets/dino_dash/dino.dart';
-import 'package:corso_games_app/widgets/dino_dash/game_object.dart';
-import 'package:corso_games_app/widgets/dino_dash/ground.dart';
-import 'package:corso_games_app/widgets/screen_wrapper.dart';
+// import 'package:corso_games_app/widgets/dino_dash/game_object.dart';
+// import 'package:corso_games_app/widgets/dino_dash/ground.dart';
+// import 'package:corso_games_app/widgets/screen_wrapper.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class DinoRunScreen extends StatefulWidget {
   static const String id = 'dino-dash';

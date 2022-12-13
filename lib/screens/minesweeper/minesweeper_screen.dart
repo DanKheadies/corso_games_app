@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/widgets/minesweeper/game_activity.dart';
-import 'package:corso_games_app/widgets/screen_wrapper.dart';
-import 'package:corso_games_app/widgets/screen_info.dart';
+import 'package:corso_games_app/screens/screens.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class MinesweeperScreen extends StatefulWidget {
   static const String id = 'minesweeper';

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:corso_games_app/blocs/el_word/el_word_bloc.dart';
-import 'package:corso_games_app/models/el_word/letter.dart';
-import 'package:corso_games_app/models/el_word/word.dart';
-import 'package:corso_games_app/widgets/el_word/custom_board_tile.dart';
-import 'package:corso_games_app/widgets/el_word/custom_keyboard.dart';
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class ElGameScreen extends StatelessWidget {
   static const String id = 'el-game';

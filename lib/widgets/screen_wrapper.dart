@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/widgets/games_drawer.dart';
-import 'package:corso_games_app/widgets/screen_info.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class ScreenWrapper extends StatefulWidget {
   const ScreenWrapper({

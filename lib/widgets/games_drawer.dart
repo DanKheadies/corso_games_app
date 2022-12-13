@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:corso_games_app/screens/colors_slide/colors_slide_screen.dart';
-import 'package:corso_games_app/screens/dino_dash_screen.dart';
-import 'package:corso_games_app/screens/el_word/el_word_screen.dart';
-import 'package:corso_games_app/screens/games_screen.dart';
-import 'package:corso_games_app/screens/minesweeper/minesweeper_screen.dart';
-import 'package:corso_games_app/screens/nonograms_screen.dart';
-import 'package:corso_games_app/screens/slide_to_slide/slide_to_slide_screen.dart';
-import 'package:corso_games_app/screens/tic_tac_toe/tic_tac_toe_screen.dart';
+import 'package:corso_games_app/screens/screens.dart';
 
 class GamesDrawer extends StatefulWidget {
   const GamesDrawer({
@@ -157,6 +150,22 @@ class _GamesDrawerState extends State<GamesDrawer> {
               Navigator.pushNamed(
                 context,
                 NonogramsScreen.id,
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Puzzles And Draggin',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.pushNamed(
+                context,
+                PuzzlesAndDragginScreen.id,
               );
             },
           ),

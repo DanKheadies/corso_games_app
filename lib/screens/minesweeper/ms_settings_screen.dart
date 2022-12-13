@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'package:corso_games_app/widgets/screen_info.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 enum MinesweeperDifficulty {
   tbd,

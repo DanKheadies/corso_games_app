@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:corso_games_app/providers/tic_tac_toe/game_provider.dart';
-import 'package:corso_games_app/widgets/tic_tac_toe/board.dart';
-import 'package:corso_games_app/widgets/tic_tac_toe/results.dart';
-import 'package:corso_games_app/widgets/tic_tac_toe/whose_move.dart';
-import 'package:corso_games_app/widgets/screen_wrapper.dart';
+import 'package:corso_games_app/providers/providers.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class TicTacToeScreen extends StatelessWidget {
   static const String id = 'tic-tac-toe';

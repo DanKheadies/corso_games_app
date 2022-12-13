@@ -3,7 +3,7 @@
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:corso_games_app/helpers/slide_to_slide/helpers.dart';
+import 'package:corso_games_app/helpers/helpers.dart';
 
 const themes = [
   ThemeSimple(),

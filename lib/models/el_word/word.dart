@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:corso_games_app/models/el_word/letter.dart';
+import 'package:corso_games_app/models/models.dart';
 
 class Word extends Equatable {
   final int? id;
