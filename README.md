@@ -27,6 +27,9 @@ A collection of Flutter games. GLHF!
 > [Tic Tac Toe](https://github.com/jakubjaniec/tictactoe)
 > via Jakub Janiec
 
+> [Solitare](https://github.com/deven98/FlutterSolitaire)
+> via Deven Joshi
+
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)

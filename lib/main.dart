@@ -1,3 +1,4 @@
+import 'package:corso_games_app/screens/solitare_screen.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,10 +37,10 @@ class CorsoGames extends StatelessWidget {
           GamesScreen.id: (context) => const GamesScreen(),
           MinesweeperScreen.id: (context) => const MinesweeperScreen(),
           MSSettingsScreen.id: (context) => const MSSettingsScreen(),
-          NonogramsScreen.id: (context) => const NonogramsScreen(),
           PuzzlesAndDragginScreen.id: (context) =>
               const PuzzlesAndDragginScreen(),
           SlideToSlideScreen.id: (context) => const SlideToSlideScreen(),
+          SolitareScreen.id: (context) => const SolitareScreen(),
           SplashScreen.id: (context) => const SplashScreen(),
           TicTacToeScreen.id: (context) => const TicTacToeScreen(),
         },

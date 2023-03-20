@@ -56,14 +56,6 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
-            icon: Icons.pin_rounded,
-            title: 'Nonograms',
-            onPress: () => Navigator.pushNamed(
-              context,
-              NonogramsScreen.id,
-            ),
-          ),
-          GameButton(
             icon: Icons.drag_indicator,
             title: 'PAD',
             onPress: () => Navigator.pushNamed(
@@ -80,6 +72,14 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            icon: Icons.stacked_bar_chart,
+            title: 'Solitare',
+            onPress: () => Navigator.pushNamed(
+              context,
+              SolitareScreen.id,
+            ),
+          ),
+          GameButton(
             icon: Icons.tag,
             title: 'Tic Tac Toe',
             onPress: () => Navigator.pushNamed(
@@ -90,7 +90,10 @@ class GamesScreen extends StatelessWidget {
         ],
       ),
       screenFunction: (String _string) {},
-      bottomBar: const BottomAppBar(),
+      bottomBar: BottomAppBar(
+        // TODO: remove this?
+        color: Theme.of(context).colorScheme.secondary,
+      ),
     );
   }
 }

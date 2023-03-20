@@ -29,9 +29,9 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
     'Move the white dot to the bottom right.',
     'Move the white dots into the 4 corners.',
     'Move the white dots to the center line.',
-    'Move the white dot to the bottom in 1 turn.',
-    'Move the white dots into the 4 corners in 2 turns.',
-    'Move the white dots to the center line in 1 turn.',
+    'Move the white dot to the bottom right in 1 turn.',
+    'Move the white dots into the 4 corners in 3 turns.',
+    'Move the white dots to the center line in 2 turns.',
   ];
 
   void turnTicker() {
@@ -169,7 +169,7 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
       title: 'Puzzles And Draggin',
       infoTitle: 'Puzzles And Draggin',
       infoDetails:
-          'Drag the circles. Follow the instructions. Use the circle you\'re dragging to move other circles.',
+          'Drag the circles. Use the force. Follow the instructions. Use the circle you\'re dragging to move other circles.',
       button: 'Leggooo!',
       backgroundOverride: Colors.transparent,
       content: Padding(
@@ -238,7 +238,9 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
+                                  // backgroundColor: Colors.black,
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.primary,
                                 ),
                                 child: const Text('Huzzah! Next Challenge'),
                               )
@@ -247,7 +249,9 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                             ? ElevatedButton(
                                 onPressed: resetGameBoard,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
+                                  // backgroundColor: Colors.black,
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.primary,
                                 ),
                                 child: const Text('Try again!'),
                               )

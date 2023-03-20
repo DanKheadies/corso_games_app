@@ -35,6 +35,7 @@ class DragObject extends StatelessWidget {
       left: left,
       top: top,
       child: InkWell(
+        onTap: () => onTapDown(id),
         onTapDown: (_) => onTapDown(id),
         child: Stack(
           children: [
@@ -53,7 +54,7 @@ class DragObject extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             color: color,
                           ),
-                          child: Center(
+                          child: const Center(
                               // child: text == '' ? const SizedBox() : Text(text),
                               ),
                         ),
@@ -111,7 +112,7 @@ class DragObject extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50),
                           color: color.withOpacity(0.333),
                         ),
-                        child: Center(
+                        child: const Center(
                             // child: text == '' ? const SizedBox() : Text(text),
                             ),
                       ),
@@ -129,7 +130,7 @@ class DragObject extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50),
                           color: color,
                         ),
-                        child: Center(
+                        child: const Center(
                             // child: text == '' ? const SizedBox() : Text(text),
                             ),
                       ),

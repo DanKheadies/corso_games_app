@@ -10,5 +10,6 @@ export 'nonograms_screen.dart';
 export 'puzzles_and_draggin_screen.dart';
 export 'slide_to_slide/puzzle_screen.dart';
 export 'slide_to_slide/slide_to_slide_screen.dart';
+export 'solitare_screen.dart';
 export 'splash_screen.dart';
 export 'tic_tac_toe_screen.dart';
