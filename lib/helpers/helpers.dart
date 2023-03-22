@@ -9,3 +9,4 @@ export 'slide_to_slide/theme_simple.dart';
 export 'slide_to_slide/theme_space.dart';
 export 'slide_to_slide/themes.dart';
 export 'slide_to_slide/value_tab_controller.dart';
+export 'solo_noble/board_factory.dart';

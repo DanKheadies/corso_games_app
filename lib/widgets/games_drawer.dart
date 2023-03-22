@@ -32,7 +32,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -41,38 +41,27 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                GamesScreen.id,
+                GamesScreen.routeName,
               );
             },
-            child: const DrawerHeader(
-              margin: EdgeInsets.only(
+            child: DrawerHeader(
+              margin: const EdgeInsets.only(
                 bottom: 10,
                 top: 35,
               ),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/main/corso-games-1.png'),
+                  image: MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark
+                      ? const AssetImage('assets/images/main/corso-games-2.png')
+                      : const AssetImage(
+                          'assets/images/main/corso-games-1.png'),
                   fit: BoxFit.contain,
                 ),
               ),
-              child: SizedBox(),
+              child: const SizedBox(),
             ),
           ),
-          // ListTile(
-          //   title: Text(
-          //     'Games',
-          //     style: TextStyle(
-          //       fontSize: 18,
-          //       color: Theme.of(context).colorScheme.primary,
-          //     ),
-          //   ),
-          //   onTap: () {
-          //     Navigator.pushNamed(
-          //       context,
-          //       GamesScreen.id,
-          //     );
-          //   },
-          // ),
           ListTile(
             title: Text(
               'Colors Slide',
@@ -85,7 +74,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                ColorsSlideScreen.id,
+                ColorsSlideScreen.routeName,
               );
             },
           ),
@@ -101,7 +90,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                DinoRunScreen.id,
+                DinoRunScreen.routeName,
               );
             },
           ),
@@ -117,7 +106,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                ElWordScreen.id,
+                ElWordScreen.routeName,
               );
             },
           ),
@@ -133,23 +122,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                MinesweeperScreen.id,
-              );
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Nonograms',
-              style: TextStyle(
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            onTap: () {
-              widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                NonogramsScreen.id,
+                MinesweeperScreen.routeName,
               );
             },
           ),
@@ -165,7 +138,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                PuzzlesAndDragginScreen.id,
+                PuzzlesAndDragginScreen.routeName,
               );
             },
           ),
@@ -181,7 +154,39 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                SlideToSlideScreen.id,
+                SlideToSlideScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Solitare',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.pushNamed(
+                context,
+                SolitareScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Solo Noble',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.pushNamed(
+                context,
+                SoloNobleScreen.routeName,
               );
             },
           ),
@@ -197,7 +202,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
                 context,
-                TicTacToeScreen.id,
+                TicTacToeScreen.routeName,
               );
             },
           ),

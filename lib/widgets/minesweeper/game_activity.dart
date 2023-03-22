@@ -277,35 +277,68 @@ class _GameActivityState extends State<GameActivity> {
     );
   }
 
-  Image getImage(ImageType type) {
+  Image getImage(
+    ImageType type,
+    BuildContext context,
+  ) {
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? true
+            : false;
     switch (type) {
       case ImageType.zero:
-        return Image.asset('assets/images/minesweeper/0.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_0.png'
+            : 'assets/images/minesweeper/0.png');
       case ImageType.one:
-        return Image.asset('assets/images/minesweeper/1.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_1.png'
+            : 'assets/images/minesweeper/1.png');
       case ImageType.two:
-        return Image.asset('assets/images/minesweeper/2.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_2.png'
+            : 'assets/images/minesweeper/2.png');
       case ImageType.three:
-        return Image.asset('assets/images/minesweeper/3.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_3.png'
+            : 'assets/images/minesweeper/3.png');
       case ImageType.four:
-        return Image.asset('assets/images/minesweeper/4.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_4.png'
+            : 'assets/images/minesweeper/4.png');
       case ImageType.five:
-        return Image.asset('assets/images/minesweeper/5.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_5.png'
+            : 'assets/images/minesweeper/5.png');
       case ImageType.six:
-        return Image.asset('assets/images/minesweeper/6.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_6.png'
+            : 'assets/images/minesweeper/6.png');
       case ImageType.seven:
-        return Image.asset('assets/images/minesweeper/7.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_7.png'
+            : 'assets/images/minesweeper/7.png');
       case ImageType.eight:
-        return Image.asset('assets/images/minesweeper/8.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_8.png'
+            : 'assets/images/minesweeper/8.png');
       case ImageType.bomb:
-        return Image.asset('assets/images/minesweeper/bomb.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_bomb.png'
+            : 'assets/images/minesweeper/bomb.png');
       case ImageType.facingDown:
-        return Image.asset('assets/images/minesweeper/facingDown.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_facingDown.png'
+            : 'assets/images/minesweeper/facingDown.png');
       case ImageType.flagged:
-        return Image.asset('assets/images/minesweeper/flagged.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_flagged.png'
+            : 'assets/images/minesweeper/flagged.png');
 
       default:
-        return Image.asset('assets/images/minesweeper/facingDown.png');
+        return Image.asset(isDarkMode
+            ? 'assets/images/minesweeper/_facingDown.png'
+            : 'assets/images/minesweeper/facingDown.png');
     }
   }
 
@@ -341,13 +374,13 @@ class _GameActivityState extends State<GameActivity> {
         widget.timerReset();
         initializeGame();
       },
-      child: const CircleAvatar(
+      child: CircleAvatar(
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
         child: Icon(
           Icons.tag_faces,
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.background,
           size: 40,
         ),
-        backgroundColor: Colors.yellowAccent,
       ),
     );
   }
@@ -362,7 +395,7 @@ class _GameActivityState extends State<GameActivity> {
       child: ListView(
         children: [
           Container(
-            color: Colors.grey,
+            color: Theme.of(context).scaffoldBackgroundColor,
             height: headerHeight,
             width: double.infinity,
             child: Row(
@@ -395,18 +428,19 @@ class _GameActivityState extends State<GameActivity> {
 
               if (openedSquares[position] == false) {
                 if (flaggedSquares[position] == true) {
-                  image = getImage(ImageType.flagged);
+                  image = getImage(ImageType.flagged, context);
                 } else {
-                  image = getImage(ImageType.facingDown);
+                  image = getImage(ImageType.facingDown, context);
                 }
               } else {
                 if (board[rowNumber][columnNumber].hasBomb) {
-                  image = getImage(ImageType.bomb);
+                  image = getImage(ImageType.bomb, context);
                 } else {
                   image = getImage(
                     getImageTypeFromNumber(
                       board[rowNumber][columnNumber].bombsAround,
                     ),
+                    context,
                   );
                 }
               }
@@ -437,9 +471,9 @@ class _GameActivityState extends State<GameActivity> {
                     });
                   }
                 },
-                splashColor: Colors.grey,
+                splashColor: Theme.of(context).scaffoldBackgroundColor,
                 child: Container(
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.error.withOpacity(0.825),
                   child: image,
                 ),
               );

@@ -158,14 +158,16 @@ class CustomKeyboard extends StatelessWidget {
                     height: height * .05,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: Colors.transparent,
                       boxShadow: [
                         BoxShadow(
                           color: !state.isNewWord && state.letterCount != 0
                               ? Theme.of(context).colorScheme.primary
-                              : Colors.grey[800] as Color,
-                          blurRadius: 1,
-                          spreadRadius: 1,
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .surface
+                                  .withOpacity(0.825),
+                          // blurRadius: 1,
+                          // spreadRadius: 1,
                         ),
                       ],
                     ),
@@ -203,7 +205,7 @@ class CustomKeyboard extends StatelessWidget {
                           style: TextStyle(
                             // fontSize: 14,
                             fontSize: height * .0175,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                           ),
                         ),
                       ),
@@ -230,9 +232,13 @@ class CustomKeyboard extends StatelessWidget {
                                     !state.isNewWord &&
                                     state.letterCount != 0
                                 ? Theme.of(context).colorScheme.primary
-                                : Colors.grey[800] as Color,
-                            blurRadius: 1,
-                            spreadRadius: 1,
+                                // : Colors.grey[800] as Color,
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .surface
+                                    .withOpacity(0.825),
+                            // blurRadius: 1,
+                            // spreadRadius: 1,
                           ),
                         ],
                       ),
@@ -260,10 +266,8 @@ class CustomKeyboard extends StatelessWidget {
                           child: Text(
                             'Check',
                             style: TextStyle(
-                              // fontSize: 18,
-                              // fontSize: 14,
                               fontSize: height * .0175,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).scaffoldBackgroundColor,
                             ),
                           ),
                         ),

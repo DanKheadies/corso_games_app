@@ -15,9 +15,29 @@ enum ColorsSlideDifficulty {
 }
 
 class CSSettingsScreen extends StatefulWidget {
-  static const String id = 'colors-slide-settings';
+  // static const String id = 'colors-slide-settings';
+  static const String routeName = '/colors-slide-settings';
+  static Route route({
+    required ColorsSlideDifficulty difficulty,
+    required bool timer,
+  }) {
+    return MaterialPageRoute(
+      builder: (_) => CSSettingsScreen(
+        difficulty: difficulty,
+        timer: timer,
+      ),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
-  const CSSettingsScreen({Key? key}) : super(key: key);
+  final bool timer;
+  final ColorsSlideDifficulty difficulty;
+
+  const CSSettingsScreen({
+    Key? key,
+    required this.timer,
+    required this.difficulty,
+  }) : super(key: key);
 
   @override
   State<CSSettingsScreen> createState() => _CSSettingsScreenState();
@@ -30,9 +50,13 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
 
   NeumorphicRadioStyle _neumorphRadioStyle() {
     return NeumorphicRadioStyle(
-      unselectedColor: Theme.of(context).colorScheme.secondary,
-      selectedDepth: 4,
-      unselectedDepth: -4,
+      unselectedColor: Theme.of(context).scaffoldBackgroundColor,
+      selectedDepth:
+          MediaQuery.of(context).platformBrightness == Brightness.dark ? 1 : 4,
+      unselectedDepth:
+          MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? -1
+              : -4,
       intensity: 2.5,
       shape: NeumorphicShape.concave,
       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
@@ -51,17 +75,22 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
-
-    setState(() {
-      argsTimer = args['timer'];
-    });
+    if (argsTimer != widget.timer) {
+      setState(() {
+        argsTimer = widget.timer;
+      });
+    }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('CS Settings'),
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        title: Text(
+          'CS Settings',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.background,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -83,7 +112,8 @@ Heads up: changing any of the settings here will reset your game.''',
         onWillPop: () async {
           Navigator.pop(context, {
             'difficulty': _difficulty == ColorsSlideDifficulty.tbd
-                ? args['difficulty'] as ColorsSlideDifficulty
+                // ? args['difficulty'] as ColorsSlideDifficulty
+                ? widget.difficulty
                 : _difficulty,
             'timer': showTimer,
           });
@@ -100,12 +130,12 @@ Heads up: changing any of the settings here will reset your game.''',
                   const SizedBox(height: 30),
                   NeumorphicSwitch(
                     style: NeumorphicSwitchStyle(
-                      activeThumbColor: Theme.of(context).colorScheme.primary,
-                      activeTrackColor: Theme.of(context).colorScheme.secondary,
-                      inactiveThumbColor:
-                          Theme.of(context).colorScheme.secondary,
+                      activeThumbColor: Theme.of(context).colorScheme.tertiary,
+                      activeTrackColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                      inactiveThumbColor: Theme.of(context).colorScheme.primary,
                       inactiveTrackColor:
-                          Theme.of(context).colorScheme.secondary,
+                          Theme.of(context).scaffoldBackgroundColor,
                     ),
                     value: showTimer,
                     onChanged: (value) {
@@ -121,16 +151,31 @@ Heads up: changing any of the settings here will reset your game.''',
                 children: [
                   const Text('size'),
                   NeumorphicRadio(
+                    padding: const EdgeInsets.all(15),
+                    value: ColorsSlideDifficulty.threeByThree,
+                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
+                        // ? args['difficulty'] as ColorsSlideDifficulty
+                        ? widget.difficulty
+                        : _difficulty,
+                    onChanged: (ColorsSlideDifficulty? diff) {
+                      setState(() {
+                        _difficulty = diff;
+                      });
+                    },
+                    style: _neumorphRadioStyle(),
                     child: const Text(
                       '3x3',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
+                  ),
+                  NeumorphicRadio(
                     padding: const EdgeInsets.all(15),
-                    value: ColorsSlideDifficulty.threeByThree,
+                    value: ColorsSlideDifficulty.fourByFour,
                     groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                        ? args['difficulty'] as ColorsSlideDifficulty
+                        // ? args['difficulty'] as ColorsSlideDifficulty
+                        ? widget.difficulty
                         : _difficulty,
                     onChanged: (ColorsSlideDifficulty? diff) {
                       setState(() {
@@ -138,18 +183,19 @@ Heads up: changing any of the settings here will reset your game.''',
                       });
                     },
                     style: _neumorphRadioStyle(),
-                  ),
-                  NeumorphicRadio(
                     child: const Text(
                       '4x4',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
-                    padding: const EdgeInsets.all(15),
-                    value: ColorsSlideDifficulty.fourByFour,
+                  ),
+                  NeumorphicRadio(
+                    padding: const EdgeInsets.all(20),
+                    value: ColorsSlideDifficulty.fiveByFive,
                     groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                        ? args['difficulty'] as ColorsSlideDifficulty
+                        // ? args['difficulty'] as ColorsSlideDifficulty
+                        ? widget.difficulty
                         : _difficulty,
                     onChanged: (ColorsSlideDifficulty? diff) {
                       setState(() {
@@ -157,18 +203,19 @@ Heads up: changing any of the settings here will reset your game.''',
                       });
                     },
                     style: _neumorphRadioStyle(),
-                  ),
-                  NeumorphicRadio(
                     child: const Text(
                       '5x5',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
+                  ),
+                  NeumorphicRadio(
                     padding: const EdgeInsets.all(20),
-                    value: ColorsSlideDifficulty.fiveByFive,
+                    value: ColorsSlideDifficulty.sevenBySeven,
                     groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                        ? args['difficulty'] as ColorsSlideDifficulty
+                        // ? args['difficulty'] as ColorsSlideDifficulty
+                        ? widget.difficulty
                         : _difficulty,
                     onChanged: (ColorsSlideDifficulty? diff) {
                       setState(() {
@@ -176,18 +223,19 @@ Heads up: changing any of the settings here will reset your game.''',
                       });
                     },
                     style: _neumorphRadioStyle(),
-                  ),
-                  NeumorphicRadio(
                     child: const Text(
                       '7x7',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
+                  ),
+                  NeumorphicRadio(
                     padding: const EdgeInsets.all(20),
-                    value: ColorsSlideDifficulty.sevenBySeven,
+                    value: ColorsSlideDifficulty.tenByTen,
                     groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                        ? args['difficulty'] as ColorsSlideDifficulty
+                        // ? args['difficulty'] as ColorsSlideDifficulty
+                        ? widget.difficulty
                         : _difficulty,
                     onChanged: (ColorsSlideDifficulty? diff) {
                       setState(() {
@@ -195,18 +243,19 @@ Heads up: changing any of the settings here will reset your game.''',
                       });
                     },
                     style: _neumorphRadioStyle(),
-                  ),
-                  NeumorphicRadio(
                     child: const Text(
                       '10x10',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
+                  ),
+                  NeumorphicRadio(
                     padding: const EdgeInsets.all(20),
-                    value: ColorsSlideDifficulty.tenByTen,
+                    value: ColorsSlideDifficulty.yolo,
                     groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                        ? args['difficulty'] as ColorsSlideDifficulty
+                        // ? args['difficulty'] as ColorsSlideDifficulty
+                        ? widget.difficulty
                         : _difficulty,
                     onChanged: (ColorsSlideDifficulty? diff) {
                       setState(() {
@@ -214,25 +263,12 @@ Heads up: changing any of the settings here will reset your game.''',
                       });
                     },
                     style: _neumorphRadioStyle(),
-                  ),
-                  NeumorphicRadio(
                     child: const Text(
                       'YOLO',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
-                    padding: const EdgeInsets.all(20),
-                    value: ColorsSlideDifficulty.yolo,
-                    groupValue: _difficulty == ColorsSlideDifficulty.tbd
-                        ? args['difficulty'] as ColorsSlideDifficulty
-                        : _difficulty,
-                    onChanged: (ColorsSlideDifficulty? diff) {
-                      setState(() {
-                        _difficulty = diff;
-                      });
-                    },
-                    style: _neumorphRadioStyle(),
                   ),
                 ],
               ),

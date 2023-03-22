@@ -9,21 +9,29 @@ import 'package:corso_games_app/helpers/slide_to_slide/shared_theme.dart';
 import 'package:corso_games_app/models/slide_to_slide/puzzle_proxy.dart';
 
 // const _accentBlue = Color(0xff000579);
-const _primary = Color.fromARGB(255, 192, 65, 111);
-const _secondary = Color(0xFFFFF8E1);
-const _tertiary = Color.fromARGB(255, 245, 125, 129);
+final darkMode = WidgetsBinding.instance.window.platformBrightness;
+const _primary = Color(0xFFc0416f);
+final _secondary = darkMode == Brightness.dark
+    ? const Color(0xFF1a1a1a)
+    : const Color(0xFFfff8e1);
+final _tertiary = darkMode == Brightness.dark
+    ? const Color(0xFFb3585a)
+    : const Color(0xFFff7d81);
+final _boardBackground = darkMode == Brightness.dark
+    ? const Color(0xFF0b0b0b)
+    : const Color(0xFFf9f9f9);
 
 class ThemeSimple extends SharedTheme {
   @override
   String get name => 'Simple';
 
-  const ThemeSimple();
+  ThemeSimple();
 
   @override
   Color get puzzleThemeBackground => _secondary;
 
   @override
-  Color get puzzleBackgroundColor => Colors.white70;
+  Color get puzzleBackgroundColor => _boardBackground;
 
   @override
   Color get puzzleAccentColor => _tertiary;
@@ -38,7 +46,12 @@ class ThemeSimple extends SharedTheme {
       );
 
   @override
-  Widget tileButton(int i, PuzzleProxy puzzle, bool small) {
+  Widget tileButton(
+    int i,
+    PuzzleProxy puzzle,
+    bool small,
+    BuildContext context,
+  ) {
     if (i == puzzle.tileCount) {
       assert(puzzle.solved);
       return const Center(

@@ -27,7 +27,12 @@ abstract class SharedTheme {
 
   EdgeInsetsGeometry tilePadding(PuzzleProxy puzzle) => const EdgeInsets.all(6);
 
-  Widget tileButton(int i, PuzzleProxy puzzle, bool small);
+  Widget tileButton(
+    int i,
+    PuzzleProxy puzzle,
+    bool small,
+    BuildContext context,
+  );
 
   Ink createInk(
     Widget child, {
@@ -59,7 +64,7 @@ abstract class SharedTheme {
             animationDuration: puzzleAnimationDuration,
             shape: shape ?? puzzleBorder(small),
             padding: const EdgeInsets.symmetric(),
-            primary: color,
+            backgroundColor: color,
           ),
           clipBehavior: Clip.hardEdge,
           onPressed: () => puzzle.clickOrShake(tileValue),
@@ -81,12 +86,19 @@ abstract class SharedTheme {
         fontWeight: FontWeight.bold,
       );
 
-  List<Widget> bottomControls(PuzzleControls controls) => <Widget>[
+  List<Widget> bottomControls(
+    PuzzleControls controls,
+    BuildContext context,
+  ) =>
+      <Widget>[
         Tooltip(
           message: 'Reset',
           child: IconButton(
             onPressed: controls.reset,
-            icon: Icon(Icons.refresh, color: puzzleAccentColor),
+            icon: Icon(
+              Icons.refresh,
+              color: puzzleAccentColor,
+            ),
           ),
         ),
         Tooltip(
@@ -108,10 +120,11 @@ abstract class SharedTheme {
                 style: _infoStyle,
               ),
               // const TextSpan(text: ' Moves'),
-              const TextSpan(
+              TextSpan(
                 text: ' Moves',
                 style: TextStyle(
-                  color: Colors.black,
+                  // color: Colors.black,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
             ],
@@ -127,10 +140,11 @@ abstract class SharedTheme {
                   text: controls.incorrectTiles.toString(),
                   style: _infoStyle,
                 ),
-                const TextSpan(
+                TextSpan(
                   text: ' Tiles left',
                   style: TextStyle(
-                    color: Colors.black,
+                    // color: Colors.black,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                 ),
               ],
@@ -139,11 +153,21 @@ abstract class SharedTheme {
         ),
       ];
 
-  Widget tileButtonCore(int i, PuzzleProxy puzzle, bool small) {
+  Widget tileButtonCore(
+    int i,
+    PuzzleProxy puzzle,
+    bool small,
+    BuildContext context,
+  ) {
     if (i == puzzle.tileCount && !puzzle.solved) {
       return const Center();
     }
 
-    return tileButton(i, puzzle, small);
+    return tileButton(
+      i,
+      puzzle,
+      small,
+      context,
+    );
   }
 }

@@ -6,7 +6,14 @@ import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class MinesweeperScreen extends StatefulWidget {
-  static const String id = 'minesweeper';
+  // static const String id = 'minesweeper';
+  static const String routeName = '/minesweeper';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const MinesweeperScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const MinesweeperScreen({Key? key}) : super(key: key);
 
@@ -59,8 +66,8 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
     }
   }
 
-  void checkTimer(bool _showTimer) {
-    if (_showTimer != showTimer) {
+  void checkTimer(bool showTimer) {
+    if (showTimer != showTimer) {
       setState(() {
         resetGame = true;
       });
@@ -89,7 +96,8 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
       title: 'Minesweeper',
       infoTitle: 'Minesweeper',
       infoDetails: 'Press to pop a mine. Long press to set a flag.',
-      backgroundOverride: Colors.grey,
+      backgroundOverride:
+          Theme.of(context).colorScheme.background.withOpacity(0.825),
       content: GameActivity(
         difficulty: currentDifficulty,
         resetGame: resetGame,
@@ -99,16 +107,16 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
           handleTimer();
         },
       ),
-      screenFunction: (String _string) {
-        if (_string == 'drawerOpen') {
+      screenFunction: (String string) {
+        if (string == 'drawerOpen') {
           setState(() {
             timerStatus = 'pause';
           });
-        } else if (_string == 'drawerClose') {
+        } else if (string == 'drawerClose') {
           setState(() {
             timerStatus = 'resume';
           });
-        } else if (_string == 'drawerNavigate') {
+        } else if (string == 'drawerNavigate') {
           setState(() {
             timerStatus = 'stop';
           });
@@ -120,25 +128,25 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
         });
       },
       bottomBar: BottomAppBar(
-        color: Theme.of(context).colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.secondary,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
               tooltip: 'Settings',
-              icon: const Icon(
+              icon: Icon(
                 Icons.settings,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.background,
                 size: 30,
               ),
               onPressed: () async {
                 final result = await Navigator.pushNamed(
                   context,
-                  MSSettingsScreen.id,
-                  arguments: {
-                    'difficulty': currentDifficulty,
-                    'timer': showTimer,
-                  },
+                  MSSettingsScreen.routeName,
+                  arguments: [
+                    currentDifficulty,
+                    showTimer,
+                  ],
                 );
                 result as Map;
                 setDifficulty(result['difficulty']);
@@ -152,9 +160,9 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
             ),
             IconButton(
               tooltip: 'Share',
-              icon: const Icon(
+              icon: Icon(
                 Icons.ios_share_outlined,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.background,
                 size: 30,
               ),
               onPressed: () => showScreenInfo(

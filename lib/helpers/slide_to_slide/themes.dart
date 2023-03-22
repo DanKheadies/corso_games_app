@@ -5,9 +5,9 @@
 
 import 'package:corso_games_app/helpers/helpers.dart';
 
-const themes = [
+final themes = [
   ThemeSimple(),
   // ThemeLure(),
-  ThemeSpace(),
-  ThemePlaster(),
+  const ThemeSpace(),
+  const ThemePlaster(),
 ];

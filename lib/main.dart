@@ -1,14 +1,25 @@
-import 'package:corso_games_app/screens/solitare_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/config/config.dart';
+import 'package:corso_games_app/firebase_options.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/screens/screens.dart';
+// import 'package:corso_games_app/simple_bloc_observer.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // Bloc.observer = SimpleBlocObserver();
   runApp(const CorsoGames());
 }
 
@@ -17,33 +28,18 @@ class CorsoGames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TimerBloc(ticker: const Ticker()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TimerBloc(ticker: const Ticker()),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: const Color.fromARGB(255, 192, 65, 111),
-            secondary: Colors.amber[50],
-            tertiary: const Color.fromARGB(255, 245, 125, 129),
-          ),
-        ),
-        initialRoute: SplashScreen.id,
-        routes: {
-          ColorsSlideScreen.id: (context) => const ColorsSlideScreen(),
-          CSSettingsScreen.id: (context) => const CSSettingsScreen(),
-          DinoRunScreen.id: (context) => const DinoRunScreen(),
-          ElWordScreen.id: (context) => const ElWordScreen(),
-          GamesScreen.id: (context) => const GamesScreen(),
-          MinesweeperScreen.id: (context) => const MinesweeperScreen(),
-          MSSettingsScreen.id: (context) => const MSSettingsScreen(),
-          PuzzlesAndDragginScreen.id: (context) =>
-              const PuzzlesAndDragginScreen(),
-          SlideToSlideScreen.id: (context) => const SlideToSlideScreen(),
-          SolitareScreen.id: (context) => const SolitareScreen(),
-          SplashScreen.id: (context) => const SplashScreen(),
-          TicTacToeScreen.id: (context) => const TicTacToeScreen(),
-        },
+        theme: lightTheme(),
+        darkTheme: darkTheme(),
+        initialRoute: SplashScreen.routeName,
+        onGenerateRoute: AppRouter.onGenerateRoute,
       ),
     );
   }

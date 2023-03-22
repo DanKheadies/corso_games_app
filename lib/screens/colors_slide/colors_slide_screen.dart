@@ -7,7 +7,14 @@ import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class ColorsSlideScreen extends StatefulWidget {
-  static const String id = 'colors-slide';
+  // static const String id = 'colors-slide';
+  static const String routeName = '/colors-slide';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const ColorsSlideScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const ColorsSlideScreen({Key? key}) : super(key: key);
 
@@ -97,8 +104,8 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
     }
   }
 
-  void checkTimer(bool _showTimer) {
-    if (_showTimer != showTimer) {
+  void checkTimer(bool showTimer) {
+    if (showTimer != showTimer) {
       Timer(const Duration(milliseconds: 100), () {
         Controller.restart(context);
       });
@@ -143,16 +150,16 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
           const SizedBox(),
         ],
       ),
-      screenFunction: (String _string) {
-        if (_string == 'drawerOpen') {
+      screenFunction: (String string) {
+        if (string == 'drawerOpen') {
           setState(() {
             timerStatus = 'pause';
           });
-        } else if (_string == 'drawerClose') {
+        } else if (string == 'drawerClose') {
           setState(() {
             timerStatus = 'resume';
           });
-        } else if (_string == 'drawerNavigate') {
+        } else if (string == 'drawerNavigate') {
           setState(() {
             timerStatus = 'stop';
           });
@@ -164,26 +171,26 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         });
       },
       bottomBar: BottomAppBar(
-        color: Theme.of(context).colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.secondary,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
               tooltip: 'Settings',
-              icon: const Icon(
+              icon: Icon(
                 Icons.settings,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.background,
                 size: 30,
               ),
               onPressed: () async {
                 final result = await Navigator.pushNamed(
                   context,
-                  CSSettingsScreen.id,
-                  arguments: {
-                    'difficulty': currentDifficulty,
-                    'timer': showTimer,
-                  },
+                  CSSettingsScreen.routeName,
+                  arguments: [
+                    currentDifficulty,
+                    showTimer,
+                  ],
                 );
                 result as Map;
                 setDifficulty(result['difficulty']);
@@ -197,9 +204,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
             ),
             IconButton(
               tooltip: 'Share',
-              icon: const Icon(
+              icon: Icon(
                 Icons.ios_share_outlined,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.background,
                 size: 30,
               ),
               onPressed: () => showScreenInfo(
@@ -219,9 +226,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.settings_backup_restore_rounded,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.background,
             size: 30,
           ),
           onPressed: () {

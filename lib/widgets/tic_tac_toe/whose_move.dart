@@ -13,7 +13,8 @@ class WhoseMove extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     final style = TextStyle(
-      color: Colors.grey[800],
+      // color: Colors.grey[800],
+      color: Theme.of(context).colorScheme.surface,
       fontSize: state.getAdaptiveTextSize(context, 20),
     );
 

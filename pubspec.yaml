@@ -1,5 +1,5 @@
 name: corso_games_app
-description: A collection of flutter games for fun.
+description: A collection of flutter games. Good luck, have fun.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -13,9 +13,12 @@ dependencies:
     sdk: flutter
 
   animated_text_kit: ^4.2.1
+  bloc: ^8.1.1
+  cloud_firestore: ^4.4.5
   cupertino_icons: ^1.0.2
   email_validator: ^2.1.17
   equatable: ^2.0.5
+  firebase_analytics: ^10.1.6
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
   firebase_messaging: ^14.3.0
@@ -42,7 +45,7 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/images/main/cg-1.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21 
   web:
     generate: true
     image_path: "assets/images/main/cg-1.png"
@@ -51,7 +54,7 @@ flutter_icons:
   windows:
     generate: true
     image_path: "assets/images/main/cg-1.png"
-    icon_size: 48 # min:48, max:256, default: 48
+    icon_size: 48 
 
 flutter:
   uses-material-design: true

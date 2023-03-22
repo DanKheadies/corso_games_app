@@ -39,7 +39,12 @@ class ThemePlaster extends SharedTheme {
       );
 
   @override
-  Widget tileButton(int i, PuzzleProxy puzzle, bool small) {
+  Widget tileButton(
+    int i,
+    PuzzleProxy puzzle,
+    bool small,
+    BuildContext context,
+  ) {
     final correctColumn = i % puzzle.width;
     final correctRow = i ~/ puzzle.width;
 

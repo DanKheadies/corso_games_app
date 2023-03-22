@@ -49,7 +49,8 @@ class DragObject extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.black,
+                              // Non-selected circles
+                              color: Theme.of(context).colorScheme.surface,
                             ),
                             borderRadius: BorderRadius.circular(50),
                             color: color,
@@ -82,7 +83,8 @@ class DragObject extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.black,
+                            // Dragging circle
+                            color: Theme.of(context).colorScheme.surface,
                           ),
                           borderRadius: BorderRadius.circular(50),
                           color: color.withOpacity(0.666),
@@ -107,7 +109,11 @@ class DragObject extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.black.withOpacity(0.333),
+                            // Background / cast of moving circle
+                            color: Theme.of(context)
+                                .colorScheme
+                                .surface
+                                .withOpacity(0.333),
                           ),
                           borderRadius: BorderRadius.circular(50),
                           color: color.withOpacity(0.333),
@@ -125,7 +131,8 @@ class DragObject extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.black,
+                            // Stationary border
+                            color: Theme.of(context).colorScheme.surface,
                           ),
                           borderRadius: BorderRadius.circular(50),
                           color: color,

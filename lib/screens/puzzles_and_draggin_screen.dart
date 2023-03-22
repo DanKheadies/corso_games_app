@@ -6,7 +6,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class PuzzlesAndDragginScreen extends StatefulWidget {
-  static const String id = 'puzzles-and-draggin';
+  // static const String id = 'puzzles-and-draggin';
+  static const String routeName = '/puzzles-and-draggin';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const PuzzlesAndDragginScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const PuzzlesAndDragginScreen({Key? key}) : super(key: key);
 
@@ -23,15 +30,17 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
   int squaresPerRow = 6;
   int challenge = 0;
   int currentTurn = 0;
-  List<int> roundWon = [0, 0, 0, 0, 0, 0];
-  List<int> roundLimit = [0, 0, 0, 1, 3, 2];
+  List<int> roundWon = [0, 0, 0, 0, 0, 0, 0, 0];
+  List<int> roundLimit = [0, 0, 0, 1, 3, 2, 0, 3];
   List<String> instruction = [
-    'Move the white dot to the bottom right.',
-    'Move the white dots into the 4 corners.',
-    'Move the white dots to the center line.',
-    'Move the white dot to the bottom right in 1 turn.',
-    'Move the white dots into the 4 corners in 3 turns.',
-    'Move the white dots to the center line in 2 turns.',
+    'Move the green dot to the bottom right.',
+    'Move the green dots into the 4 corners.',
+    'Move the green dots to the center line.',
+    'Move the green dot to the bottom right in 1 turn.',
+    'Move the green dots into the 4 corners in 3 turns.',
+    'Move the green dots to the center line in 2 turns.',
+    'Form a green rectangle at the center.',
+    'Form a green rectangle at the center in 3 turns.'
   ];
 
   void turnTicker() {
@@ -111,6 +120,16 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
           turnsTicker: turnTicker,
           roundWon: wonRound,
         );
+      } else if (chal == 6 || chal == 7) {
+        return GameGrid3(
+          boardPad: boardPad,
+          gridWidth: width,
+          squareSize: size,
+          resetGameBoard: reset,
+          unsetReset: unsetReset,
+          turnsTicker: turnTicker,
+          roundWon: wonRound,
+        );
       } else {
         return GameGrid(
           boardPad: boardPad,
@@ -141,6 +160,16 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
         );
       } else if (chal == 2 || chal == 5) {
         return GameGrid2(
+          boardPad: boardPad,
+          gridWidth: width,
+          squareSize: size,
+          resetGameBoard: reset,
+          unsetReset: unsetReset,
+          turnsTicker: turnTicker,
+          roundWon: wonRound,
+        );
+      } else if (chal == 6 || chal == 7) {
+        return GameGrid3(
           boardPad: boardPad,
           gridWidth: width,
           squareSize: size,
@@ -180,11 +209,10 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
         child: Column(
           children: [
             Expanded(
-              flex: 10, // 20
+              flex: 10,
               child: SizedBox(
                 width: double.infinity,
                 height: double.infinity,
-                // color: Colors.grey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -199,18 +227,34 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                       children: [
                         Text(
                           '$currentTurn',
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
                         ),
                         const SizedBox(width: 5),
                         const Text('/'),
                         const SizedBox(width: 5),
-                        (challenge == 3 || challenge == 4 || challenge == 5)
+                        (challenge == 3 ||
+                                challenge == 4 ||
+                                challenge == 5 ||
+                                challenge == 7)
                             ? Text(
                                 '${roundLimit[challenge]}',
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.surface,
+                                    ),
                               )
-                            : const FaIcon(
+                            : FaIcon(
                                 FontAwesomeIcons.infinity,
+                                // color: Colors.black,
+                                color: Theme.of(context).colorScheme.surface,
                               ),
                       ],
                     ),
@@ -219,11 +263,11 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                       padding: const EdgeInsets.all(15),
                       child: Text(
                         instruction[challenge],
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                     roundWon[challenge] == 1
-                        ? challenge >= 5
+                        ? challenge >= 7
                             ? const SizedBox(
                                 height: 48,
                                 child: Center(
@@ -235,6 +279,7 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                                   setState(() {
                                     challenge += 1;
                                     currentTurn = 0;
+                                    resetGrid = true;
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -242,7 +287,14 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                                   backgroundColor:
                                       Theme.of(context).colorScheme.primary,
                                 ),
-                                child: const Text('Huzzah! Next Challenge'),
+                                child: Text(
+                                  'Huzzah! Next Challenge',
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                  ),
+                                ),
                               )
                         : currentTurn >= roundLimit[challenge] &&
                                 roundLimit[challenge] != 0
@@ -277,10 +329,9 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
           ],
         ),
       ),
-      screenFunction: (String _string) {},
-      // bottomBar: const BottomAppBar(),
+      screenFunction: (String string) {},
       bottomBar: BottomAppBar(
-        color: Theme.of(context).colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.secondary,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -290,7 +341,7 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
               icon: Icon(
                 Icons.settings,
                 // color: Colors.white,
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               onPressed: () {},
@@ -300,7 +351,7 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
               icon: Icon(
                 Icons.ios_share_outlined,
                 // color: Colors.white,
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               onPressed: () {},
@@ -313,9 +364,9 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.settings_backup_restore_rounded,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.background,
             size: 30,
           ),
           onPressed: resetGameBoard,

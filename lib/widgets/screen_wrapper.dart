@@ -42,13 +42,20 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
     return Scaffold(
       backgroundColor: widget.backgroundOverride != Colors.transparent
           ? widget.backgroundOverride
-          : Theme.of(context).colorScheme.secondary,
+          : Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        actions: <Widget>[
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.background,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        actions: [
           IconButton(
-            icon: const Icon(Icons.info_outline),
+            icon: const Icon(
+              Icons.info_outline,
+            ),
             onPressed: () => showScreenInfo(
               context,
               widget.infoTitle,
@@ -57,11 +64,11 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
               widget.alignment ?? TextAlign.left,
               'GLHF',
             ),
-          )
+          ),
         ],
       ),
       drawer: GamesDrawer(
-        handler: (String _string) => widget.screenFunction(_string),
+        handler: (String string) => widget.screenFunction(string),
       ),
       body: widget.content,
       bottomNavigationBar: widget.bottomBar,

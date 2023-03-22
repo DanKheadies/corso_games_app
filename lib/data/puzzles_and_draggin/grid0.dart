@@ -10,7 +10,7 @@ List<GridUnit> grid0(
   grid = [
     GridUnit(
       id: '1',
-      data: 'white',
+      data: 'green',
       left: posLeft + (squareSize * 0) + (boardPad * 0),
       top: posTop + (squareSize * 0) + (boardPad * 0),
     ),

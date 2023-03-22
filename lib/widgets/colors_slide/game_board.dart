@@ -54,7 +54,15 @@ class _GameBoardState extends State<GameBoard> {
               intensity: 0.75,
               surfaceIntensity: 0.25,
               lightSource: LightSource.topLeft,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              shadowDarkColor:
+                  Theme.of(context).colorScheme.surface.withOpacity(0.575),
+              shadowDarkColorEmboss:
+                  Theme.of(context).colorScheme.surface.withOpacity(0.575),
+              shadowLightColor:
+                  Theme.of(context).colorScheme.background.withOpacity(0.575),
+              shadowLightColorEmboss:
+                  Theme.of(context).colorScheme.background.withOpacity(0.575),
             ),
             child: SizedBox(
               width: root,

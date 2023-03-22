@@ -6,7 +6,14 @@ import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class ElGameScreen extends StatelessWidget {
-  static const String id = 'el-game';
+  // static const String id = 'el-game';
+  static const String routeName = '/el-game';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const ElGameScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const ElGameScreen({Key? key}) : super(key: key);
 
@@ -44,7 +51,6 @@ class ElGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    // double width = MediaQuery.of(context).size.width;
 
     return BlocConsumer<ElWordBloc, ElWordState>(
       listenWhen: (previous, current) {
@@ -55,9 +61,12 @@ class ElGameScreen extends StatelessWidget {
       },
       listener: (context, state) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('That word is not in the Corso dictionary.'),
-            duration: Duration(seconds: 3),
+          SnackBar(
+            content: Text(
+              'That word is not in the Corso dictionary.',
+              style: TextStyle(color: Theme.of(context).colorScheme.surface),
+            ),
+            duration: const Duration(seconds: 3),
           ),
         );
       },
@@ -65,7 +74,7 @@ class ElGameScreen extends StatelessWidget {
         if (state is ElWordLoading) {
           return Center(
             child: CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.tertiary,
+              color: Theme.of(context).colorScheme.primary,
             ),
           );
         }
@@ -92,7 +101,7 @@ class ElGameScreen extends StatelessWidget {
                       // fontSize: 32,
                       fontSize: height * .04,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   SizedBox(height: height * 0.05),
@@ -101,20 +110,18 @@ class ElGameScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: height * .04,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   SizedBox(height: height * 0.025),
                   Text(
                     state.solution,
                     style: TextStyle(
-                      // fontSize: 42,
                       fontSize: height * .055,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                  // const SizedBox(height: 50),
                   SizedBox(height: height * 0.05),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -122,7 +129,7 @@ class ElGameScreen extends StatelessWidget {
                     child: Text(
                       'Play Again',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         // fontSize: 18,
                         fontSize: height * 0.025,
                       ),
@@ -149,10 +156,9 @@ class ElGameScreen extends StatelessWidget {
                   Text(
                     'Congrats, you won!',
                     style: TextStyle(
-                      // fontSize: 32,
                       fontSize: height * .04,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   SizedBox(height: height * 0.05),
@@ -161,20 +167,18 @@ class ElGameScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: height * .04,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   SizedBox(height: height * 0.025),
                   Text(
                     state.solution,
                     style: TextStyle(
-                      // fontSize: 42,
                       fontSize: height * .055,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
-                  // const SizedBox(height: 50),
                   SizedBox(height: height * 0.05),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -182,8 +186,7 @@ class ElGameScreen extends StatelessWidget {
                     child: Text(
                       'Play Again',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                        // fontSize: 18,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         fontSize: height * 0.025,
                       ),
                     ),

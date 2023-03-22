@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/timer/timer_bloc.dart';
-import 'package:corso_games_app/widgets/dino_dash/cactus.dart';
-import 'package:corso_games_app/widgets/dino_dash/cloud.dart';
-import 'package:corso_games_app/widgets/dino_dash/constants.dart';
-import 'package:corso_games_app/widgets/dino_dash/dino.dart';
-// import 'package:corso_games_app/widgets/dino_dash/game_object.dart';
-// import 'package:corso_games_app/widgets/dino_dash/ground.dart';
-// import 'package:corso_games_app/widgets/screen_wrapper.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class DinoRunScreen extends StatefulWidget {
-  static const String id = 'dino-dash';
+  // static const String id = 'dino-dash';
+  static const String routeName = '/dino-dash';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const DinoRunScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const DinoRunScreen({Key? key}) : super(key: key);
 
@@ -58,9 +58,7 @@ class _DinoRunScreenState extends State<DinoRunScreen>
   }
 
   _update() {
-    // print(worldController.lastElapsedDuration);
     if (worldController.lastElapsedDuration == null) return;
-    // print('not null');
     dino.update(
         lastUpdateCall, worldController.lastElapsedDuration as Duration);
 
@@ -173,10 +171,8 @@ class _DinoRunScreenState extends State<DinoRunScreen>
   BlocBuilder actionButtons(BuildContext context) {
     return BlocBuilder<TimerBloc, TimerState>(
       builder: (context, state) {
-        // context.read<TimerBloc>().add(TimerStarted(duration: state.duration));
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          // children: const [],
           children: [
             if (state is TimerReady) ...[
               FloatingActionButton(
@@ -206,11 +202,6 @@ class _DinoRunScreenState extends State<DinoRunScreen>
                 child: const Icon(Icons.refresh),
                 onPressed: () => context.read<TimerBloc>().add(TimerReset()),
               ),
-              // ] else if (state is TimerComplete) ...[
-              //   FloatingActionButton(
-              //     child: const Icon(Icons.refresh),
-              //     onPressed: () => context.read<TimerBloc>().add(TimerReset()),
-              //   ),
             ],
           ],
         );
@@ -255,10 +246,8 @@ class _DinoRunScreenState extends State<DinoRunScreen>
           children: [
             Text(
               '${context.select((TimerBloc bloc) => bloc.state.duration)}',
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
-            // actionButtons(context),
-            // Text('${context.select((TimerBloc bloc) => bloc.state)}'),
           ],
         ),
       ),
@@ -269,7 +258,6 @@ class _DinoRunScreenState extends State<DinoRunScreen>
         if (dino.isDead) {
           stopTimer(context);
         } else if (!dino.isDead && state.duration > 0 && runDistance == 0) {
-          print('derp');
           restartTimer(context);
         } else if (!dino.isDead && state.duration < 1) {
           startTimer(context, state);
@@ -288,19 +276,17 @@ class _DinoRunScreenState extends State<DinoRunScreen>
               children: children,
             ),
           ),
-          screenFunction: (String _string) {
-            if (_string == 'drawerOpen') {
+          screenFunction: (String string) {
+            if (string == 'drawerOpen') {
               stopTimer(context);
               worldController.stop();
-            } else if (_string == 'drawerClose') {
+            } else if (string == 'drawerClose') {
               startTimer(context, state);
               worldController.repeat();
-              // worldController.forward();
-              // worldController.forward(from: state.duration.toDouble());
             }
           },
           bottomBar: BottomAppBar(
-            color: Theme.of(context).colorScheme.tertiary,
+            color: Theme.of(context).colorScheme.secondary,
             shape: const CircularNotchedRectangle(),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -309,8 +295,7 @@ class _DinoRunScreenState extends State<DinoRunScreen>
                   tooltip: 'Settings',
                   icon: Icon(
                     Icons.settings,
-                    // color: Colors.white,
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Theme.of(context).colorScheme.secondary,
                     size: 30,
                   ),
                   onPressed: () {},
@@ -319,8 +304,7 @@ class _DinoRunScreenState extends State<DinoRunScreen>
                   tooltip: 'Share',
                   icon: Icon(
                     Icons.ios_share_outlined,
-                    // color: Colors.white,
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Theme.of(context).colorScheme.secondary,
                     size: 30,
                   ),
                   onPressed: () {},
@@ -336,9 +320,9 @@ class _DinoRunScreenState extends State<DinoRunScreen>
             tooltip: 'Reset',
             backgroundColor: Theme.of(context).colorScheme.primary,
             child: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.settings_backup_restore_rounded,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.background,
                 size: 30,
               ),
               onPressed: () {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:corso_games_app/widgets/tic_tac_toe/field.dart';
 
-class Board extends StatelessWidget {
-  const Board({Key? key}) : super(key: key);
+class TicTacToeBoard extends StatelessWidget {
+  const TicTacToeBoard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

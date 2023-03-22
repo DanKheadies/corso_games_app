@@ -42,16 +42,17 @@ class Results extends StatelessWidget {
               Text(
                 'Draws',
                 style: TextStyle(
-                  fontSize: state.getAdaptiveTextSize(context, 16),
-                  color: Colors.grey[800],
-                ),
+                    fontSize: state.getAdaptiveTextSize(context, 16),
+                    // color: Colors.grey[800],
+                    color: Theme.of(context).colorScheme.surface),
               ),
               SizedBox(height: size.height * 0.012),
               Text(
                 '${state.draws}',
                 style: TextStyle(
                   fontSize: state.getAdaptiveTextSize(context, 40),
-                  color: Colors.grey[800],
+                  // color: Colors.grey[800],
+                  color: Theme.of(context).colorScheme.surface,
                   fontWeight: FontWeight.w200,
                 ),
               ),

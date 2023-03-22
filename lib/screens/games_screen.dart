@@ -4,7 +4,14 @@ import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class GamesScreen extends StatelessWidget {
-  static const String id = 'games';
+  // static const String id = 'games';
+  static const String routeName = '/games';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const GamesScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const GamesScreen({Key? key}) : super(key: key);
 
@@ -28,7 +35,7 @@ class GamesScreen extends StatelessWidget {
             title: 'Colors Slide',
             onPress: () => Navigator.pushNamed(
               context,
-              ColorsSlideScreen.id,
+              ColorsSlideScreen.routeName,
             ),
           ),
           GameButton(
@@ -36,7 +43,7 @@ class GamesScreen extends StatelessWidget {
             title: 'Dino Dash',
             onPress: () => Navigator.pushNamed(
               context,
-              DinoRunScreen.id,
+              DinoRunScreen.routeName,
             ),
           ),
           GameButton(
@@ -44,7 +51,7 @@ class GamesScreen extends StatelessWidget {
             title: 'El Word',
             onPress: () => Navigator.pushNamed(
               context,
-              ElWordScreen.id,
+              ElWordScreen.routeName,
             ),
           ),
           GameButton(
@@ -52,7 +59,7 @@ class GamesScreen extends StatelessWidget {
             title: 'Minesweeper',
             onPress: () => Navigator.pushNamed(
               context,
-              MinesweeperScreen.id,
+              MinesweeperScreen.routeName,
             ),
           ),
           GameButton(
@@ -60,7 +67,7 @@ class GamesScreen extends StatelessWidget {
             title: 'PAD',
             onPress: () => Navigator.pushNamed(
               context,
-              PuzzlesAndDragginScreen.id,
+              PuzzlesAndDragginScreen.routeName,
             ),
           ),
           GameButton(
@@ -68,7 +75,7 @@ class GamesScreen extends StatelessWidget {
             title: 'Slide to Slide',
             onPress: () => Navigator.pushNamed(
               context,
-              SlideToSlideScreen.id,
+              SlideToSlideScreen.routeName,
             ),
           ),
           GameButton(
@@ -76,7 +83,15 @@ class GamesScreen extends StatelessWidget {
             title: 'Solitare',
             onPress: () => Navigator.pushNamed(
               context,
-              SolitareScreen.id,
+              SolitareScreen.routeName,
+            ),
+          ),
+          GameButton(
+            icon: Icons.grain_rounded,
+            title: 'Solo Noble',
+            onPress: () => Navigator.pushNamed(
+              context,
+              SoloNobleScreen.routeName,
             ),
           ),
           GameButton(
@@ -84,16 +99,13 @@ class GamesScreen extends StatelessWidget {
             title: 'Tic Tac Toe',
             onPress: () => Navigator.pushNamed(
               context,
-              TicTacToeScreen.id,
+              TicTacToeScreen.routeName,
             ),
           ),
         ],
       ),
-      screenFunction: (String _string) {},
-      bottomBar: BottomAppBar(
-        // TODO: remove this?
-        color: Theme.of(context).colorScheme.secondary,
-      ),
+      screenFunction: (String string) {},
+      bottomBar: const SizedBox(),
     );
   }
 }

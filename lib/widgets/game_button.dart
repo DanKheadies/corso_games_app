@@ -88,13 +88,21 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
         curve: Curves.easeIn,
         child: NeumorphicButton(
           style: NeumorphicStyle(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).scaffoldBackgroundColor,
             depth: waitForAnim
                 ? _animationTween.value
                 : isPressed
                     ? -4
                     : 4,
             intensity: 2.5,
+            shadowDarkColor:
+                Theme.of(context).colorScheme.surface.withOpacity(0.575),
+            shadowDarkColorEmboss:
+                Theme.of(context).colorScheme.surface.withOpacity(0.575),
+            shadowLightColor:
+                Theme.of(context).colorScheme.background.withOpacity(1),
+            shadowLightColorEmboss:
+                Theme.of(context).colorScheme.background.withOpacity(1),
             shape: NeumorphicShape.flat,
             boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
           ),

@@ -37,7 +37,12 @@ class ThemeSpace extends SharedTheme {
       puzzle.solved ? const EdgeInsets.all(1) : const EdgeInsets.all(4);
 
   @override
-  Widget tileButton(int i, PuzzleProxy puzzle, bool small) {
+  Widget tileButton(
+    int i,
+    PuzzleProxy puzzle,
+    bool small,
+    BuildContext context,
+  ) {
     if (i == puzzle.tileCount && !puzzle.solved) {
       assert(puzzle.solved);
     }

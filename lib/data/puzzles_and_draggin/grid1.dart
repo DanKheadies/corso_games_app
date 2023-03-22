@@ -45,7 +45,7 @@ List<GridUnit> grid1(
     ),
     GridUnit(
       id: '8',
-      data: 'white',
+      data: 'green',
       left: posLeft + (squareSize * 1) + (boardPad * 1),
       top: posTop + (squareSize * 1) + (boardPad * 1),
     ),
@@ -71,7 +71,7 @@ List<GridUnit> grid1(
     ),
     GridUnit(
       id: '13',
-      data: 'white',
+      data: 'green',
       left: posLeft + (squareSize * 0) + (boardPad * 0),
       top: posTop + (squareSize * 2) + (boardPad * 2),
     ),
@@ -117,13 +117,13 @@ List<GridUnit> grid1(
     ),
     GridUnit(
       id: '22',
-      data: 'white',
+      data: 'green',
       left: posLeft + (squareSize * 3) + (boardPad * 3),
       top: posTop + (squareSize * 3) + (boardPad * 3),
     ),
     GridUnit(
       id: '23',
-      data: 'white',
+      data: 'green',
       left: posLeft + (squareSize * 4) + (boardPad * 4),
       top: posTop + (squareSize * 3) + (boardPad * 3),
     ),

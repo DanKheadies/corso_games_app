@@ -25,23 +25,17 @@ class CustomKey extends StatelessWidget {
     Color color = (letterEvaluation.isNotEmpty)
         ? letterEvaluation
                 .any((letter) => letter!.evaluation == Evaluation.correct)
-            ? Colors.lightGreen
+            ? Theme.of(context).colorScheme.tertiary
             : letterEvaluation
                     .any((letter) => letter!.evaluation == Evaluation.present)
-                ? Theme.of(context).colorScheme.tertiary
+                ? Theme.of(context).colorScheme.secondary
                 : letterEvaluation.any(
                         (letter) => letter!.evaluation == Evaluation.missing)
-                    // ? Theme.of(context).colorScheme.secondary
-                    // ? Colors.black87
-                    ? Colors.grey[800] as Color
+                    ? Theme.of(context).colorScheme.surface.withOpacity(0.825)
                     : Theme.of(context).colorScheme.primary
         : Theme.of(context).colorScheme.primary;
 
     return Container(
-      // width: 45,
-      // height: 45,
-      // width: 25,
-      // height: 25,
       width: width * .075,
       height: height * .05,
       decoration: BoxDecoration(
@@ -49,7 +43,7 @@ class CustomKey extends StatelessWidget {
         color: color,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.tertiary,
+            color: Theme.of(context).colorScheme.background,
             blurRadius: 1,
             spreadRadius: 1,
           ),
@@ -62,10 +56,8 @@ class CustomKey extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              // fontSize: 18,
-              // fontSize: 14,
               fontSize: height * .0175,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).scaffoldBackgroundColor,
             ),
           ),
         ),

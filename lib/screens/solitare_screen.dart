@@ -6,7 +6,14 @@ import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class SolitareScreen extends StatefulWidget {
-  static const String id = 'solitare';
+  // static const String id = 'solitare';
+  static const String routeName = '/solitare';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const SolitareScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const SolitareScreen({super.key});
 
@@ -267,6 +274,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
                         ..faceUp = false;
                     }),
                   );
+                  cardDeckOpened.clear();
                 } else {
                   cardDeckOpened.add(
                     cardDeckClosed.removeLast()
@@ -371,7 +379,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
       infoDetails:
           'Stack cards sequentially in their suit. You can reveal new cards by moving opposite colored cards onto cards that are one higher than their own value, e.g. a red six can be placed on a black seven.',
       button: 'Leggooo!',
-      backgroundOverride: Colors.transparent,
+      backgroundOverride: Theme.of(context).colorScheme.tertiary,
       content: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -502,7 +510,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
       screenFunction: (String string) {},
       // bottomBar: const BottomAppBar(),
       bottomBar: BottomAppBar(
-        color: Theme.of(context).colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.secondary,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -511,8 +519,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
               tooltip: 'Settings',
               icon: Icon(
                 Icons.settings,
-                // color: Colors.white,
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               onPressed: () {},
@@ -522,7 +529,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
               icon: Icon(
                 Icons.ios_share_outlined,
                 // color: Colors.white,
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
               onPressed: () {},
@@ -538,9 +545,9 @@ class _SolitareScreenState extends State<SolitareScreen> {
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.settings_backup_restore_rounded,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.background,
             size: 30,
           ),
           // onPressed: resetGameBoard,

@@ -7,7 +7,14 @@ import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class ElWordScreen extends StatefulWidget {
-  static const String id = 'el-word';
+  // static const String id = 'el-word';
+  static const String routeName = '/el-word';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const ElWordScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const ElWordScreen({Key? key}) : super(key: key);
 
@@ -27,12 +34,12 @@ class _ElWordScreenState extends State<ElWordScreen> {
         title: 'El Word',
         infoTitle: 'El Word',
         infoDetails:
-            'Try to guess the word. Green is good. Pink is close but no cigar. Try it in another spot. The other pink (maroon) await their fate. And if it\'s in a dark, unreachable void, it means it\'s dead. Leave it..',
+            'Try to guess the word. Green is good. Pink is close but no cigar. Try it in another spot. The other pink (maroon) await their fate. And if it\'s in a dark, unreachable void, it means it\'s dead. Leave it.. Unless you\'re in dark mode. Then light isn\'t right. Leave it..',
         backgroundOverride: Colors.transparent,
         content: const ElGameScreen(),
-        screenFunction: (String _string) {},
+        screenFunction: (String string) {},
         bottomBar: BottomAppBar(
-          color: Theme.of(context).colorScheme.tertiary,
+          color: Theme.of(context).colorScheme.secondary,
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -41,8 +48,7 @@ class _ElWordScreenState extends State<ElWordScreen> {
                 tooltip: 'Settings',
                 icon: Icon(
                   Icons.settings,
-                  // color: Colors.white,
-                  color: Theme.of(context).colorScheme.tertiary,
+                  color: Theme.of(context).colorScheme.secondary,
                   size: 30,
                 ),
                 onPressed: () {},
@@ -51,7 +57,7 @@ class _ElWordScreenState extends State<ElWordScreen> {
                 tooltip: 'Share',
                 icon: Icon(
                   Icons.ios_share_outlined,
-                  color: Theme.of(context).colorScheme.tertiary,
+                  color: Theme.of(context).colorScheme.secondary,
                   size: 30,
                 ),
                 onPressed: () {},
@@ -79,9 +85,9 @@ class _ElWordScreenState extends State<ElWordScreen> {
               tooltip: 'Reset',
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.settings_backup_restore_rounded,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.background,
                   size: 30,
                 ),
                 onPressed: () {

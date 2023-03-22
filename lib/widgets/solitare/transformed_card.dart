@@ -79,7 +79,11 @@ class _TransformedCardState extends State<TransformedCard> {
             width: 40,
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.black,
+                // color: Colors.black,
+                color:
+                    MediaQuery.of(context).platformBrightness == Brightness.dark
+                        ? Theme.of(context).colorScheme.background
+                        : Theme.of(context).colorScheme.onBackground,
               ),
               borderRadius: BorderRadius.circular(8),
               // color: Colors.blue,
@@ -109,10 +113,15 @@ class _TransformedCardState extends State<TransformedCard> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.black,
+            // color: Colors.black,
+            color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? Theme.of(context).colorScheme.background
+                : Theme.of(context).colorScheme.onBackground,
           ),
           borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
+          color: MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? Theme.of(context).colorScheme.surface
+              : Theme.of(context).colorScheme.onSurface,
         ),
         height: 60,
         width: 40,
@@ -125,7 +134,11 @@ class _TransformedCardState extends State<TransformedCard> {
                   Center(
                     child: Text(
                       _cardTypeToString(),
-                      style: const TextStyle(
+                      style: TextStyle(
+                        color: MediaQuery.of(context).platformBrightness ==
+                                Brightness.dark
+                            ? Theme.of(context).colorScheme.background
+                            : Theme.of(context).colorScheme.onBackground,
                         fontSize: 16,
                       ),
                     ),
@@ -147,7 +160,11 @@ class _TransformedCardState extends State<TransformedCard> {
                   children: [
                     Text(
                       _cardTypeToString(),
-                      style: const TextStyle(
+                      style: TextStyle(
+                        color: MediaQuery.of(context).platformBrightness ==
+                                Brightness.dark
+                            ? Theme.of(context).colorScheme.background
+                            : Theme.of(context).colorScheme.onBackground,
                         fontSize: 10,
                       ),
                     ),

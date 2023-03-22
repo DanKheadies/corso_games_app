@@ -5,7 +5,14 @@ import 'package:corso_games_app/providers/providers.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class TicTacToeScreen extends StatelessWidget {
-  static const String id = 'tic-tac-toe';
+  // static const String id = 'tic-tac-toe';
+  static const String routeName = '/tic-tac-toe';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (_) => const TicTacToeScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   const TicTacToeScreen({Key? key}) : super(key: key);
 
@@ -26,7 +33,7 @@ class TicTacToeScreen extends StatelessWidget {
               Column(
                 children: const [
                   WhoseMove(),
-                  Board(),
+                  TicTacToeBoard(),
                 ],
               ),
               const Results(),
@@ -34,8 +41,8 @@ class TicTacToeScreen extends StatelessWidget {
           ),
         ),
       ),
-      screenFunction: (String _string) {},
-      bottomBar: const BottomAppBar(),
+      screenFunction: (String string) {},
+      bottomBar: const SizedBox(),
     );
   }
 }

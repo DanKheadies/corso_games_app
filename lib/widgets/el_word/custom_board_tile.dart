@@ -26,21 +26,23 @@ class CustomBoardTile extends StatelessWidget {
             ? Colors.transparent
             // If the letter is correct, we use the primary red/pink.
             : letters[letterIndex]!.evaluation == Evaluation.correct
-                ? Colors.lightGreen
+                // ? Colors.lightGreen
+                ? Theme.of(context).colorScheme.tertiary
                 // If the letter is correct, but not in the right spot, we use a yellow.
                 : letters[letterIndex]!.evaluation == Evaluation.present
-                    ? Theme.of(context).colorScheme.tertiary
-                    : Colors.grey[800] as Color
+                    ? Theme.of(context).colorScheme.secondary
+                    // : Colors.grey[800] as Color
+                    : Theme.of(context).colorScheme.surface.withOpacity(0.825)
         : Colors.transparent;
 
     // Set the color of the Text
     Color textColor = (letterCount > letterIndex)
         // If the eval is equal to pending, no color.
         ? letters[letterIndex]!.evaluation == Evaluation.missing
-            ? Theme.of(context).colorScheme.secondary
+            ? Theme.of(context).scaffoldBackgroundColor
             : letters[letterIndex]!.evaluation == Evaluation.pending
-                ? Colors.black
-                : Theme.of(context).colorScheme.secondary
+                ? Theme.of(context).colorScheme.surface
+                : Theme.of(context).scaffoldBackgroundColor
         : Colors.black;
 
     return Container(
@@ -48,7 +50,7 @@ class CustomBoardTile extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: Theme.of(context).colorScheme.tertiary,
+          color: Theme.of(context).colorScheme.secondary,
           width: 2,
         ),
         color: color,

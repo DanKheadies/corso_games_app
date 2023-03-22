@@ -189,7 +189,7 @@ const _maxFrameDuration = Duration(milliseconds: 34);
 
 Widget _updateConstraints(
     BoxConstraints constraints, Widget Function(bool small) builder) {
-  const _smallWidth = 580;
+  const smallWidth = 580;
 
   final constraintWidth =
       constraints.hasBoundedWidth ? constraints.maxWidth : 1000.0;
@@ -197,7 +197,7 @@ Widget _updateConstraints(
   final constraintHeight =
       constraints.hasBoundedHeight ? constraints.maxHeight : 1000.0;
 
-  return builder(constraintWidth < _smallWidth || constraintHeight < 690);
+  return builder(constraintWidth < smallWidth || constraintHeight < 690);
 }
 
 Widget _doBuild(BuildContext _, BoxConstraints constraints) =>
@@ -220,10 +220,10 @@ Widget _doBuildCore(bool small) => ValueTabController<SharedTheme>(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Colors.black26,
+                              color: Theme.of(context).colorScheme.secondary,
                               width: 1,
                             ),
                           ),
@@ -235,7 +235,10 @@ Widget _doBuildCore(bool small) => ValueTabController<SharedTheme>(
                           labelColor: theme.puzzleAccentColor,
                           indicatorColor: theme.puzzleAccentColor,
                           indicatorWeight: 1.5,
-                          unselectedLabelColor: Colors.black.withOpacity(0.6),
+                          unselectedLabelColor: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.666),
                           tabs: themes
                               .map((st) => Text(
                                     st.name.toUpperCase(),
@@ -261,15 +264,20 @@ Widget _doBuildCore(bool small) => ValueTabController<SharedTheme>(
                                 i,
                                 appState.puzzle,
                                 small,
+                                context,
                               ),
                             ),
                           ),
                         ),
                       ),
                       Container(
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           border: Border(
-                            top: BorderSide(color: Colors.black26, width: 1),
+                            top: BorderSide(
+                              // color: Colors.black26,
+                              color: Theme.of(context).colorScheme.secondary,
+                              width: 1,
+                            ),
                           ),
                         ),
                         padding: const EdgeInsets.only(
@@ -279,8 +287,12 @@ Widget _doBuildCore(bool small) => ValueTabController<SharedTheme>(
                           right: 10,
                         ),
                         child: Consumer<PuzzleControls>(
-                          builder: (_, controls, __) =>
-                              Row(children: theme.bottomControls(controls)),
+                          builder: (_, controls, __) => Row(
+                            children: theme.bottomControls(
+                              controls,
+                              context,
+                            ),
+                          ),
                         ),
                       )
                     ],

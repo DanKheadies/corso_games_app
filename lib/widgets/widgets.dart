@@ -10,4 +10,5 @@ export 'screen_info.dart';
 export 'screen_wrapper.dart';
 export 'slide_to_slide/widgets.dart';
 export 'solitare/widgets.dart';
+export 'solo_noble/widgets.dart';
 export 'tic_tac_toe/widgets.dart';
