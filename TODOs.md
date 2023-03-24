@@ -11,10 +11,16 @@ A list of TODOs to improve Corso Games for all.
     1. Restarting bug
 3. Minesweeper
     1. Scrollable area vs calculation
-4. Nonograms
-5. Slide to Slide
+4. Slide to Slide
     1. Winning and showing
+5. Solo Noble
+    1. Win/lose popup
+6. User Account
+    1. Login / Register
+    2. Subscribe to notifications (why?)
+    3. Reset High Scores
+    4. Dark / Light mode
 
 ---
 
-Compliments of DTFun LLC 2022
+Compliments of DTFun LLC 2023

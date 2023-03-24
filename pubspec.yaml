@@ -28,6 +28,7 @@ dependencies:
   flutter_pw_validator: ^1.5.0
   font_awesome_flutter: ^10.3.0
   hydrated_bloc: ^9.1.0
+  path_provider: ^2.0.14
   permission_handler: ^10.2.0
   provider: ^6.0.2
   stop_watch_timer: ^2.0.0

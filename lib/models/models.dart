@@ -14,3 +14,4 @@ export 'solitare/playing_card.dart';
 export 'solo_noble/board_configuration.dart';
 export 'solo_noble/index.dart';
 export 'ticker.dart';
+export 'user_model.dart';

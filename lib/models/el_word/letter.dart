@@ -8,14 +8,14 @@ enum Evaluation {
 }
 
 class Letter extends Equatable {
-  final int? id;
+  final int id;
   final String letter;
-  final Evaluation? evaluation;
+  final Evaluation evaluation;
 
   const Letter({
-    this.id,
-    required this.letter,
-    required this.evaluation,
+    this.id = 0,
+    this.letter = '',
+    this.evaluation = Evaluation.pending,
   });
 
   @override
@@ -31,5 +31,28 @@ class Letter extends Equatable {
       letter: letter ?? this.letter,
       evaluation: evaluation ?? this.evaluation,
     );
+  }
+
+  factory Letter.fromJson(Map<String, dynamic> json) {
+    // print('Letter fromJson');
+    return Letter(
+      id: json['id'],
+      letter: json['letter'],
+      evaluation: Evaluation.values.firstWhere(
+        (eval) => eval.name.toString() == json['evaluation'],
+      ),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    // print('Letter toJson');
+    // print(id);
+    // print(letter);
+    // print(evaluation.name);
+    return {
+      'id': id,
+      'letter': letter,
+      'evaluation': evaluation.name,
+    };
   }
 }

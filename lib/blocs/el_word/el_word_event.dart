@@ -1,7 +1,6 @@
 part of 'el_word_bloc.dart';
 
-@immutable
-abstract class ElWordEvent extends Equatable {
+class ElWordEvent extends Equatable {
   const ElWordEvent();
 
   @override
@@ -9,6 +8,8 @@ abstract class ElWordEvent extends Equatable {
 }
 
 class LoadGame extends ElWordEvent {}
+
+class ResetGame extends ElWordEvent {}
 
 class UpdateGuess extends ElWordEvent {
   final Word word;
@@ -24,7 +25,12 @@ class UpdateGuess extends ElWordEvent {
   });
 
   @override
-  List<Object> get props => [word, isBackArrow, isCheckBtn, isNormalBtn];
+  List<Object> get props => [
+        word,
+        isBackArrow,
+        isCheckBtn,
+        isNormalBtn,
+      ];
 }
 
 class ValidateGuess extends ElWordEvent {

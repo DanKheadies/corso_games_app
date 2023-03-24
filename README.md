@@ -30,6 +30,9 @@ A collection of Flutter games. GLHF!
 > [Solitare](https://github.com/deven98/FlutterSolitaire)
 > via Deven Joshi
 
+> [Solo Noble](https://github.com/austincv/peg-solitaire)
+> via Austin Chungath Vincent
+
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)
@@ -40,4 +43,4 @@ A collection of Flutter games. GLHF!
 
 ---
 
-Compliments of DTFun LLC 2022
+Compliments of DTFun LLC 2023

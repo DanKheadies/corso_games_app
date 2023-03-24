@@ -1,61 +1,66 @@
 part of 'el_word_bloc.dart';
 
-@immutable
-abstract class ElWordState extends Equatable {
-  const ElWordState();
-
-  @override
-  List<Object?> get props => [];
+enum ElWordStatus {
+  initial,
+  loading,
+  loaded,
+  solved,
+  wrong,
+  reset, // TODO
+  error,
 }
 
-class ElWordLoading extends ElWordState {}
-
-class ElWordLoaded extends ElWordState {
+class ElWordState extends Equatable {
+  final ElWordStatus status;
   final Word solution;
-  final List<String> dictionary;
   final List<Word> guesses;
   final int letterCount;
   final bool isNewWord;
   final bool isNotInDictionary;
 
-  const ElWordLoaded({
-    required this.solution,
-    required this.dictionary,
-    required this.guesses,
+  const ElWordState({
+    this.status = ElWordStatus.initial,
+    this.solution = const Word(),
+    this.guesses = const [],
     this.letterCount = 0,
     this.isNewWord = false,
     this.isNotInDictionary = false,
   });
 
+  factory ElWordState.fromJson(Map<String, dynamic> json) {
+    var list = json['guesses'] as List;
+    List<Word> guessesList = list.map((word) => Word.fromJson(word)).toList();
+
+    return ElWordState(
+      status: ElWordStatus.values.firstWhere(
+        (status) => status.name.toString() == json['status'],
+      ),
+      solution: Word.fromJson(json['solution']),
+      guesses: guessesList,
+      letterCount: json['letterCount'],
+      isNewWord: json['isNewWord'],
+      isNotInDictionary: json['isNotInDictionary'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status.name,
+      'solution': solution.toJson(),
+      'guesses': guesses,
+      'letterCount': letterCount,
+      'isNewWord': isNewWord,
+      'isNotInDictionary': isNotInDictionary,
+    };
+  }
+
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
+        status,
         solution,
-        dictionary,
         guesses,
         letterCount,
         isNewWord,
         isNotInDictionary,
       ];
-}
-
-class ElWordSolved extends ElWordState {
-  final String solution;
-
-  const ElWordSolved({
-    required this.solution,
-  });
-
-  @override
-  List<Object> get props => [solution];
-}
-
-class ElWordWrong extends ElWordState {
-  final String solution;
-
-  const ElWordWrong({
-    required this.solution,
-  });
-
-  @override
-  List<Object> get props => [solution];
 }

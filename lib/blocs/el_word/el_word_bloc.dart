@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -11,12 +11,10 @@ import 'package:corso_games_app/models/el_word/word.dart';
 part 'el_word_event.dart';
 part 'el_word_state.dart';
 
-class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
-  ElWordBloc()
-      : super(
-          ElWordLoading(),
-        ) {
+class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
+  ElWordBloc() : super(const ElWordState()) {
     on<LoadGame>(_onLoadGame);
+    on<ResetGame>(_onResetGame);
     on<UpdateGuess>(_onUpdateGuess);
     on<ValidateGuess>(_onValidateGuess);
   }
@@ -25,7 +23,9 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
     LoadGame event,
     Emitter<ElWordState> emit,
   ) async {
-    String wordsFile = await rootBundle.loadString('assets/el_word/words.txt');
+    if (state.status == ElWordStatus.loaded) return;
+
+    String wordsFile = await loadDictionary();
     List<String> words = wordsFile.split('\n');
     int randomIndex = Random().nextInt(words.length);
     String word = words[randomIndex];
@@ -56,13 +56,56 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
       ],
     );
 
-    var dictionary =
-        await rootBundle.loadString('assets/el_word/words_full.txt');
+    emit(
+      ElWordState(
+        status: ElWordStatus.loaded,
+        solution: elWord,
+        guesses: Word.guesses,
+      ),
+    );
+  }
+
+  void _onResetGame(
+    ResetGame event,
+    Emitter<ElWordState> emit,
+  ) async {
+    // TODO: combine w/ load game
+
+    String wordsFile = await loadDictionary();
+    List<String> words = wordsFile.split('\n');
+    int randomIndex = Random().nextInt(words.length);
+    String word = words[randomIndex];
+    word.toUpperCase();
+
+    Word elWord = Word(
+      letters: <Letter>[
+        Letter(
+          letter: word.substring(0, 1),
+          evaluation: Evaluation.correct,
+        ),
+        Letter(
+          letter: word.substring(1, 2),
+          evaluation: Evaluation.correct,
+        ),
+        Letter(
+          letter: word.substring(2, 3),
+          evaluation: Evaluation.correct,
+        ),
+        Letter(
+          letter: word.substring(3, 4),
+          evaluation: Evaluation.correct,
+        ),
+        Letter(
+          letter: word.substring(4, 5),
+          evaluation: Evaluation.correct,
+        ),
+      ],
+    );
 
     emit(
-      ElWordLoaded(
+      ElWordState(
+        status: ElWordStatus.loaded,
         solution: elWord,
-        dictionary: dictionary.split('\n'),
         guesses: Word.guesses,
       ),
     );
@@ -71,9 +114,9 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
   void _onUpdateGuess(
     UpdateGuess event,
     Emitter<ElWordState> emit,
-  ) {
+  ) async {
     final state = this.state;
-    if (state is ElWordLoaded) {
+    if (state.status == ElWordStatus.loaded) {
       int letterCount;
 
       List<Word> guesses = (state.guesses.map((word) {
@@ -83,9 +126,13 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
       var prevWordIndex = (state.letterCount / 5).floor() - 1;
 
       if (prevWordIndex >= 0) {
-        if (guesses[prevWordIndex].letters[0]?.evaluation ==
+        if (guesses[prevWordIndex].letters[0].evaluation ==
                 Evaluation.pending &&
-            guesses[prevWordIndex].letters[4] != null &&
+            guesses[prevWordIndex].letters[4] !=
+                const Letter(
+                  letter: '',
+                  evaluation: Evaluation.missing,
+                ) &&
             !event.isCheckBtn &&
             !event.isBackArrow) {
           return;
@@ -101,9 +148,9 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
       }
 
       emit(
-        ElWordLoaded(
+        ElWordState(
+          status: ElWordStatus.loaded,
           solution: state.solution,
-          dictionary: state.dictionary,
           guesses: guesses,
           letterCount: letterCount,
           isNewWord: letterCount % 5 == 0 && event.isBackArrow,
@@ -111,9 +158,12 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
       );
 
       if (event.isCheckBtn) {
-        if (state.dictionary.contains(
+        String wordsFile = await loadDictionary();
+        List<String> dictionary = wordsFile.split('\n');
+
+        if (dictionary.contains(
           event.word.letters
-              .map((letter) => letter!.letter)
+              .map((letter) => letter.letter)
               .join()
               .toLowerCase(),
         )) {
@@ -125,15 +175,22 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
             return word.id == event.word.id
                 ? Word(
                     id: event.word.id,
-                    letters: List.generate(5, (index) => null),
+                    letters: List.generate(
+                      5,
+                      (index) => Letter(
+                        id: index,
+                        letter: '',
+                        evaluation: Evaluation.pending,
+                      ),
+                    ),
                   )
                 : word;
           })).toList();
 
           emit(
-            ElWordLoaded(
+            ElWordState(
+              status: ElWordStatus.loaded,
               solution: state.solution,
-              dictionary: state.dictionary,
               guesses: guesses,
               letterCount: letterCount - 5,
               isNewWord: true,
@@ -150,23 +207,36 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
     Emitter<ElWordState> emit,
   ) {
     final state = this.state;
-    if (state is ElWordLoaded) {
+    if (state.status == ElWordStatus.loaded) {
       List<String> solution = state.solution.letters
-          .map((letter) => letter!.letter.toUpperCase())
+          .map((letter) => letter.letter.toUpperCase())
           .toList();
       List<String> guess =
-          event.word.letters.map((letter) => letter!.letter).toList();
+          event.word.letters.map((letter) => letter.letter).toList();
       List<Letter?> letters = event.word.letters;
 
       var evaluation = [];
 
       if (listEquals(solution, guess)) {
         emit(
-          ElWordSolved(solution: solution.join('')),
+          ElWordState(
+            status: ElWordStatus.solved,
+            solution: Word(
+              id: 0,
+              letters: state.solution.letters,
+            ),
+          ),
         );
-      } else if (state.guesses[5].letters[0] != null) {
+      } else if (state.guesses[5].letters[0] !=
+          const Letter(
+            id: 0,
+            letter: '',
+            evaluation: Evaluation.pending,
+          )) {
         emit(
-          ElWordWrong(solution: solution.join('')),
+          const ElWordState(
+            status: ElWordStatus.wrong,
+          ),
         );
       } else {
         guess.asMap().forEach(
@@ -194,8 +264,8 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
         }).toList();
 
         emit(
-          ElWordLoaded(
-            dictionary: state.dictionary,
+          ElWordState(
+            status: ElWordStatus.loaded,
             solution: state.solution,
             guesses: validatedGuesses,
             letterCount: state.letterCount,
@@ -204,5 +274,19 @@ class ElWordBloc extends Bloc<ElWordEvent, ElWordState> {
         );
       }
     }
+  }
+
+  Future<String> loadDictionary() async {
+    return await rootBundle.loadString('assets/el_word/words_full.txt');
+  }
+
+  @override
+  ElWordState? fromJson(Map<String, dynamic> json) {
+    return ElWordState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(ElWordState state) {
+    return state.toJson();
   }
 }

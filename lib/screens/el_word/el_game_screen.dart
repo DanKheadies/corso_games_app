@@ -6,7 +6,6 @@ import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class ElGameScreen extends StatelessWidget {
-  // static const String id = 'el-game';
   static const String routeName = '/el-game';
   static Route route() {
     return MaterialPageRoute(
@@ -15,9 +14,9 @@ class ElGameScreen extends StatelessWidget {
     );
   }
 
-  const ElGameScreen({Key? key}) : super(key: key);
+  const ElGameScreen({super.key});
 
-  Widget _buildBoard(BuildContext context, ElWordLoaded state) {
+  Widget _buildBoard(BuildContext context, ElWordState state) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -54,7 +53,7 @@ class ElGameScreen extends StatelessWidget {
 
     return BlocConsumer<ElWordBloc, ElWordState>(
       listenWhen: (previous, current) {
-        if (current is ElWordLoaded) {
+        if (current.status == ElWordStatus.loaded) {
           return current.isNotInDictionary;
         }
         return false;
@@ -71,14 +70,15 @@ class ElGameScreen extends StatelessWidget {
         );
       },
       builder: (context, state) {
-        if (state is ElWordLoading) {
+        if (state.status == ElWordStatus.loading ||
+            state.status == ElWordStatus.initial) {
           return Center(
             child: CircularProgressIndicator(
               color: Theme.of(context).colorScheme.primary,
             ),
           );
         }
-        if (state is ElWordLoaded) {
+        if (state.status == ElWordStatus.loaded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +88,10 @@ class ElGameScreen extends StatelessWidget {
             ],
           );
         }
-        if (state is ElWordWrong) {
+        if (state.status == ElWordStatus.wrong) {
+          List<String> solution = state.solution.letters
+              .map((letter) => letter.letter.toUpperCase())
+              .toList();
           return Padding(
             padding: const EdgeInsets.all(15.0),
             child: Center(
@@ -98,7 +101,6 @@ class ElGameScreen extends StatelessWidget {
                   Text(
                     'Sorry Charlie..',
                     style: TextStyle(
-                      // fontSize: 32,
                       fontSize: height * .04,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.surface,
@@ -115,7 +117,7 @@ class ElGameScreen extends StatelessWidget {
                   ),
                   SizedBox(height: height * 0.025),
                   Text(
-                    state.solution,
+                    solution.join(''),
                     style: TextStyle(
                       fontSize: height * .055,
                       fontWeight: FontWeight.bold,
@@ -130,7 +132,6 @@ class ElGameScreen extends StatelessWidget {
                       'Play Again',
                       style: TextStyle(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        // fontSize: 18,
                         fontSize: height * 0.025,
                       ),
                     ),
@@ -146,7 +147,10 @@ class ElGameScreen extends StatelessWidget {
             ),
           );
         }
-        if (state is ElWordSolved) {
+        if (state.status == ElWordStatus.solved) {
+          List<String> solution = state.solution.letters
+              .map((letter) => letter.letter.toUpperCase())
+              .toList();
           return Padding(
             padding: const EdgeInsets.all(15.0),
             child: Center(
@@ -172,7 +176,7 @@ class ElGameScreen extends StatelessWidget {
                   ),
                   SizedBox(height: height * 0.025),
                   Text(
-                    state.solution,
+                    solution.join(''),
                     style: TextStyle(
                       fontSize: height * .055,
                       fontWeight: FontWeight.bold,
@@ -202,7 +206,9 @@ class ElGameScreen extends StatelessWidget {
             ),
           );
         } else {
-          return const Text('Something went wrong.');
+          return const Center(
+            child: Text('Something went wrong.'),
+          );
         }
       },
     );

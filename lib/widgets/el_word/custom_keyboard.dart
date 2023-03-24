@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/el_word/el_word_bloc.dart';
 import 'package:corso_games_app/models/el_word/letter.dart';
-// import 'package:corso_games_app/models/el_word/word.dart';
 import 'package:corso_games_app/widgets/el_word/custom_key.dart';
 
 class CustomKeyboard extends StatelessWidget {
@@ -20,20 +19,20 @@ class CustomKeyboard extends StatelessWidget {
 
     return BlocBuilder<ElWordBloc, ElWordState>(
       builder: (context, state) {
-        if (state is ElWordLoading) {
+        if (state.status == ElWordStatus.loading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state is ElWordLoaded) {
+        if (state.status == ElWordStatus.loaded) {
           var letters = state.guesses
               .expand((element) => element.letters)
-              .where((element) => element != null)
+              // .where((element) => element != null)
               .toSet();
 
           var missingLetters = letters
-              .where((letter) => letter!.evaluation == Evaluation.missing)
-              .map((letter) => letter!.letter);
+              .where((letter) => letter.evaluation == Evaluation.missing)
+              .map((letter) => letter.letter);
 
           return Column(
             children: [
@@ -61,8 +60,9 @@ class CustomKeyboard extends StatelessWidget {
                           );
                         }
 
-                        var updateWord =
-                            state.guesses[wordIndex].copyWith(letters: letters);
+                        var updateWord = state.guesses[wordIndex].copyWith(
+                          letters: letters,
+                        );
 
                         context.read<ElWordBloc>().add(
                               UpdateGuess(
@@ -99,8 +99,9 @@ class CustomKeyboard extends StatelessWidget {
                           );
                         }
 
-                        var updateWord =
-                            state.guesses[wordIndex].copyWith(letters: letters);
+                        var updateWord = state.guesses[wordIndex].copyWith(
+                          letters: letters,
+                        );
 
                         context.read<ElWordBloc>().add(
                               UpdateGuess(
@@ -141,8 +142,9 @@ class CustomKeyboard extends StatelessWidget {
                           );
                         }
 
-                        var updateWord =
-                            state.guesses[wordIndex].copyWith(letters: letters);
+                        var updateWord = state.guesses[wordIndex].copyWith(
+                          letters: letters,
+                        );
 
                         context.read<ElWordBloc>().add(
                               UpdateGuess(
@@ -166,8 +168,6 @@ class CustomKeyboard extends StatelessWidget {
                                   .colorScheme
                                   .surface
                                   .withOpacity(0.825),
-                          // blurRadius: 1,
-                          // spreadRadius: 1,
                         ),
                       ],
                     ),
@@ -186,7 +186,12 @@ class CustomKeyboard extends StatelessWidget {
                           var letters = state.guesses[wordIndex].letters;
 
                           letters.removeAt(letterIndex);
-                          letters.add(null);
+                          letters.add(
+                            const Letter(
+                              letter: '',
+                              evaluation: Evaluation.pending,
+                            ),
+                          );
 
                           var updatedWord = state.guesses[wordIndex]
                               .copyWith(letters: letters);
@@ -203,7 +208,6 @@ class CustomKeyboard extends StatelessWidget {
                         child: Text(
                           'Erase',
                           style: TextStyle(
-                            // fontSize: 14,
                             fontSize: height * .0175,
                             color: Theme.of(context).scaffoldBackgroundColor,
                           ),
@@ -219,8 +223,6 @@ class CustomKeyboard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                      // width: 80,
-                      // height: 40,
                       width: width * .333,
                       height: height * .05,
                       decoration: BoxDecoration(
@@ -232,13 +234,10 @@ class CustomKeyboard extends StatelessWidget {
                                     !state.isNewWord &&
                                     state.letterCount != 0
                                 ? Theme.of(context).colorScheme.primary
-                                // : Colors.grey[800] as Color,
                                 : Theme.of(context)
                                     .colorScheme
                                     .surface
                                     .withOpacity(0.825),
-                            // blurRadius: 1,
-                            // spreadRadius: 1,
                           ),
                         ],
                       ),
