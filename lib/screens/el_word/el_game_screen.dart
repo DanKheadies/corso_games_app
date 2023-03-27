@@ -63,7 +63,9 @@ class ElGameScreen extends StatelessWidget {
           SnackBar(
             content: Text(
               'That word is not in the Corso dictionary.',
-              style: TextStyle(color: Theme.of(context).colorScheme.surface),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.surface,
+              ),
             ),
             duration: const Duration(seconds: 3),
           ),

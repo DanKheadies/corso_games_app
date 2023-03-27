@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/widgets/colors_slide/game_piece.dart';
 import 'package:corso_games_app/widgets/colors_slide/score.dart';
 
@@ -15,31 +17,33 @@ enum Direction {
 }
 
 class Controller {
-  static ScoreModel score = ScoreModel();
-  static Random rnd = Random();
-  static List<GamePiece> _pieces = [];
-  static Map<Point, GamePiece> index = {};
+  // ScoreModel score = ScoreModel();
+  // Random rnd = Random();
+  List<GamePiece> _pieces = [];
+  Map<Point, GamePiece> index = {};
 
-  static int initGridSize = 3;
-  static int gridSize = initGridSize;
+  // int initGridSize = 3;
+  // int gridSize = initGridSize;
+  int gridSize = 3;
 
   // TODO: add waterfall / tetris effect and spawn circles faster and faster
 
-  static get pieces => _pieces;
+  get pieces => _pieces;
 
-  static StreamController bus = StreamController.broadcast();
-  static StreamSubscription listen(void Function(dynamic) handler) {
+  StreamController bus = StreamController.broadcast();
+  StreamSubscription listen(void Function(dynamic) handler) {
     bus.stream.listen(handler);
-    return becauseItsNeeded;
+    // return becauseItsNeeded;
+    return bus.stream.listen((event) {});
   }
 
-  static StreamSubscription becauseItsNeeded = bus.stream.listen((event) {});
+  // StreamSubscription becauseItsNeeded = bus.stream.listen((event) {});
 
-  static dispose() => bus.close();
+  dispose() => bus.close();
 
-  static Direction lastDirection = Direction.right;
+  Direction lastDirection = Direction.right;
 
-  static Direction parse(Offset offset) {
+  Direction parse(Offset offset) {
     if (offset.dx < 0 && offset.dx.abs() > offset.dy.abs()) {
       return Direction.left;
     }
@@ -56,24 +60,25 @@ class Controller {
     return Direction.none;
   }
 
-  static addPiece(GamePiece piece) {
+  void addPiece(GamePiece piece) {
     _pieces.add(piece);
     index[piece.position] = piece;
   }
 
-  static removePlace(GamePiece piece) {
+  void removePlace(GamePiece piece) {
     _pieces.remove(piece);
     index[piece.position] = GamePiece(
       model: GamePieceModel(
         position: const Point(0, 0),
         value: 0,
+        cont: this,
       ),
     );
   }
 
-  static void on(Offset offset, BuildContext context) {
+  void on(Offset offset, BuildContext context) {
     lastDirection = parse(offset);
-    process(lastDirection);
+    process(lastDirection, context);
 
     bus.add(null);
 
@@ -81,8 +86,13 @@ class Controller {
       ScaffoldMessenger.of(context)
           .showSnackBar(
             SnackBar(
-              content: const Text('You can\'t add any more!'),
-              backgroundColor: Theme.of(context).colorScheme.tertiary,
+              content: Text(
+                'You can\'t add any more!',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.surface,
+                ),
+              ),
+              // backgroundColor: Theme.of(context).colorScheme.surface,
             ),
           )
           .closed
@@ -92,9 +102,9 @@ class Controller {
       return;
     }
 
-    Point p = Point(rnd.nextInt(gridSize), rnd.nextInt(gridSize));
+    Point p = Point(Random().nextInt(gridSize), Random().nextInt(gridSize));
     while (index.containsKey(p)) {
-      p = Point(rnd.nextInt(gridSize), rnd.nextInt(gridSize));
+      p = Point(Random().nextInt(gridSize), Random().nextInt(gridSize));
     }
 
     addPiece(
@@ -102,24 +112,52 @@ class Controller {
         model: GamePieceModel(
           position: p,
           value: 0,
+          cont: this,
         ),
       ),
     );
   }
 
-  static void process(Direction direction) {
+  void process(
+    Direction direction,
+    BuildContext context,
+  ) {
     switch (direction) {
       case (Direction.up):
-        scan(0, gridSize, 1, Axis.vertical);
+        scan(
+          0,
+          gridSize,
+          1,
+          Axis.vertical,
+          context,
+        );
         break;
       case (Direction.down):
-        scan(gridSize - 1, -1, -1, Axis.vertical);
+        scan(
+          gridSize - 1,
+          -1,
+          -1,
+          Axis.vertical,
+          context,
+        );
         break;
       case Direction.left:
-        scan(0, gridSize, 1, Axis.horizontal);
+        scan(
+          0,
+          gridSize,
+          1,
+          Axis.horizontal,
+          context,
+        );
         break;
       case Direction.right:
-        scan(gridSize - 1, -1, -1, Axis.horizontal);
+        scan(
+          gridSize - 1,
+          -1,
+          -1,
+          Axis.horizontal,
+          context,
+        );
         break;
 
       default:
@@ -127,27 +165,35 @@ class Controller {
     }
   }
 
-  static scan(
+  void scan(
     int start,
     int end,
     int op,
     Axis axis,
+    BuildContext context,
   ) {
     for (int j = start; j != end; j += op) {
       for (int k = 0; k != gridSize; k++) {
         Point p = axis == Axis.vertical ? Point(k, j) : Point(j, k);
         if (index.containsKey(p)) {
-          check(start, op, axis, index[p]);
+          check(
+            start,
+            op,
+            axis,
+            index[p],
+            context,
+          );
         }
       }
     }
   }
 
-  static void check(
+  void check(
     int start,
     int op,
     Axis axis,
     GamePiece? piece,
+    BuildContext context,
   ) {
     num target =
         (axis == Axis.vertical) ? piece!.position.y : piece!.position.x;
@@ -159,7 +205,11 @@ class Controller {
       if (!index.containsKey(lookup)) {
         target -= op;
       } else if (index[lookup]?.value == piece.value) {
-        return merge(piece, index[lookup]);
+        return merge(
+          piece,
+          index[lookup],
+          context,
+        );
       } else {
         break;
       }
@@ -174,7 +224,11 @@ class Controller {
     }
   }
 
-  static void merge(GamePiece source, GamePiece? target) {
+  void merge(
+    GamePiece source,
+    GamePiece? target,
+    BuildContext context,
+  ) {
     // see final List<Color> colors = const [ (in game_piece.dart)
     // [totalColors] - 1 = numBelow
     if (source.value == 12) {
@@ -182,7 +236,13 @@ class Controller {
       index.remove(target!.position);
       _pieces.remove(source);
       _pieces.remove(target);
-      score.value += source.model.value * 100;
+      // score.value += source.model.value * 100;
+      context.read<ColorsSlideBloc>().add(
+            UpdateColorsSlideScore(
+              reset: false,
+              increaseAmount: source.model.value * 100,
+            ),
+          );
       return;
     }
 
@@ -190,25 +250,37 @@ class Controller {
     index.remove(target!.position);
     _pieces.remove(target);
     relocate(source, target.position);
-    score.value += source.model.value * 10;
+    // score.value += source.model.value * 10;
+    context.read<ColorsSlideBloc>().add(
+          UpdateColorsSlideScore(
+            reset: false,
+            increaseAmount: source.model.value * 10,
+          ),
+        );
   }
 
-  static void relocate(GamePiece piece, Point destination) {
+  void relocate(GamePiece piece, Point destination) {
     index.remove(piece.position);
     piece.move(destination);
     index[piece.position] = piece;
   }
 
-  static void start(BuildContext context) {
+  void start(BuildContext context) {
     _pieces = [];
     index = {};
     on(const Offset(1, 0), context);
   }
 
-  static void restart(BuildContext context) {
+  void restart(BuildContext context) {
     _pieces = [];
     index = {};
-    score.value = 0;
+    // score.value = 0;
+    context.read<ColorsSlideBloc>().add(
+          const UpdateColorsSlideScore(
+            reset: true,
+            increaseAmount: 0,
+          ),
+        );
     on(const Offset(1, 0), context);
   }
 }

@@ -29,10 +29,12 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
   // bool showTimer = false;
   // ColorsSlideDifficulty currentDifficulty = ColorsSlideDifficulty.threeByThree;
   // ColorsSlideDifficulty oldDifficulty = ColorsSlideDifficulty.threeByThree;
-  late StreamSubscription _eventStream;
+  Controller cont = Controller();
   List<GamePiece> pieces = [];
   // String size = '3x3';
   String timerStatus = '';
+
+  late StreamSubscription _eventStream;
 
   @override
   void initState() {
@@ -43,27 +45,34 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       pieces = [];
     });
 
-    _eventStream = Controller.listen(onAction);
+    // _eventStream = Controller.listen(onAction);
+    _eventStream = cont.listen(onAction);
 
-    Timer(
-      const Duration(milliseconds: 100),
-      () {
-        Controller.gridSize = Controller.initGridSize;
-        Controller.restart(context);
-      },
+    cont.start(
+      context,
     );
+
+    // Timer(
+    //   const Duration(milliseconds: 100),
+    //   () {
+    //     // Controller.gridSize = Controller.initGridSize;
+    //     // cont.gridSize = cont.initGridSize;
+    //     // cont.restart(context);
+    //   },
+    // );
   }
 
   void onAction(dynamic data) {
     setState(() {
-      pieces = Controller.pieces;
+      // pieces = Controller.pieces;
+      pieces = cont.pieces;
     });
   }
 
   void checkTimer(bool showTimer) {
     if (showTimer != showTimer) {
       Timer(const Duration(milliseconds: 100), () {
-        Controller.restart(context);
+        cont.restart(context);
       });
     }
   }
@@ -85,7 +94,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       content: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
         builder: (context, state) {
           if (state.resetColors) {
-            Controller.restart(context);
+            cont.restart(context);
             context.read<ColorsSlideBloc>().add(
                   ToggleColorsSlideReset(),
                 );
@@ -96,21 +105,40 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: state.showTimer
-                      ? [
-                          const CSSize(),
-                          Score(pieces: pieces),
-                          CSTimer(
-                            timer: state.showTimer,
-                            timerStatus: timerStatus,
-                          ),
-                        ]
-                      : [
-                          const CSSize(),
-                          Score(pieces: pieces),
-                        ],
+                  children: [
+                    const CSSize(),
+                    const Score(),
+                    if (state.showTimer)
+                      CSTimer(
+                        timer: state.showTimer,
+                        timerStatus: timerStatus,
+                      ),
+                  ],
                 ),
-                GameBoard(pieces: pieces),
+                //   children: state.showTimer
+                //       ? [
+                //           const CSSize(),
+                //           const Score(
+                //             // pieces: pieces,
+                //             // cont: cont,
+                //           ),
+                //           CSTimer(
+                //             timer: state.showTimer,
+                //             timerStatus: timerStatus,
+                //           ),
+                //         ]
+                //       : [
+                //           const CSSize(),
+                //           const Score(
+                //             // pieces: pieces,
+                //             // cont: cont,
+                //           ),
+                //         ],
+                // ),
+                GameBoard(
+                  pieces: pieces,
+                  cont: cont,
+                ),
                 const SizedBox(),
                 const SizedBox(),
               ],
@@ -158,42 +186,17 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                       color: Theme.of(context).colorScheme.background,
                       size: 30,
                     ),
-                    onPressed: () async {
-                      // final result = await Navigator.pushNamed(
-                      //   context,
-                      //   CSSettingsScreen.routeName,
-                      //   arguments: [
-                      //     currentDifficulty,
-                      //     showTimer,
-                      //   ],
-                      // );
-                      // result as Map;
-                      // setDifficulty(result['difficulty']);
-                      // checkTimer(result['timer']);
-                      // setState(() {
-                      //   currentDifficulty =
-                      //       result['difficulty'] as ColorsSlideDifficulty;
-                      //   showTimer = result['timer'];
-                      // });
-
-                      final result = await Navigator.pushNamed(
+                    onPressed: () {
+                      Navigator.pushNamed(
                         context,
                         CSSettingsScreen.routeName,
                       ).then(
                         (value) {
-                          print('popped');
-                          print(state.resetColors);
-                          print(value);
                           if (state.resetColors) {
-                            print('reset');
-                            print(state.resetColors);
-                            Controller.restart(context);
+                            cont.restart(context);
                           }
                         },
                       );
-
-                      print(result);
-                      print(state.resetColors);
                     },
                   );
                 } else {
@@ -209,7 +212,8 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                           content: Text(
                             'There is an error.',
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.surface),
+                              color: Theme.of(context).colorScheme.surface,
+                            ),
                           ),
                           duration: const Duration(seconds: 3),
                         ),
@@ -253,7 +257,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
               pieces = [];
               timerStatus = 'reset';
             });
-            Controller.restart(context);
+            cont.restart(context);
             Timer(const Duration(milliseconds: 100), () {
               setState(() {
                 timerStatus = '';

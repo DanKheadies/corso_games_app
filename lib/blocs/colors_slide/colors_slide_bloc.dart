@@ -17,6 +17,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     on<ToggleColorsSlideReset>(_onToggleColorsSlideReset);
     on<ToggleColorsSlideTimer>(_onToggleColorsSlideTimer);
     on<UpdateColorsSlideDifficulty>(_onUpdateColorsSlideDifficulty);
+    on<UpdateColorsSlideScore>(_onUpdateColorsSlideScore);
   }
 
   void _onLoadColorsSlide(
@@ -31,6 +32,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         showTimer: false,
         difficulty: ColorsSlideDifficulty.threeByThree,
         status: ColorsSlideStatus.loaded,
+        score: 0,
         size: 3,
         timerSeconds: 0,
       ),
@@ -47,6 +49,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         showTimer: state.showTimer,
         difficulty: state.difficulty,
         status: state.status,
+        score: state.score,
         size: state.size,
         timerSeconds: state.timerSeconds,
       ),
@@ -63,6 +66,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         showTimer: !state.showTimer,
         difficulty: state.difficulty,
         status: state.status,
+        score: state.score,
         size: state.size,
         timerSeconds: state.timerSeconds,
       ),
@@ -74,20 +78,41 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     Emitter<ColorsSlideState> emit,
   ) {
     var rando = Random().nextInt(13) + 2;
-    if (event.size == 0) {
-      Controller.gridSize = rando;
-    } else {
-      Controller.gridSize = event.size;
-    }
+    // if (event.size == 0) {
+    //   // Controller.gridSize = rando;
+    //   // cont.gridSize = rando;
+    //   print('TODO: YOLO grid size');
+    // } else {
+    //   // Controller.gridSize = event.size;
+    //   // cont.gridSize = event.size;
+    //   print('TODO: update grid size');
+    // }
 
-    print('should reset colors?');
     emit(
       ColorsSlideState(
         resetColors: true,
         showTimer: state.showTimer,
         difficulty: event.difficulty,
         status: state.status,
+        score: 0,
         size: event.size == 0 ? rando : event.size,
+        timerSeconds: 0, // TODO: sync to the actual timer
+      ),
+    );
+  }
+
+  void _onUpdateColorsSlideScore(
+    UpdateColorsSlideScore event,
+    Emitter<ColorsSlideState> emit,
+  ) {
+    emit(
+      ColorsSlideState(
+        resetColors: state.resetColors,
+        showTimer: state.showTimer,
+        difficulty: state.difficulty,
+        status: state.status,
+        score: event.reset ? 0 : state.score + event.increaseAmount,
+        size: state.size,
         timerSeconds: 0,
       ),
     );

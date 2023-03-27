@@ -31,3 +31,19 @@ class UpdateColorsSlideDifficulty extends ColorsSlideEvent {
         size,
       ];
 }
+
+class UpdateColorsSlideScore extends ColorsSlideEvent {
+  final bool reset;
+  final int increaseAmount;
+
+  const UpdateColorsSlideScore({
+    required this.reset,
+    required this.increaseAmount,
+  });
+
+  @override
+  List<Object> get props => [
+        reset,
+        increaseAmount,
+      ];
+}

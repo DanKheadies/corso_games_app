@@ -6,31 +6,35 @@ import 'package:provider/provider.dart';
 import 'package:corso_games_app/widgets/colors_slide/controller.dart';
 
 class GamePieceModel extends ChangeNotifier {
+  final Controller cont;
+
   GamePieceModel({
     required this.value,
     required this.position,
+    required this.cont,
   }) {
-    prev = initialPoint(initialDirection);
+    // prev = initialPoint(initialDirection);
+    prev = initialPoint(cont.lastDirection);
   }
 
-  int gridSize = Controller.gridSize;
+  // int gridSize = Controller.gridSize;
 
   late int value;
   late Point position;
   late Point prev;
 
-  Direction get initialDirection => Controller.lastDirection;
+  // Direction get initialDirection => Controller.lastDirection;
 
   Point initialPoint(Direction direction) {
-    switch (initialDirection) {
+    switch (cont.lastDirection) {
       case Direction.up:
-        return Point(position.x, gridSize - 1);
+        return Point(position.x, cont.gridSize - 1);
 
       case Direction.down:
         return Point(position.x, 0);
 
       case Direction.left:
-        return Point(gridSize - 1, position.y);
+        return Point(cont.gridSize - 1, position.y);
 
       case Direction.right:
         return Point(0, position.y);
@@ -112,12 +116,12 @@ class GamePieceView extends AnimatedWidget {
     model.prev = model.position;
 
     Size size = MediaQuery.of(context).size;
-    double itemSize = size.width / model.gridSize;
+    double itemSize = size.width / model.cont.gridSize;
 
     return Align(
       alignment: FractionalOffset(
-        x.value / (model.gridSize - 1),
-        y.value / (model.gridSize - 1),
+        x.value / (model.cont.gridSize - 1),
+        y.value / (model.cont.gridSize - 1),
       ),
       child: Container(
         constraints: BoxConstraints(

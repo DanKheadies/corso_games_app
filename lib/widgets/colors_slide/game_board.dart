@@ -9,9 +9,11 @@ class GameBoard extends StatefulWidget {
   const GameBoard({
     Key? key,
     required this.pieces,
+    required this.cont,
   }) : super(key: key);
 
   final List<GamePiece> pieces;
+  final Controller cont;
 
   @override
   State<GameBoard> createState() => _GameBoardState();
@@ -28,7 +30,7 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   void onPanEnd(DragEndDetails ev) {
-    Controller.on(dragOffset, context);
+    widget.cont.on(dragOffset, context);
     Timer(
       const Duration(milliseconds: 300),
       () => dragOffset = const Offset(0, 0),
