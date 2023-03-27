@@ -138,7 +138,7 @@ class ElGameScreen extends StatelessWidget {
                     onPressed: () {
                       Word.resetGuesses();
                       context.read<ElWordBloc>().add(
-                            LoadGame(),
+                            LoadElWord(),
                           );
                     },
                   ),
@@ -197,7 +197,7 @@ class ElGameScreen extends StatelessWidget {
                     onPressed: () {
                       Word.resetGuesses();
                       context.read<ElWordBloc>().add(
-                            LoadGame(),
+                            LoadElWord(),
                           );
                     },
                   ),

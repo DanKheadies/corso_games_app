@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CSSize extends StatefulWidget {
-  const CSSize({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
+import 'package:corso_games_app/blocs/blocs.dart';
 
-  final String size;
+class CSSize extends StatelessWidget {
+  const CSSize({Key? key}) : super(key: key);
 
-  @override
-  State<CSSize> createState() => _CSSizeState();
-}
-
-class _CSSizeState extends State<CSSize> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(
-            top: 24,
-            bottom: 12,
-          ),
-          child: Text('size:'),
-        ),
-        Text(
-          widget.size,
-        ),
-      ],
+    return BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
+      builder: (context, state) {
+        if (state.status != ColorsSlideStatus.error) {
+          return Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(
+                  top: 24,
+                  bottom: 12,
+                ),
+                child: Text('size:'),
+              ),
+              Text(
+                '${state.size}x${state.size}',
+              ),
+            ],
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

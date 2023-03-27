@@ -1,7 +1,17 @@
-import 'package:corso_games_app/screens/screens.dart';
+// // import 'package:corso_games_app/screens/screens.dart';
 
-class CSSettingsArguments {
-  final ColorsSlideDifficulty difficulty;
+// enum ColorsSlideDifficulty {
+//   tbd,
+//   threeByThree,
+//   fourByFour,
+//   fiveByFive,
+//   sevenBySeven,
+//   tenByTen,
+//   yolo,
+// }
 
-  CSSettingsArguments(this.difficulty);
-}
+// class CSSettingsArguments {
+//   final ColorsSlideDifficulty difficulty;
+
+//   CSSettingsArguments(this.difficulty);
+// }

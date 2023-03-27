@@ -41,7 +41,10 @@ class CorsoGames extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ElWordBloc()..add(LoadGame()),
+          create: (context) => ColorsSlideBloc()..add(LoadColorsSlide()),
+        ),
+        BlocProvider(
+          create: (context) => ElWordBloc()..add(LoadElWord()),
         ),
         BlocProvider(
           create: (context) => TimerBloc(ticker: const Ticker()),

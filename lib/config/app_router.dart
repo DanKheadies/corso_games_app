@@ -13,11 +13,11 @@ class AppRouter {
       case ColorsSlideScreen.routeName:
         return ColorsSlideScreen.route();
       case CSSettingsScreen.routeName:
-        final dataValues = settings.arguments as List;
+        // final dataValues = settings.arguments as List;
         return CSSettingsScreen.route(
-          difficulty: dataValues[0],
-          timer: dataValues[1],
-        );
+            // difficulty: dataValues[0],
+            // timer: dataValues[1],
+            );
       case DinoRunScreen.routeName:
         return DinoRunScreen.route();
       case ElWordScreen.routeName:

@@ -5,22 +5,21 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'package:corso_games_app/models/el_word/letter.dart';
-import 'package:corso_games_app/models/el_word/word.dart';
+import 'package:corso_games_app/models/models.dart';
 
 part 'el_word_event.dart';
 part 'el_word_state.dart';
 
 class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
   ElWordBloc() : super(const ElWordState()) {
-    on<LoadGame>(_onLoadGame);
-    on<ResetGame>(_onResetGame);
+    on<LoadElWord>(_onLoadGame);
+    on<ResetElWord>(_onResetGame);
     on<UpdateGuess>(_onUpdateGuess);
     on<ValidateGuess>(_onValidateGuess);
   }
 
   void _onLoadGame(
-    LoadGame event,
+    LoadElWord event,
     Emitter<ElWordState> emit,
   ) async {
     if (state.status == ElWordStatus.loaded) return;
@@ -66,7 +65,7 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
   }
 
   void _onResetGame(
-    ResetGame event,
+    ResetElWord event,
     Emitter<ElWordState> emit,
   ) async {
     // TODO: combine w/ load game

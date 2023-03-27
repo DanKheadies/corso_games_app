@@ -7,9 +7,9 @@ class ElWordEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadGame extends ElWordEvent {}
+class LoadElWord extends ElWordEvent {}
 
-class ResetGame extends ElWordEvent {}
+class ResetElWord extends ElWordEvent {}
 
 class UpdateGuess extends ElWordEvent {
   final Word word;

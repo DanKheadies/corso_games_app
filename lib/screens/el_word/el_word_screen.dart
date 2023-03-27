@@ -58,7 +58,7 @@ class ElWordScreen extends StatelessWidget {
         onPressed: () {
           Word.resetGuesses();
           context.read<ElWordBloc>().add(
-                ResetGame(),
+                ResetElWord(),
               );
         },
         tooltip: 'Reset',
@@ -72,7 +72,7 @@ class ElWordScreen extends StatelessWidget {
           onPressed: () {
             Word.resetGuesses();
             context.read<ElWordBloc>().add(
-                  ResetGame(),
+                  ResetElWord(),
                 );
           },
         ),

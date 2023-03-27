@@ -1,8 +1,11 @@
 import 'dart:async';
-import 'dart:math';
+// import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
@@ -23,17 +26,18 @@ class ColorsSlideScreen extends StatefulWidget {
 }
 
 class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
-  bool showTimer = false;
-  ColorsSlideDifficulty currentDifficulty = ColorsSlideDifficulty.threeByThree;
-  ColorsSlideDifficulty oldDifficulty = ColorsSlideDifficulty.threeByThree;
+  // bool showTimer = false;
+  // ColorsSlideDifficulty currentDifficulty = ColorsSlideDifficulty.threeByThree;
+  // ColorsSlideDifficulty oldDifficulty = ColorsSlideDifficulty.threeByThree;
   late StreamSubscription _eventStream;
   List<GamePiece> pieces = [];
-  String size = '3x3';
+  // String size = '3x3';
   String timerStatus = '';
 
   @override
   void initState() {
     super.initState();
+    print('cs init');
 
     setState(() {
       pieces = [];
@@ -54,54 +58,6 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
     setState(() {
       pieces = Controller.pieces;
     });
-  }
-
-  void setDifficulty(Object? difficulty) {
-    if (difficulty == ColorsSlideDifficulty.threeByThree) {
-      Controller.gridSize = 3;
-      setState(() {
-        size = '3x3';
-      });
-    } else if (difficulty == ColorsSlideDifficulty.fourByFour) {
-      Controller.gridSize = 4;
-      setState(() {
-        size = '4x4';
-      });
-    } else if (difficulty == ColorsSlideDifficulty.fiveByFive) {
-      Controller.gridSize = 5;
-      setState(() {
-        size = '5x5';
-      });
-    } else if (difficulty == ColorsSlideDifficulty.sevenBySeven) {
-      Controller.gridSize = 7;
-      setState(() {
-        size = '7x7';
-      });
-    } else if (difficulty == ColorsSlideDifficulty.tenByTen) {
-      Controller.gridSize = 10;
-      setState(() {
-        size = '10x10';
-      });
-    } else if (difficulty == ColorsSlideDifficulty.yolo) {
-      var rando = Random().nextInt(13) + 2;
-      Controller.gridSize = rando;
-      setState(() {
-        size = '${rando}x$rando';
-      });
-    }
-
-    if (difficulty != oldDifficulty) {
-      Controller.restart(context);
-      setState(() {
-        oldDifficulty = difficulty as ColorsSlideDifficulty;
-        timerStatus = 'reset';
-      });
-      Timer(const Duration(milliseconds: 100), () {
-        setState(() {
-          timerStatus = '';
-        });
-      });
-    }
   }
 
   void checkTimer(bool showTimer) {
@@ -126,29 +82,45 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       infoDetails:
           'Like 2048 but with colors!! Tap to add aother circle. Swipe up, down, left or right to move and merge circles. Merging circles of similar colors gives you points and changes their combined color.',
       backgroundOverride: Colors.transparent,
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: showTimer
-                ? [
-                    CSSize(size: size),
-                    Score(pieces: pieces),
-                    CSTimer(
-                      timer: showTimer,
-                      timerStatus: timerStatus,
-                    ),
-                  ]
-                : [
-                    CSSize(size: size),
-                    Score(pieces: pieces),
-                  ],
-          ),
-          GameBoard(pieces: pieces),
-          const SizedBox(),
-          const SizedBox(),
-        ],
+      content: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
+        builder: (context, state) {
+          if (state.resetColors) {
+            Controller.restart(context);
+            context.read<ColorsSlideBloc>().add(
+                  ToggleColorsSlideReset(),
+                );
+          }
+          if (state.status != ColorsSlideStatus.error) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: state.showTimer
+                      ? [
+                          const CSSize(),
+                          Score(pieces: pieces),
+                          CSTimer(
+                            timer: state.showTimer,
+                            timerStatus: timerStatus,
+                          ),
+                        ]
+                      : [
+                          const CSSize(),
+                          Score(pieces: pieces),
+                        ],
+                ),
+                GameBoard(pieces: pieces),
+                const SizedBox(),
+                const SizedBox(),
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
       screenFunction: (String string) {
         if (string == 'drawerOpen') {
@@ -176,30 +148,75 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(
-              tooltip: 'Settings',
-              icon: Icon(
-                Icons.settings,
-                color: Theme.of(context).colorScheme.background,
-                size: 30,
-              ),
-              onPressed: () async {
-                final result = await Navigator.pushNamed(
-                  context,
-                  CSSettingsScreen.routeName,
-                  arguments: [
-                    currentDifficulty,
-                    showTimer,
-                  ],
-                );
-                result as Map;
-                setDifficulty(result['difficulty']);
-                checkTimer(result['timer']);
-                setState(() {
-                  currentDifficulty =
-                      result['difficulty'] as ColorsSlideDifficulty;
-                  showTimer = result['timer'];
-                });
+            BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
+              builder: (context, state) {
+                if (state.status != ColorsSlideStatus.error) {
+                  return IconButton(
+                    tooltip: 'Settings',
+                    icon: Icon(
+                      Icons.settings,
+                      color: Theme.of(context).colorScheme.background,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+                      // final result = await Navigator.pushNamed(
+                      //   context,
+                      //   CSSettingsScreen.routeName,
+                      //   arguments: [
+                      //     currentDifficulty,
+                      //     showTimer,
+                      //   ],
+                      // );
+                      // result as Map;
+                      // setDifficulty(result['difficulty']);
+                      // checkTimer(result['timer']);
+                      // setState(() {
+                      //   currentDifficulty =
+                      //       result['difficulty'] as ColorsSlideDifficulty;
+                      //   showTimer = result['timer'];
+                      // });
+
+                      final result = await Navigator.pushNamed(
+                        context,
+                        CSSettingsScreen.routeName,
+                      ).then(
+                        (value) {
+                          print('popped');
+                          print(state.resetColors);
+                          print(value);
+                          if (state.resetColors) {
+                            print('reset');
+                            print(state.resetColors);
+                            Controller.restart(context);
+                          }
+                        },
+                      );
+
+                      print(result);
+                      print(state.resetColors);
+                    },
+                  );
+                } else {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.warning,
+                      color: Theme.of(context).colorScheme.background,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'There is an error.',
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.surface),
+                          ),
+                          duration: const Duration(seconds: 3),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
             ),
             IconButton(
