@@ -31,12 +31,12 @@ class _GameBoardState extends State<GameBoard> {
   void initState() {
     super.initState();
     // TODO: disable this
-    widget.cont.start(
-      context,
-      widget.gridSize,
-      widget.pieces,
-      widget.index,
-    );
+    // widget.cont.start(
+    //   context,
+    //   widget.gridSize,
+    //   widget.pieces,
+    //   widget.index,
+    // );
   }
 
   void onGesture(DragUpdateDetails ev) {

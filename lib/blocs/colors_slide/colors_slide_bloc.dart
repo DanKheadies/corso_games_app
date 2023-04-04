@@ -23,7 +23,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     LoadColorsSlide event,
     Emitter<ColorsSlideState> emit,
   ) {
-    // print('on load: ${state.status}');
+    print('on load: ${state.status}');
     if (state.status == ColorsSlideStatus.loaded) return;
 
     emit(
@@ -36,7 +36,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         size: 3,
         timerSeconds: 0,
         pieces: [],
-        indexes: {},
+        indexMap: {},
       ),
     );
   }
@@ -52,10 +52,14 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         difficulty: state.difficulty,
         status: state.status,
         score: state.score,
+        // score: 0,
         size: state.size,
         timerSeconds: state.timerSeconds,
+        // timerSeconds: 0,
         pieces: state.pieces,
-        indexes: state.indexes,
+        // pieces: const [],
+        indexMap: state.indexMap,
+        // indexMap: const {},
       ),
     );
   }
@@ -74,7 +78,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         size: state.size,
         timerSeconds: state.timerSeconds,
         pieces: state.pieces,
-        indexes: state.indexes,
+        indexMap: state.indexMap,
       ),
     );
   }
@@ -95,7 +99,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         size: event.size == 0 ? rando : event.size,
         timerSeconds: 0, // TODO: sync to the actual timer
         pieces: state.pieces,
-        indexes: state.indexes,
+        indexMap: state.indexMap,
       ),
     );
   }
@@ -115,7 +119,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         size: state.size,
         timerSeconds: state.timerSeconds,
         pieces: event.pieces,
-        indexes: event.index,
+        indexMap: event.index,
       ),
     );
   }
@@ -134,7 +138,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         size: state.size,
         timerSeconds: 0,
         pieces: state.pieces,
-        indexes: state.indexes,
+        indexMap: state.indexMap,
       ),
     );
   }

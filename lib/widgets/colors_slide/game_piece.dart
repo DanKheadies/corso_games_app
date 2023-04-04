@@ -47,6 +47,14 @@ class GamePieceModel extends ChangeNotifier {
     position = to;
     notifyListeners();
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value,
+      'position': position,
+      'gridSize': gridSize,
+    };
+  }
 }
 
 class GamePieceView extends AnimatedWidget {
@@ -162,6 +170,13 @@ class GamePiece extends StatefulWidget {
   int get value => model.value;
   Point get position => model.position;
   void move(Point to) => model.move(to);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'model': model,
+      'gridSize': gridSize,
+    };
+  }
 
   @override
   State<GamePiece> createState() => _GamePieceState();

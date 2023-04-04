@@ -37,20 +37,18 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       backgroundOverride: Colors.transparent,
       content: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
         builder: (context, state) {
-          // TODO: see if needed
-          // if (state.resetColors) {
-          //   // Pieces update in cont
-          //   print('reset?');
-          //   cont.restart(
-          //     context,
-          //     state.size,
-          //     state.pieces,
-          //     state.index,
-          //   );
-          //   context.read<ColorsSlideBloc>().add(
-          //         ToggleColorsSlideReset(),
-          //       );
-          // }
+          // Reset on difficulty change
+          if (state.resetColors) {
+            cont.restart(
+              context,
+              state.size,
+              state.pieces,
+              state.indexMap,
+            );
+            context.read<ColorsSlideBloc>().add(
+                  ToggleColorsSlideReset(),
+                );
+          }
 
           if (state.status != ColorsSlideStatus.error) {
             return Column(
@@ -72,7 +70,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                   pieces: state.pieces,
                   cont: cont,
                   gridSize: state.size,
-                  index: state.indexes,
+                  index: state.indexMap,
                 ),
                 const SizedBox(),
                 const SizedBox(),
@@ -132,7 +130,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                               context,
                               state.size,
                               state.pieces,
-                              state.indexes,
+                              state.indexMap,
                             );
                           }
                         },
@@ -203,7 +201,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                     context,
                     state.size,
                     state.pieces,
-                    state.indexes,
+                    state.indexMap,
                   );
                   Timer(const Duration(milliseconds: 100), () {
                     setState(() {
