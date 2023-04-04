@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class ColorsSlideScreen extends StatefulWidget {
-  // static const String id = 'colors-slide';
   static const String routeName = '/colors-slide';
   static Route route() {
     return MaterialPageRoute(
@@ -26,62 +24,8 @@ class ColorsSlideScreen extends StatefulWidget {
 }
 
 class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
-  // bool showTimer = false;
-  // ColorsSlideDifficulty currentDifficulty = ColorsSlideDifficulty.threeByThree;
-  // ColorsSlideDifficulty oldDifficulty = ColorsSlideDifficulty.threeByThree;
   Controller cont = Controller();
-  List<GamePiece> pieces = [];
-  // String size = '3x3';
   String timerStatus = '';
-
-  late StreamSubscription _eventStream;
-
-  @override
-  void initState() {
-    super.initState();
-    print('cs init');
-
-    setState(() {
-      pieces = [];
-    });
-
-    // _eventStream = Controller.listen(onAction);
-    _eventStream = cont.listen(onAction);
-
-    cont.start(
-      context,
-    );
-
-    // Timer(
-    //   const Duration(milliseconds: 100),
-    //   () {
-    //     // Controller.gridSize = Controller.initGridSize;
-    //     // cont.gridSize = cont.initGridSize;
-    //     // cont.restart(context);
-    //   },
-    // );
-  }
-
-  void onAction(dynamic data) {
-    setState(() {
-      // pieces = Controller.pieces;
-      pieces = cont.pieces;
-    });
-  }
-
-  void checkTimer(bool showTimer) {
-    if (showTimer != showTimer) {
-      Timer(const Duration(milliseconds: 100), () {
-        cont.restart(context);
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _eventStream.cancel();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +37,21 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       backgroundOverride: Colors.transparent,
       content: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
         builder: (context, state) {
-          if (state.resetColors) {
-            cont.restart(context);
-            context.read<ColorsSlideBloc>().add(
-                  ToggleColorsSlideReset(),
-                );
-          }
+          // TODO: see if needed
+          // if (state.resetColors) {
+          //   // Pieces update in cont
+          //   print('reset?');
+          //   cont.restart(
+          //     context,
+          //     state.size,
+          //     state.pieces,
+          //     state.index,
+          //   );
+          //   context.read<ColorsSlideBloc>().add(
+          //         ToggleColorsSlideReset(),
+          //       );
+          // }
+
           if (state.status != ColorsSlideStatus.error) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,29 +68,11 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                       ),
                   ],
                 ),
-                //   children: state.showTimer
-                //       ? [
-                //           const CSSize(),
-                //           const Score(
-                //             // pieces: pieces,
-                //             // cont: cont,
-                //           ),
-                //           CSTimer(
-                //             timer: state.showTimer,
-                //             timerStatus: timerStatus,
-                //           ),
-                //         ]
-                //       : [
-                //           const CSSize(),
-                //           const Score(
-                //             // pieces: pieces,
-                //             // cont: cont,
-                //           ),
-                //         ],
-                // ),
                 GameBoard(
-                  pieces: pieces,
+                  pieces: state.pieces,
                   cont: cont,
+                  gridSize: state.size,
+                  index: state.indexes,
                 ),
                 const SizedBox(),
                 const SizedBox(),
@@ -145,7 +80,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Text('Something went wrong.'),
             );
           }
         },
@@ -193,7 +128,12 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                       ).then(
                         (value) {
                           if (state.resetColors) {
-                            cont.restart(context);
+                            cont.restart(
+                              context,
+                              state.size,
+                              state.pieces,
+                              state.indexes,
+                            );
                           }
                         },
                       );
@@ -246,23 +186,54 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         onPressed: () {},
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
-        child: IconButton(
-          icon: Icon(
-            Icons.settings_backup_restore_rounded,
-            color: Theme.of(context).colorScheme.background,
-            size: 30,
-          ),
-          onPressed: () {
-            setState(() {
-              pieces = [];
-              timerStatus = 'reset';
-            });
-            cont.restart(context);
-            Timer(const Duration(milliseconds: 100), () {
-              setState(() {
-                timerStatus = '';
-              });
-            });
+        child: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
+          builder: (context, state) {
+            if (state.status != ColorsSlideStatus.error) {
+              return IconButton(
+                icon: Icon(
+                  Icons.settings_backup_restore_rounded,
+                  color: Theme.of(context).colorScheme.background,
+                  size: 30,
+                ),
+                onPressed: () {
+                  setState(() {
+                    timerStatus = 'reset';
+                  });
+                  cont.restart(
+                    context,
+                    state.size,
+                    state.pieces,
+                    state.indexes,
+                  );
+                  Timer(const Duration(milliseconds: 100), () {
+                    setState(() {
+                      timerStatus = '';
+                    });
+                  });
+                },
+              );
+            } else {
+              return IconButton(
+                icon: Icon(
+                  Icons.warning,
+                  color: Theme.of(context).colorScheme.background,
+                  size: 30,
+                ),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'There is an error.',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                      ),
+                      duration: const Duration(seconds: 3),
+                    ),
+                  );
+                },
+              );
+            }
           },
         ),
       ),

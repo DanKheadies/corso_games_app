@@ -32,6 +32,22 @@ class UpdateColorsSlideDifficulty extends ColorsSlideEvent {
       ];
 }
 
+class UpdateColorsSlidePieces extends ColorsSlideEvent {
+  final List<GamePiece> pieces;
+  final Map<Point, GamePiece> index;
+
+  const UpdateColorsSlidePieces({
+    required this.pieces,
+    required this.index,
+  });
+
+  @override
+  List<Object> get props => [
+        pieces,
+        index,
+      ];
+}
+
 class UpdateColorsSlideScore extends ColorsSlideEvent {
   final bool reset;
   final int increaseAmount;

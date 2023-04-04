@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
@@ -10,10 +11,14 @@ class GameBoard extends StatefulWidget {
     Key? key,
     required this.pieces,
     required this.cont,
+    required this.gridSize,
+    required this.index,
   }) : super(key: key);
 
   final List<GamePiece> pieces;
   final Controller cont;
+  final int gridSize;
+  final Map<Point, GamePiece> index;
 
   @override
   State<GameBoard> createState() => _GameBoardState();
@@ -21,6 +26,18 @@ class GameBoard extends StatefulWidget {
 
 class _GameBoardState extends State<GameBoard> {
   Offset dragOffset = const Offset(0, 0);
+
+  @override
+  void initState() {
+    super.initState();
+    // TODO: disable this
+    widget.cont.start(
+      context,
+      widget.gridSize,
+      widget.pieces,
+      widget.index,
+    );
+  }
 
   void onGesture(DragUpdateDetails ev) {
     dragOffset = Offset(
@@ -30,7 +47,13 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   void onPanEnd(DragEndDetails ev) {
-    widget.cont.on(dragOffset, context);
+    widget.cont.on(
+      context,
+      dragOffset,
+      widget.gridSize,
+      widget.pieces,
+      widget.index,
+    );
     Timer(
       const Duration(milliseconds: 300),
       () => dragOffset = const Offset(0, 0),

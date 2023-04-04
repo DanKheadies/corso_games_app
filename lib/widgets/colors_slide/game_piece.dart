@@ -3,43 +3,39 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:corso_games_app/widgets/colors_slide/controller.dart';
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 class GamePieceModel extends ChangeNotifier {
-  final Controller cont;
+  final int gridSize;
 
   GamePieceModel({
     required this.value,
     required this.position,
-    required this.cont,
+    required this.gridSize,
   }) {
-    // prev = initialPoint(initialDirection);
-    prev = initialPoint(cont.lastDirection);
+    prev = initialPoint(lastDirection);
   }
-
-  // int gridSize = Controller.gridSize;
 
   late int value;
   late Point position;
   late Point prev;
 
-  // Direction get initialDirection => Controller.lastDirection;
+  Point initialPoint(ColorsSlideDirection direction) {
+    switch (lastDirection) {
+      case ColorsSlideDirection.up:
+        return Point(position.x, gridSize - 1);
 
-  Point initialPoint(Direction direction) {
-    switch (cont.lastDirection) {
-      case Direction.up:
-        return Point(position.x, cont.gridSize - 1);
-
-      case Direction.down:
+      case ColorsSlideDirection.down:
         return Point(position.x, 0);
 
-      case Direction.left:
-        return Point(cont.gridSize - 1, position.y);
+      case ColorsSlideDirection.left:
+        return Point(gridSize - 1, position.y);
 
-      case Direction.right:
+      case ColorsSlideDirection.right:
         return Point(0, position.y);
 
-      case Direction.none:
+      case ColorsSlideDirection.none:
         break;
     }
 
@@ -58,6 +54,7 @@ class GamePieceView extends AnimatedWidget {
     Key? key,
     required this.model,
     controller,
+    required this.gridSize,
   })  : x = Tween<double>(
           begin: model.prev.x.toDouble(),
           end: model.position.x.toDouble(),
@@ -91,6 +88,7 @@ class GamePieceView extends AnimatedWidget {
 
   final GamePieceModel model;
   AnimationController get controller => listenable as AnimationController;
+  final int gridSize;
 
   final Animation<double> x;
   final Animation<double> y;
@@ -116,12 +114,12 @@ class GamePieceView extends AnimatedWidget {
     model.prev = model.position;
 
     Size size = MediaQuery.of(context).size;
-    double itemSize = size.width / model.cont.gridSize;
+    double itemSize = size.width / gridSize;
 
     return Align(
       alignment: FractionalOffset(
-        x.value / (model.cont.gridSize - 1),
-        y.value / (model.cont.gridSize - 1),
+        x.value / (gridSize - 1),
+        y.value / (gridSize - 1),
       ),
       child: Container(
         constraints: BoxConstraints(
@@ -155,9 +153,11 @@ class GamePiece extends StatefulWidget {
   const GamePiece({
     Key? key,
     required this.model,
+    required this.gridSize,
   }) : super(key: key);
 
   final GamePieceModel model;
+  final int gridSize;
 
   int get value => model.value;
   Point get position => model.position;
@@ -205,6 +205,7 @@ class _GamePieceState extends State<GamePiece> with TickerProviderStateMixin {
           return GamePieceView(
             model: model,
             controller: _controller,
+            gridSize: widget.gridSize,
           );
         },
       ),

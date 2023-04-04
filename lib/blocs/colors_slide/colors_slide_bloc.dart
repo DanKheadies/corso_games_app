@@ -1,10 +1,8 @@
-import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 
 import 'package:corso_games_app/widgets/widgets.dart';
 
@@ -17,6 +15,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     on<ToggleColorsSlideReset>(_onToggleColorsSlideReset);
     on<ToggleColorsSlideTimer>(_onToggleColorsSlideTimer);
     on<UpdateColorsSlideDifficulty>(_onUpdateColorsSlideDifficulty);
+    on<UpdateColorsSlidePieces>(_onUpdateColorsSlidePieces);
     on<UpdateColorsSlideScore>(_onUpdateColorsSlideScore);
   }
 
@@ -24,6 +23,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     LoadColorsSlide event,
     Emitter<ColorsSlideState> emit,
   ) {
+    // print('on load: ${state.status}');
     if (state.status == ColorsSlideStatus.loaded) return;
 
     emit(
@@ -35,6 +35,8 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         score: 0,
         size: 3,
         timerSeconds: 0,
+        pieces: [],
+        indexes: {},
       ),
     );
   }
@@ -52,6 +54,8 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         score: state.score,
         size: state.size,
         timerSeconds: state.timerSeconds,
+        pieces: state.pieces,
+        indexes: state.indexes,
       ),
     );
   }
@@ -69,6 +73,8 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         score: state.score,
         size: state.size,
         timerSeconds: state.timerSeconds,
+        pieces: state.pieces,
+        indexes: state.indexes,
       ),
     );
   }
@@ -78,15 +84,6 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     Emitter<ColorsSlideState> emit,
   ) {
     var rando = Random().nextInt(13) + 2;
-    // if (event.size == 0) {
-    //   // Controller.gridSize = rando;
-    //   // cont.gridSize = rando;
-    //   print('TODO: YOLO grid size');
-    // } else {
-    //   // Controller.gridSize = event.size;
-    //   // cont.gridSize = event.size;
-    //   print('TODO: update grid size');
-    // }
 
     emit(
       ColorsSlideState(
@@ -97,6 +94,28 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         score: 0,
         size: event.size == 0 ? rando : event.size,
         timerSeconds: 0, // TODO: sync to the actual timer
+        pieces: state.pieces,
+        indexes: state.indexes,
+      ),
+    );
+  }
+
+  void _onUpdateColorsSlidePieces(
+    UpdateColorsSlidePieces event,
+    Emitter<ColorsSlideState> emit,
+  ) {
+    // print('update pieces: ${state.status}');
+    emit(
+      ColorsSlideState(
+        resetColors: state.resetColors,
+        showTimer: state.showTimer,
+        difficulty: state.difficulty,
+        status: state.status,
+        score: state.score,
+        size: state.size,
+        timerSeconds: state.timerSeconds,
+        pieces: event.pieces,
+        indexes: event.index,
       ),
     );
   }
@@ -114,6 +133,8 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         score: event.reset ? 0 : state.score + event.increaseAmount,
         size: state.size,
         timerSeconds: 0,
+        pieces: state.pieces,
+        indexes: state.indexes,
       ),
     );
   }
