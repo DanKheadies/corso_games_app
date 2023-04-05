@@ -9,7 +9,7 @@ import 'package:corso_games_app/widgets/widgets.dart';
 
 ColorsSlideDirection lastDirection = ColorsSlideDirection.right;
 
-class Controller {
+class ColorsController {
   // TODO: add waterfall / tetris effect and spawn circles faster and faster
 
   StreamController bus = StreamController.broadcast();
@@ -39,15 +39,15 @@ class Controller {
 
   void addPiece(
     BuildContext context,
-    GamePiece piece,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    ColorsGamePiece piece,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
     // print('add piece @ ${piece.position}');
-    pieces.add(piece);
+    colorsPieces.add(piece);
     index[piece.position] = piece;
 
-    // pieces.forEach((element) {
+    // colorsPieces.forEach((element) {
     //   print(element.model.position);
     // });
     // index.forEach((key, value) {
@@ -56,44 +56,44 @@ class Controller {
 
     context.read<ColorsSlideBloc>().add(
           const UpdateColorsSlideScore(
-            reset: false,
-            increaseAmount: 1,
+            colorsReset: false,
+            colorsIncreaseAmount: 1,
           ),
         );
-    // print('updating pieces via add');
+    // print('updating colorsPieces via add');
     context.read<ColorsSlideBloc>().add(
           UpdateColorsSlidePieces(
-            indexMap: index,
-            pieces: pieces,
+            colorsIndexMap: index,
+            colorsPieces: colorsPieces,
           ),
         );
   }
 
-  // Handles moving / combining / etc pieces using the user input
+  // Handles moving / combining / etc colorsPieces using the user input
   void on(
     BuildContext context,
     Offset offset,
     int gridSize,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
     // Identifies a Direction (or lack thereof)
     lastDirection = parse(offset);
 
-    // Decides how to push / merge pieces and add a new  one
+    // Decides how to push / merge colorsPieces and add a new  one
     process(
       context,
       lastDirection,
       gridSize,
-      pieces,
+      colorsPieces,
       index,
     );
 
-    // Needed to make the pieces appear / happen
+    // Needed to make the colorsPieces appear / happen
     bus.add(null);
 
     // No more room at the inn
-    if (pieces.length == (gridSize * gridSize)) {
+    if (colorsPieces.length == (gridSize * gridSize)) {
       ScaffoldMessenger.of(context)
           .showSnackBar(
             SnackBar(
@@ -121,15 +121,15 @@ class Controller {
     // Add a piece to the grid
     addPiece(
       context,
-      GamePiece(
-        model: GamePieceModel(
+      ColorsGamePiece(
+        model: ColorsGamePieceModel(
           position: p,
           value: 0,
           gridSize: gridSize,
         ),
         gridSize: gridSize,
       ),
-      pieces,
+      colorsPieces,
       index,
     );
   }
@@ -138,8 +138,8 @@ class Controller {
     BuildContext context,
     ColorsSlideDirection direction,
     int gridSize,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
     switch (direction) {
       case (ColorsSlideDirection.up):
@@ -150,7 +150,7 @@ class Controller {
           0,
           gridSize,
           1,
-          pieces,
+          colorsPieces,
           index,
         );
         break;
@@ -162,7 +162,7 @@ class Controller {
           gridSize - 1,
           -1,
           -1,
-          pieces,
+          colorsPieces,
           index,
         );
         break;
@@ -174,7 +174,7 @@ class Controller {
           0,
           gridSize,
           1,
-          pieces,
+          colorsPieces,
           index,
         );
         break;
@@ -186,7 +186,7 @@ class Controller {
           gridSize - 1,
           -1,
           -1,
-          pieces,
+          colorsPieces,
           index,
         );
         break;
@@ -203,8 +203,8 @@ class Controller {
     int start,
     int end,
     int op,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
     for (int j = start; j != end; j += op) {
       for (int k = 0; k != gridSize; k++) {
@@ -216,7 +216,7 @@ class Controller {
             index[p]!,
             start,
             op,
-            pieces,
+            colorsPieces,
             index,
           );
         }
@@ -227,11 +227,11 @@ class Controller {
   void check(
     BuildContext context,
     Axis axis,
-    GamePiece piece,
+    ColorsGamePiece piece,
     int start,
     int op,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
     num target = (axis == Axis.vertical) ? piece.position.y : piece.position.x;
     for (var n = target - op; n != start - op; n -= op) {
@@ -246,7 +246,7 @@ class Controller {
           context,
           piece,
           index[lookup],
-          pieces,
+          colorsPieces,
           index,
         );
       } else {
@@ -263,7 +263,7 @@ class Controller {
         context,
         piece,
         destination,
-        pieces,
+        colorsPieces,
         index,
       );
     }
@@ -272,91 +272,91 @@ class Controller {
     // context.read<ColorsSlideBloc>().add(
     //       UpdateColorsSlidePieces(
     //         index: index,
-    //         pieces: pieces,
+    //         colorsPieces: colorsPieces,
     //       ),
     //     );
   }
 
   void merge(
     BuildContext context,
-    GamePiece source,
-    GamePiece? target,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    ColorsGamePiece source,
+    ColorsGamePiece? target,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
     if (source.value == 12) {
       index.remove(source.position);
       index.remove(target!.position);
-      pieces.remove(source);
-      pieces.remove(target);
+      colorsPieces.remove(source);
+      colorsPieces.remove(target);
 
       context.read<ColorsSlideBloc>().add(
             UpdateColorsSlideScore(
-              reset: false,
-              increaseAmount: source.model.value * 100,
+              colorsReset: false,
+              colorsIncreaseAmount: source.model.value * 100,
             ),
           );
       context.read<ColorsSlideBloc>().add(
             UpdateColorsSlidePieces(
-              indexMap: index,
-              pieces: pieces,
+              colorsIndexMap: index,
+              colorsPieces: colorsPieces,
             ),
           );
       return;
     }
 
-    // Check if the target matches one in pieces
-    var inderp =
-        pieces.indexWhere((element) => element.position == target!.position);
+    // Check if the target matches one in colorsPieces
+    var inderp = colorsPieces
+        .indexWhere((element) => element.position == target!.position);
 
-    // A match means we need to update pieces list / bloc cache
+    // A match means we need to update colorsPieces list / bloc cache
     if (inderp != -1) {
-      pieces[inderp] = target!;
+      colorsPieces[inderp] = target!;
     }
 
     source.model.value += 1;
     index.remove(target!.position);
-    pieces.remove(target);
+    colorsPieces.remove(target);
 
     relocate(
       context,
       source,
       target.position,
-      pieces,
+      colorsPieces,
       index,
     );
 
     context.read<ColorsSlideBloc>().add(
           UpdateColorsSlideScore(
-            reset: false,
-            increaseAmount: source.model.value * 10,
+            colorsReset: false,
+            colorsIncreaseAmount: source.model.value * 10,
           ),
         );
     context.read<ColorsSlideBloc>().add(
           UpdateColorsSlidePieces(
-            indexMap: index,
-            pieces: pieces,
+            colorsIndexMap: index,
+            colorsPieces: colorsPieces,
           ),
         );
   }
 
   void relocate(
     BuildContext context,
-    GamePiece piece,
+    ColorsGamePiece piece,
     Point destination,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
-    // Check if the piece matches one in pieces
-    var inderp =
-        pieces.indexWhere((element) => element.position == piece.position);
+    // Check if the piece matches one in colorsPieces
+    var inderp = colorsPieces
+        .indexWhere((element) => element.position == piece.position);
 
-    // A match means we need to update pieces list / bloc cache
+    // A match means we need to update colorsPieces list / bloc cache
     if (inderp != -1) {
-      pieces[inderp] = piece;
+      colorsPieces[inderp] = piece;
     }
 
-    // Relocate the pieces
+    // Relocate the colorsPieces
     index.remove(piece.position);
     piece.move(destination);
     index[piece.position] = piece;
@@ -365,17 +365,17 @@ class Controller {
   void start(
     BuildContext context,
     int gridSize,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
-    pieces = [];
+    colorsPieces = [];
     index = {};
 
     on(
       context,
       const Offset(1, 0),
       gridSize,
-      pieces,
+      colorsPieces,
       index,
     );
   }
@@ -383,16 +383,16 @@ class Controller {
   void restart(
     BuildContext context,
     int gridSize,
-    List<GamePiece> pieces,
-    Map<Point, GamePiece> index,
+    List<ColorsGamePiece> colorsPieces,
+    Map<Point, ColorsGamePiece> index,
   ) {
-    pieces = [];
+    colorsPieces = [];
     index = {};
 
     context.read<ColorsSlideBloc>().add(
           const UpdateColorsSlideScore(
-            reset: true,
-            increaseAmount: 0,
+            colorsReset: true,
+            colorsIncreaseAmount: 0,
           ),
         );
 
@@ -400,7 +400,7 @@ class Controller {
       context,
       const Offset(1, 0),
       gridSize,
-      pieces,
+      colorsPieces,
       index,
     );
   }

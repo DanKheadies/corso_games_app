@@ -27,42 +27,42 @@ enum ColorsSlideStatus {
 
 class ColorsSlideState extends Equatable {
   final bool resetColors;
-  final bool showTimer;
-  final ColorsSlideDifficulty difficulty;
-  final ColorsSlideDirection lastDirection;
-  final ColorsSlideStatus status;
-  final int score;
-  final int size;
-  final int timerSeconds;
-  final List<GamePiece> pieces;
-  final Map<Point, GamePiece> indexMap;
+  final bool showColorsTimer;
+  final ColorsSlideDifficulty colorsDifficulty;
+  final ColorsSlideDirection colorsLastDirection;
+  final ColorsSlideStatus colorsStatus;
+  final int colorsScore;
+  final int colorsSize;
+  final int colorsTimerSeconds;
+  final List<ColorsGamePiece> colorsPieces;
+  final Map<Point, ColorsGamePiece> colorsIndexMap;
 
   const ColorsSlideState({
     this.resetColors = false,
-    this.showTimer = false,
-    this.difficulty = ColorsSlideDifficulty.threeByThree,
-    this.lastDirection = ColorsSlideDirection.right,
-    this.status = ColorsSlideStatus.loading,
-    this.score = 0,
-    this.size = 3,
-    this.timerSeconds = 0,
-    this.pieces = const [],
-    this.indexMap = const {},
+    this.showColorsTimer = false,
+    this.colorsDifficulty = ColorsSlideDifficulty.threeByThree,
+    this.colorsLastDirection = ColorsSlideDirection.right,
+    this.colorsStatus = ColorsSlideStatus.loading,
+    this.colorsScore = 0,
+    this.colorsSize = 3,
+    this.colorsTimerSeconds = 0,
+    this.colorsPieces = const [],
+    this.colorsIndexMap = const {},
   });
 
   factory ColorsSlideState.fromJson(Map<String, dynamic> json) {
     // print('fromJson');
-    // Get pieces list from JSON
-    var pList = json['pieces'] as List;
+    // Get colorsPieces list from JSON
+    var pList = json['colorsPieces'] as List;
     // Create empty List of GamePieces
-    List<GamePiece> piecesList = [];
+    List<ColorsGamePiece> colorsPiecesList = [];
 
     // Loop thru JSON list and store in List of GamePieces
     for (int i = 0; i < pList.length; i++) {
       // Expand the array with an empty GamePiece
-      piecesList.add(
-        GamePiece(
-          model: GamePieceModel(
+      colorsPiecesList.add(
+        ColorsGamePiece(
+          model: ColorsGamePieceModel(
             gridSize: 0,
             position: const Point(0, 0),
             value: 0,
@@ -76,8 +76,8 @@ class ColorsSlideState extends Equatable {
       var point = model[1];
 
       // Fill out list item
-      piecesList[i] = GamePiece(
-        model: GamePieceModel(
+      colorsPiecesList[i] = ColorsGamePiece(
+        model: ColorsGamePieceModel(
           value: model[0],
           position: Point(
             point[0],
@@ -90,10 +90,10 @@ class ColorsSlideState extends Equatable {
     }
 
     // Get index map from JSON
-    var iMap = json['indexMap'] as Map;
+    var iMap = json['colorsIndexMap'] as Map;
 
     // Create empty Map for the index
-    Map<Point, GamePiece> tempIndexMap = {};
+    Map<Point, ColorsGamePiece> tempIndexMap = {};
 
     // Loop thru JSON map and store in Map of index
     iMap.forEach((key, value) {
@@ -106,9 +106,9 @@ class ColorsSlideState extends Equatable {
         Point(
           int.parse(px),
           int.parse(py),
-        ): GamePiece(
+        ): ColorsGamePiece(
           gridSize: value['gridSize'],
-          model: GamePieceModel(
+          model: ColorsGamePieceModel(
             gridSize: model['gridSize'],
             position: Point(
               position['x'],
@@ -121,7 +121,7 @@ class ColorsSlideState extends Equatable {
     });
 
     // TODO: remove testing prints
-    // piecesList.forEach((piece) {
+    // colorsPiecesList.forEach((piece) {
     //   print(piece.model.position);
     // });
     // tempIndexMap.forEach((point, gamePiece) {
@@ -130,44 +130,44 @@ class ColorsSlideState extends Equatable {
 
     return ColorsSlideState(
       resetColors: json['resetColors'],
-      showTimer: json['showTimer'],
-      difficulty: ColorsSlideDifficulty.values.firstWhere(
-        (diff) => diff.name.toString() == json['difficulty'],
+      showColorsTimer: json['showColorsTimer'],
+      colorsDifficulty: ColorsSlideDifficulty.values.firstWhere(
+        (diff) => diff.name.toString() == json['colorsDifficulty'],
       ),
-      lastDirection: ColorsSlideDirection.values.firstWhere(
-        (direction) => direction.name.toString() == json['lastDirection'],
+      colorsLastDirection: ColorsSlideDirection.values.firstWhere(
+        (direction) => direction.name.toString() == json['colorsLastDirection'],
       ),
-      status: ColorsSlideStatus.values.firstWhere(
-        (status) => status.name.toString() == json['status'],
+      colorsStatus: ColorsSlideStatus.values.firstWhere(
+        (colorsStatus) => colorsStatus.name.toString() == json['colorsStatus'],
       ),
-      score: json['score'],
-      size: json['size'],
-      timerSeconds: json['timerSeconds'],
-      pieces: piecesList,
-      indexMap: tempIndexMap,
+      colorsScore: json['colorsScore'],
+      colorsSize: json['colorsSize'],
+      colorsTimerSeconds: json['colorsTimerSeconds'],
+      colorsPieces: colorsPiecesList,
+      colorsIndexMap: tempIndexMap,
     );
   }
 
   Map<String, dynamic> toJson() {
     // print('toJson');
-    // Create an empty list for the pieces
-    var piecesList = [];
+    // Create an empty list for the colorsPieces
+    var colorsPiecesList = [];
 
-    // Loop thru the pieces in state to store in JSON
-    for (int i = 0; i < pieces.length; i++) {
-      // Add an empty entry to the pieces list
-      piecesList.add('');
+    // Loop thru the colorsPieces in state to store in JSON
+    for (int i = 0; i < colorsPieces.length; i++) {
+      // Add an empty entry to the colorsPieces list
+      colorsPiecesList.add('');
 
-      // Enter the pieces data
-      piecesList[i] = [
-        size,
+      // Enter the colorsPieces data
+      colorsPiecesList[i] = [
+        colorsSize,
         [
-          pieces[i].model.value,
+          colorsPieces[i].model.value,
           [
-            pieces[i].model.position.x,
-            pieces[i].model.position.y,
+            colorsPieces[i].model.position.x,
+            colorsPieces[i].model.position.y,
           ],
-          pieces[i].model.gridSize,
+          colorsPieces[i].model.gridSize,
         ],
       ];
     }
@@ -175,7 +175,7 @@ class ColorsSlideState extends Equatable {
     // Create an empty map for the index
     Map<dynamic, dynamic> tempIndexMap = {};
 
-    indexMap.forEach((key, value) {
+    colorsIndexMap.forEach((key, value) {
       var point = key;
       var gp = value;
       tempIndexMap['(${point.x}, ${point.y})'] = {
@@ -192,7 +192,7 @@ class ColorsSlideState extends Equatable {
     });
 
     // TODO: remove testing prints
-    // piecesList.forEach((piece) {
+    // colorsPiecesList.forEach((piece) {
     //   print(piece[1][1]);
     // });
     // tempIndexMap.forEach((point, gamePiece) {
@@ -201,28 +201,28 @@ class ColorsSlideState extends Equatable {
 
     return {
       'resetColors': resetColors,
-      'showTimer': showTimer,
-      'difficulty': difficulty.name,
-      'lastDirection': lastDirection.name,
-      'status': status.name,
-      'score': score,
-      'size': size,
-      'timerSeconds': timerSeconds,
-      'pieces': piecesList,
-      'indexMap': tempIndexMap,
+      'showColorsTimer': showColorsTimer,
+      'colorsDifficulty': colorsDifficulty.name,
+      'colorsLastDirection': colorsLastDirection.name,
+      'colorsStatus': colorsStatus.name,
+      'colorsScore': colorsScore,
+      'colorsSize': colorsSize,
+      'colorsTimerSeconds': colorsTimerSeconds,
+      'colorsPieces': colorsPiecesList,
+      'colorsIndexMap': tempIndexMap,
     };
   }
 
   @override
   List<Object> get props => [
         resetColors,
-        showTimer,
-        difficulty,
-        status,
-        score,
-        size,
-        timerSeconds,
-        pieces,
-        indexMap,
+        showColorsTimer,
+        colorsDifficulty,
+        colorsStatus,
+        colorsScore,
+        colorsSize,
+        colorsTimerSeconds,
+        colorsPieces,
+        colorsIndexMap,
       ];
 }

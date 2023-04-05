@@ -3,11 +3,11 @@ import 'dart:math';
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'package:corso_games_app/widgets/colors_slide/controller.dart';
-import 'package:corso_games_app/widgets/colors_slide/game_piece.dart';
+import 'package:corso_games_app/widgets/colors_slide/colors_controller.dart';
+import 'package:corso_games_app/widgets/colors_slide/colors_game_piece.dart';
 
-class GameBoard extends StatefulWidget {
-  const GameBoard({
+class ColorsGameBoard extends StatefulWidget {
+  const ColorsGameBoard({
     Key? key,
     required this.pieces,
     required this.cont,
@@ -15,16 +15,16 @@ class GameBoard extends StatefulWidget {
     required this.index,
   }) : super(key: key);
 
-  final List<GamePiece> pieces;
-  final Controller cont;
+  final List<ColorsGamePiece> pieces;
+  final ColorsController cont;
   final int gridSize;
-  final Map<Point, GamePiece> index;
+  final Map<Point, ColorsGamePiece> index;
 
   @override
-  State<GameBoard> createState() => _GameBoardState();
+  State<ColorsGameBoard> createState() => _ColorsGameBoardState();
 }
 
-class _GameBoardState extends State<GameBoard> {
+class _ColorsGameBoardState extends State<ColorsGameBoard> {
   Offset dragOffset = const Offset(0, 0);
 
   @override

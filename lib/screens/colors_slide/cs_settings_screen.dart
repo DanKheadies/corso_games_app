@@ -68,7 +68,7 @@ Heads up: changing any of the settings here will reset your game.''',
       ),
       body: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
         builder: (context, state) {
-          if (state.status != ColorsSlideStatus.error) {
+          if (state.colorsStatus != ColorsSlideStatus.error) {
             return Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -89,7 +89,7 @@ Heads up: changing any of the settings here will reset your game.''',
                           inactiveTrackColor:
                               Theme.of(context).scaffoldBackgroundColor,
                         ),
-                        value: state.showTimer,
+                        value: state.showColorsTimer,
                         onChanged: (value) {
                           context.read<ColorsSlideBloc>().add(
                                 ToggleColorsSlideTimer(),
@@ -105,14 +105,14 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(15),
                         value: ColorsSlideDifficulty.threeByThree,
-                        groupValue: state.difficulty,
+                        groupValue: state.colorsDifficulty,
                         onChanged: (_) {
                           context.read<ColorsSlideBloc>().add(
                                 const UpdateColorsSlideDifficulty(
                                   resetColors: true,
-                                  difficulty:
+                                  colorsDifficulty:
                                       ColorsSlideDifficulty.threeByThree,
-                                  size: 3,
+                                  colorsSize: 3,
                                 ),
                               );
                         },
@@ -127,13 +127,14 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(15),
                         value: ColorsSlideDifficulty.fourByFour,
-                        groupValue: state.difficulty,
+                        groupValue: state.colorsDifficulty,
                         onChanged: (_) {
                           context.read<ColorsSlideBloc>().add(
                                 const UpdateColorsSlideDifficulty(
                                   resetColors: true,
-                                  difficulty: ColorsSlideDifficulty.fourByFour,
-                                  size: 4,
+                                  colorsDifficulty:
+                                      ColorsSlideDifficulty.fourByFour,
+                                  colorsSize: 4,
                                 ),
                               );
                         },
@@ -148,13 +149,14 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(20),
                         value: ColorsSlideDifficulty.fiveByFive,
-                        groupValue: state.difficulty,
+                        groupValue: state.colorsDifficulty,
                         onChanged: (_) {
                           context.read<ColorsSlideBloc>().add(
                                 const UpdateColorsSlideDifficulty(
                                   resetColors: true,
-                                  difficulty: ColorsSlideDifficulty.fiveByFive,
-                                  size: 5,
+                                  colorsDifficulty:
+                                      ColorsSlideDifficulty.fiveByFive,
+                                  colorsSize: 5,
                                 ),
                               );
                         },
@@ -169,14 +171,14 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(20),
                         value: ColorsSlideDifficulty.sevenBySeven,
-                        groupValue: state.difficulty,
+                        groupValue: state.colorsDifficulty,
                         onChanged: (_) {
                           context.read<ColorsSlideBloc>().add(
                                 const UpdateColorsSlideDifficulty(
                                   resetColors: true,
-                                  difficulty:
+                                  colorsDifficulty:
                                       ColorsSlideDifficulty.sevenBySeven,
-                                  size: 7,
+                                  colorsSize: 7,
                                 ),
                               );
                         },
@@ -191,13 +193,14 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(20),
                         value: ColorsSlideDifficulty.tenByTen,
-                        groupValue: state.difficulty,
+                        groupValue: state.colorsDifficulty,
                         onChanged: (_) {
                           context.read<ColorsSlideBloc>().add(
                                 const UpdateColorsSlideDifficulty(
                                   resetColors: true,
-                                  difficulty: ColorsSlideDifficulty.tenByTen,
-                                  size: 10,
+                                  colorsDifficulty:
+                                      ColorsSlideDifficulty.tenByTen,
+                                  colorsSize: 10,
                                 ),
                               );
                         },
@@ -212,13 +215,13 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(20),
                         value: ColorsSlideDifficulty.yolo,
-                        groupValue: state.difficulty,
+                        groupValue: state.colorsDifficulty,
                         onChanged: (_) {
                           context.read<ColorsSlideBloc>().add(
                                 const UpdateColorsSlideDifficulty(
                                   resetColors: true,
-                                  difficulty: ColorsSlideDifficulty.yolo,
-                                  size: 0,
+                                  colorsDifficulty: ColorsSlideDifficulty.yolo,
+                                  colorsSize: 0,
                                 ),
                               );
                         },

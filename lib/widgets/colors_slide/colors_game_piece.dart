@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
-class GamePieceModel extends ChangeNotifier {
+class ColorsGamePieceModel extends ChangeNotifier {
   final int gridSize;
 
-  GamePieceModel({
+  ColorsGamePieceModel({
     required this.value,
     required this.position,
     required this.gridSize,
@@ -49,8 +49,8 @@ class GamePieceModel extends ChangeNotifier {
   }
 }
 
-class GamePieceView extends AnimatedWidget {
-  GamePieceView({
+class ColorsGamePieceView extends AnimatedWidget {
+  ColorsGamePieceView({
     Key? key,
     required this.model,
     controller,
@@ -86,7 +86,7 @@ class GamePieceView extends AnimatedWidget {
           listenable: controller,
         );
 
-  final GamePieceModel model;
+  final ColorsGamePieceModel model;
   AnimationController get controller => listenable as AnimationController;
   final int gridSize;
 
@@ -149,14 +149,14 @@ class GamePieceView extends AnimatedWidget {
   }
 }
 
-class GamePiece extends StatefulWidget {
-  const GamePiece({
+class ColorsGamePiece extends StatefulWidget {
+  const ColorsGamePiece({
     Key? key,
     required this.model,
     required this.gridSize,
   }) : super(key: key);
 
-  final GamePieceModel model;
+  final ColorsGamePieceModel model;
   final int gridSize;
 
   int get value => model.value;
@@ -164,11 +164,12 @@ class GamePiece extends StatefulWidget {
   void move(Point to) => model.move(to);
 
   @override
-  State<GamePiece> createState() => _GamePieceState();
+  State<ColorsGamePiece> createState() => _ColorsGamePieceState();
 }
 
-class _GamePieceState extends State<GamePiece> with TickerProviderStateMixin {
-  _GamePieceState();
+class _ColorsGamePieceState extends State<ColorsGamePiece>
+    with TickerProviderStateMixin {
+  _ColorsGamePieceState();
 
   late AnimationController _controller;
 
@@ -191,7 +192,7 @@ class _GamePieceState extends State<GamePiece> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: widget.model,
-      child: Consumer<GamePieceModel>(
+      child: Consumer<ColorsGamePieceModel>(
         builder: (
           context,
           model,
@@ -202,7 +203,7 @@ class _GamePieceState extends State<GamePiece> with TickerProviderStateMixin {
             _controller.forward();
           } on TickerCanceled {}
 
-          return GamePieceView(
+          return ColorsGamePieceView(
             model: model,
             controller: _controller,
             gridSize: widget.gridSize,

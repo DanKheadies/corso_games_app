@@ -6,11 +6,13 @@ class MSTimer extends StatefulWidget {
   const MSTimer({
     Key? key,
     required this.timer,
-    required this.timerStatus,
+    // required this.timerStatus,
+    required this.mineTimerSeconds,
   }) : super(key: key);
 
   final bool timer;
-  final String timerStatus;
+  // final String timerStatus;
+  final int mineTimerSeconds;
 
   @override
   State<MSTimer> createState() => _MSTimerState();
@@ -113,28 +115,28 @@ class _MSTimerState extends State<MSTimer> {
 
   @override
   Widget build(BuildContext context) {
-    if (seconds != 0 && widget.timerStatus == 'pause') pauseTimer();
-    if (seconds != 0 && widget.timerStatus == 'reset') resetTimer();
-    if (seconds != 0 && widget.timerStatus == 'resume') resumeTimer();
-    if (seconds != 0 && widget.timerStatus == 'stop') stopTimer();
+    // if (seconds != 0 && widget.timerStatus == 'pause') pauseTimer();
+    // if (seconds != 0 && widget.timerStatus == 'reset') resetTimer();
+    // if (seconds != 0 && widget.timerStatus == 'resume') resumeTimer();
+    // if (seconds != 0 && widget.timerStatus == 'stop') stopTimer();
 
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(
+        Padding(
+          padding: const EdgeInsets.only(
             top: 15,
           ),
           child: Text(
             'timer:',
             style: TextStyle(
-              color: Colors.yellowAccent,
+              color: Theme.of(context).colorScheme.surface,
             ),
           ),
         ),
         Text(
           '$seconds',
-          style: const TextStyle(
-            color: Colors.yellowAccent,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
           ),
         ),
       ],

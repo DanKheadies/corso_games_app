@@ -15,51 +15,51 @@ class ToggleColorsSlideTimer extends ColorsSlideEvent {}
 
 class UpdateColorsSlideDifficulty extends ColorsSlideEvent {
   final bool resetColors;
-  final ColorsSlideDifficulty difficulty;
-  final int size;
+  final ColorsSlideDifficulty colorsDifficulty;
+  final int colorsSize;
 
   const UpdateColorsSlideDifficulty({
     required this.resetColors,
-    required this.difficulty,
-    required this.size,
+    required this.colorsDifficulty,
+    required this.colorsSize,
   });
 
   @override
   List<Object> get props => [
         resetColors,
-        difficulty,
-        size,
+        colorsDifficulty,
+        colorsSize,
       ];
 }
 
 class UpdateColorsSlidePieces extends ColorsSlideEvent {
-  final List<GamePiece> pieces;
-  final Map<Point, GamePiece> indexMap;
+  final List<ColorsGamePiece> colorsPieces;
+  final Map<Point, ColorsGamePiece> colorsIndexMap;
 
   const UpdateColorsSlidePieces({
-    required this.pieces,
-    required this.indexMap,
+    required this.colorsPieces,
+    required this.colorsIndexMap,
   });
 
   @override
   List<Object> get props => [
-        pieces,
-        indexMap,
+        colorsPieces,
+        colorsIndexMap,
       ];
 }
 
 class UpdateColorsSlideScore extends ColorsSlideEvent {
-  final bool reset;
-  final int increaseAmount;
+  final bool colorsReset;
+  final int colorsIncreaseAmount;
 
   const UpdateColorsSlideScore({
-    required this.reset,
-    required this.increaseAmount,
+    required this.colorsReset,
+    required this.colorsIncreaseAmount,
   });
 
   @override
   List<Object> get props => [
-        reset,
-        increaseAmount,
+        colorsReset,
+        colorsIncreaseAmount,
       ];
 }

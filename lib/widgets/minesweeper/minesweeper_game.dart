@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:corso_games_app/models/minesweeper/board_square.dart';
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/models/minesweeper/mine_board_square.dart';
 import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
 import 'package:corso_games_app/widgets/minesweeper/ms_timer.dart';
 
@@ -21,27 +23,39 @@ enum ImageType {
   flagged,
 }
 
-class GameActivity extends StatefulWidget {
-  const GameActivity({
+class MinesweeperGame extends StatefulWidget {
+  const MinesweeperGame({
     Key? key,
-    required this.difficulty,
-    required this.resetGame,
-    required this.timer,
-    required this.timerStatus,
-    required this.timerReset,
+    required this.resetMinesweeper,
+    required this.showMineTimer,
+    required this.mineDifficulty,
+    required this.mineTimerSeconds,
+    required this.bombProbability,
+    required this.maxProbability,
+    required this.bombCount,
+    required this.squaresLeft,
+    required this.board,
+    required this.openedSquares,
+    required this.flaggedSquares,
   }) : super(key: key);
 
-  final MinesweeperDifficulty difficulty;
-  final bool resetGame;
-  final bool timer;
-  final String timerStatus;
-  final VoidCallback timerReset;
+  final bool resetMinesweeper;
+  final bool showMineTimer;
+  final MinesweeperDifficulty mineDifficulty;
+  final int mineTimerSeconds;
+  final int bombProbability;
+  final int maxProbability;
+  final int bombCount;
+  final int squaresLeft;
+  final List<List<MineBoardSquare>> board;
+  final List<bool> openedSquares;
+  final List<bool> flaggedSquares;
 
   @override
-  State<GameActivity> createState() => _GameActivityState();
+  State<MinesweeperGame> createState() => _MinesweeperGameState();
 }
 
-class _GameActivityState extends State<GameActivity> {
+class _MinesweeperGameState extends State<MinesweeperGame> {
   // TODO: math to make this relationship scale accordingly
 
   // iPhone 12 mini (h:60) (856 x 1,482) (1080 x 2340)
@@ -72,7 +86,7 @@ class _GameActivityState extends State<GameActivity> {
   int bombCount = 0;
   int squaresLeft = 0;
 
-  List<List<BoardSquare>> board = [];
+  List<List<MineBoardSquare>> board = [];
   List<bool> openedSquares = [];
   List<bool> flaggedSquares = [];
 
@@ -83,26 +97,26 @@ class _GameActivityState extends State<GameActivity> {
   }
 
   void initializeGame() {
-    if (widget.difficulty == MinesweeperDifficulty.easy) {
+    if (widget.mineDifficulty == MinesweeperDifficulty.easy) {
       bombProbability = 3;
       maxProbability = 30;
-    } else if (widget.difficulty == MinesweeperDifficulty.medium) {
+    } else if (widget.mineDifficulty == MinesweeperDifficulty.medium) {
       bombProbability = 3;
       maxProbability = 20;
-    } else if (widget.difficulty == MinesweeperDifficulty.hard) {
+    } else if (widget.mineDifficulty == MinesweeperDifficulty.hard) {
       bombProbability = 3;
       maxProbability = 15;
-    } else if (widget.difficulty == MinesweeperDifficulty.harder) {
+    } else if (widget.mineDifficulty == MinesweeperDifficulty.harder) {
       bombProbability = 5;
       maxProbability = 20;
-    } else if (widget.difficulty == MinesweeperDifficulty.wtf) {
+    } else if (widget.mineDifficulty == MinesweeperDifficulty.wtf) {
       bombProbability = 5;
       maxProbability = 15;
     }
 
     board = List.generate(rowCount, (i) {
       return List.generate(columnCount, (j) {
-        return BoardSquare();
+        return MineBoardSquare();
       });
     });
 
@@ -183,6 +197,7 @@ class _GameActivityState extends State<GameActivity> {
     }
 
     setState(() {});
+    // TODO: set the bloc state now
   }
 
   // This function opens other squares around the target square which don't have any bombs around them.
@@ -242,7 +257,7 @@ class _GameActivityState extends State<GameActivity> {
           actions: [
             TextButton(
               onPressed: () {
-                widget.timerReset();
+                // widget.timerReset();
                 initializeGame();
                 Navigator.pop(context);
               },
@@ -265,7 +280,10 @@ class _GameActivityState extends State<GameActivity> {
           actions: [
             TextButton(
               onPressed: () {
-                widget.timerReset();
+                // widget.timerReset();
+                context.read<MinesweeperBloc>().add(
+                      ToggleMinesweeperReset(),
+                    );
                 initializeGame();
                 Navigator.pop(context);
               },
@@ -371,7 +389,10 @@ class _GameActivityState extends State<GameActivity> {
   InkWell smilieReset() {
     return InkWell(
       onTap: () {
-        widget.timerReset();
+        // widget.timerReset();
+        context.read<MinesweeperBloc>().add(
+              ToggleMinesweeperReset(),
+            );
         initializeGame();
       },
       child: CircleAvatar(
@@ -387,8 +408,14 @@ class _GameActivityState extends State<GameActivity> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.resetGame) {
+    // if (widget.resetGame) {
+    //   initializeGame();
+    // }
+    if (widget.resetMinesweeper) {
       initializeGame();
+      // context.read<ColorsSlideBloc>().add(
+      //       ToggleColorsSlideReset(),
+      //     );
     }
 
     return Center(
@@ -400,17 +427,15 @@ class _GameActivityState extends State<GameActivity> {
             width: double.infinity,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: widget.timer
-                  ? [
-                      smilieReset(),
-                      MSTimer(
-                        timer: widget.timer,
-                        timerStatus: widget.timerStatus,
-                      ),
-                    ]
-                  : [
-                      smilieReset(),
-                    ],
+              children: [
+                smilieReset(),
+                if (widget.showMineTimer)
+                  MSTimer(
+                    timer: widget.showMineTimer,
+                    mineTimerSeconds: widget.mineTimerSeconds,
+                    // timerStatus: timerStatus,
+                  ),
+              ],
             ),
           ),
           GridView.builder(
@@ -448,12 +473,16 @@ class _GameActivityState extends State<GameActivity> {
               return InkWell(
                 // Opens squares
                 onTap: () {
+                  print('open');
                   if (board[rowNumber][columnNumber].hasBomb) {
+                    print('gg');
                     _handleGameOver();
                   }
                   if (board[rowNumber][columnNumber].bombsAround == 0) {
+                    print('bombs around');
                     _handleTap(rowNumber, columnNumber);
                   } else {
+                    print('g2g');
                     setState(() {
                       openedSquares[position] = true;
                       squaresLeft = squaresLeft - 1;
@@ -473,7 +502,7 @@ class _GameActivityState extends State<GameActivity> {
                 },
                 splashColor: Theme.of(context).scaffoldBackgroundColor,
                 child: Container(
-                  color: Theme.of(context).colorScheme.error.withOpacity(0.825),
+                  color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
                   child: image,
                 ),
               );

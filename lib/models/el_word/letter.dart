@@ -34,7 +34,6 @@ class Letter extends Equatable {
   }
 
   factory Letter.fromJson(Map<String, dynamic> json) {
-    // print('Letter fromJson');
     return Letter(
       id: json['id'],
       letter: json['letter'],
@@ -45,10 +44,6 @@ class Letter extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    // print('Letter toJson');
-    // print(id);
-    // print(letter);
-    // print(evaluation.name);
     return {
       'id': id,
       'letter': letter,

@@ -20,6 +20,8 @@ A list of TODOs to improve Corso Games for all.
     2. Subscribe to notifications (why?)
     3. Reset High Scores
     4. Dark / Light mode
+7. Colors Slide
+    1. Figure out why it doesn't slide after using HyBLoC data, i.e. leaving & coming back
 
 ---
 

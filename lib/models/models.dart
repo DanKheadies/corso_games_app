@@ -1,8 +1,7 @@
-// export 'colors/cs_piece_model.dart';
 export 'dino_dash/sprite.dart';
 export 'el_word/letter.dart';
 export 'el_word/word.dart';
-export 'minesweeper/board_square.dart';
+export 'minesweeper/mine_board_square.dart';
 export 'puzzles_and_draggin/grid_unit.dart';
 export 'slide_to_slide/body.dart';
 export 'slide_to_slide/point_int.dart';

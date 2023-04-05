@@ -1,2 +1,2 @@
-export 'game_activity.dart';
+export 'minesweeper_game.dart';
 export 'ms_timer.dart';

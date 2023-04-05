@@ -23,7 +23,7 @@ class ColorsSlideScreen extends StatefulWidget {
 }
 
 class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
-  Controller cont = Controller();
+  ColorsController cont = ColorsController();
   String timerStatus = '';
 
   @override
@@ -40,16 +40,16 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
           if (state.resetColors) {
             cont.restart(
               context,
-              state.size,
-              state.pieces,
-              state.indexMap,
+              state.colorsSize,
+              state.colorsPieces,
+              state.colorsIndexMap,
             );
             context.read<ColorsSlideBloc>().add(
                   ToggleColorsSlideReset(),
                 );
           }
 
-          if (state.status != ColorsSlideStatus.error) {
+          if (state.colorsStatus != ColorsSlideStatus.error) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -57,19 +57,19 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const CSSize(),
-                    const Score(),
-                    if (state.showTimer)
+                    const ColorsScore(),
+                    if (state.showColorsTimer)
                       CSTimer(
-                        timer: state.showTimer,
+                        timer: state.showColorsTimer,
                         timerStatus: timerStatus,
                       ),
                   ],
                 ),
-                GameBoard(
-                  pieces: state.pieces,
+                ColorsGameBoard(
+                  pieces: state.colorsPieces,
                   cont: cont,
-                  gridSize: state.size,
-                  index: state.indexMap,
+                  gridSize: state.colorsSize,
+                  index: state.colorsIndexMap,
                 ),
                 const SizedBox(),
                 const SizedBox(),
@@ -110,7 +110,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
           children: [
             BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
               builder: (context, state) {
-                if (state.status != ColorsSlideStatus.error) {
+                if (state.colorsStatus != ColorsSlideStatus.error) {
                   return IconButton(
                     tooltip: 'Settings',
                     icon: Icon(
@@ -127,9 +127,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                           if (state.resetColors) {
                             cont.restart(
                               context,
-                              state.size,
-                              state.pieces,
-                              state.indexMap,
+                              state.colorsSize,
+                              state.colorsPieces,
+                              state.colorsIndexMap,
                             );
                           }
                         },
@@ -179,7 +179,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
             // TODO: for testing misc-bloc stuff
             // BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
             //   builder: (context, state) {
-            //     if (state.status != ColorsSlideStatus.error) {
+            //     if (state.colorsStatus != ColorsSlideStatus.error) {
             //       return IconButton(
             //         tooltip: 'Share',
             //         icon: Icon(
@@ -230,7 +230,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
           builder: (context, state) {
-            if (state.status != ColorsSlideStatus.error) {
+            if (state.colorsStatus != ColorsSlideStatus.error) {
               return IconButton(
                 icon: Icon(
                   Icons.settings_backup_restore_rounded,
@@ -243,9 +243,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                   });
                   cont.restart(
                     context,
-                    state.size,
-                    state.pieces,
-                    state.indexMap,
+                    state.colorsSize,
+                    state.colorsPieces,
+                    state.colorsIndexMap,
                   );
                   Timer(const Duration(milliseconds: 100), () {
                     setState(() {

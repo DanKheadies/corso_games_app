@@ -10,7 +10,7 @@ class CSSize extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
       builder: (context, state) {
-        if (state.status != ColorsSlideStatus.error) {
+        if (state.colorsStatus != ColorsSlideStatus.error) {
           return Column(
             children: [
               const Padding(
@@ -21,7 +21,7 @@ class CSSize extends StatelessWidget {
                 child: Text('size:'),
               ),
               Text(
-                '${state.size}x${state.size}',
+                '${state.colorsSize}x${state.colorsSize}',
               ),
             ],
           );
