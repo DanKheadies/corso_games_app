@@ -305,6 +305,15 @@ class Controller {
       return;
     }
 
+    // Check if the target matches one in pieces
+    var inderp =
+        pieces.indexWhere((element) => element.position == target!.position);
+
+    // A match means we need to update pieces list / bloc cache
+    if (inderp != -1) {
+      pieces[inderp] = target!;
+    }
+
     source.model.value += 1;
     index.remove(target!.position);
     pieces.remove(target);
@@ -338,52 +347,19 @@ class Controller {
     List<GamePiece> pieces,
     Map<Point, GamePiece> index,
   ) {
-    // There's a certain total number where this fails?
-    // print('relocate');
-    // print('from ${piece.position} to $destination');
     // Check if the piece matches one in pieces
     var inderp =
         pieces.indexWhere((element) => element.position == piece.position);
-    // print(inderp);
 
     // A match means we need to update pieces list / bloc cache
     if (inderp != -1) {
-      print('got one');
-      // pieces.forEach((element) {
-      //   print('current pieces piece @ ${element.position}');
-      // });
       pieces[inderp] = piece;
-      // pieces.forEach((element) {
-      //   print('updated pieces piece @ ${element.position}');
-      // });
     }
 
     // Relocate the pieces
     index.remove(piece.position);
     piece.move(destination);
     index[piece.position] = piece;
-
-    // print('piece @ ${piece.position}');
-    // pieces.firstWhere((element) => element.position == destination);
-
-    // pieces.forEach((element) {
-    //   print('pieces piece @ ${element.position}');
-    // });
-
-    // Update pieces (TODO if needed here or in IF check above or at all b/c its in add in the next step)
-    // context.read<ColorsSlideBloc>().add(
-    //       UpdateColorsSlidePieces(
-    //         indexMap: index,
-    //         pieces: pieces,
-    //       ),
-    //     );
-
-    // context.read<ColorsSlideBloc>().add(
-    //       const UpdateColorsSlideScore(
-    //         reset: false,
-    //         increaseAmount: 1,
-    //       ),
-    //     );
   }
 
   void start(
