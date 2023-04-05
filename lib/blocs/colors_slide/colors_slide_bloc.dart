@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
@@ -23,7 +22,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     LoadColorsSlide event,
     Emitter<ColorsSlideState> emit,
   ) {
-    print('on load: ${state.status}');
+    // print('on load: ${state.status}');
     if (state.status == ColorsSlideStatus.loaded) return;
 
     emit(
@@ -108,7 +107,6 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     UpdateColorsSlidePieces event,
     Emitter<ColorsSlideState> emit,
   ) {
-    // print('update pieces: ${state.status}');
     emit(
       ColorsSlideState(
         resetColors: state.resetColors,
@@ -119,7 +117,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
         size: state.size,
         timerSeconds: state.timerSeconds,
         pieces: event.pieces,
-        indexMap: event.index,
+        indexMap: event.indexMap,
       ),
     );
   }

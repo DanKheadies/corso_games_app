@@ -51,8 +51,7 @@ class ColorsSlideState extends Equatable {
   });
 
   factory ColorsSlideState.fromJson(Map<String, dynamic> json) {
-    print('fromJson');
-    print(json);
+    // print('fromJson');
     // Get pieces list from JSON
     var pList = json['pieces'] as List;
     // Create empty List of GamePieces
@@ -92,12 +91,9 @@ class ColorsSlideState extends Equatable {
 
     // Get index map from JSON
     var iMap = json['indexMap'] as Map;
-    print('daco');
-    print(iMap);
-    print(iMap.length);
 
     // Create empty Map for the index
-    Map<Point, GamePiece> indexMap = {};
+    Map<Point, GamePiece> tempIndexMap = {};
 
     // Loop thru JSON map and store in Map of index
     iMap.forEach((key, value) {
@@ -106,7 +102,7 @@ class ColorsSlideState extends Equatable {
       var py = point.substring(point.indexOf(' ') + 1, point.indexOf(')'));
       var model = value['model'];
       var position = model['position'];
-      indexMap.addAll({
+      tempIndexMap.addAll({
         Point(
           int.parse(px),
           int.parse(py),
@@ -124,11 +120,13 @@ class ColorsSlideState extends Equatable {
       });
     });
 
-    print('dank');
-    indexMap.forEach((point, gp) {
-      print(point);
-      print(gp.model.value);
-    });
+    // TODO: remove testing prints
+    // piecesList.forEach((piece) {
+    //   print(piece.model.position);
+    // });
+    // tempIndexMap.forEach((point, gamePiece) {
+    //   print(point);
+    // });
 
     return ColorsSlideState(
       resetColors: json['resetColors'],
@@ -146,12 +144,12 @@ class ColorsSlideState extends Equatable {
       size: json['size'],
       timerSeconds: json['timerSeconds'],
       pieces: piecesList,
-      indexMap: indexMap,
+      indexMap: tempIndexMap,
     );
   }
 
   Map<String, dynamic> toJson() {
-    print('toJson');
+    // print('toJson');
     // Create an empty list for the pieces
     var piecesList = [];
 
@@ -180,7 +178,6 @@ class ColorsSlideState extends Equatable {
     indexMap.forEach((key, value) {
       var point = key;
       var gp = value;
-      // print('point: $point');
       tempIndexMap['(${point.x}, ${point.y})'] = {
         'gridSize': gp.gridSize,
         'model': {
@@ -194,8 +191,13 @@ class ColorsSlideState extends Equatable {
       };
     });
 
-    print('g2g');
-    print(tempIndexMap);
+    // TODO: remove testing prints
+    // piecesList.forEach((piece) {
+    //   print(piece[1][1]);
+    // });
+    // tempIndexMap.forEach((point, gamePiece) {
+    //   print(point);
+    // });
 
     return {
       'resetColors': resetColors,

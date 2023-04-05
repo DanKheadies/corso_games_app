@@ -30,13 +30,14 @@ class _GameBoardState extends State<GameBoard> {
   @override
   void initState() {
     super.initState();
-    // TODO: disable this
-    // widget.cont.start(
-    //   context,
-    //   widget.gridSize,
-    //   widget.pieces,
-    //   widget.index,
-    // );
+    if (widget.pieces.isEmpty) {
+      widget.cont.start(
+        context,
+        widget.gridSize,
+        widget.pieces,
+        widget.index,
+      );
+    }
   }
 
   void onGesture(DragUpdateDetails ev) {

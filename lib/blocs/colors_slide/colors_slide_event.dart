@@ -34,17 +34,17 @@ class UpdateColorsSlideDifficulty extends ColorsSlideEvent {
 
 class UpdateColorsSlidePieces extends ColorsSlideEvent {
   final List<GamePiece> pieces;
-  final Map<Point, GamePiece> index;
+  final Map<Point, GamePiece> indexMap;
 
   const UpdateColorsSlidePieces({
     required this.pieces,
-    required this.index,
+    required this.indexMap,
   });
 
   @override
   List<Object> get props => [
         pieces,
-        index,
+        indexMap,
       ];
 }
 

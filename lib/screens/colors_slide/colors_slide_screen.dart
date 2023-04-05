@@ -1,5 +1,4 @@
 import 'dart:async';
-// import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -177,6 +176,51 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                 'Oh Boy',
               ),
             ),
+            // TODO: for testing misc-bloc stuff
+            // BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
+            //   builder: (context, state) {
+            //     if (state.status != ColorsSlideStatus.error) {
+            //       return IconButton(
+            //         tooltip: 'Share',
+            //         icon: Icon(
+            //           Icons.ios_share_outlined,
+            //           color: Theme.of(context).colorScheme.background,
+            //           size: 30,
+            //         ),
+            //         onPressed: () {
+            //           // await HydratedBloc.storage.clear();
+            //           // context.read<ColorsSlideBloc>().add(
+            //           //       UpdateColorsSlideScore(
+            //           //         increaseAmount: 1,
+            //           //         reset: false,
+            //           //       ),
+            //           //     );
+            //         },
+            //       );
+            //     } else {
+            //       return IconButton(
+            //         icon: Icon(
+            //           Icons.warning,
+            //           color: Theme.of(context).colorScheme.background,
+            //           size: 30,
+            //         ),
+            //         onPressed: () {
+            //           ScaffoldMessenger.of(context).showSnackBar(
+            //             SnackBar(
+            //               content: Text(
+            //                 'There is an error.',
+            //                 style: TextStyle(
+            //                   color: Theme.of(context).colorScheme.surface,
+            //                 ),
+            //               ),
+            //               duration: const Duration(seconds: 3),
+            //             ),
+            //           );
+            //         },
+            //       );
+            //     }
+            //   },
+            // ),
           ],
         ),
       ),
