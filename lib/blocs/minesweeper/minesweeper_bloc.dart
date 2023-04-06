@@ -1,17 +1,16 @@
-import 'dart:math';
-
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:corso_games_app/models/models.dart';
-import 'package:corso_games_app/widgets/widgets.dart';
+// import 'package:corso_games_app/widgets/widgets.dart';
 
 part 'minesweeper_event.dart';
 part 'minesweeper_state.dart';
 
-class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
+class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
   MinesweeperBloc() : super(const MinesweeperState()) {
     on<LoadMinesweeper>(_onLoadMinesweeper);
+    on<SetMinesweeperBoard>(_onSetMinesweeperBoard);
     on<ToggleMinesweeperReset>(_onToggleMinesweeperReset);
     on<ToggleMinesweeperTimer>(_onToggleMinesweeperTimer);
     on<UpdateMinesweeperBoard>(_onUpdateMinesweeperBoard);
@@ -22,7 +21,7 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     LoadMinesweeper event,
     Emitter<MinesweeperState> emit,
   ) {
-    // print('on load: ${state.status}');
+    // print('on load: ${state.mineStatus}');
     if (state.mineStatus == MinesweeperStatus.loaded) return;
 
     emit(
@@ -39,6 +38,29 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
         mineBoard: [],
         openedSquares: [],
         flaggedSquares: [],
+      ),
+    );
+  }
+
+  void _onSetMinesweeperBoard(
+    SetMinesweeperBoard event,
+    Emitter<MinesweeperState> emit,
+  ) {
+    print('set mine board');
+    emit(
+      MinesweeperState(
+        resetMinesweeper: false,
+        showMineTimer: state.showMineTimer,
+        mineDifficulty: state.mineDifficulty,
+        mineStatus: state.mineStatus,
+        mineTimerSeconds: state.mineTimerSeconds,
+        bombProbability: event.bombProbability,
+        maxProbability: event.maxProbability,
+        bombCount: event.bombCount,
+        squaresLeft: event.squaresLeft,
+        mineBoard: event.mineBoard,
+        openedSquares: event.openedSquares,
+        flaggedSquares: event.flaggedSquares,
       ),
     );
   }
@@ -91,11 +113,9 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     UpdateMinesweeperBoard event,
     Emitter<MinesweeperState> emit,
   ) {
-    // TODO?
-
     emit(
       MinesweeperState(
-        resetMinesweeper: true,
+        resetMinesweeper: state.resetMinesweeper,
         showMineTimer: state.showMineTimer,
         mineDifficulty: state.mineDifficulty,
         mineStatus: state.mineStatus,
@@ -117,6 +137,7 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
   ) {
     int bProb = 0;
     int mProb = 0;
+
     if (event.mineDifficulty == MinesweeperDifficulty.easy) {
       bProb = 3;
       mProb = 30;
@@ -150,5 +171,15 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
         flaggedSquares: state.flaggedSquares,
       ),
     );
+  }
+
+  @override
+  MinesweeperState? fromJson(Map<String, dynamic> json) {
+    return MinesweeperState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(MinesweeperState state) {
+    return state.toJson();
   }
 }

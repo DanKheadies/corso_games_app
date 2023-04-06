@@ -1,43 +1,20 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
-// enum MinesweeperDifficulty {
-//   tbd,
-//   easy,
-//   medium,
-//   hard,
-//   harder,
-//   wtf,
-// }
-
 class MSSettingsScreen extends StatefulWidget {
   static const String routeName = '/minesweeper-settings';
-  // static Route route({
-  //   required MinesweeperDifficulty difficulty,
-  //   required bool timer,
-  // }) {
   static Route route() {
     return MaterialPageRoute(
-      builder: (_) => const MSSettingsScreen(
-          // difficulty: difficulty,
-          // timer: timer,
-          ),
+      builder: (_) => const MSSettingsScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
 
-  // final bool timer;
-  // final MinesweeperDifficulty difficulty;
-
   const MSSettingsScreen({
     Key? key,
-    // required this.timer,
-    // required this.difficulty,
   }) : super(key: key);
 
   @override
@@ -45,10 +22,6 @@ class MSSettingsScreen extends StatefulWidget {
 }
 
 class _MSSettingsScreenState extends State<MSSettingsScreen> {
-  // bool argsTimer = false;
-  // bool showTimer = false;
-  // MinesweeperDifficulty? _difficulty = MinesweeperDifficulty.tbd;
-
   NeumorphicRadioStyle _neumorphRadioStyle() {
     return NeumorphicRadioStyle(
       unselectedColor: Theme.of(context).scaffoldBackgroundColor,
@@ -64,24 +37,8 @@ class _MSSettingsScreenState extends State<MSSettingsScreen> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Timer(const Duration(milliseconds: 100), () {
-  //     setState(() {
-  //       showTimer = argsTimer;
-  //     });
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // if (argsTimer != widget.timer) {
-    //   setState(() {
-    //     argsTimer = widget.timer;
-    //   });
-    // }
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -109,17 +66,6 @@ Heads up: changing any of the settings here will reset your game.''',
           )
         ],
       ),
-      // body: WillPopScope(
-      // onWillPop: () async {
-      //   Navigator.pop(context, {
-      //     'difficulty': _difficulty == MinesweeperDifficulty.tbd
-      //         // ? args['difficulty'] as MinesweeperDifficulty
-      //         ? widget.difficulty
-      //         : _difficulty,
-      //     'timer': showTimer,
-      //   });
-      //   return true;
-      // },
       body: BlocBuilder<MinesweeperBloc, MinesweeperState>(
         builder: (context, state) {
           if (state.mineStatus != MinesweeperStatus.error) {
@@ -145,9 +91,6 @@ Heads up: changing any of the settings here will reset your game.''',
                         ),
                         value: state.showMineTimer,
                         onChanged: (value) {
-                          // setState(() {
-                          //   showTimer = !showTimer;
-                          // });
                           context.read<MinesweeperBloc>().add(
                                 ToggleMinesweeperTimer(),
                               );
@@ -162,15 +105,8 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(15),
                         value: MinesweeperDifficulty.easy,
-                        // groupValue: _difficulty == MinesweeperDifficulty.tbd
-                        //     // ? args['difficulty'] as MinesweeperDifficulty
-                        //     ? widget.difficulty
-                        //     : _difficulty,
                         groupValue: state.mineDifficulty,
                         onChanged: (_) {
-                          // setState(() {
-                          //   _difficulty = diff;
-                          // });
                           context.read<MinesweeperBloc>().add(
                                 const UpdateMinesweeperDifficulty(
                                   resetMinesweeper: true,
@@ -189,20 +125,8 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(15),
                         value: MinesweeperDifficulty.medium,
-                        // groupValue: _difficulty == MinesweeperDifficulty.tbd
-                        //     // ? args['difficulty'] as MinesweeperDifficulty
-                        //     ? widget.difficulty
-                        //     : _difficulty,
-                        // onChanged: (MinesweeperDifficulty? diff) {
-                        //   setState(() {
-                        //     _difficulty = diff;
-                        //   });
-                        // },
                         groupValue: state.mineDifficulty,
                         onChanged: (_) {
-                          // setState(() {
-                          //   _difficulty = diff;
-                          // });
                           context.read<MinesweeperBloc>().add(
                                 const UpdateMinesweeperDifficulty(
                                   resetMinesweeper: true,
@@ -221,20 +145,8 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(20),
                         value: MinesweeperDifficulty.hard,
-                        // groupValue: _difficulty == MinesweeperDifficulty.tbd
-                        //     // ? args['difficulty'] as MinesweeperDifficulty
-                        //     ? widget.difficulty
-                        //     : _difficulty,
-                        // onChanged: (MinesweeperDifficulty? diff) {
-                        //   setState(() {
-                        //     _difficulty = diff;
-                        //   });
-                        // },
                         groupValue: state.mineDifficulty,
                         onChanged: (_) {
-                          // setState(() {
-                          //   _difficulty = diff;
-                          // });
                           context.read<MinesweeperBloc>().add(
                                 const UpdateMinesweeperDifficulty(
                                   resetMinesweeper: true,
@@ -253,20 +165,8 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(20),
                         value: MinesweeperDifficulty.harder,
-                        // groupValue: _difficulty == MinesweeperDifficulty.tbd
-                        //     // ? args['difficulty'] as MinesweeperDifficulty
-                        //     ? widget.difficulty
-                        //     : _difficulty,
-                        // onChanged: (MinesweeperDifficulty? diff) {
-                        //   setState(() {
-                        //     _difficulty = diff;
-                        //   });
-                        // },
                         groupValue: state.mineDifficulty,
                         onChanged: (_) {
-                          // setState(() {
-                          //   _difficulty = diff;
-                          // });
                           context.read<MinesweeperBloc>().add(
                                 const UpdateMinesweeperDifficulty(
                                   resetMinesweeper: true,
@@ -285,20 +185,8 @@ Heads up: changing any of the settings here will reset your game.''',
                       NeumorphicRadio(
                         padding: const EdgeInsets.all(20),
                         value: MinesweeperDifficulty.wtf,
-                        // groupValue: _difficulty == MinesweeperDifficulty.tbd
-                        //     // ? args['difficulty'] as MinesweeperDifficulty
-                        //     ? widget.difficulty
-                        //     : _difficulty,
-                        // onChanged: (MinesweeperDifficulty? diff) {
-                        //   setState(() {
-                        //     _difficulty = diff;
-                        //   });
-                        // },
                         groupValue: state.mineDifficulty,
                         onChanged: (_) {
-                          // setState(() {
-                          //   _difficulty = diff;
-                          // });
                           context.read<MinesweeperBloc>().add(
                                 const UpdateMinesweeperDifficulty(
                                   resetMinesweeper: true,

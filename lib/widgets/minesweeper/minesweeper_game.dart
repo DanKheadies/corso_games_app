@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/models/minesweeper/mine_board_square.dart';
-import 'package:corso_games_app/screens/minesweeper/ms_settings_screen.dart';
-import 'package:corso_games_app/widgets/minesweeper/ms_timer.dart';
+import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 
 enum ImageType {
   zero,
@@ -93,7 +92,20 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
   @override
   void initState() {
     super.initState();
-    initializeGame();
+    if (widget.bombCount != 0) {
+      setState(() {
+        bombProbability = widget.bombProbability;
+        maxProbability = widget.maxProbability;
+        bombCount = widget.bombCount;
+        squaresLeft = widget.squaresLeft;
+        board = widget.board;
+        openedSquares = widget.openedSquares;
+        flaggedSquares = widget.flaggedSquares;
+      });
+    } else {
+      initializeGame();
+    }
+    // initializeGame();
   }
 
   void initializeGame() {
@@ -197,7 +209,18 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
     }
 
     setState(() {});
-    // TODO: set the bloc state now
+
+    context.read<MinesweeperBloc>().add(
+          SetMinesweeperBoard(
+            bombProbability: bombProbability,
+            maxProbability: maxProbability,
+            bombCount: bombCount,
+            squaresLeft: squaresLeft,
+            mineBoard: board,
+            openedSquares: openedSquares,
+            flaggedSquares: flaggedSquares,
+          ),
+        );
   }
 
   // This function opens other squares around the target square which don't have any bombs around them.
@@ -257,9 +280,8 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
           actions: [
             TextButton(
               onPressed: () {
-                // widget.timerReset();
-                initializeGame();
                 Navigator.pop(context);
+                initializeGame();
               },
               child: const Text('Play Again'),
             ),
@@ -280,7 +302,6 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
           actions: [
             TextButton(
               onPressed: () {
-                // widget.timerReset();
                 context.read<MinesweeperBloc>().add(
                       ToggleMinesweeperReset(),
                     );
@@ -389,7 +410,6 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
   InkWell smilieReset() {
     return InkWell(
       onTap: () {
-        // widget.timerReset();
         context.read<MinesweeperBloc>().add(
               ToggleMinesweeperReset(),
             );
@@ -408,14 +428,8 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.resetGame) {
-    //   initializeGame();
-    // }
     if (widget.resetMinesweeper) {
       initializeGame();
-      // context.read<ColorsSlideBloc>().add(
-      //       ToggleColorsSlideReset(),
-      //     );
     }
 
     return Center(
@@ -433,7 +447,6 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
                   MSTimer(
                     timer: widget.showMineTimer,
                     mineTimerSeconds: widget.mineTimerSeconds,
-                    // timerStatus: timerStatus,
                   ),
               ],
             ),
@@ -473,24 +486,39 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
               return InkWell(
                 // Opens squares
                 onTap: () {
-                  print('open');
                   if (board[rowNumber][columnNumber].hasBomb) {
-                    print('gg');
                     _handleGameOver();
-                  }
-                  if (board[rowNumber][columnNumber].bombsAround == 0) {
-                    print('bombs around');
-                    _handleTap(rowNumber, columnNumber);
                   } else {
-                    print('g2g');
-                    setState(() {
-                      openedSquares[position] = true;
-                      squaresLeft = squaresLeft - 1;
-                    });
-                  }
+                    if (board[rowNumber][columnNumber].bombsAround == 0) {
+                      _handleTap(rowNumber, columnNumber);
 
-                  if (squaresLeft <= bombCount) {
-                    _handleWin();
+                      context.read<MinesweeperBloc>().add(
+                            UpdateMinesweeperBoard(
+                              squaresLeft: squaresLeft,
+                              mineBoard: board,
+                              openedSquares: openedSquares,
+                              flaggedSquares: flaggedSquares,
+                            ),
+                          );
+                    } else {
+                      setState(() {
+                        openedSquares[position] = true;
+                        squaresLeft = squaresLeft - 1;
+                      });
+
+                      context.read<MinesweeperBloc>().add(
+                            UpdateMinesweeperBoard(
+                              squaresLeft: squaresLeft,
+                              mineBoard: board,
+                              openedSquares: openedSquares,
+                              flaggedSquares: flaggedSquares,
+                            ),
+                          );
+                    }
+
+                    if (squaresLeft <= bombCount) {
+                      _handleWin();
+                    }
                   }
                 },
                 onLongPress: () {
@@ -498,6 +526,15 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
                     setState(() {
                       flaggedSquares[position] = true;
                     });
+
+                    context.read<MinesweeperBloc>().add(
+                          UpdateMinesweeperBoard(
+                            squaresLeft: squaresLeft,
+                            mineBoard: board,
+                            openedSquares: openedSquares,
+                            flaggedSquares: flaggedSquares,
+                          ),
+                        );
                   }
                 },
                 splashColor: Theme.of(context).scaffoldBackgroundColor,

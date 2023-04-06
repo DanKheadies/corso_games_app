@@ -23,73 +23,7 @@ class MinesweeperScreen extends StatefulWidget {
 }
 
 class _MinesweeperScreenState extends State<MinesweeperScreen> {
-  // bool showTimer = false;
-  // bool resetGame = false;
-  // MinesweeperDifficulty currentDifficulty = MinesweeperDifficulty.easy;
-  // MinesweeperDifficulty oldDifficulty = MinesweeperDifficulty.easy;
   String timerStatus = '';
-
-  // void setDifficulty(Object? difficulty) {
-  //   if (difficulty == MinesweeperDifficulty.easy) {
-  //     setState(() {
-  //       currentDifficulty = MinesweeperDifficulty.easy;
-  //     });
-  //   } else if (difficulty == MinesweeperDifficulty.medium) {
-  //     setState(() {
-  //       currentDifficulty = MinesweeperDifficulty.medium;
-  //     });
-  //   } else if (difficulty == MinesweeperDifficulty.hard) {
-  //     setState(() {
-  //       currentDifficulty = MinesweeperDifficulty.hard;
-  //     });
-  //   } else if (difficulty == MinesweeperDifficulty.harder) {
-  //     setState(() {
-  //       currentDifficulty = MinesweeperDifficulty.harder;
-  //     });
-  //   } else if (difficulty == MinesweeperDifficulty.wtf) {
-  //     setState(() {
-  //       currentDifficulty = MinesweeperDifficulty.wtf;
-  //     });
-  //   }
-
-  //   if (difficulty != oldDifficulty) {
-  //     setState(() {
-  //       oldDifficulty = difficulty as MinesweeperDifficulty;
-  //       resetGame = true;
-  //       timerStatus = 'reset';
-  //     });
-  //     Timer(const Duration(milliseconds: 100), () {
-  //       setState(() {
-  //         resetGame = false;
-  //         timerStatus = '';
-  //       });
-  //     });
-  //   }
-  // }
-
-  // void checkTimer(bool showTimer) {
-  //   if (showTimer != showTimer) {
-  //     setState(() {
-  //       resetGame = true;
-  //     });
-  //     Timer(const Duration(milliseconds: 100), () {
-  //       setState(() {
-  //         resetGame = false;
-  //       });
-  //     });
-  //   }
-  // }
-
-  // void handleTimer() {
-  //   setState(() {
-  //     timerStatus = 'reset';
-  //   });
-  //   Timer(const Duration(milliseconds: 100), () {
-  //     setState(() {
-  //       timerStatus = '';
-  //     });
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -174,17 +108,17 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                       Navigator.pushNamed(
                         context,
                         MSSettingsScreen.routeName,
-                      ).then(
-                        (value) {
-                          if (state.resetMinesweeper) {
-                            // cont.restart(
-                            //   context,
-                            //   state.size,
-                            //   state.pieces,
-                            //   state.indexMap,
-                            // );
-                          }
-                        },
+                        // ).then(
+                        //   (value) {
+                        //     if (state.resetMinesweeper) {
+                        //       // cont.restart(
+                        //       //   context,
+                        //       //   state.size,
+                        //       //   state.pieces,
+                        //       //   state.indexMap,
+                        //       // );
+                        //     }
+                        //   },
                       );
                     },
                   );
@@ -212,32 +146,6 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                 }
               },
             ),
-            // IconButton(
-            //   tooltip: 'Settings',
-            //   icon: Icon(
-            //     Icons.settings,
-            //     color: Theme.of(context).colorScheme.background,
-            //     size: 30,
-            //   ),
-            //   onPressed: () async {
-            //     final result = await Navigator.pushNamed(
-            //       context,
-            //       MSSettingsScreen.routeName,
-            //       arguments: [
-            //         currentDifficulty,
-            //         showTimer,
-            //       ],
-            //     );
-            //     result as Map;
-            //     setDifficulty(result['difficulty']);
-            //     checkTimer(result['timer']);
-            //     setState(() {
-            //       currentDifficulty =
-            //           result['difficulty'] as MinesweeperDifficulty;
-            //       showTimer = result['timer'];
-            //     });
-            //   },
-            // ),
             IconButton(
               tooltip: 'Share',
               icon: Icon(

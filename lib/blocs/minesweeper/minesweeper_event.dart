@@ -9,6 +9,37 @@ class MinesweeperEvent extends Equatable {
 
 class LoadMinesweeper extends MinesweeperEvent {}
 
+class SetMinesweeperBoard extends MinesweeperEvent {
+  final int bombProbability;
+  final int maxProbability;
+  final int bombCount;
+  final int squaresLeft;
+  final List<List<MineBoardSquare>> mineBoard;
+  final List<bool> openedSquares;
+  final List<bool> flaggedSquares;
+
+  const SetMinesweeperBoard({
+    required this.bombProbability,
+    required this.maxProbability,
+    required this.bombCount,
+    required this.squaresLeft,
+    required this.mineBoard,
+    required this.openedSquares,
+    required this.flaggedSquares,
+  });
+
+  @override
+  List<Object> get props => [
+        bombProbability,
+        maxProbability,
+        bombCount,
+        squaresLeft,
+        mineBoard,
+        openedSquares,
+        flaggedSquares,
+      ];
+}
+
 class ToggleMinesweeperReset extends MinesweeperEvent {}
 
 class ToggleMinesweeperTimer extends MinesweeperEvent {}
@@ -16,27 +47,16 @@ class ToggleMinesweeperTimer extends MinesweeperEvent {}
 class UpdateMinesweeperDifficulty extends MinesweeperEvent {
   final bool resetMinesweeper;
   final MinesweeperDifficulty mineDifficulty;
-  // final int bombProbability;
-  // final int maxProbability;
-  // final int bombCount;
-  // final int squaresLeft;
-  // final List<List<MineBoardSquare>> mineBoard;
-  // final List<bool> openedSquares;
-  // final List<bool> flaggedSquares;
 
   const UpdateMinesweeperDifficulty({
     required this.resetMinesweeper,
     required this.mineDifficulty,
-    // required this.bombProbability,
-    // required this.maxProbability,
   });
 
   @override
   List<Object> get props => [
         resetMinesweeper,
         mineDifficulty,
-        // bombProbability,
-        // maxProbability,
       ];
 }
 
@@ -61,19 +81,3 @@ class UpdateMinesweeperBoard extends MinesweeperEvent {
         flaggedSquares,
       ];
 }
-
-// class UpdateColorsSlideScore extends ColorsSlideEvent {
-//   final bool reset;
-//   final int increaseAmount;
-
-//   const UpdateColorsSlideScore({
-//     required this.reset,
-//     required this.increaseAmount,
-//   });
-
-//   @override
-//   List<Object> get props => [
-//         reset,
-//         increaseAmount,
-//       ];
-// }

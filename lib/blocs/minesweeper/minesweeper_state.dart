@@ -47,15 +47,25 @@ class MinesweeperState extends Equatable {
 
   factory MinesweeperState.fromJson(Map<String, dynamic> json) {
     var mineList = json['mineBoard'] as List;
-    List<List<MineBoardSquare>> mineBoardList = [];
+    // TODO: pass in row & column counts
+    List<List<MineBoardSquare>> mineBoardList = List.generate(15, (i) {
+      return List.generate(10, (j) {
+        return MineBoardSquare();
+      });
+    });
+
+    for (int i = 0; i < mineList.length; i++) {
+      for (int j = 0; j < mineList[i].length; j++) {
+        mineBoardList[i][j].hasBomb = mineList[i][j]['hasBomb'];
+        mineBoardList[i][j].bombsAround = mineList[i][j]['bombsAround'];
+      }
+    }
 
     var openedList = json['openedSquares'] as List<bool>;
-    // print(openedList);
     List<bool> openedSquaresList = openedList;
-    // List<Word> guessesList = list.map((word) => Word.fromJson(word)).toList();
 
-    var flaggedList = json['flaggedSquares'] as List;
-    List<bool> flaggedSquaresList = [];
+    var flaggedList = json['flaggedSquares'] as List<bool>;
+    List<bool> flaggedSquaresList = flaggedList;
 
     return MinesweeperState(
       resetMinesweeper: json['resetMinesweeper'],
