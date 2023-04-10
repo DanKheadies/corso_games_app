@@ -42,7 +42,18 @@ class SetMinesweeperBoard extends MinesweeperEvent {
 
 class ToggleMinesweeperReset extends MinesweeperEvent {}
 
-class ToggleMinesweeperTimer extends MinesweeperEvent {}
+class ToggleMinesweeperTimer extends MinesweeperEvent {
+  final MinesweeperTimerStatus mineTimerStatus;
+
+  const ToggleMinesweeperTimer({
+    required this.mineTimerStatus,
+  });
+
+  @override
+  List<Object> get props => [
+        mineTimerStatus,
+      ];
+}
 
 class UpdateMinesweeperDifficulty extends MinesweeperEvent {
   final bool resetMinesweeper;
@@ -79,5 +90,24 @@ class UpdateMinesweeperBoard extends MinesweeperEvent {
         mineBoard,
         openedSquares,
         flaggedSquares,
+      ];
+}
+
+class UpdateMinesweeperTimer extends MinesweeperEvent {
+  final int mineTimerSeconds;
+  final int mineTimerPauseSeconds;
+  final MinesweeperTimerStatus mineTimerStatus;
+
+  const UpdateMinesweeperTimer({
+    required this.mineTimerSeconds,
+    required this.mineTimerPauseSeconds,
+    required this.mineTimerStatus,
+  });
+
+  @override
+  List<Object> get props => [
+        mineTimerSeconds,
+        mineTimerPauseSeconds,
+        mineTimerStatus,
       ];
 }

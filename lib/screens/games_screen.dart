@@ -18,7 +18,7 @@ class GamesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      title: 'Games',
+      title: 'Corso Games',
       infoTitle: 'Corso Rules',
       infoDetails:
           'Enjoy the games. If you have a problem, send an email to support@holisticgaming.com.',
@@ -31,6 +31,7 @@ class GamesScreen extends StatelessWidget {
         crossAxisCount: 2,
         children: [
           GameButton(
+            isIconic: true,
             icon: Icons.blur_linear_rounded,
             title: 'Colors Slide',
             onPress: () => Navigator.pushNamed(
@@ -39,6 +40,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.run_circle,
             title: 'Dino Dash',
             onPress: () => Navigator.pushNamed(
@@ -47,6 +49,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.abc,
             title: 'El Word',
             onPress: () => Navigator.pushNamed(
@@ -55,6 +58,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.flag_rounded,
             title: 'Minesweeper',
             onPress: () => Navigator.pushNamed(
@@ -63,6 +67,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.drag_indicator,
             title: 'PAD',
             onPress: () => Navigator.pushNamed(
@@ -71,6 +76,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.view_comfortable,
             title: 'Slide to Slide',
             onPress: () => Navigator.pushNamed(
@@ -79,6 +85,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.stacked_bar_chart,
             title: 'Solitare',
             onPress: () => Navigator.pushNamed(
@@ -87,6 +94,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.grain_rounded,
             title: 'Solo Noble',
             onPress: () => Navigator.pushNamed(
@@ -95,6 +103,7 @@ class GamesScreen extends StatelessWidget {
             ),
           ),
           GameButton(
+            isIconic: true,
             icon: Icons.tag,
             title: 'Tic Tac Toe',
             onPress: () => Navigator.pushNamed(

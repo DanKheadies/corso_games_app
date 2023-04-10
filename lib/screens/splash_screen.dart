@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen>
       const Duration(seconds: 4),
       () => Navigator.pushNamed(
         context,
-        GamesScreen.routeName,
+        WelcomeScreen.routeName,
       ),
     );
   }
@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen>
           timer.cancel();
           Navigator.pushNamed(
             context,
-            GamesScreen.routeName,
+            WelcomeScreen.routeName,
           );
         },
         child: Center(

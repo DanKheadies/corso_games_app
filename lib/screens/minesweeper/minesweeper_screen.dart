@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/screens/screens.dart';
@@ -23,7 +22,7 @@ class MinesweeperScreen extends StatefulWidget {
 }
 
 class _MinesweeperScreenState extends State<MinesweeperScreen> {
-  String timerStatus = '';
+  // String timerStatus = '';
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +53,8 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
               showMineTimer: state.showMineTimer,
               mineDifficulty: state.mineDifficulty,
               mineTimerSeconds: state.mineTimerSeconds,
+              mineTimerPauseSeconds: state.mineTimerPauseSeconds,
+              mineTimerStatus: state.mineTimerStatus,
               bombProbability: state.bombProbability,
               maxProbability: state.maxProbability,
               bombCount: state.bombCount,
@@ -71,23 +72,30 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
       ),
       screenFunction: (String string) {
         if (string == 'drawerOpen') {
-          setState(() {
-            timerStatus = 'pause';
-          });
+          // setState(() {
+          //   timerStatus = 'pause';
+          // });
+          // context.read<MinesweeperBloc>().add(
+          //       UpdateMinesweeperTimer(
+          //         mineTimerSeconds: mineTimerSeconds,
+          //         mineTimerPauseSeconds: mineTimerPauseSeconds,
+          //         mineTimerStatus: mineTimerStatus,
+          //       ),
+          //     );
         } else if (string == 'drawerClose') {
-          setState(() {
-            timerStatus = 'resume';
-          });
+          // setState(() {
+          //   timerStatus = 'resume';
+          // });
         } else if (string == 'drawerNavigate') {
-          setState(() {
-            timerStatus = 'stop';
-          });
+          // setState(() {
+          //   timerStatus = 'stop';
+          // });
         }
-        Timer(const Duration(milliseconds: 100), () {
-          setState(() {
-            timerStatus = '';
-          });
-        });
+        // Timer(const Duration(milliseconds: 100), () {
+        //   setState(() {
+        //     timerStatus = '';
+        //   });
+        // });
       },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
@@ -97,6 +105,8 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
             BlocBuilder<MinesweeperBloc, MinesweeperState>(
               builder: (context, state) {
                 if (state.mineStatus != MinesweeperStatus.error) {
+                  print('bloc builder in ms settings icon');
+                  print(state.mineTimerStatus);
                   return IconButton(
                     tooltip: 'Settings',
                     icon: Icon(
@@ -108,17 +118,35 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                       Navigator.pushNamed(
                         context,
                         MSSettingsScreen.routeName,
-                        // ).then(
-                        //   (value) {
-                        //     if (state.resetMinesweeper) {
-                        //       // cont.restart(
-                        //       //   context,
-                        //       //   state.size,
-                        //       //   state.pieces,
-                        //       //   state.indexMap,
-                        //       // );
-                        //     }
-                        //   },
+                      ).then(
+                        (value) {
+                          //     if (state.resetMinesweeper) {
+                          //       // cont.restart(
+                          //       //   context,
+                          //       //   state.size,
+                          //       //   state.pieces,
+                          //       //   state.indexMap,
+                          //       // );
+                          //     }
+                          print('post ms settings pop');
+                          print('state: ${state.mineTimerStatus}');
+
+                          // TODO: start ms timer after the pop
+                          // set to running if it's resumed
+                          // set to paused if it's.. anything else?
+                          // if (state.mineTimerStatus ==
+                          //     MinesweeperTimerStatus.resume) {
+                          //   print('set to resume to start running');
+                          //   context.read<MinesweeperBloc>().add(
+                          //         const UpdateMinesweeperTimer(
+                          //           mineTimerSeconds: 0,
+                          //           mineTimerPauseSeconds: 0,
+                          //           mineTimerStatus:
+                          //               MinesweeperTimerStatus.running,
+                          //         ),
+                          //       );
+                          // }
+                        },
                       );
                     },
                   );
@@ -146,21 +174,69 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                 }
               },
             ),
-            IconButton(
-              tooltip: 'Share',
-              icon: Icon(
-                Icons.ios_share_outlined,
-                color: Theme.of(context).colorScheme.background,
-                size: 30,
-              ),
-              onPressed: () => showScreenInfo(
-                context,
-                'Coming Soon',
-                'You\'ll be able to share your high score soon!',
-                false,
-                TextAlign.center,
-                'Oh Boy',
-              ),
+            // IconButton(
+            //   tooltip: 'Share',
+            //   icon: Icon(
+            //     Icons.ios_share_outlined,
+            //     color: Theme.of(context).colorScheme.background,
+            //     size: 30,
+            //   ),
+            //   onPressed: () => showScreenInfo(
+            //     context,
+            //     'Coming Soon',
+            //     'You\'ll be able to share your high score soon!',
+            //     false,
+            //     TextAlign.center,
+            //     'Oh Boy',
+            //   ),
+            // ),
+            BlocBuilder<MinesweeperBloc, MinesweeperState>(
+              builder: (context, state) {
+                if (state.mineStatus != MinesweeperStatus.error) {
+                  return IconButton(
+                    tooltip: 'Share',
+                    icon: Icon(
+                      Icons.ios_share_outlined,
+                      color: Theme.of(context).colorScheme.background,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+                      final con = context.read<MinesweeperBloc>();
+                      await HydratedBloc.storage.clear();
+                      // context.read<ColorsSlideBloc>().add(
+                      //       UpdateColorsSlideScore(
+                      //         increaseAmount: 1,
+                      //         reset: false,
+                      //       ),
+                      //     );
+                      con.add(
+                        ToggleMinesweeperReset(),
+                      );
+                    },
+                  );
+                } else {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.warning,
+                      color: Theme.of(context).colorScheme.background,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'There is an error.',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.surface,
+                            ),
+                          ),
+                          duration: const Duration(seconds: 3),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
             ),
           ],
         ),

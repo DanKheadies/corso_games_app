@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 Color black = const Color(0xFF0b0b0b);
 Color white = const Color(0xFFf9f9f9);
@@ -22,6 +23,9 @@ ThemeData lightTheme() {
       onSurface: white,
     ),
     scaffoldBackgroundColor: const Color(0xFFfff8e1),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: black,
+    ),
     iconTheme: IconThemeData(
       // color: Color(0xFFc0416f),
       color: white,
@@ -32,6 +36,7 @@ ThemeData lightTheme() {
         // color: Color(0xFFc0416f),
         color: white,
       ),
+      // systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
     // textTheme: const TextTheme(
     //   titleLarge: TextStyle(
@@ -75,6 +80,9 @@ ThemeData darkTheme() {
       onSurface: black,
     ),
     scaffoldBackgroundColor: const Color(0xFF1a1a1a),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: white,
+    ),
     iconTheme: IconThemeData(
       color: black,
     ),
@@ -83,6 +91,7 @@ ThemeData darkTheme() {
       iconTheme: IconThemeData(
         color: black,
       ),
+      // systemOverlayStyle: SystemUiOverlayStyle.dark,
     ),
     // textTheme: const TextTheme(
     //   titleLarge: TextStyle(

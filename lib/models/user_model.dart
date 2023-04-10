@@ -45,12 +45,12 @@ class User extends Equatable {
     bool? isSubscribedToNotifications,
   }) {
     return User(
+      id: id ?? this.id,
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       phone: phone ?? this.phone,
       city: city ?? this.city,
       country: country ?? this.country,
-      id: id ?? this.id,
       createdOn: createdOn ?? this.createdOn,
       lastLogin: lastLogin ?? this.lastLogin,
       deviceOS: deviceOS ?? this.deviceOS,
@@ -85,7 +85,7 @@ class User extends Equatable {
     );
   }
 
-  Map<String, Object> toDocument() {
+  Map<String, Object> toJson() {
     return {
       'fullName': fullName,
       'email': email,
@@ -101,9 +101,20 @@ class User extends Equatable {
     };
   }
 
-  // static const empty = User(
-  //   id: '',
-  // );
+  static const empty = User(
+    id: '',
+    // fullName = '',
+    // email = '',
+    // phone = '',
+    // city = '',
+    // country = '',
+    // createdOn = '',
+    // lastLogin = '',
+    // deviceOS = '',
+    // deviceType = '',
+    // notificationToken = '',
+    // isSubscribedToNotifications = false,
+  );
 
   @override
   List<Object?> get props => [

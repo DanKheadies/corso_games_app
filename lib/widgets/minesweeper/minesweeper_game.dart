@@ -29,6 +29,8 @@ class MinesweeperGame extends StatefulWidget {
     required this.showMineTimer,
     required this.mineDifficulty,
     required this.mineTimerSeconds,
+    required this.mineTimerPauseSeconds,
+    required this.mineTimerStatus,
     required this.bombProbability,
     required this.maxProbability,
     required this.bombCount,
@@ -42,6 +44,8 @@ class MinesweeperGame extends StatefulWidget {
   final bool showMineTimer;
   final MinesweeperDifficulty mineDifficulty;
   final int mineTimerSeconds;
+  final int mineTimerPauseSeconds;
+  final MinesweeperTimerStatus mineTimerStatus;
   final int bombProbability;
   final int maxProbability;
   final int bombCount;
@@ -429,8 +433,10 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
   @override
   Widget build(BuildContext context) {
     if (widget.resetMinesweeper) {
+      print('ms game; reset true');
       initializeGame();
     }
+    print('ms game & timer status: ${widget.mineTimerStatus}');
 
     return Center(
       child: ListView(
@@ -445,8 +451,10 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
                 smilieReset(),
                 if (widget.showMineTimer)
                   MSTimer(
-                    timer: widget.showMineTimer,
+                    // showTimer: widget.showMineTimer,
                     mineTimerSeconds: widget.mineTimerSeconds,
+                    mineTimerPauseSeconds: widget.mineTimerPauseSeconds,
+                    mineTimerStatus: widget.mineTimerStatus, // TODO: THIS?
                   ),
               ],
             ),
@@ -487,6 +495,10 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
                 // Opens squares
                 onTap: () {
                   if (board[rowNumber][columnNumber].hasBomb) {
+                    setState(() {
+                      openedSquares[position] = true;
+                      squaresLeft = squaresLeft - 1;
+                    });
                     _handleGameOver();
                   } else {
                     if (board[rowNumber][columnNumber].bombsAround == 0) {

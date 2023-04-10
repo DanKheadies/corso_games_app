@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/cubits/cubits.dart';
+import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:corso_games_app/screens/screens.dart';
 
 class GamesDrawer extends StatefulWidget {
@@ -62,6 +65,30 @@ class _GamesDrawerState extends State<GamesDrawer> {
               child: const SizedBox(),
             ),
           ),
+          // const SizedBox(height: 10),
+          // BlocBuilder<BrightnessCubit, Brightness>(
+          //   builder: (context, state) {
+          //     return Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         InkWell(
+          //           borderRadius: BorderRadius.circular(50),
+          //           child: Icon(
+          //             state == Brightness.dark
+          //                 ? Icons.dark_mode
+          //                 : Icons.light_mode,
+          //             size: 45,
+          //             color: Theme.of(context).colorScheme.primary,
+          //           ),
+          //           onTap: () {
+          //             context.read<BrightnessCubit>().toggleBrightness();
+          //           },
+          //         ),
+          //       ],
+          //     );
+          //   },
+          // ),
+          // const SizedBox(height: 10),
           ListTile(
             title: Text(
               'Colors Slide',
@@ -69,6 +96,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
               ),
+            ),
+            leading: Icon(
+              Icons.blur_linear_rounded,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {
               widget.handler('drawerNavigate');
@@ -86,6 +117,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
+            leading: Icon(
+              Icons.run_circle,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onTap: () {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
@@ -101,6 +136,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
               ),
+            ),
+            leading: Icon(
+              Icons.abc,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {
               widget.handler('drawerNavigate');
@@ -118,6 +157,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
+            leading: Icon(
+              Icons.flag_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onTap: () {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
@@ -133,6 +176,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
               ),
+            ),
+            leading: Icon(
+              Icons.drag_indicator,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {
               widget.handler('drawerNavigate');
@@ -150,6 +197,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
+            leading: Icon(
+              Icons.view_comfortable,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onTap: () {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
@@ -165,6 +216,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
               ),
+            ),
+            leading: Icon(
+              Icons.stacked_bar_chart,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {
               widget.handler('drawerNavigate');
@@ -182,6 +237,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
+            leading: Icon(
+              Icons.grain_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onTap: () {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
@@ -198,6 +257,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
+            leading: Icon(
+              Icons.tag,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onTap: () {
               widget.handler('drawerNavigate');
               Navigator.pushNamed(
@@ -206,6 +269,27 @@ class _GamesDrawerState extends State<GamesDrawer> {
               );
             },
           ),
+          const SizedBox(height: 25),
+          ListTile(
+            title: Text(
+              'Profile',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.person,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () async {
+              var nav = Navigator.of(context);
+              context.read<SignUpCubit>().signOut();
+              await context.read<AuthRepository>().signOut();
+              nav.pushNamedAndRemoveUntil('/', (route) => false);
+            },
+          ),
+          const SizedBox(height: 25),
         ],
       ),
     );

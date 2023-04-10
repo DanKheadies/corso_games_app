@@ -8,8 +8,10 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/config/config.dart';
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/firebase_options.dart';
 import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:corso_games_app/screens/screens.dart';
 // import 'package:corso_games_app/simple_bloc_observer.dart';
 
@@ -38,27 +40,77 @@ class CorsoGames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ColorsSlideBloc()..add(LoadColorsSlide()),
+        RepositoryProvider(
+          create: (context) => UserRepository(),
         ),
-        BlocProvider(
-          create: (context) => ElWordBloc()..add(LoadElWord()),
-        ),
-        BlocProvider(
-          create: (context) => MinesweeperBloc()..add(LoadMinesweeper()),
-        ),
-        BlocProvider(
-          create: (context) => TimerBloc(ticker: const Ticker()),
+        RepositoryProvider(
+          create: (context) => AuthRepository(
+            userRepository: context.read<UserRepository>(),
+          ),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme(),
-        darkTheme: darkTheme(),
-        initialRoute: SplashScreen.routeName,
-        onGenerateRoute: AppRouter.onGenerateRoute,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(
+              authRepository: context.read<AuthRepository>(),
+              userRepository: context.read<UserRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => UserBloc(
+              authBloc: context.read<AuthBloc>(),
+              userRepository: context.read<UserRepository>(),
+            )..add(
+                LoadUser(
+                  context.read<AuthBloc>().state.authUser,
+                ),
+                // UpdateUser(
+                //   user: context.read<AuthBloc>().state.authUser,
+                //   userStatus: UserStatus.loading,
+                // ),
+              ),
+          ),
+          BlocProvider(
+            create: (context) => ColorsSlideBloc()..add(LoadColorsSlide()),
+          ),
+          BlocProvider(
+            create: (context) => ElWordBloc()..add(LoadElWord()),
+          ),
+          BlocProvider(
+            create: (context) => MinesweeperBloc()..add(LoadMinesweeper()),
+          ),
+          BlocProvider(
+            create: (context) => TimerBloc(ticker: const Ticker()),
+          ),
+          BlocProvider(
+            create: (context) => BrightnessCubit(),
+          ),
+          BlocProvider(
+            create: (context) => LoginCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SignUpCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+        ],
+        child: BlocBuilder<BrightnessCubit, Brightness>(
+          builder: (context, state) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: state == Brightness.dark ? darkTheme() : lightTheme(),
+              // theme: lightTheme(),
+              // darkTheme: darkTheme(),
+              initialRoute: SplashScreen.routeName,
+              onGenerateRoute: AppRouter.onGenerateRoute,
+            );
+          },
+        ),
       ),
     );
   }

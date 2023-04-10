@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class ScreenWrapper extends StatefulWidget {
@@ -51,6 +54,11 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.secondary,
+        // brightness: ,
+        // systemOverlayStyle: SystemUiOverlayStyle(),
+        // systemOverlayStyle: SystemUiOverlayStyle(
+        //   statusBarBrightness: Brightness.dark,
+        // ),
         actions: [
           IconButton(
             icon: const Icon(
@@ -65,6 +73,30 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
               'GLHF',
             ),
           ),
+          BlocBuilder<BrightnessCubit, Brightness>(
+            builder: (context, state) {
+              return IconButton(
+                icon: Icon(
+                  state == Brightness.dark ? Icons.dark_mode : Icons.light_mode,
+                ),
+                onPressed: () =>
+                    context.read<BrightnessCubit>().toggleBrightness(),
+              );
+              // return InkWell(
+              //   borderRadius: BorderRadius.circular(50),
+              //   child: Icon(
+              //     state == Brightness.dark ? Icons.dark_mode : Icons.light_mode,
+              //     // Icons.light_mode,
+              //     // size: 45,
+              //     // color: Theme.of(context).colorScheme.primary,
+              //   ),
+              //   onTap: () {
+              //     context.read<BrightnessCubit>().toggleBrightness();
+              //   },
+              // );
+            },
+          ),
+          const SizedBox(width: 10),
         ],
       ),
       drawer: GamesDrawer(

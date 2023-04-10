@@ -20,12 +20,16 @@ class AppRouter {
         return ElWordScreen.route();
       case GamesScreen.routeName:
         return GamesScreen.route();
+      case LoginScreen.routeName:
+        return LoginScreen.route();
       case MinesweeperScreen.routeName:
         return MinesweeperScreen.route();
       case MSSettingsScreen.routeName:
         return MSSettingsScreen.route();
       case PuzzlesAndDragginScreen.routeName:
         return PuzzlesAndDragginScreen.route();
+      case RegistrationScreen.routeName:
+        return RegistrationScreen.route();
       case SlideToSlideScreen.routeName:
         return SlideToSlideScreen.route();
       case SolitareScreen.routeName:
@@ -34,6 +38,8 @@ class AppRouter {
         return SoloNobleScreen.route();
       case TicTacToeScreen.routeName:
         return TicTacToeScreen.route();
+      case WelcomeScreen.routeName:
+        return WelcomeScreen.route();
 
       default:
         return _errorRoute();

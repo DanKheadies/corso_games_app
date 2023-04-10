@@ -22,7 +22,7 @@ class UserRepository extends BaseUserRepository {
       await _firebaseFirestore
           .collection('users')
           .doc(user.id)
-          .set(user.toDocument());
+          .set(user.toJson());
     }
   }
 
@@ -41,6 +41,6 @@ class UserRepository extends BaseUserRepository {
     return _firebaseFirestore
         .collection('users')
         .doc(user.id)
-        .update(user.toDocument());
+        .update(user.toJson());
   }
 }

@@ -91,8 +91,13 @@ Heads up: changing any of the settings here will reset your game.''',
                         ),
                         value: state.showMineTimer,
                         onChanged: (value) {
+                          print(
+                              'changing the timer w/ current status ${state.mineTimerStatus}');
                           context.read<MinesweeperBloc>().add(
-                                ToggleMinesweeperTimer(),
+                                const ToggleMinesweeperTimer(
+                                  mineTimerStatus:
+                                      MinesweeperTimerStatus.resume,
+                                ),
                               );
                         },
                       ),

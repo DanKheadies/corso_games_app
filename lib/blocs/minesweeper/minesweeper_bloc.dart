@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:corso_games_app/models/models.dart';
-// import 'package:corso_games_app/widgets/widgets.dart';
 
 part 'minesweeper_event.dart';
 part 'minesweeper_state.dart';
@@ -15,6 +14,7 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
     on<ToggleMinesweeperTimer>(_onToggleMinesweeperTimer);
     on<UpdateMinesweeperBoard>(_onUpdateMinesweeperBoard);
     on<UpdateMinesweeperDifficulty>(_onUpdateMinesweeperDifficulty);
+    on<UpdateMinesweeperTimer>(_onUpdateMinesweeperTimer);
   }
 
   void _onLoadMinesweeper(
@@ -23,7 +23,7 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
   ) {
     // print('on load: ${state.mineStatus}');
     if (state.mineStatus == MinesweeperStatus.loaded) return;
-
+    print('load');
     emit(
       const MinesweeperState(
         resetMinesweeper: false,
@@ -31,6 +31,8 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
         mineDifficulty: MinesweeperDifficulty.easy,
         mineStatus: MinesweeperStatus.loaded,
         mineTimerSeconds: 0,
+        mineTimerPauseSeconds: 0,
+        mineTimerStatus: MinesweeperTimerStatus.stopped,
         bombProbability: 3,
         maxProbability: 30,
         bombCount: 0,
@@ -46,14 +48,15 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
     SetMinesweeperBoard event,
     Emitter<MinesweeperState> emit,
   ) {
-    print('set mine board');
     emit(
       MinesweeperState(
         resetMinesweeper: false,
         showMineTimer: state.showMineTimer,
         mineDifficulty: state.mineDifficulty,
         mineStatus: state.mineStatus,
-        mineTimerSeconds: state.mineTimerSeconds,
+        mineTimerSeconds: 0,
+        mineTimerPauseSeconds: 0,
+        mineTimerStatus: state.mineTimerStatus,
         bombProbability: event.bombProbability,
         maxProbability: event.maxProbability,
         bombCount: event.bombCount,
@@ -75,7 +78,11 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
         showMineTimer: state.showMineTimer,
         mineDifficulty: state.mineDifficulty,
         mineStatus: state.mineStatus,
-        mineTimerSeconds: state.mineTimerSeconds,
+        mineTimerSeconds: 0,
+        mineTimerPauseSeconds: 0,
+        mineTimerStatus: state.showMineTimer
+            ? MinesweeperTimerStatus.reset
+            : MinesweeperTimerStatus.stopped, // TODO
         bombProbability: state.bombProbability,
         maxProbability: state.maxProbability,
         bombCount: state.bombCount,
@@ -91,6 +98,7 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
     ToggleMinesweeperTimer event,
     Emitter<MinesweeperState> emit,
   ) {
+    print('ms bloc toggle timer; currently ${state.mineTimerStatus}');
     emit(
       MinesweeperState(
         resetMinesweeper: state.resetMinesweeper,
@@ -98,6 +106,11 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
         mineDifficulty: state.mineDifficulty,
         mineStatus: state.mineStatus,
         mineTimerSeconds: state.mineTimerSeconds,
+        mineTimerPauseSeconds: state.mineTimerPauseSeconds,
+        mineTimerStatus: state.mineTimerStatus == MinesweeperTimerStatus.stopped
+            ? MinesweeperTimerStatus.resume
+            : MinesweeperTimerStatus.stopped,
+        // mineTimerStatus: state.mineTimerStatus, // TODO?
         bombProbability: state.bombProbability,
         maxProbability: state.maxProbability,
         bombCount: state.bombCount,
@@ -107,6 +120,8 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
         flaggedSquares: state.flaggedSquares,
       ),
     );
+    // print('post ms bloc emit');
+    // print(state.mineTimerStatus);
   }
 
   void _onUpdateMinesweeperBoard(
@@ -119,7 +134,9 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
         showMineTimer: state.showMineTimer,
         mineDifficulty: state.mineDifficulty,
         mineStatus: state.mineStatus,
-        mineTimerSeconds: 0, // TODO: sync to the actual timer
+        mineTimerSeconds: state.mineTimerSeconds,
+        mineTimerPauseSeconds: state.mineTimerPauseSeconds,
+        mineTimerStatus: state.mineTimerStatus,
         bombProbability: state.bombProbability,
         maxProbability: state.maxProbability,
         bombCount: state.bombCount,
@@ -161,9 +178,35 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
         showMineTimer: state.showMineTimer,
         mineDifficulty: event.mineDifficulty,
         mineStatus: state.mineStatus,
-        mineTimerSeconds: 0, // TODO: sync to the actual timer
+        mineTimerSeconds: 0,
+        mineTimerPauseSeconds: 0,
+        mineTimerStatus: MinesweeperTimerStatus.reset,
         bombProbability: bProb,
         maxProbability: mProb,
+        bombCount: state.bombCount,
+        squaresLeft: state.squaresLeft,
+        mineBoard: state.mineBoard,
+        openedSquares: state.openedSquares,
+        flaggedSquares: state.flaggedSquares,
+      ),
+    );
+  }
+
+  void _onUpdateMinesweeperTimer(
+    UpdateMinesweeperTimer event,
+    Emitter<MinesweeperState> emit,
+  ) {
+    emit(
+      MinesweeperState(
+        resetMinesweeper: false,
+        showMineTimer: state.showMineTimer,
+        mineDifficulty: state.mineDifficulty,
+        mineStatus: state.mineStatus,
+        mineTimerSeconds: event.mineTimerSeconds,
+        mineTimerPauseSeconds: event.mineTimerPauseSeconds,
+        mineTimerStatus: event.mineTimerStatus,
+        bombProbability: state.bombProbability,
+        maxProbability: state.maxProbability,
         bombCount: state.bombCount,
         squaresLeft: state.squaresLeft,
         mineBoard: state.mineBoard,
