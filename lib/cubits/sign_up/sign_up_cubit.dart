@@ -20,6 +20,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         super(SignUpState.initial());
 
   void userChanged(User user) {
+    print('sign up cubit user changed');
     emit(
       state.copyWith(
         user: user,
@@ -38,11 +39,9 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void signOut() {
+    print('sign up cubit sign out');
     emit(
-      state.copyWith(
-        status: SignUpStatus.initial,
-        authUser: null,
-      ),
+      SignUpState.initial(),
     );
   }
 

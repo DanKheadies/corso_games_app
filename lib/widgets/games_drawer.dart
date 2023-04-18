@@ -282,11 +282,19 @@ class _GamesDrawerState extends State<GamesDrawer> {
               Icons.person,
               color: Theme.of(context).colorScheme.primary,
             ),
-            onTap: () async {
-              var nav = Navigator.of(context);
-              context.read<SignUpCubit>().signOut();
-              await context.read<AuthRepository>().signOut();
-              nav.pushNamedAndRemoveUntil('/', (route) => false);
+            // onTap: () async {
+            onTap: () {
+              // var nav = Navigator.of(context);
+              // var con = context.read<SignUpCubit>();
+              print('alpha');
+              context.read<AuthRepository>().signOut(); // THIS
+              // await context.read<AuthRepository>().signOut(); // THIS
+              // con.signOut();
+              // nav.pushNamedAndRemoveUntil('/', (route) => false);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                SplashScreen.routeName,
+                (route) => false,
+              );
             },
           ),
           const SizedBox(height: 25),

@@ -26,7 +26,7 @@ class UserInput extends StatelessWidget {
             ),
           ),
           style: TextStyle(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.surface,
           ),
         );
       },

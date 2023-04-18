@@ -1,13 +1,13 @@
 // import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
-import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/cubits/cubits.dart';
+// import 'package:corso_games_app/blocs/blocs.dart';
+// import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class RegistrationScreen extends StatelessWidget {
   static const String routeName = '/registration';
   static Route route() {
     return MaterialPageRoute(
@@ -19,74 +19,56 @@ class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  bool validEmail = true;
-  bool validPassword = false;
-  final TextEditingController passwordCont = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listenWhen: (previous, current) => previous.authUser != current.authUser,
-      listener: (context, state) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          '/welcome',
-          (route) => false,
-        );
-        context.read<SignUpCubit>().signOut();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Register',
-            style: TextStyle(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Register',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.background,
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.info_outline,
               color: Theme.of(context).colorScheme.background,
             ),
-          ),
-          automaticallyImplyLeading: false,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          elevation: 0,
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.info_outline,
-                color: Theme.of(context).colorScheme.background,
-              ),
-              tooltip: 'Info Helper',
-              onPressed: () => showScreenInfo(
-                context,
-                'Register',
-                'Enter your email and a password.',
-                false,
-                TextAlign.center,
-                'Let\'s Go',
-              ),
+            tooltip: 'Info Helper',
+            onPressed: () => showScreenInfo(
+              context,
+              'Register',
+              'Enter your email and a password.',
+              false,
+              TextAlign.center,
+              'Let\'s Go',
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-            context.read<SignUpCubit>().signOut();
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              '/welcome',
-              (route) => false,
-            );
-          },
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          child: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).colorScheme.primary,
           ),
-        ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          // context.read<SignUpCubit>().signOut();
+          // Navigator.of(context).pushNamedAndRemoveUntil(
+          //   '/welcome',
+          //   (route) => false,
+          // );
+          Navigator.of(context).pop();
+        },
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        resizeToAvoidBottomInset: false,
-        body: const Registration(
-          isAnon: false,
+        child: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.primary,
         ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: false,
+      body: const Registration(
+        isAnon: false,
       ),
     );
   }

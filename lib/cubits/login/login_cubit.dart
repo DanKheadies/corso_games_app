@@ -35,15 +35,18 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void signOut() {
+    print('log in cubit sign out');
     emit(
-      state.copyWith(
-        status: LoginStatus.initial,
-        errorMessage: '',
-      ),
+      // state.copyWith(
+      //   status: LoginStatus.initial,
+      //   errorMessage: '',
+      // ),
+      LoginState.initial(),
     );
   }
 
   Future<void> logInWithCredentials() async {
+    print('log in cubit login w/ creds');
     if (state.status == LoginStatus.submitting) return;
 
     emit(
@@ -56,6 +59,9 @@ class LoginCubit extends Cubit<LoginState> {
       var lastLogin = DateTime.now().toString();
       var notificationToken = await FirebaseMessaging.instance.getToken();
 
+      print('trying to loggin');
+      // print(state.cgUser); // no user info atm
+
       await _authRepository.logInWithEmailAndPassword(
         user: state.cgUser!,
         email: state.email,
@@ -64,8 +70,8 @@ class LoginCubit extends Cubit<LoginState> {
         notificationToken: notificationToken ?? '',
       );
 
+      // print(state.cgUser);
       print('should be success');
-      // print();
 
       emit(
         state.copyWith(

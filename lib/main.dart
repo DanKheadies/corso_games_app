@@ -42,13 +42,13 @@ class CorsoGames extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(
-          create: (context) => UserRepository(),
-        ),
+        // RepositoryProvider(
+        //   create: (context) => UserRepository(),
+        // ),
         RepositoryProvider(
           create: (context) => AuthRepository(
-            userRepository: context.read<UserRepository>(),
-          ),
+              // userRepository: context.read<UserRepository>(),
+              ),
         ),
       ],
       child: MultiBlocProvider(
@@ -56,23 +56,19 @@ class CorsoGames extends StatelessWidget {
           BlocProvider(
             create: (context) => AuthBloc(
               authRepository: context.read<AuthRepository>(),
-              userRepository: context.read<UserRepository>(),
+              // userRepository: context.read<UserRepository>(),
             ),
           ),
-          BlocProvider(
-            create: (context) => UserBloc(
-              authBloc: context.read<AuthBloc>(),
-              userRepository: context.read<UserRepository>(),
-            )..add(
-                LoadUser(
-                  context.read<AuthBloc>().state.authUser,
-                ),
-                // UpdateUser(
-                //   user: context.read<AuthBloc>().state.authUser,
-                //   userStatus: UserStatus.loading,
-                // ),
-              ),
-          ),
+          // BlocProvider(
+          //   create: (context) => UserBloc(
+          //     authBloc: context.read<AuthBloc>(),
+          //     userRepository: context.read<UserRepository>(),
+          //   )..add(
+          //       LoadUser(
+          //         context.read<AuthBloc>().state.authUser,
+          //       ),
+          //     ),
+          // ),
           BlocProvider(
             create: (context) => ColorsSlideBloc()..add(LoadColorsSlide()),
           ),

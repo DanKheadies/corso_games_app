@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
+import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -74,24 +75,39 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    // print('welcome screen build');
     return BlocListener<AuthBloc, AuthState>(
+      // listenWhen: (previous, current) => true,
+      // listenWhen: (previous, current) {
+      //   print('listen..');
+      //   print(previous);
+      //   print(current);
+      //   return true;
+      // },
+      // listenWhen: (previous, current) => previous.authUser != current.authUser,
       listenWhen: (previous, current) {
         print('listening..');
-        if (previous.status != current.status || current.user != null) {
+        print(current.status);
+        // TODO: this should trigger if / when LoginCubit is successful?
+        // if (previous.status != current.status ||
+        //     current.user != null ||
+        //     current.status == AuthStatus.authenticated) {
+        // if (previous.status != current.status || current.user != null) {
+        if (previous.status != current.status) {
           print('triggered');
           print(previous.status);
           print(current.status);
-          print(current.user);
+          // print(current.user);
           return true;
         }
         print('do nothing');
         return false;
       },
       listener: (context, state) {
-        // print('welcome listener triggered');
+        print('welcome listener triggered');
         if (state.authUser != null &&
             state.status == AuthStatus.authenticated) {
-          // print('welcome is authUser & auth\'d so push');
+          print('welcome is authUser & auth\'d so push');
 
           Navigator.pushNamedAndRemoveUntil(
             context,
@@ -99,13 +115,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             (route) => false,
           );
         } else {
-          // print('welcome no authUser or unauth/known so stay');
-          context.read<LoginCubit>().signOut();
-          context.read<SignUpCubit>().signOut();
+          print('welcome no authUser or unauth/known so stay');
+          // context.read<LoginCubit>().signOut();
+          // context.read<SignUpCubit>().signOut();
 
           Navigator.pushNamedAndRemoveUntil(
             context,
-            '/welcome',
+            WelcomeScreen.routeName,
             (route) => false,
           );
         }
@@ -137,28 +153,31 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     );
                   },
                 ),
+                // TODO: wrap w/ sign up or login cubit here?
+                // Maybe auth bloc listner at this point
                 Column(
                   children: [
+                    // TODO: wrap w/ login cubit here?
                     GameButton(
                       isIconic: false,
                       icon: Icons.login,
                       title: 'Log In',
-                      onPress: () =>
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/login',
-                        (route) => !route.isActive,
-                      ),
+                      onPress: () => Navigator.of(context)
+                          .pushNamed(LoginScreen.routeName),
                     ),
                     const SizedBox(height: 35),
+                    // TODO: wrap w/ reg cubit here?
                     GameButton(
                       isIconic: false,
                       icon: Icons.app_registration_rounded,
                       title: 'Sign Up',
-                      onPress: () =>
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/registration',
-                        (route) => !route.isActive,
-                      ),
+                      // onPress: () =>
+                      //     Navigator.of(context).pushNamedAndRemoveUntil(
+                      //   '/registration',
+                      //   (route) => !route.isActive,
+                      // ),
+                      onPress: () => Navigator.of(context)
+                          .pushNamed(RegistrationScreen.routeName),
                     ),
                     // PaddedButton(
                     //   color: Theme.of(context)
@@ -177,20 +196,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     BlocBuilder<SignUpCubit, SignUpState>(
                       builder: (context, state) {
                         if (state.status == SignUpStatus.initial) {
-                          // return PaddedButton(
-                          //   color: Theme.of(context)
-                          //       .colorScheme
-                          //       .tertiary
-                          //       .withOpacity(0.8),
-                          //   text: 'Continue to Cruise Schedules',
-                          //   isDisabled: false,
-                          //   onPressed: () =>
-                          //       context.read<SignUpCubit>().signUpAnonymously(),
-                          // );
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 10,
-                            ), // Only w/ the trifecta
+                            ),
                             child: ActionLink(
                               text: 'Maybe Later',
                               resetLink: false,
@@ -204,10 +213,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         if (state.status == SignUpStatus.submitting) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 22), // Only Anon Button
-                            // padding: const EdgeInsets.symmetric(
-                            //   vertical: 0, // Log, Reg & Anon Buttons
-                            // ),
+                              vertical: 22,
+                            ),
                             child: CircularProgressIndicator(
                               color: Theme.of(context).colorScheme.tertiary,
                             ),
@@ -219,7 +226,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               vertical: 10,
                             ),
                             child: Text(
-                              'Try closing and re-opening the app.',
+                              'Succes! Try closing and re-opening the app.',
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),

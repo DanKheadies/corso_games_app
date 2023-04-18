@@ -57,7 +57,7 @@ class _ActionLinkState extends State<ActionLink> {
           ? Column(
               children: [
                 const SizedBox(
-                  height: 13,
+                  height: 9,
                 ),
                 SizedBox(
                   width: 125,
@@ -65,7 +65,7 @@ class _ActionLinkState extends State<ActionLink> {
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 9),
               ],
             )
           : RichText(
@@ -75,7 +75,7 @@ class _ActionLinkState extends State<ActionLink> {
                     text: widget.text,
                     style: TextStyle(
                       color: isClicked || widget.isDisable
-                          ? Theme.of(context).colorScheme.secondary
+                          ? Theme.of(context).colorScheme.surface
                           : Theme.of(context).colorScheme.primary,
                       fontSize: 18,
                     ),
