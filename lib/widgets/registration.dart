@@ -60,10 +60,13 @@ class _RegistrationState extends State<Registration> {
                   if (widget.updateEmail != null) {
                     widget.updateEmail!(value);
                   } else {
-                    context.read<SignUpCubit>().userChanged(
-                          state.user!.copyWith(
-                            email: value,
-                          ),
+                    // context.read<SignUpCubit>().userChanged(
+                    //       state.user!.copyWith(
+                    //         email: value,
+                    //       ),
+                    //     );
+                    context.read<SignUpCubit>().emailChanged(
+                          value,
                         );
                   }
                 },
@@ -154,11 +157,13 @@ class _RegistrationState extends State<Registration> {
                                 title: 'Sign Up',
                                 onPress: () {
                                   if (validEmail && validPassword) {
+                                    print('dank');
                                     if (widget.isAnon) {
                                       context
                                           .read<SignUpCubit>()
                                           .convertWithEmail();
                                     } else {
+                                      print('very dank');
                                       context
                                           .read<SignUpCubit>()
                                           .signUpWithCredentials();

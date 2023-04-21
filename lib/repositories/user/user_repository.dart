@@ -29,7 +29,10 @@ class UserRepository extends BaseUserRepository {
 
   @override
   Stream<User> getUser(String userId) {
+    // Future<User> getUser(String userId) {
     print('user repo getUser');
+    // var user = _firebaseFirestore.collection('users').doc(userId).get();
+    // return user.
     return _firebaseFirestore.collection('users').doc(userId).snapshots().map(
           (snap) => User.fromJson(
             snap.data() ?? {},

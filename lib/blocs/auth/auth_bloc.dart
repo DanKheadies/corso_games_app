@@ -13,15 +13,15 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
-  // final UserRepository _userRepository;
+  final UserRepository _userRepository;
   StreamSubscription<auth.User?>? _authUserSubscription;
   // StreamSubscription<User?>? _userSubscription;
 
   AuthBloc({
     required AuthRepository authRepository,
-    // required UserRepository userRepository,
+    required UserRepository userRepository,
   })  : _authRepository = authRepository,
-        // _userRepository = userRepository,
+        _userRepository = userRepository,
         super(const AuthState.unknown()) {
     on<AuthUserChanged>(_onAuthUserChanged);
 
@@ -29,22 +29,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       print('auth bloc auth user sub');
       if (authUser != null) {
         print('auth bloc auth user sub - authUser not null');
-        // _userRepository.getUser(authUser.uid).listen((user) {
-        //   print('auth bloc auth user sub - getUser');
-        //   // print(user); // have the user after the call to Firebase
-        //   add(
-        //     AuthUserChanged(
-        //       authUser: authUser,
-        //       user: user,
-        //     ),
-        //   );
-        // });
-        add(
-          AuthUserChanged(
-            authUser: authUser,
-            // user: user,
-          ),
-        );
+        _userRepository.getUser(authUser.uid).listen((user) {
+          print('auth bloc auth user sub - getUser');
+          print(user); // have the user after the call to Firebase
+          add(
+            AuthUserChanged(
+              authUser: authUser,
+              user: user,
+            ),
+          );
+        }).onError((err) {
+          print('error: $err');
+        });
       } else {
         print('auth bloc auth user sub - authUser null');
         add(
@@ -79,7 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         AuthState.authenticated(
           authUser: event.authUser!,
-          // user: event.user!,
+          user: event.user!,
         ),
       );
     } else {

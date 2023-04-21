@@ -14,8 +14,8 @@ class LoginState extends Equatable {
   final String password;
   final LoginStatus status;
   final String? errorMessage;
-  final auth.User? user;
-  final User? cgUser;
+  final auth.User? authUser;
+  // final User? user;
 
   bool get isFormValid => email.isNotEmpty && password.isNotEmpty;
 
@@ -24,8 +24,8 @@ class LoginState extends Equatable {
     required this.password,
     required this.status,
     this.errorMessage,
-    this.user,
-    this.cgUser,
+    this.authUser,
+    // this.user,
   });
 
   factory LoginState.initial() {
@@ -34,8 +34,26 @@ class LoginState extends Equatable {
       password: '',
       status: LoginStatus.initial,
       errorMessage: '',
-      user: null,
-      cgUser: User(),
+      authUser: null,
+      // user: User(),
+    );
+  }
+
+  LoginState copyWith({
+    String? email,
+    String? password,
+    LoginStatus? status,
+    String? errorMessage,
+    auth.User? authUser,
+    // User? user,
+  }) {
+    return LoginState(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
+      authUser: authUser ?? this.authUser,
+      // user: user ?? this.user,
     );
   }
 
@@ -48,25 +66,7 @@ class LoginState extends Equatable {
         password,
         status,
         errorMessage,
-        user,
-        cgUser,
+        authUser,
+        // user,
       ];
-
-  LoginState copyWith({
-    String? email,
-    String? password,
-    LoginStatus? status,
-    String? errorMessage,
-    auth.User? user,
-    User? cgUser,
-  }) {
-    return LoginState(
-      email: email ?? this.email,
-      password: password ?? this.password,
-      status: status ?? this.status,
-      errorMessage: errorMessage ?? this.errorMessage,
-      user: user ?? this.user,
-      cgUser: cgUser ?? this.cgUser,
-    );
-  }
 }

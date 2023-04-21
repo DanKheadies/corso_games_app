@@ -5,20 +5,21 @@ import 'package:corso_games_app/repositories/repositories.dart';
 
 class AuthRepository extends BaseAuthRepository {
   final auth.FirebaseAuth _firebaseAuth;
-  // final UserRepository _userRepository;
+  final UserRepository _userRepository;
 
   AuthRepository({
     auth.FirebaseAuth? firebaseAuth,
-    // required UserRepository userRepository,
-  }) : _firebaseAuth = firebaseAuth ?? auth.FirebaseAuth.instance;
-  // _userRepository = userRepository;
+    required UserRepository userRepository,
+  })  : _firebaseAuth = firebaseAuth ?? auth.FirebaseAuth.instance,
+        _userRepository = userRepository;
 
   @override
   Stream<auth.User?> get user => _firebaseAuth.userChanges();
 
   @override
   Future<auth.User?> signUp({
-    required User user,
+    // required User user,
+    required String email,
     required String password,
     required String createdOn,
     required String lastLogin,
@@ -28,22 +29,33 @@ class AuthRepository extends BaseAuthRepository {
   }) async {
     print('auth repo sign up');
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-        email: user.email,
-        password: password,
-        // )
-        // .then(
-        //   (value) => _userRepository.createUser(
-        //     user.copyWith(
-        //       id: value.user!.uid,
-        //       createdOn: createdOn,
-        //       lastLogin: lastLogin,
-        //       deviceOS: deviceOS,
-        //       deviceType: deviceType,
-        //       notificationToken: notificationToken,
-        //     ),
-        //   ),
-      );
+      await _firebaseAuth
+          .createUserWithEmailAndPassword(
+            // email: user.email,
+            email: email,
+            password: password,
+          )
+          .then(
+            (value) => _userRepository.createUser(
+              // user.copyWith(
+              //   id: value.user!.uid,
+              //   createdOn: createdOn,
+              //   lastLogin: lastLogin,
+              //   deviceOS: deviceOS,
+              //   deviceType: deviceType,
+              //   notificationToken: notificationToken,
+              // ),
+              User.empty.copyWith(
+                id: value.user!.uid,
+                email: email,
+                createdOn: createdOn,
+                lastLogin: lastLogin,
+                deviceOS: deviceOS,
+                deviceType: deviceType,
+                notificationToken: notificationToken,
+              ),
+            ),
+          );
       return null;
     } catch (err) {
       throw Exception(err);
@@ -52,7 +64,7 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<auth.User?> signUpAnonymously({
-    required User user,
+    // required User user,
     required String createdOn,
     required String lastLogin,
     required String deviceOS,
@@ -61,19 +73,27 @@ class AuthRepository extends BaseAuthRepository {
   }) async {
     print('auth repo sign up anon');
     try {
-      await _firebaseAuth.signInAnonymously();
-      // await _firebaseAuth.signInAnonymously().then(
-      //       (value) => _userRepository.createUser(
-      //         user.copyWith(
-      //           id: value.user!.uid,
-      //           createdOn: createdOn,
-      //           lastLogin: lastLogin,
-      //           deviceOS: deviceOS,
-      //           deviceType: deviceType,
-      //           notificationToken: notificationToken,
-      //         ),
-      //       ),
-      //     );
+      // await _firebaseAuth.signInAnonymously();
+      await _firebaseAuth.signInAnonymously().then(
+            (value) => _userRepository.createUser(
+              // user.copyWith(
+              //   id: value.user!.uid,
+              //   createdOn: createdOn,
+              //   lastLogin: lastLogin,
+              //   deviceOS: deviceOS,
+              //   deviceType: deviceType,
+              //   notificationToken: notificationToken,
+              // ),
+              User.empty.copyWith(
+                id: value.user!.uid,
+                createdOn: createdOn,
+                lastLogin: lastLogin,
+                deviceOS: deviceOS,
+                deviceType: deviceType,
+                notificationToken: notificationToken,
+              ),
+            ),
+          );
       return null;
     } catch (err) {
       throw Exception(err);
@@ -81,31 +101,35 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
+  // Future<auth.UserCredential> logInWithEmailAndPassword({
   Future<void> logInWithEmailAndPassword({
-    required User user,
+    // required User user,
     required String email,
     required String password,
-    required String lastLogin,
-    required String notificationToken,
+    // required String lastLogin,
+    // required String notificationToken,
   }) async {
     print('auth repo login');
     try {
-      await _firebaseAuth
-          .signInWithEmailAndPassword(
+      // return await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      )
-          .then((value) {
-        print('now updating..');
-        // _userRepository.updateUser(
-        //   user.copyWith(
-        //     id: value.user!.uid,
-        //     lastLogin: lastLogin,
-        //     notificationToken: notificationToken,
-        //   ),
-        // );
-        // print(user); // user is null at this moment
-      });
+      );
+
+      //     .then((value) {
+      //   print('now updating..');
+      //   // User user = _userRepository.getUser(userId);
+      //   // User derp = user.map((user) => User.fromJson());
+      //   _userRepository.updateUser(
+      //     user.copyWith(
+      //       id: value.user!.uid,
+      //       lastLogin: lastLogin,
+      //       notificationToken: notificationToken,
+      //     ),
+      //   );
+      //   // print(user); // user is null at this moment
+      // });
     } catch (err) {
       throw Exception(err);
     }
@@ -127,12 +151,14 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<auth.User?> convertWithEmail({
-    required User user,
+    // required User user,
+    required String email,
     required String password,
   }) async {
     print('auth repo convert');
     final credential = auth.EmailAuthProvider.credential(
-      email: user.email,
+      // email: user.email,
+      email: email,
       password: password,
     );
 

@@ -109,15 +109,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             state.status == AuthStatus.authenticated) {
           print('welcome is authUser & auth\'d so push');
 
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/games',
+          // Need to avoid if it's sign up
+          print(state.user);
+          if (state.user!.email != '') {
+            print('update login');
+            context.read<LoginCubit>().updateLogin(
+                  user: state.user!,
+                );
+          }
+
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            GamesScreen.routeName,
             (route) => false,
           );
         } else {
           print('welcome no authUser or unauth/known so stay');
-          // context.read<LoginCubit>().signOut();
-          // context.read<SignUpCubit>().signOut();
 
           Navigator.pushNamedAndRemoveUntil(
             context,
@@ -171,27 +177,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       isIconic: false,
                       icon: Icons.app_registration_rounded,
                       title: 'Sign Up',
-                      // onPress: () =>
-                      //     Navigator.of(context).pushNamedAndRemoveUntil(
-                      //   '/registration',
-                      //   (route) => !route.isActive,
-                      // ),
                       onPress: () => Navigator.of(context)
                           .pushNamed(RegistrationScreen.routeName),
                     ),
-                    // PaddedButton(
-                    //   color: Theme.of(context)
-                    //       .colorScheme
-                    //       .secondary
-                    //       .withOpacity(0.8),
-                    //   text: 'Sign Up',
-                    //   isDisabled: false,
-                    //   onPressed: () =>
-                    //       Navigator.of(context).pushNamedAndRemoveUntil(
-                    //     '/registration',
-                    //     (route) => !route.isActive,
-                    //   ),
-                    // ),
                     const SizedBox(height: 45),
                     BlocBuilder<SignUpCubit, SignUpState>(
                       builder: (context, state) {

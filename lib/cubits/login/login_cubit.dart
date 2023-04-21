@@ -10,10 +10,13 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final AuthRepository _authRepository;
+  final UserRepository _userRepository;
 
   LoginCubit({
     required AuthRepository authRepository,
+    required UserRepository userRepository,
   })  : _authRepository = authRepository,
+        _userRepository = userRepository,
         super(LoginState.initial());
 
   void emailChanged(String value) {
@@ -37,16 +40,11 @@ class LoginCubit extends Cubit<LoginState> {
   void signOut() {
     print('log in cubit sign out');
     emit(
-      // state.copyWith(
-      //   status: LoginStatus.initial,
-      //   errorMessage: '',
-      // ),
       LoginState.initial(),
     );
   }
 
   Future<void> logInWithCredentials() async {
-    print('log in cubit login w/ creds');
     if (state.status == LoginStatus.submitting) return;
 
     emit(
@@ -56,22 +54,18 @@ class LoginCubit extends Cubit<LoginState> {
     );
 
     try {
-      var lastLogin = DateTime.now().toString();
-      var notificationToken = await FirebaseMessaging.instance.getToken();
-
       print('trying to loggin');
       // print(state.cgUser); // no user info atm
 
+      // var authUser = await _authRepository.logInWithEmailAndPassword(
       await _authRepository.logInWithEmailAndPassword(
-        user: state.cgUser!,
+        // user: state.cgUser!,
+        // user: _authRepository.user,
         email: state.email,
         password: state.password,
-        lastLogin: lastLogin,
-        notificationToken: notificationToken ?? '',
+        // lastLogin: lastLogin,
+        // notificationToken: notificationToken ?? '',
       );
-
-      // print(state.cgUser);
-      print('should be success');
 
       emit(
         state.copyWith(
@@ -88,6 +82,20 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
     }
+  }
+
+  Future<void> updateLogin({
+    required User user,
+  }) async {
+    var lastLogin = DateTime.now().toString();
+    var notificationToken = await FirebaseMessaging.instance.getToken();
+
+    await _userRepository.updateUser(
+      user.copyWith(
+        lastLogin: lastLogin,
+        notificationToken: notificationToken ?? '',
+      ),
+    );
   }
 
   Future<void> resetPassword({

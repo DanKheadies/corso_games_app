@@ -130,41 +130,52 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       // TODO: disable w/ spinner after click
                       // TODO: disable if no email / password (?) snackbars prevent below
-                      GameButton(
-                        isIconic: false,
-                        icon: Icons.login,
-                        title: 'Log In',
-                        onPress: () {
-                          if (state.email == '') {
-                            ScaffoldMessenger.of(context)
-                              ..removeCurrentSnackBar()
-                              ..showSnackBar(
-                                const SnackBar(
-                                  content: Text("Enter an email."),
-                                ),
-                              );
-                          } else if (state.password == '') {
-                            ScaffoldMessenger.of(context)
-                              ..removeCurrentSnackBar()
-                              ..showSnackBar(
-                                const SnackBar(
-                                  content: Text("Enter a password."),
-                                ),
-                              );
-                          } else if (EmailValidator.validate(state.email) &&
-                              state.password != '') {
-                            context.read<LoginCubit>().logInWithCredentials();
-                          } else {
-                            ScaffoldMessenger.of(context)
-                              ..removeCurrentSnackBar()
-                              ..showSnackBar(
-                                const SnackBar(
-                                  content: Text("Enter a valid email."),
-                                ),
-                              );
-                          }
-                        },
-                      ),
+                      state.status == LoginStatus.submitting
+                          ? const Padding(
+                              padding: EdgeInsets.all(11),
+                              child: SizedBox(
+                                height: 35,
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          : GameButton(
+                              isIconic: false,
+                              icon: Icons.login,
+                              title: 'Log In',
+                              onPress: () {
+                                if (state.email == '') {
+                                  ScaffoldMessenger.of(context)
+                                    ..removeCurrentSnackBar()
+                                    ..showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Enter an email."),
+                                      ),
+                                    );
+                                } else if (state.password == '') {
+                                  ScaffoldMessenger.of(context)
+                                    ..removeCurrentSnackBar()
+                                    ..showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Enter a password."),
+                                      ),
+                                    );
+                                } else if (EmailValidator.validate(
+                                        state.email) &&
+                                    state.password != '') {
+                                  context
+                                      .read<LoginCubit>()
+                                      .logInWithCredentials();
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                    ..removeCurrentSnackBar()
+                                    ..showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Enter a valid email."),
+                                      ),
+                                    );
+                                }
+                              },
+                            ),
                       const SizedBox(height: 40),
                       ActionLink(
                         text: 'Forgot your password?',

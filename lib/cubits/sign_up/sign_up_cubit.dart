@@ -19,11 +19,20 @@ class SignUpCubit extends Cubit<SignUpState> {
   })  : _authRepository = authRepository,
         super(SignUpState.initial());
 
-  void userChanged(User user) {
-    print('sign up cubit user changed');
+  // void userChanged(User user) {
+  //   print('sign up cubit user changed');
+  //   emit(
+  //     state.copyWith(
+  //       user: user,
+  //       status: SignUpStatus.initial,
+  //     ),
+  //   );
+  // }
+
+  void emailChanged(String value) {
     emit(
       state.copyWith(
-        user: user,
+        email: value,
         status: SignUpStatus.initial,
       ),
     );
@@ -46,8 +55,10 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   Future<void> signUpWithCredentials() async {
+    print('sign up w/ creds');
     if (!state.isFormValid || state.status == SignUpStatus.submitting) return;
 
+    print('submitting');
     emit(
       state.copyWith(
         status: SignUpStatus.submitting,
@@ -87,8 +98,10 @@ class SignUpCubit extends Cubit<SignUpState> {
       }
 
       var authUser = await _authRepository.signUp(
+        // user: state.user!,
+        // userId: state.email,
+        email: state.email,
         password: state.password,
-        user: state.user!,
         createdOn: createdOn,
         lastLogin: createdOn,
         deviceOS: deviceOS,
@@ -155,7 +168,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       }
 
       var authUser = await _authRepository.signUpAnonymously(
-        user: state.user!,
+        // user: state.user!,
         createdOn: createdOn,
         lastLogin: createdOn,
         deviceOS: deviceOS,
@@ -191,7 +204,8 @@ class SignUpCubit extends Cubit<SignUpState> {
 
     try {
       var authUser = await _authRepository.convertWithEmail(
-        user: state.user!,
+        // user: state.user!,
+        email: state.email,
         password: state.password,
       );
 

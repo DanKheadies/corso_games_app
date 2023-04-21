@@ -13,7 +13,6 @@ import 'package:corso_games_app/repositories/repositories.dart';
 part 'user_event.dart';
 part 'user_state.dart';
 
-// class UserBloc extends HydratedBloc<UserEvent, UserState> {
 class UserBloc extends Bloc<UserEvent, UserState> {
   final AuthBloc _authBloc;
   final UserRepository _userRepository;
@@ -30,18 +29,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     _authSubscription = _authBloc.stream.listen((state) {
       print('user bloc auth sub listening..');
-      // if (state.user != null) {
-      //   print('user bloc auth sub - state has user');
-      //   add(
-      //     LoadUser(state.authUser),
-      //   );
-      //   // add(
-      //   //   LoadUser(
-      //   //     authUser: state.authUser!,
-      //   //     userStatus: UserStatus.loading,
-      //   //   ),
-      //   // );
-      // }
+      if (state.user != null) {
+        print('user bloc auth sub - state has user');
+        add(
+          LoadUser(state.authUser),
+        );
+        //   // add(
+        //   //   LoadUser(
+        //   //     authUser: state.authUser!,
+        //   //     userStatus: UserStatus.loading,
+        //   //   ),
+        //   // );
+      }
     });
   }
 
@@ -49,68 +48,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     LoadUser event,
     Emitter<UserState> emit,
   ) {
-    // if (state.userStatus == UserStatus.loaded) return;
     print('user bloc load user');
 
     emit(
       UserLoading(),
-      // const UserState(
-      //   user: User.empty,
-      //   userStatus: UserStatus.loading,
-      //   userTheme: false,
-      // ),
-      // UserState(
-      //   user: state.user,
-      //   userStatus: state.userStatus,
-      //   userTheme: state.userTheme,
-      // ),
     );
 
     if (event.authUser != null) {
       print('user bloc load user - event has authUser');
       _userRepository.getUser(event.authUser!.uid).listen((user) {
-        // add(
-        //   // UpdateUser(
-        //   //   user: user,
-        //   // ),
-        //   UserState(
-        //     user: user,
-        //   ),
-        // );
         print('user bloc load user getting User');
         add(
           UpdateUser(
             user: user,
-            // userStatus: UserStatus.loaded,
           ),
         );
       });
-    } else {
-      print('user bloc load user - unauth');
-      emit(
-        UserUnauthenticated(),
-      );
-      // emit(
-      //   const UserState(
-      //     user: User.empty,
-      //     userStatus: UserStatus.loading,
-      //     userTheme: false,
-      //   ),
-      // );
     }
   }
-
-  // void _onToggleTheme(
-  //   ToggleTheme event,
-  //   Emitter<UserState> emit,
-  // ) {
-  //   emit(
-  //     UserState(
-  //       user: state.user,
-  //       userTheme: event.userTheme,
-  //     ),
-  //   );
-  // }
 
   void _onUpdateUser(
     UpdateUser event,
@@ -130,16 +85,4 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     _authSubscription?.cancel();
     super.close();
   }
-
-  // @override
-  // UserState? fromJson(Map<String, dynamic> json) {
-  //   // TODO: implement fromJson
-  //   throw UnimplementedError();
-  // }
-
-  // @override
-  // Map<String, dynamic>? toJson(UserState state) {
-  //   // TODO: implement toJson
-  //   throw UnimplementedError();
-  // }
 }

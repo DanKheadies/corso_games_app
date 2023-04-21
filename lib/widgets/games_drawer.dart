@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:corso_games_app/cubits/cubits.dart';
+// import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:corso_games_app/screens/screens.dart';
 
@@ -272,7 +272,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
           const SizedBox(height: 25),
           ListTile(
             title: Text(
-              'Profile',
+              'Logout', // Profile
               style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
@@ -282,15 +282,8 @@ class _GamesDrawerState extends State<GamesDrawer> {
               Icons.person,
               color: Theme.of(context).colorScheme.primary,
             ),
-            // onTap: () async {
             onTap: () {
-              // var nav = Navigator.of(context);
-              // var con = context.read<SignUpCubit>();
-              print('alpha');
-              context.read<AuthRepository>().signOut(); // THIS
-              // await context.read<AuthRepository>().signOut(); // THIS
-              // con.signOut();
-              // nav.pushNamedAndRemoveUntil('/', (route) => false);
+              context.read<AuthRepository>().signOut();
               Navigator.of(context).pushNamedAndRemoveUntil(
                 SplashScreen.routeName,
                 (route) => false,
