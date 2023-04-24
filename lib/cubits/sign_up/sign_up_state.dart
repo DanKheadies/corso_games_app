@@ -13,10 +13,6 @@ class SignUpState extends Equatable {
   final SignUpStatus status;
   final String? errorMessage;
   final auth.User? authUser;
-  // final User? user;
-
-  // bool get isFormValid => user!.email.isNotEmpty && password.isNotEmpty;
-  bool get isFormValid => email.isNotEmpty && password.isNotEmpty;
 
   const SignUpState({
     required this.email,
@@ -24,8 +20,9 @@ class SignUpState extends Equatable {
     required this.status,
     this.errorMessage,
     this.authUser,
-    // this.user,
   });
+
+  bool get isFormValid => email.isNotEmpty && password.isNotEmpty;
 
   factory SignUpState.initial() {
     return const SignUpState(
@@ -34,7 +31,6 @@ class SignUpState extends Equatable {
       status: SignUpStatus.initial,
       errorMessage: '',
       authUser: null,
-      // user: User(),
     );
   }
 
@@ -44,7 +40,6 @@ class SignUpState extends Equatable {
     SignUpStatus? status,
     String? errorMessage,
     auth.User? authUser,
-    // User? user,
   }) {
     return SignUpState(
       email: email ?? this.email,
@@ -52,7 +47,6 @@ class SignUpState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       authUser: authUser ?? this.authUser,
-      // user: user ?? this.user,
     );
   }
 
@@ -66,6 +60,5 @@ class SignUpState extends Equatable {
         status,
         errorMessage,
         authUser,
-        // user,
       ];
 }

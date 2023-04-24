@@ -78,9 +78,9 @@ class CorsoGames extends StatelessWidget {
           BlocProvider(
             create: (context) => MinesweeperBloc()..add(LoadMinesweeper()),
           ),
-          BlocProvider(
-            create: (context) => TimerBloc(ticker: const Ticker()),
-          ),
+          // BlocProvider(
+          //   create: (context) => TimerBloc(ticker: const Ticker()),
+          // ),
           BlocProvider(
             create: (context) => BrightnessCubit(),
           ),
@@ -94,6 +94,9 @@ class CorsoGames extends StatelessWidget {
             create: (context) => SignUpCubit(
               authRepository: context.read<AuthRepository>(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => TimerCubit(),
           ),
         ],
         child: BlocBuilder<BrightnessCubit, Brightness>(

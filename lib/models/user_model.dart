@@ -44,7 +44,6 @@ class User extends Equatable {
     String? notificationToken,
     bool? isSubscribedToNotifications,
   }) {
-    print('user copyWith');
     return User(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
@@ -66,7 +65,6 @@ class User extends Equatable {
     Map<String, dynamic> json, [
     String? id,
   ]) {
-    print('user fromJson');
     // Timestamp fbStamp = json['createdOn'] ??
     //     Timestamp.fromDate(DateTime.utc(1900, 1, 1, 0, 0, 0, 0, 0));
     // DateTime createdOn = fbStamp.toDate();
@@ -88,7 +86,6 @@ class User extends Equatable {
   }
 
   Map<String, Object> toJson() {
-    print('user toJson');
     return {
       'fullName': fullName,
       'email': email,

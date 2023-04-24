@@ -58,11 +58,6 @@ class LoginScreen extends StatelessWidget {
         title: '',
         onPress: () {
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          // context.read<LoginCubit>().signOut();
-          // Navigator.of(context).pushNamedAndRemoveUntil(
-          //   '/welcome',
-          //   (route) => false,
-          // );
           Navigator.of(context).pop();
         },
       ),

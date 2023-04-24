@@ -15,7 +15,6 @@ class LoginState extends Equatable {
   final LoginStatus status;
   final String? errorMessage;
   final auth.User? authUser;
-  // final User? user;
 
   bool get isFormValid => email.isNotEmpty && password.isNotEmpty;
 
@@ -25,7 +24,6 @@ class LoginState extends Equatable {
     required this.status,
     this.errorMessage,
     this.authUser,
-    // this.user,
   });
 
   factory LoginState.initial() {
@@ -35,7 +33,6 @@ class LoginState extends Equatable {
       status: LoginStatus.initial,
       errorMessage: '',
       authUser: null,
-      // user: User(),
     );
   }
 
@@ -45,7 +42,6 @@ class LoginState extends Equatable {
     LoginStatus? status,
     String? errorMessage,
     auth.User? authUser,
-    // User? user,
   }) {
     return LoginState(
       email: email ?? this.email,
@@ -53,7 +49,6 @@ class LoginState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       authUser: authUser ?? this.authUser,
-      // user: user ?? this.user,
     );
   }
 
@@ -67,6 +62,5 @@ class LoginState extends Equatable {
         status,
         errorMessage,
         authUser,
-        // user,
       ];
 }

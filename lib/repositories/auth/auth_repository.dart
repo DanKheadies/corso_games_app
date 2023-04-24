@@ -18,7 +18,6 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<auth.User?> signUp({
-    // required User user,
     required String email,
     required String password,
     required String createdOn,
@@ -27,24 +26,14 @@ class AuthRepository extends BaseAuthRepository {
     required String deviceType,
     required String notificationToken,
   }) async {
-    print('auth repo sign up');
     try {
       await _firebaseAuth
           .createUserWithEmailAndPassword(
-            // email: user.email,
             email: email,
             password: password,
           )
           .then(
             (value) => _userRepository.createUser(
-              // user.copyWith(
-              //   id: value.user!.uid,
-              //   createdOn: createdOn,
-              //   lastLogin: lastLogin,
-              //   deviceOS: deviceOS,
-              //   deviceType: deviceType,
-              //   notificationToken: notificationToken,
-              // ),
               User.empty.copyWith(
                 id: value.user!.uid,
                 email: email,
@@ -64,26 +53,15 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<auth.User?> signUpAnonymously({
-    // required User user,
     required String createdOn,
     required String lastLogin,
     required String deviceOS,
     required String deviceType,
     required String notificationToken,
   }) async {
-    print('auth repo sign up anon');
     try {
-      // await _firebaseAuth.signInAnonymously();
       await _firebaseAuth.signInAnonymously().then(
             (value) => _userRepository.createUser(
-              // user.copyWith(
-              //   id: value.user!.uid,
-              //   createdOn: createdOn,
-              //   lastLogin: lastLogin,
-              //   deviceOS: deviceOS,
-              //   deviceType: deviceType,
-              //   notificationToken: notificationToken,
-              // ),
               User.empty.copyWith(
                 id: value.user!.uid,
                 createdOn: createdOn,
@@ -101,35 +79,15 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
-  // Future<auth.UserCredential> logInWithEmailAndPassword({
   Future<void> logInWithEmailAndPassword({
-    // required User user,
     required String email,
     required String password,
-    // required String lastLogin,
-    // required String notificationToken,
   }) async {
-    print('auth repo login');
     try {
-      // return await _firebaseAuth.signInWithEmailAndPassword(
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      //     .then((value) {
-      //   print('now updating..');
-      //   // User user = _userRepository.getUser(userId);
-      //   // User derp = user.map((user) => User.fromJson());
-      //   _userRepository.updateUser(
-      //     user.copyWith(
-      //       id: value.user!.uid,
-      //       lastLogin: lastLogin,
-      //       notificationToken: notificationToken,
-      //     ),
-      //   );
-      //   // print(user); // user is null at this moment
-      // });
     } catch (err) {
       throw Exception(err);
     }
@@ -139,7 +97,6 @@ class AuthRepository extends BaseAuthRepository {
   Future<void> resetPassword({
     required String email,
   }) async {
-    print('auth repo reset pass');
     try {
       await _firebaseAuth.sendPasswordResetEmail(
         email: email,
@@ -151,27 +108,16 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<auth.User?> convertWithEmail({
-    // required User user,
     required String email,
     required String password,
   }) async {
-    print('auth repo convert');
     final credential = auth.EmailAuthProvider.credential(
-      // email: user.email,
       email: email,
       password: password,
     );
 
     try {
-      await _firebaseAuth.currentUser?.linkWithCredential(credential).then(
-        (value) {
-          // _userRepository.updateUser(
-          //   user.copyWith(
-          //     email: user.email,
-          //   ),
-          // );
-        },
-      );
+      await _firebaseAuth.currentUser?.linkWithCredential(credential);
       return null;
     } catch (err) {
       throw Exception(err);
@@ -180,7 +126,6 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<void> signOut() async {
-    print('auth sign out');
     await _firebaseAuth.signOut();
   }
 }

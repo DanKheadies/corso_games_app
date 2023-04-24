@@ -12,7 +12,6 @@ class UserRepository extends BaseUserRepository {
 
   @override
   Future<void> createUser(User user) async {
-    print('user repo creating user');
     bool userExist =
         (await _firebaseFirestore.collection('users').doc(user.id).get())
             .exists;
@@ -29,10 +28,6 @@ class UserRepository extends BaseUserRepository {
 
   @override
   Stream<User> getUser(String userId) {
-    // Future<User> getUser(String userId) {
-    print('user repo getUser');
-    // var user = _firebaseFirestore.collection('users').doc(userId).get();
-    // return user.
     return _firebaseFirestore.collection('users').doc(userId).snapshots().map(
           (snap) => User.fromJson(
             snap.data() ?? {},
@@ -43,7 +38,6 @@ class UserRepository extends BaseUserRepository {
 
   @override
   Future<void> updateUser(User user) async {
-    print('user repo update');
     return _firebaseFirestore
         .collection('users')
         .doc(user.id)

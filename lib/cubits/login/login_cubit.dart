@@ -38,7 +38,6 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void signOut() {
-    print('log in cubit sign out');
     emit(
       LoginState.initial(),
     );
@@ -54,17 +53,9 @@ class LoginCubit extends Cubit<LoginState> {
     );
 
     try {
-      print('trying to loggin');
-      // print(state.cgUser); // no user info atm
-
-      // var authUser = await _authRepository.logInWithEmailAndPassword(
       await _authRepository.logInWithEmailAndPassword(
-        // user: state.cgUser!,
-        // user: _authRepository.user,
         email: state.email,
         password: state.password,
-        // lastLogin: lastLogin,
-        // notificationToken: notificationToken ?? '',
       );
 
       emit(
@@ -73,7 +64,6 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
     } catch (err) {
-      print('login failed');
       print(err);
       emit(
         state.copyWith(
@@ -118,7 +108,6 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
     } catch (err) {
-      print('reset failed');
       print(err);
       emit(
         state.copyWith(

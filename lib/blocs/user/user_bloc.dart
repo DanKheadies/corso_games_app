@@ -28,18 +28,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UpdateUser>(_onUpdateUser);
 
     _authSubscription = _authBloc.stream.listen((state) {
-      print('user bloc auth sub listening..');
       if (state.user != null) {
-        print('user bloc auth sub - state has user');
         add(
           LoadUser(state.authUser),
         );
-        //   // add(
-        //   //   LoadUser(
-        //   //     authUser: state.authUser!,
-        //   //     userStatus: UserStatus.loading,
-        //   //   ),
-        //   // );
       }
     });
   }
@@ -48,16 +40,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     LoadUser event,
     Emitter<UserState> emit,
   ) {
-    print('user bloc load user');
-
-    emit(
-      UserLoading(),
-    );
+    emit(UserLoading());
 
     if (event.authUser != null) {
-      print('user bloc load user - event has authUser');
       _userRepository.getUser(event.authUser!.uid).listen((user) {
-        print('user bloc load user getting User');
         add(
           UpdateUser(
             user: user,
@@ -71,7 +57,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UpdateUser event,
     Emitter<UserState> emit,
   ) {
-    print('user bloc update user');
     _userRepository.updateUser(event.user);
     emit(
       UserLoaded(

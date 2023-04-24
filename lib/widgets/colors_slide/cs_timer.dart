@@ -60,7 +60,9 @@ class _CSTimerState extends State<CSTimer> {
   @override
   void initState() {
     super.initState();
+    print('init');
     if (widget.timer) {
+      print('timer true');
       timerStream = stopWatchStream();
       timerSubscription = timerStream.listen((int newTick) {
         setState(() {

@@ -75,44 +75,27 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    // print('welcome screen build');
     return BlocListener<AuthBloc, AuthState>(
-      // listenWhen: (previous, current) => true,
+      listenWhen: (previous, current) => previous.status != current.status,
       // listenWhen: (previous, current) {
-      //   print('listen..');
-      //   print(previous);
-      //   print(current);
-      //   return true;
+      //   print('listening..');
+      //   print(current.status);
+      //   if (previous.status != current.status) {
+      //     print('triggered');
+      //     print(previous.status);
+      //     print(current.status);
+      //     return true;
+      //   }
+      //   print('do nothing');
+      //   return false;
       // },
-      // listenWhen: (previous, current) => previous.authUser != current.authUser,
-      listenWhen: (previous, current) {
-        print('listening..');
-        print(current.status);
-        // TODO: this should trigger if / when LoginCubit is successful?
-        // if (previous.status != current.status ||
-        //     current.user != null ||
-        //     current.status == AuthStatus.authenticated) {
-        // if (previous.status != current.status || current.user != null) {
-        if (previous.status != current.status) {
-          print('triggered');
-          print(previous.status);
-          print(current.status);
-          // print(current.user);
-          return true;
-        }
-        print('do nothing');
-        return false;
-      },
       listener: (context, state) {
         print('welcome listener triggered');
         if (state.authUser != null &&
             state.status == AuthStatus.authenticated) {
           print('welcome is authUser & auth\'d so push');
 
-          // Need to avoid if it's sign up
-          print(state.user);
-          if (state.user!.email != '') {
-            print('update login');
+          if (state.user!.lastLogin != '') {
             context.read<LoginCubit>().updateLogin(
                   user: state.user!,
                 );
@@ -122,14 +105,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             GamesScreen.routeName,
             (route) => false,
           );
-        } else {
-          print('welcome no authUser or unauth/known so stay');
+          // } else {
+          //   print('welcome no authUser or unauth/known so stay');
 
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            WelcomeScreen.routeName,
-            (route) => false,
-          );
+          //   Navigator.pushNamedAndRemoveUntil(
+          //     context,
+          //     WelcomeScreen.routeName,
+          //     (route) => false,
+          //   );
         }
       },
       child: Scaffold(

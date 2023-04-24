@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
 
 part 'sign_up_state.dart';
@@ -18,16 +17,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     required AuthRepository authRepository,
   })  : _authRepository = authRepository,
         super(SignUpState.initial());
-
-  // void userChanged(User user) {
-  //   print('sign up cubit user changed');
-  //   emit(
-  //     state.copyWith(
-  //       user: user,
-  //       status: SignUpStatus.initial,
-  //     ),
-  //   );
-  // }
 
   void emailChanged(String value) {
     emit(
@@ -48,17 +37,14 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void signOut() {
-    print('sign up cubit sign out');
     emit(
       SignUpState.initial(),
     );
   }
 
   Future<void> signUpWithCredentials() async {
-    print('sign up w/ creds');
     if (!state.isFormValid || state.status == SignUpStatus.submitting) return;
 
-    print('submitting');
     emit(
       state.copyWith(
         status: SignUpStatus.submitting,
@@ -98,8 +84,6 @@ class SignUpCubit extends Cubit<SignUpState> {
       }
 
       var authUser = await _authRepository.signUp(
-        // user: state.user!,
-        // userId: state.email,
         email: state.email,
         password: state.password,
         createdOn: createdOn,
@@ -168,7 +152,6 @@ class SignUpCubit extends Cubit<SignUpState> {
       }
 
       var authUser = await _authRepository.signUpAnonymously(
-        // user: state.user!,
         createdOn: createdOn,
         lastLogin: createdOn,
         deviceOS: deviceOS,
@@ -204,7 +187,6 @@ class SignUpCubit extends Cubit<SignUpState> {
 
     try {
       var authUser = await _authRepository.convertWithEmail(
-        // user: state.user!,
         email: state.email,
         password: state.password,
       );
