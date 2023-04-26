@@ -26,6 +26,8 @@ class AppRouter {
         return MinesweeperScreen.route();
       case MSSettingsScreen.routeName:
         return MSSettingsScreen.route();
+      case ProfileScreen.routeName:
+        return ProfileScreen.route();
       case PuzzlesAndDragginScreen.routeName:
         return PuzzlesAndDragginScreen.route();
       case RegistrationScreen.routeName:

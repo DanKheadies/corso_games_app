@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
+import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
@@ -60,9 +61,7 @@ class _RegistrationState extends State<Registration> {
                   if (widget.updateEmail != null) {
                     widget.updateEmail!(value);
                   } else {
-                    context.read<SignUpCubit>().emailChanged(
-                          value,
-                        );
+                    context.read<SignUpCubit>().emailChanged(value);
                   }
                 },
                 labelText: 'Email',
@@ -140,6 +139,19 @@ class _RegistrationState extends State<Registration> {
                                       context
                                           .read<SignUpCubit>()
                                           .convertWithEmail();
+
+                                      // TODO: save user email on conversion
+
+                                      // context.read<UserBloc>().add(
+                                      //   UpdateUser(user: user,),
+                                      // );
+                                      // context.read<UserBloc>().add(
+                                      //   UpdateUser(
+                                      //     user: state.user.copyWith(
+                                      //       fullName: value,
+                                      //     ),
+                                      //   ),
+                                      // );
                                     } else {
                                       context
                                           .read<SignUpCubit>()

@@ -7,6 +7,7 @@ export 'games_screen.dart';
 export 'login_screen.dart';
 export 'minesweeper/minesweeper_screen.dart';
 export 'minesweeper/ms_settings_screen.dart';
+export 'profile_screen.dart';
 export 'puzzles_and_draggin_screen.dart';
 export 'registration_screen.dart';
 export 'slide_to_slide/puzzle_screen.dart';

@@ -195,7 +195,7 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
         (squaresPerRow * 1); // for 6 squares w/out padding
 
     return ScreenWrapper(
-      title: 'Puzzles And Draggin',
+      title: 'Puzzles & Draggin',
       infoTitle: 'Puzzles And Draggin',
       infoDetails:
           'Drag the circles. Use the force. Follow the instructions. Use the circle you\'re dragging to move other circles.',
@@ -305,7 +305,14 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                                   backgroundColor:
                                       Theme.of(context).colorScheme.primary,
                                 ),
-                                child: const Text('Try again!'),
+                                child: Text(
+                                  'Try again!',
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                  ),
+                                ),
                               )
                             : const SizedBox(height: 48),
                   ],

@@ -267,8 +267,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
+              Navigator.of(context).pushNamed(
                 TicTacToeScreen.routeName,
               );
             },
@@ -276,7 +275,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
           const SizedBox(height: 25),
           ListTile(
             title: Text(
-              'Logout', // Profile
+              'Profile',
               style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
@@ -287,15 +286,34 @@ class _GamesDrawerState extends State<GamesDrawer> {
               color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {
-              context.read<AuthRepository>().signOut();
-              context.read<LoginCubit>().signOut();
-              context.read<SignUpCubit>().signOut();
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                SplashScreen.routeName,
-                (route) => false,
+              Navigator.of(context).pushNamed(
+                ProfileScreen.routeName,
               );
             },
           ),
+          // const SizedBox(height: 15),
+          // ListTile(
+          //   title: Text(
+          //     'Logout', // Profile
+          //     style: TextStyle(
+          //       fontSize: 18,
+          //       color: Theme.of(context).colorScheme.primary,
+          //     ),
+          //   ),
+          //   leading: Icon(
+          //     Icons.person,
+          //     color: Theme.of(context).colorScheme.primary,
+          //   ),
+          //   onTap: () {
+          //     context.read<AuthRepository>().signOut();
+          //     context.read<LoginCubit>().signOut();
+          //     context.read<SignUpCubit>().signOut();
+          //     Navigator.of(context).pushNamedAndRemoveUntil(
+          //       SplashScreen.routeName,
+          //       (route) => false,
+          //     );
+          //   },
+          // ),
           const SizedBox(height: 25),
         ],
       ),

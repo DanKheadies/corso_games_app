@@ -4,7 +4,6 @@ import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class GamesScreen extends StatelessWidget {
-  // static const String id = 'games';
   static const String routeName = '/games';
   static Route route() {
     return MaterialPageRoute(

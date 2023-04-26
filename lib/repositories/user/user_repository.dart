@@ -38,6 +38,7 @@ class UserRepository extends BaseUserRepository {
 
   @override
   Future<void> updateUser(User user) async {
+    // print('user repo - update user');
     return _firebaseFirestore
         .collection('users')
         .doc(user.id)

@@ -1,6 +1,7 @@
 export 'action_link.dart';
 export 'colors_slide/widgets.dart';
 export 'coming_soon.dart';
+export 'custom_text_form_field.dart';
 export 'dino_dash/widgets.dart';
 export 'el_word/widgets.dart';
 export 'game_button.dart';

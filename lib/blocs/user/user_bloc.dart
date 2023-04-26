@@ -44,11 +44,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     if (event.authUser != null) {
       _userRepository.getUser(event.authUser!.uid).listen((user) {
+        // print('here');
         add(
           UpdateUser(
             user: user,
           ),
         );
+      }).onError((err) {
+        // TODO: generating a lot of errors on sign out; related to user repo / stream
+        print('user bloc error: $err');
       });
     }
   }
