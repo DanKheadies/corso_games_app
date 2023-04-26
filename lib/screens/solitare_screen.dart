@@ -82,16 +82,10 @@ class _SolitareScreenState extends State<SolitareScreen> {
               tooltip: 'Share',
               icon: Icon(
                 Icons.ios_share_outlined,
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 30,
               ),
-              onPressed: () {
-                context.read<SolitareBloc>().add(
-                      TestSolitare(
-                        test: DateTime.now().second,
-                      ),
-                    );
-              },
+              onPressed: () {},
             ),
           ],
         ),

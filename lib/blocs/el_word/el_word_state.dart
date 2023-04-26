@@ -44,7 +44,6 @@ class ElWordState extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    // print('el word to json');
     return {
       'status': status.name,
       'solution': solution.toJson(),

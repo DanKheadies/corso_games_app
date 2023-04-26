@@ -223,7 +223,6 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
 
   @override
   Map<String, dynamic>? toJson(MinesweeperState state) {
-    // print('ms toJson');
     return state.toJson();
   }
 }

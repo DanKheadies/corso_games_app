@@ -7,9 +7,6 @@ import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
-// ignore: library_private_types_in_public_api
-// GlobalKey<_SolitareBoardState> solitareKey = GlobalKey();
-
 class SolitareBoard extends StatefulWidget {
   final bool resetSolitare;
   final List<PlayingCard> allCards;
@@ -222,7 +219,6 @@ class _SolitareBoardState extends State<SolitareBoard> {
 
     setState(() {});
 
-    print('initialize');
     context.read<SolitareBloc>().add(
           UpdateCards(
             allCards: allCards,
@@ -259,7 +255,16 @@ class _SolitareBoardState extends State<SolitareBoard> {
           ..faceUp = true;
       });
 
-      print('refresh list');
+      // Timer(
+      //   const Duration(milliseconds: 100),
+      //   () {
+      //     context.read<SolitareBloc>().add(
+      //           UpdateCards(
+      //             allCards: allCards,
+      //           ),
+      //         );
+      //   },
+      // );
       context.read<SolitareBloc>().add(
             UpdateCards(
               allCards: allCards,
@@ -353,7 +358,6 @@ class _SolitareBoardState extends State<SolitareBoard> {
                   );
                 });
 
-                print('tap card deck & not empty');
                 context.read<SolitareBloc>().add(
                       UpdateCards(
                         cardDeckClosed: cardDeckClosed,
@@ -362,9 +366,6 @@ class _SolitareBoardState extends State<SolitareBoard> {
                     );
               }
             },
-            // onDoubleTap: () => context.read<SolitareBloc>().add(
-            //       TestSolitare(),
-            //     ),
             child: cardDeckClosed.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.all(4),

@@ -11,19 +11,6 @@ class LoadSolitare extends SolitareEvent {}
 
 class ToggleSolitareReset extends SolitareEvent {}
 
-class TestSolitare extends SolitareEvent {
-  final int? test;
-
-  const TestSolitare({
-    this.test,
-  });
-
-  @override
-  List<Object?> get props => [
-        test,
-      ];
-}
-
 class UpdateCards extends SolitareEvent {
   final List<PlayingCard>? allCards;
   final List<PlayingCard>? cardColumn1;
@@ -39,6 +26,7 @@ class UpdateCards extends SolitareEvent {
   final List<PlayingCard>? finalDiamondsDeck;
   final List<PlayingCard>? finalHeartsDeck;
   final List<PlayingCard>? finalSpadesDeck;
+  final int? todoTicker;
 
   const UpdateCards({
     this.allCards,
@@ -55,6 +43,7 @@ class UpdateCards extends SolitareEvent {
     this.finalDiamondsDeck,
     this.finalHeartsDeck,
     this.finalSpadesDeck,
+    this.todoTicker,
   });
 
   @override
@@ -73,5 +62,6 @@ class UpdateCards extends SolitareEvent {
         finalDiamondsDeck,
         finalHeartsDeck,
         finalSpadesDeck,
+        todoTicker,
       ];
 }

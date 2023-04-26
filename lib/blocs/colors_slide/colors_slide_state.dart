@@ -183,8 +183,6 @@ class ColorsSlideState extends Equatable {
       };
     });
 
-    print('cs toJson');
-
     return {
       'resetColors': resetColors,
       // 'showColorsTimer': showColorsTimer,

@@ -9,7 +9,6 @@ enum SolitareStatus {
 
 class SolitareState extends Equatable {
   final bool resetSolitare;
-  final int test;
   final SolitareStatus solitareStatus;
   final List<PlayingCard> allCards;
   final List<PlayingCard> cardColumn1;
@@ -25,10 +24,10 @@ class SolitareState extends Equatable {
   final List<PlayingCard> finalDiamondsDeck;
   final List<PlayingCard> finalHeartsDeck;
   final List<PlayingCard> finalSpadesDeck;
+  final int todoTicker;
 
   const SolitareState({
     this.resetSolitare = false,
-    this.test = 0,
     this.solitareStatus = SolitareStatus.loading,
     this.allCards = const [],
     this.cardColumn1 = const [],
@@ -44,6 +43,7 @@ class SolitareState extends Equatable {
     this.finalDiamondsDeck = const [],
     this.finalHeartsDeck = const [],
     this.finalSpadesDeck = const [],
+    this.todoTicker = 0,
   });
 
   factory SolitareState.fromJson(Map<String, dynamic> json) {
@@ -92,7 +92,6 @@ class SolitareState extends Equatable {
 
     return SolitareState(
       resetSolitare: json['resetSolitare'],
-      test: json['test'],
       solitareStatus: SolitareStatus.values.firstWhere(
         (status) => status.name.toString() == json['solitareStatus'],
       ),
@@ -110,35 +109,13 @@ class SolitareState extends Equatable {
       finalDiamondsDeck: finalDiamondsList,
       finalHeartsDeck: finalHeartsList,
       finalSpadesDeck: finalSpadesList,
+      todoTicker: json['todoTicker'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    // print('to json works?');
-    // print(cardColumn2);
-    // print(cardDeckOpened);
-    // print(finalDiamondsDeck);
-
-    // print('reset: ${resetSolitare}');
-    // print('status: ${solitareStatus}');
-    // print('all: ${allCards}');
-    // print('c1: ${cardColumn1}');
-    // print('c2: ${cardColumn2}');
-    // print('c3: ${cardColumn3}');
-    // print('c4: ${cardColumn4}');
-    // print('c5: ${cardColumn5}');
-    // print('c6: ${cardColumn6}');
-    // print('c7: ${cardColumn7}');
-    // print('closed: ${cardDeckClosed}');
-    // print('opened: ${cardDeckOpened}');
-    // print('clubs: ${finalClubsDeck}');
-    // print('diamonds: ${finalDiamondsDeck}');
-    // print('hearts: ${finalHeartsDeck}');
-    // print('spades: ${finalSpadesDeck}');
-
     return {
       'resetSolitare': resetSolitare,
-      'test': test,
       'solitareStatus': solitareStatus.name,
       'allCards': allCards,
       'cardColumn1': cardColumn1,
@@ -154,13 +131,13 @@ class SolitareState extends Equatable {
       'finalDiamondsDeck': finalDiamondsDeck,
       'finalHeartsDeck': finalHeartsDeck,
       'finalSpadesDeck': finalSpadesDeck,
+      'todoTicker': todoTicker,
     };
   }
 
   @override
   List<Object> get props => [
         resetSolitare,
-        test,
         solitareStatus,
         allCards,
         cardColumn1,
@@ -176,5 +153,6 @@ class SolitareState extends Equatable {
         finalDiamondsDeck,
         finalHeartsDeck,
         finalSpadesDeck,
+        todoTicker,
       ];
 }
