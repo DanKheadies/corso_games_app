@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
@@ -27,20 +22,6 @@ class ColorsSlideScreen extends StatefulWidget {
 
 class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
   ColorsController cont = ColorsController();
-  StopWatchTimer csTimer = StopWatchTimer();
-
-  @override
-  void initState() {
-    super.initState();
-    // print('colors init');
-    csTimer.onStartTimer();
-  }
-
-  @override
-  void dispose() async {
-    super.dispose();
-    await csTimer.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +44,6 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
             context.read<ColorsSlideBloc>().add(
                   ToggleColorsSlideReset(),
                 );
-            context.read<TimerCubit>().resetTimer(TimerGame.colorsSlide);
           }
 
           if (state.colorsStatus != ColorsSlideStatus.error) {
@@ -72,97 +52,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const CSSize(),
-                    const ColorsScore(),
-                    if (state.showColorsTimer)
-                      BlocBuilder<TimerCubit, TimerState>(
-                        builder: (context, state) {
-                          // print('daco: ${state.colorsSlideDuration}');
-                          return VisibilityDetector(
-                            key: const Key('colors-slide-timer'),
-                            onVisibilityChanged: (visInfo) {
-                              if (visInfo.visibleBounds == Rect.zero) {
-                                // should pause, i.e. timer not showing / present
-                                print('not visible, stop timer');
-                                csTimer.onStopTimer();
-                                context.read<TimerCubit>().cacheTime(
-                                      TimerGame.colorsSlide,
-                                    );
-                                print('cache: ${state.colorsSlideCache}');
-                              } else {
-                                // should start timer b/c we're showing timer
-                                if (!csTimer.isRunning) {
-                                  print('visible, start timer');
-                                  csTimer.onStartTimer();
-                                }
-                              }
-                            },
-                            child: StreamBuilder(
-                              stream: csTimer.secondTime,
-                              initialData: 0,
-                              builder: (context, snap) {
-                                // Checks (to be removed)
-                                print('tick');
-                                print('seconds: ${DateTime.now().second}');
-                                print('millis: ${DateTime.now().millisecond}');
-                                var value = snap.data;
-
-                                // Update active
-                                context.read<TimerCubit>().updateTime(
-                                      TimerGame.colorsSlide,
-                                      value! + state.colorsSlideCache!,
-                                    );
-                                print('updated active');
-
-                                // Init w/ stored data
-                                // if (value == 0 && state.colorsSlideCache != 0) {
-                                //   // fresh start but add duration to value
-                                //   // value = 0
-                                //   // cache = 10
-                                //   print('init; adding cache to value');
-                                //   value = state.colorsSlideCache;
-                                //   // active = 10
-                                // } else if (
-                                //     // value is less than duration
-                                //     // value = 1
-                                //     // cache = 10
-                                //     value < state.colorsSlideCache!) {
-                                //   // add duration & value
-                                //   print('adding');
-                                //   value += state.colorsSlideCache!;
-                                //   // active = 11
-                                // } else if (value >= state.colorsSlideCache!) {
-                                //   // value caught up, so keep duration = to value
-                                //   print('updating');
-                                //   context.read<TimerCubit>().updateTime(
-                                //         TimerGame.colorsSlide,
-                                //         value,
-                                //       );
-                                // }
-                                // print('state: ${state.colorsSlideDuration}');
-                                // if (state.colorsSlideDuration != 0) {
-                                //   print('dur: ${state.colorsSlideDuration}');
-                                //   value = value! + state.colorsSlideDuration!;
-                                //   // context.read<TimerCubit>().cacheTime(
-                                //   //       TimerGame.colorsSlide,
-                                //   //       value,
-                                //   //     );
-                                // }
-
-                                // return Text(value.toString());
-                                return Column(
-                                  children: [
-                                    Text('value: $value'),
-                                    Text('activ: ${state.colorsSlideActive}'),
-                                    Text('cache: ${state.colorsSlideCache}'),
-                                  ],
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
+                  children: const [
+                    CSSize(),
+                    ColorsScore(),
                   ],
                 ),
                 ColorsGameBoard(
@@ -183,16 +75,13 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         },
       ),
       screenFunction: (String string) {
-        if (string == 'drawerOpen') {
-          print('open');
-          csTimer.onStopTimer();
-        } else if (string == 'drawerClose') {
-          print('close');
-          csTimer.onStartTimer();
-        } else if (string == 'drawerNavigate') {
-          print('nav');
-          csTimer.onStopTimer();
-        }
+        // if (string == 'drawerOpen') {
+        //   print('open');
+        // } else if (string == 'drawerClose') {
+        //   print('close');
+        // } else if (string == 'drawerNavigate') {
+        //   print('nav');
+        // }
       },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
@@ -330,8 +219,6 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                   size: 30,
                 ),
                 onPressed: () {
-                  csTimer.onResetTimer();
-                  context.read<TimerCubit>().resetTimer(TimerGame.colorsSlide);
                   cont.restart(
                     context,
                     state.colorsSize,

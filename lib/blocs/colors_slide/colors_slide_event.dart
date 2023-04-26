@@ -11,7 +11,7 @@ class LoadColorsSlide extends ColorsSlideEvent {}
 
 class ToggleColorsSlideReset extends ColorsSlideEvent {}
 
-class ToggleColorsSlideTimer extends ColorsSlideEvent {}
+// class ToggleColorsSlideTimer extends ColorsSlideEvent {}
 
 class UpdateColorsSlideDifficulty extends ColorsSlideEvent {
   final bool resetColors;

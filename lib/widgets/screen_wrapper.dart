@@ -76,12 +76,14 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           BlocBuilder<BrightnessCubit, Brightness>(
             builder: (context, state) {
               return IconButton(
-                icon: Icon(
-                  state == Brightness.dark ? Icons.dark_mode : Icons.light_mode,
-                ),
-                onPressed: () =>
-                    context.read<BrightnessCubit>().toggleBrightness(),
-              );
+                  icon: Icon(
+                    state == Brightness.dark
+                        ? Icons.dark_mode
+                        : Icons.light_mode,
+                  ),
+                  onPressed: () {
+                    context.read<BrightnessCubit>().toggleBrightness();
+                  });
               // return InkWell(
               //   borderRadius: BorderRadius.circular(50),
               //   child: Icon(

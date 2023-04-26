@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
@@ -72,21 +74,18 @@ class _TransformedCardState extends State<TransformedCard> {
     }
   }
 
-  Widget _buildCard() {
+  Widget _buildCard(Brightness state) {
     return !widget.playingCard.faceUp
         ? Container(
             height: 60,
             width: 40,
             decoration: BoxDecoration(
               border: Border.all(
-                // color: Colors.black,
-                color:
-                    MediaQuery.of(context).platformBrightness == Brightness.dark
-                        ? Theme.of(context).colorScheme.background
-                        : Theme.of(context).colorScheme.onBackground,
+                color: state == Brightness.dark
+                    ? Theme.of(context).colorScheme.background
+                    : Theme.of(context).colorScheme.onBackground,
               ),
               borderRadius: BorderRadius.circular(8),
-              // color: Colors.blue,
               color: Theme.of(context).colorScheme.primary,
             ),
           )
@@ -98,29 +97,34 @@ class _TransformedCardState extends State<TransformedCard> {
                 setState(() {});
               },
             ),
-            childWhenDragging: _buildFaceUpCard(),
+            childWhenDragging: _buildFaceUpCard(state),
             data: {
               'cards': widget.attachedCards,
               'fromIndex': widget.columnIndex,
             },
-            child: _buildFaceUpCard(),
+            child: _buildFaceUpCard(state),
           );
   }
 
-  Widget _buildFaceUpCard() {
+  Widget _buildFaceUpCard(Brightness state) {
     return Material(
       color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
             // color: Colors.black,
-            color: MediaQuery.of(context).platformBrightness == Brightness.dark
+            color: state == Brightness.dark
                 ? Theme.of(context).colorScheme.background
                 : Theme.of(context).colorScheme.onBackground,
           ),
           borderRadius: BorderRadius.circular(8),
-          color: MediaQuery.of(context).platformBrightness == Brightness.dark
-              ? Theme.of(context).colorScheme.surface
+          color: state == Brightness.dark
+              ? Theme.of(context)
+                  .colorScheme
+                  .surface
+                  .withBlue(175)
+                  .withGreen(175)
+                  .withRed(175)
               : Theme.of(context).colorScheme.onSurface,
         ),
         height: 60,
@@ -135,8 +139,7 @@ class _TransformedCardState extends State<TransformedCard> {
                     child: Text(
                       _cardTypeToString(),
                       style: TextStyle(
-                        color: MediaQuery.of(context).platformBrightness ==
-                                Brightness.dark
+                        color: state == Brightness.dark
                             ? Theme.of(context).colorScheme.background
                             : Theme.of(context).colorScheme.onBackground,
                         fontSize: 16,
@@ -161,8 +164,7 @@ class _TransformedCardState extends State<TransformedCard> {
                     Text(
                       _cardTypeToString(),
                       style: TextStyle(
-                        color: MediaQuery.of(context).platformBrightness ==
-                                Brightness.dark
+                        color: state == Brightness.dark
                             ? Theme.of(context).colorScheme.background
                             : Theme.of(context).colorScheme.onBackground,
                         fontSize: 10,
@@ -184,14 +186,18 @@ class _TransformedCardState extends State<TransformedCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Transform(
-      transform: Matrix4.identity()
-        ..translate(
-          0.0,
-          widget.transformIndex * widget.transformDistance,
-          0.0,
-        ),
-      child: _buildCard(),
+    return BlocBuilder<BrightnessCubit, Brightness>(
+      builder: (context, state) {
+        return Transform(
+          transform: Matrix4.identity()
+            ..translate(
+              0.0,
+              widget.transformIndex * widget.transformDistance,
+              0.0,
+            ),
+          child: _buildCard(state),
+        );
+      },
     );
   }
 }

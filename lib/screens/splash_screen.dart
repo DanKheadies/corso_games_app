@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -75,11 +77,16 @@ class _SplashScreenState extends State<SplashScreen>
             scale: animation,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image(
-                image: MediaQuery.of(context).platformBrightness ==
-                        Brightness.dark
-                    ? const AssetImage('assets/images/main/corso-games-2.png')
-                    : const AssetImage('assets/images/main/corso-games-1.png'),
+              child: BlocBuilder<BrightnessCubit, Brightness>(
+                builder: (context, state) {
+                  return Image(
+                    image: state == Brightness.dark
+                        ? const AssetImage(
+                            'assets/images/main/corso-games-2.png')
+                        : const AssetImage(
+                            'assets/images/main/corso-games-1.png'),
+                  );
+                },
               ),
             ),
           ),

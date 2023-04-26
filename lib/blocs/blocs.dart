@@ -2,5 +2,6 @@ export 'auth/auth_bloc.dart';
 export 'colors_slide/colors_slide_bloc.dart';
 export 'el_word/el_word_bloc.dart';
 export 'minesweeper/minesweeper_bloc.dart';
-// export 'timer/timer_bloc.dart';
+export 'solitare/solitare_bloc.dart';
+export 'timer/timer_bloc.dart';
 export 'user/user_bloc.dart';

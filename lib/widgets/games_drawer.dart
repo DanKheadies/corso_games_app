@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// import 'package:corso_games_app/cubits/cubits.dart';
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:corso_games_app/screens/screens.dart';
 
@@ -47,22 +47,26 @@ class _GamesDrawerState extends State<GamesDrawer> {
                 GamesScreen.routeName,
               );
             },
-            child: DrawerHeader(
-              margin: const EdgeInsets.only(
-                bottom: 10,
-                top: 35,
-              ),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: MediaQuery.of(context).platformBrightness ==
-                          Brightness.dark
-                      ? const AssetImage('assets/images/main/corso-games-2.png')
-                      : const AssetImage(
-                          'assets/images/main/corso-games-1.png'),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              child: const SizedBox(),
+            child: BlocBuilder<BrightnessCubit, Brightness>(
+              builder: (context, state) {
+                return DrawerHeader(
+                  margin: const EdgeInsets.only(
+                    bottom: 10,
+                    top: 35,
+                  ),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: state == Brightness.dark
+                          ? const AssetImage(
+                              'assets/images/main/corso-games-2.png')
+                          : const AssetImage(
+                              'assets/images/main/corso-games-1.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  child: const SizedBox(),
+                );
+              },
             ),
           ),
           // const SizedBox(height: 10),
@@ -284,6 +288,8 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               context.read<AuthRepository>().signOut();
+              context.read<LoginCubit>().signOut();
+              context.read<SignUpCubit>().signOut();
               Navigator.of(context).pushNamedAndRemoveUntil(
                 SplashScreen.routeName,
                 (route) => false,

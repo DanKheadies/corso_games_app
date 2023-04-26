@@ -78,9 +78,12 @@ class CorsoGames extends StatelessWidget {
           BlocProvider(
             create: (context) => MinesweeperBloc()..add(LoadMinesweeper()),
           ),
-          // BlocProvider(
-          //   create: (context) => TimerBloc(ticker: const Ticker()),
-          // ),
+          BlocProvider(
+            create: (context) => SolitareBloc()..add(LoadSolitare()),
+          ),
+          BlocProvider(
+            create: (context) => TimerBloc(ticker: const Ticker()),
+          ),
           BlocProvider(
             create: (context) => BrightnessCubit(),
           ),
@@ -95,17 +98,12 @@ class CorsoGames extends StatelessWidget {
               authRepository: context.read<AuthRepository>(),
             ),
           ),
-          BlocProvider(
-            create: (context) => TimerCubit(),
-          ),
         ],
         child: BlocBuilder<BrightnessCubit, Brightness>(
           builder: (context, state) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: state == Brightness.dark ? darkTheme() : lightTheme(),
-              // theme: lightTheme(),
-              // darkTheme: darkTheme(),
               initialRoute: SplashScreen.routeName,
               onGenerateRoute: AppRouter.onGenerateRoute,
             );

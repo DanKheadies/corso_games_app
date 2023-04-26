@@ -60,11 +60,6 @@ class _RegistrationState extends State<Registration> {
                   if (widget.updateEmail != null) {
                     widget.updateEmail!(value);
                   } else {
-                    // context.read<SignUpCubit>().userChanged(
-                    //       state.user!.copyWith(
-                    //         email: value,
-                    //       ),
-                    //     );
                     context.read<SignUpCubit>().emailChanged(
                           value,
                         );
@@ -91,13 +86,6 @@ class _RegistrationState extends State<Registration> {
                 width: 400,
                 height: 150,
                 onSuccess: () {
-                  // ScaffoldMessenger.of(context)
-                  //   ..removeCurrentSnackBar()
-                  //   ..showSnackBar(
-                  //     const SnackBar(
-                  //       content: Text("Password is strong enough."),
-                  //     ),
-                  //   );
                   if (!validPassword) {
                     setState(() {
                       validPassword = true;
@@ -136,15 +124,6 @@ class _RegistrationState extends State<Registration> {
                         },
                       );
                     }
-                    // return PaddedSpinnerButton(
-                    //   shouldSpin: cubitState.status == SignUpStatus.submitting,
-                    //   color: Theme.of(context).colorScheme.tertiary,
-                    //   text: 'Sign Up',
-                    //   isDisabled: !validEmail || !validPassword,
-                    //   onPressed: () {
-
-                    // );
-                    // TODO
                     return cubitState.status == SignUpStatus.submitting
                         ? const Padding(
                             padding: EdgeInsets.all(10),
@@ -157,13 +136,11 @@ class _RegistrationState extends State<Registration> {
                                 title: 'Sign Up',
                                 onPress: () {
                                   if (validEmail && validPassword) {
-                                    print('dank');
                                     if (widget.isAnon) {
                                       context
                                           .read<SignUpCubit>()
                                           .convertWithEmail();
                                     } else {
-                                      print('very dank');
                                       context
                                           .read<SignUpCubit>()
                                           .signUpWithCredentials();

@@ -27,25 +27,25 @@ enum ColorsSlideStatus {
 
 class ColorsSlideState extends Equatable {
   final bool resetColors;
-  final bool showColorsTimer;
+  // final bool showColorsTimer;
   final ColorsSlideDifficulty colorsDifficulty;
   final ColorsSlideDirection colorsLastDirection;
   final ColorsSlideStatus colorsStatus;
   final int colorsScore;
   final int colorsSize;
-  final int colorsTimerSeconds;
+  // final int colorsTimerSeconds;
   final List<ColorsGamePiece> colorsPieces;
   final Map<Point, ColorsGamePiece> colorsIndexMap;
 
   const ColorsSlideState({
     this.resetColors = false,
-    this.showColorsTimer = false,
+    // this.showColorsTimer = false,
     this.colorsDifficulty = ColorsSlideDifficulty.threeByThree,
     this.colorsLastDirection = ColorsSlideDirection.right,
     this.colorsStatus = ColorsSlideStatus.loading,
     this.colorsScore = 0,
     this.colorsSize = 3,
-    this.colorsTimerSeconds = 0,
+    // this.colorsTimerSeconds = 0,
     this.colorsPieces = const [],
     this.colorsIndexMap = const {},
   });
@@ -120,17 +120,9 @@ class ColorsSlideState extends Equatable {
       });
     });
 
-    // TODO: remove testing prints
-    // colorsPiecesList.forEach((piece) {
-    //   print(piece.model.position);
-    // });
-    // tempIndexMap.forEach((point, gamePiece) {
-    //   print(point);
-    // });
-
     return ColorsSlideState(
       resetColors: json['resetColors'],
-      showColorsTimer: json['showColorsTimer'],
+      // showColorsTimer: json['showColorsTimer'],
       colorsDifficulty: ColorsSlideDifficulty.values.firstWhere(
         (diff) => diff.name.toString() == json['colorsDifficulty'],
       ),
@@ -142,7 +134,7 @@ class ColorsSlideState extends Equatable {
       ),
       colorsScore: json['colorsScore'],
       colorsSize: json['colorsSize'],
-      colorsTimerSeconds: json['colorsTimerSeconds'],
+      // colorsTimerSeconds: json['colorsTimerSeconds'],
       colorsPieces: colorsPiecesList,
       colorsIndexMap: tempIndexMap,
     );
@@ -191,23 +183,15 @@ class ColorsSlideState extends Equatable {
       };
     });
 
-    // TODO: remove testing prints
-    // colorsPiecesList.forEach((piece) {
-    //   print(piece[1][1]);
-    // });
-    // tempIndexMap.forEach((point, gamePiece) {
-    //   print(point);
-    // });
-
     return {
       'resetColors': resetColors,
-      'showColorsTimer': showColorsTimer,
+      // 'showColorsTimer': showColorsTimer,
       'colorsDifficulty': colorsDifficulty.name,
       'colorsLastDirection': colorsLastDirection.name,
       'colorsStatus': colorsStatus.name,
       'colorsScore': colorsScore,
       'colorsSize': colorsSize,
-      'colorsTimerSeconds': colorsTimerSeconds,
+      // 'colorsTimerSeconds': colorsTimerSeconds,
       'colorsPieces': colorsPiecesList,
       'colorsIndexMap': tempIndexMap,
     };
@@ -216,12 +200,12 @@ class ColorsSlideState extends Equatable {
   @override
   List<Object> get props => [
         resetColors,
-        showColorsTimer,
+        // showColorsTimer,
         colorsDifficulty,
         colorsStatus,
         colorsScore,
         colorsSize,
-        colorsTimerSeconds,
+        // colorsTimerSeconds,
         colorsPieces,
         colorsIndexMap,
       ];

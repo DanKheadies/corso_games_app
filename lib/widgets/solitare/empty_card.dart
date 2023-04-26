@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
@@ -44,26 +46,37 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
         return widget.cardsAdded.isEmpty
             ? Opacity(
                 opacity: 0.7,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                  ),
-                  height: 60,
-                  width: 40,
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Center(
-                          child: SizedBox(
-                            height: 20,
-                            child: _suitToImage(),
-                          ),
+                child: BlocBuilder<BrightnessCubit, Brightness>(
+                  builder: (context, state) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: state == Brightness.dark
+                            ? Theme.of(context)
+                                .colorScheme
+                                .background
+                                .withBlue(175)
+                                .withGreen(175)
+                                .withRed(175)
+                            : Theme.of(context).colorScheme.background,
+                      ),
+                      height: 60,
+                      width: 40,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Center(
+                              child: SizedBox(
+                                height: 20,
+                                child: _suitToImage(),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
               )
             : TransformedCard(

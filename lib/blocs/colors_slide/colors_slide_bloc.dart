@@ -12,7 +12,7 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
   ColorsSlideBloc() : super(const ColorsSlideState()) {
     on<LoadColorsSlide>(_onLoadColorsSlide);
     on<ToggleColorsSlideReset>(_onToggleColorsSlideReset);
-    on<ToggleColorsSlideTimer>(_onToggleColorsSlideTimer);
+    // on<ToggleColorsSlideTimer>(_onToggleColorsSlideTimer);
     on<UpdateColorsSlideDifficulty>(_onUpdateColorsSlideDifficulty);
     on<UpdateColorsSlidePieces>(_onUpdateColorsSlidePieces);
     on<UpdateColorsSlideScore>(_onUpdateColorsSlideScore);
@@ -28,12 +28,12 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     emit(
       const ColorsSlideState(
         resetColors: false,
-        showColorsTimer: false,
+        // showColorsTimer: false,
         colorsDifficulty: ColorsSlideDifficulty.threeByThree,
         colorsStatus: ColorsSlideStatus.loaded,
         colorsScore: 0,
         colorsSize: 3,
-        colorsTimerSeconds: 0,
+        // colorsTimerSeconds: 0,
         colorsPieces: [],
         colorsIndexMap: {},
       ),
@@ -47,40 +47,37 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     emit(
       ColorsSlideState(
         resetColors: !state.resetColors,
-        showColorsTimer: state.showColorsTimer,
+        // showColorsTimer: state.showColorsTimer,
         colorsDifficulty: state.colorsDifficulty,
         colorsStatus: state.colorsStatus,
-        colorsScore: state.colorsScore,
-        // colorsScore: 0,
+        colorsScore: 0,
         colorsSize: state.colorsSize,
-        colorsTimerSeconds: state.colorsTimerSeconds,
+        // colorsTimerSeconds: state.colorsTimerSeconds,
         // colorsTimerSeconds: 0,
         colorsPieces: state.colorsPieces,
-        // colorsPieces: const [],
         colorsIndexMap: state.colorsIndexMap,
-        // colorsIndexMap: const {},
       ),
     );
   }
 
-  void _onToggleColorsSlideTimer(
-    ToggleColorsSlideTimer event,
-    Emitter<ColorsSlideState> emit,
-  ) {
-    emit(
-      ColorsSlideState(
-        resetColors: state.resetColors,
-        showColorsTimer: !state.showColorsTimer,
-        colorsDifficulty: state.colorsDifficulty,
-        colorsStatus: state.colorsStatus,
-        colorsScore: state.colorsScore,
-        colorsSize: state.colorsSize,
-        colorsTimerSeconds: state.colorsTimerSeconds,
-        colorsPieces: state.colorsPieces,
-        colorsIndexMap: state.colorsIndexMap,
-      ),
-    );
-  }
+  // void _onToggleColorsSlideTimer(
+  //   ToggleColorsSlideTimer event,
+  //   Emitter<ColorsSlideState> emit,
+  // ) {
+  //   emit(
+  //     ColorsSlideState(
+  //       resetColors: state.resetColors,
+  //       showColorsTimer: !state.showColorsTimer,
+  //       colorsDifficulty: state.colorsDifficulty,
+  //       colorsStatus: state.colorsStatus,
+  //       colorsScore: state.colorsScore,
+  //       colorsSize: state.colorsSize,
+  //       colorsTimerSeconds: state.colorsTimerSeconds,
+  //       colorsPieces: state.colorsPieces,
+  //       colorsIndexMap: state.colorsIndexMap,
+  //     ),
+  //   );
+  // }
 
   void _onUpdateColorsSlideDifficulty(
     UpdateColorsSlideDifficulty event,
@@ -91,12 +88,12 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     emit(
       ColorsSlideState(
         resetColors: true,
-        showColorsTimer: state.showColorsTimer,
+        // showColorsTimer: state.showColorsTimer,
         colorsDifficulty: event.colorsDifficulty,
         colorsStatus: state.colorsStatus,
         colorsScore: 0,
         colorsSize: event.colorsSize == 0 ? rando : event.colorsSize,
-        colorsTimerSeconds: 0, // TODO: sync to the actual timer
+        // colorsTimerSeconds: 0,
         colorsPieces: state.colorsPieces,
         colorsIndexMap: state.colorsIndexMap,
       ),
@@ -110,12 +107,12 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     emit(
       ColorsSlideState(
         resetColors: state.resetColors,
-        showColorsTimer: state.showColorsTimer,
+        // showColorsTimer: state.showColorsTimer,
         colorsDifficulty: state.colorsDifficulty,
         colorsStatus: state.colorsStatus,
         colorsScore: state.colorsScore,
         colorsSize: state.colorsSize,
-        colorsTimerSeconds: state.colorsTimerSeconds,
+        // colorsTimerSeconds: state.colorsTimerSeconds,
         colorsPieces: event.colorsPieces,
         colorsIndexMap: event.colorsIndexMap,
       ),
@@ -129,14 +126,14 @@ class ColorsSlideBloc extends HydratedBloc<ColorsSlideEvent, ColorsSlideState> {
     emit(
       ColorsSlideState(
         resetColors: state.resetColors,
-        showColorsTimer: state.showColorsTimer,
+        // showColorsTimer: state.showColorsTimer,
         colorsDifficulty: state.colorsDifficulty,
         colorsStatus: state.colorsStatus,
         colorsScore: event.colorsReset
             ? 0
             : state.colorsScore + event.colorsIncreaseAmount,
         colorsSize: state.colorsSize,
-        colorsTimerSeconds: 0,
+        // colorsTimerSeconds: 0,
         colorsPieces: state.colorsPieces,
         colorsIndexMap: state.colorsIndexMap,
       ),

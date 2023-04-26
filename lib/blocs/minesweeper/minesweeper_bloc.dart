@@ -23,7 +23,7 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
   ) {
     // print('on load: ${state.mineStatus}');
     if (state.mineStatus == MinesweeperStatus.loaded) return;
-    print('load');
+    // print('load');
     emit(
       const MinesweeperState(
         resetMinesweeper: false,
@@ -98,7 +98,7 @@ class MinesweeperBloc extends HydratedBloc<MinesweeperEvent, MinesweeperState> {
     ToggleMinesweeperTimer event,
     Emitter<MinesweeperState> emit,
   ) {
-    print('ms bloc toggle timer; currently ${state.mineTimerStatus}');
+    // print('ms bloc toggle timer; currently ${state.mineTimerStatus}');
     emit(
       MinesweeperState(
         resetMinesweeper: state.resetMinesweeper,

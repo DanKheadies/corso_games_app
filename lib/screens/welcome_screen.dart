@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
-import 'package:corso_games_app/repositories/repositories.dart';
+// import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
@@ -77,23 +76,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listenWhen: (previous, current) => previous.status != current.status,
-      // listenWhen: (previous, current) {
-      //   print('listening..');
-      //   print(current.status);
-      //   if (previous.status != current.status) {
-      //     print('triggered');
-      //     print(previous.status);
-      //     print(current.status);
-      //     return true;
-      //   }
-      //   print('do nothing');
-      //   return false;
-      // },
       listener: (context, state) {
-        print('welcome listener triggered');
+        // print('welcome listener triggered');
         if (state.authUser != null &&
             state.status == AuthStatus.authenticated) {
-          print('welcome is authUser & auth\'d so push');
+          // print('welcome is authUser & auth\'d so push');
 
           if (state.user!.lastLogin != '') {
             context.read<LoginCubit>().updateLogin(
@@ -105,14 +92,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             GamesScreen.routeName,
             (route) => false,
           );
-          // } else {
-          //   print('welcome no authUser or unauth/known so stay');
-
-          //   Navigator.pushNamedAndRemoveUntil(
-          //     context,
-          //     WelcomeScreen.routeName,
-          //     (route) => false,
-          //   );
         }
       },
       child: Scaffold(
@@ -142,11 +121,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     );
                   },
                 ),
-                // TODO: wrap w/ sign up or login cubit here?
-                // Maybe auth bloc listner at this point
                 Column(
                   children: [
-                    // TODO: wrap w/ login cubit here?
                     GameButton(
                       isIconic: false,
                       icon: Icons.login,
@@ -155,7 +131,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           .pushNamed(LoginScreen.routeName),
                     ),
                     const SizedBox(height: 35),
-                    // TODO: wrap w/ reg cubit here?
                     GameButton(
                       isIconic: false,
                       icon: Icons.app_registration_rounded,

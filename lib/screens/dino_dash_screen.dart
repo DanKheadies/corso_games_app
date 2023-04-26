@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// import 'package:corso_games_app/blocs/timer/timer_bloc.dart';
+import 'package:corso_games_app/blocs/timer/timer_bloc.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class DinoRunScreen extends StatefulWidget {
@@ -156,58 +156,58 @@ class _DinoRunScreenState extends State<DinoRunScreen>
     worldController.dispose();
   }
 
-  // void restartTimer(BuildContext context) {
-  //   context.read<TimerBloc>().add(TimerReset());
-  // }
+  void restartTimer(BuildContext context) {
+    context.read<TimerBloc>().add(TimerReset());
+  }
 
-  // void startTimer(BuildContext context, TimerState state) {
-  //   context.read<TimerBloc>().add(TimerStarted(duration: state.duration));
-  // }
+  void startTimer(BuildContext context, TimerState state) {
+    context.read<TimerBloc>().add(TimerStarted(duration: state.duration));
+  }
 
-  // void stopTimer(BuildContext context) {
-  //   context.read<TimerBloc>().add(const TimerPaused());
-  // }
+  void stopTimer(BuildContext context) {
+    context.read<TimerBloc>().add(const TimerPaused());
+  }
 
-  // BlocBuilder actionButtons(BuildContext context) {
-  //   return BlocBuilder<TimerBloc, TimerState>(
-  //     builder: (context, state) {
-  //       return Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //         children: [
-  //           if (state is TimerReady) ...[
-  //             FloatingActionButton(
-  //               child: const Icon(Icons.play_arrow),
-  //               onPressed: () => context
-  //                   .read<TimerBloc>()
-  //                   .add(TimerStarted(duration: state.duration)),
-  //             ),
-  //           ] else if (state is TimerRunning) ...[
-  //             FloatingActionButton(
-  //               child: const Icon(Icons.pause),
-  //               onPressed: () =>
-  //                   context.read<TimerBloc>().add(const TimerPaused()),
-  //             ),
-  //             FloatingActionButton(
-  //               child: const Icon(Icons.refresh),
-  //               onPressed: () => context.read<TimerBloc>().add(TimerReset()),
-  //             ),
-  //           ] else if (state is TimerStopped) ...[
-  //             FloatingActionButton(
-  //               child: const Icon(Icons.play_arrow),
-  //               onPressed: () => context
-  //                   .read<TimerBloc>()
-  //                   .add(TimerResumed(duration: state.duration)),
-  //             ),
-  //             FloatingActionButton(
-  //               child: const Icon(Icons.refresh),
-  //               onPressed: () => context.read<TimerBloc>().add(TimerReset()),
-  //             ),
-  //           ],
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
+  BlocBuilder actionButtons(BuildContext context) {
+    return BlocBuilder<TimerBloc, TimerState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            if (state is TimerReady) ...[
+              FloatingActionButton(
+                child: const Icon(Icons.play_arrow),
+                onPressed: () => context
+                    .read<TimerBloc>()
+                    .add(TimerStarted(duration: state.duration)),
+              ),
+            ] else if (state is TimerRunning) ...[
+              FloatingActionButton(
+                child: const Icon(Icons.pause),
+                onPressed: () =>
+                    context.read<TimerBloc>().add(const TimerPaused()),
+              ),
+              FloatingActionButton(
+                child: const Icon(Icons.refresh),
+                onPressed: () => context.read<TimerBloc>().add(TimerReset()),
+              ),
+            ] else if (state is TimerStopped) ...[
+              FloatingActionButton(
+                child: const Icon(Icons.play_arrow),
+                onPressed: () => context
+                    .read<TimerBloc>()
+                    .add(TimerResumed(duration: state.duration)),
+              ),
+              FloatingActionButton(
+                child: const Icon(Icons.refresh),
+                onPressed: () => context.read<TimerBloc>().add(TimerReset()),
+              ),
+            ],
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,8 +245,7 @@ class _DinoRunScreenState extends State<DinoRunScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              // '${context.select((TimerBloc bloc) => bloc.state.duration)}',
-              '',
+              '${context.select((TimerBloc bloc) => bloc.state.duration)}',
               style: Theme.of(context).textTheme.headlineLarge,
             ),
           ],
@@ -254,89 +253,87 @@ class _DinoRunScreenState extends State<DinoRunScreen>
       ),
     );
 
-    return const SizedBox();
-
-    // return BlocBuilder<TimerBloc, TimerState>(
-    //   builder: (context, state) {
-    //     if (dino.isDead) {
-    //       stopTimer(context);
-    //     } else if (!dino.isDead && state.duration > 0 && runDistance == 0) {
-    //       restartTimer(context);
-    //     } else if (!dino.isDead && state.duration < 1) {
-    //       startTimer(context, state);
-    //     }
-    //     return ScreenWrapper(
-    //       title: 'Dino Dash',
-    //       infoTitle: 'Dino Dash',
-    //       infoDetails:
-    //           'Run for your life! If you die, you may come back. Or go to Heaven. Or to Hell.. Or the mantle?.. Don\'t die!',
-    //       backgroundOverride: Colors.transparent,
-    //       content: GestureDetector(
-    //         behavior: HitTestBehavior.translucent,
-    //         onTap: () => dino.jump(),
-    //         child: Stack(
-    //           alignment: Alignment.center,
-    //           children: children,
-    //         ),
-    //       ),
-    //       screenFunction: (String string) {
-    //         if (string == 'drawerOpen') {
-    //           stopTimer(context);
-    //           worldController.stop();
-    //         } else if (string == 'drawerClose') {
-    //           startTimer(context, state);
-    //           worldController.repeat();
-    //         }
-    //       },
-    //       bottomBar: BottomAppBar(
-    //         color: Theme.of(context).colorScheme.secondary,
-    //         shape: const CircularNotchedRectangle(),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //           children: [
-    //             IconButton(
-    //               tooltip: 'Settings',
-    //               icon: Icon(
-    //                 Icons.settings,
-    //                 color: Theme.of(context).colorScheme.secondary,
-    //                 size: 30,
-    //               ),
-    //               onPressed: () {},
-    //             ),
-    //             IconButton(
-    //               tooltip: 'Share',
-    //               icon: Icon(
-    //                 Icons.ios_share_outlined,
-    //                 color: Theme.of(context).colorScheme.secondary,
-    //                 size: 30,
-    //               ),
-    //               onPressed: () {},
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //       floatingButton: FloatingActionButton(
-    //         onPressed: () {
-    //           restartTimer(context);
-    //           reset();
-    //         },
-    //         tooltip: 'Reset',
-    //         backgroundColor: Theme.of(context).colorScheme.primary,
-    //         child: IconButton(
-    //           icon: Icon(
-    //             Icons.settings_backup_restore_rounded,
-    //             color: Theme.of(context).colorScheme.background,
-    //             size: 30,
-    //           ),
-    //           onPressed: () {
-    //             restartTimer(context);
-    //             reset();
-    //           },
-    //         ),
-    //       ),
-    //       floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
-    //     );
-    //   },
-    // );
+    return BlocBuilder<TimerBloc, TimerState>(
+      builder: (context, state) {
+        if (dino.isDead) {
+          stopTimer(context);
+        } else if (!dino.isDead && state.duration > 0 && runDistance == 0) {
+          restartTimer(context);
+        } else if (!dino.isDead && state.duration < 1) {
+          startTimer(context, state);
+        }
+        return ScreenWrapper(
+          title: 'Dino Dash',
+          infoTitle: 'Dino Dash',
+          infoDetails:
+              'Run for your life! If you die, you may come back. Or go to Heaven. Or to Hell.. Or the mantle?.. Don\'t die!',
+          backgroundOverride: Colors.transparent,
+          content: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => dino.jump(),
+            child: Stack(
+              alignment: Alignment.center,
+              children: children,
+            ),
+          ),
+          screenFunction: (String string) {
+            if (string == 'drawerOpen') {
+              stopTimer(context);
+              worldController.stop();
+            } else if (string == 'drawerClose') {
+              startTimer(context, state);
+              worldController.repeat();
+            }
+          },
+          bottomBar: BottomAppBar(
+            color: Theme.of(context).colorScheme.secondary,
+            shape: const CircularNotchedRectangle(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  tooltip: 'Settings',
+                  icon: Icon(
+                    Icons.settings,
+                    color: Theme.of(context).colorScheme.secondary,
+                    size: 30,
+                  ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  tooltip: 'Share',
+                  icon: Icon(
+                    Icons.ios_share_outlined,
+                    color: Theme.of(context).colorScheme.secondary,
+                    size: 30,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+          floatingButton: FloatingActionButton(
+            onPressed: () {
+              restartTimer(context);
+              reset();
+            },
+            tooltip: 'Reset',
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            child: IconButton(
+              icon: Icon(
+                Icons.settings_backup_restore_rounded,
+                color: Theme.of(context).colorScheme.background,
+                size: 30,
+              ),
+              onPressed: () {
+                restartTimer(context);
+                reset();
+              },
+            ),
+          ),
+          floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
+        );
+      },
+    );
   }
 }

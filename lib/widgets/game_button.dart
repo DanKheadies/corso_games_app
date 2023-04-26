@@ -163,7 +163,7 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
                       ],
                     )
                   : widget.icon == Icons.arrow_back
-                      ? Container(
+                      ? SizedBox(
                           // width: MediaQuery.of(context).size.width * 0.5,
                           // decoration: BoxDecoration(
                           //   shape: BoxShape.circle,

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/models/models.dart';
-import 'package:corso_games_app/widgets/widgets.dart';
+// import 'package:corso_games_app/widgets/widgets.dart';
 
 enum ImageType {
   zero,
@@ -323,11 +324,10 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
   Image getImage(
     ImageType type,
     BuildContext context,
+    Brightness state,
   ) {
-    bool isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark
-            ? true
-            : false;
+    bool isDarkMode = state == Brightness.dark ? true : false;
+
     switch (type) {
       case ImageType.zero:
         return Image.asset(isDarkMode
@@ -433,131 +433,139 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
   @override
   Widget build(BuildContext context) {
     if (widget.resetMinesweeper) {
-      print('ms game; reset true');
+      // print('ms game; reset true');
       initializeGame();
     }
-    print('ms game & timer status: ${widget.mineTimerStatus}');
+    // print('ms game & timer status: ${widget.mineTimerStatus}');
 
     return Center(
-      child: ListView(
-        children: [
-          Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            height: headerHeight,
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                smilieReset(),
-                if (widget.showMineTimer)
-                  MSTimer(
-                    // showTimer: widget.showMineTimer,
-                    mineTimerSeconds: widget.mineTimerSeconds,
-                    mineTimerPauseSeconds: widget.mineTimerPauseSeconds,
-                    mineTimerStatus: widget.mineTimerStatus, // TODO: THIS?
-                  ),
-              ],
-            ),
-          ),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: columnCount,
-            ),
-            itemCount: rowCount * columnCount,
-            itemBuilder: (context, position) {
-              int rowNumber = (position / columnCount).floor();
-              int columnNumber = (position % columnCount);
-
-              Image image;
-
-              if (openedSquares[position] == false) {
-                if (flaggedSquares[position] == true) {
-                  image = getImage(ImageType.flagged, context);
-                } else {
-                  image = getImage(ImageType.facingDown, context);
-                }
-              } else {
-                if (board[rowNumber][columnNumber].hasBomb) {
-                  image = getImage(ImageType.bomb, context);
-                } else {
-                  image = getImage(
-                    getImageTypeFromNumber(
-                      board[rowNumber][columnNumber].bombsAround,
-                    ),
-                    context,
-                  );
-                }
-              }
-
-              return InkWell(
-                // Opens squares
-                onTap: () {
-                  if (board[rowNumber][columnNumber].hasBomb) {
-                    setState(() {
-                      openedSquares[position] = true;
-                      squaresLeft = squaresLeft - 1;
-                    });
-                    _handleGameOver();
-                  } else {
-                    if (board[rowNumber][columnNumber].bombsAround == 0) {
-                      _handleTap(rowNumber, columnNumber);
-
-                      context.read<MinesweeperBloc>().add(
-                            UpdateMinesweeperBoard(
-                              squaresLeft: squaresLeft,
-                              mineBoard: board,
-                              openedSquares: openedSquares,
-                              flaggedSquares: flaggedSquares,
-                            ),
-                          );
-                    } else {
-                      setState(() {
-                        openedSquares[position] = true;
-                        squaresLeft = squaresLeft - 1;
-                      });
-
-                      context.read<MinesweeperBloc>().add(
-                            UpdateMinesweeperBoard(
-                              squaresLeft: squaresLeft,
-                              mineBoard: board,
-                              openedSquares: openedSquares,
-                              flaggedSquares: flaggedSquares,
-                            ),
-                          );
-                    }
-
-                    if (squaresLeft <= bombCount) {
-                      _handleWin();
-                    }
-                  }
-                },
-                onLongPress: () {
-                  if (openedSquares[position] == false) {
-                    setState(() {
-                      flaggedSquares[position] = true;
-                    });
-
-                    context.read<MinesweeperBloc>().add(
-                          UpdateMinesweeperBoard(
-                            squaresLeft: squaresLeft,
-                            mineBoard: board,
-                            openedSquares: openedSquares,
-                            flaggedSquares: flaggedSquares,
-                          ),
-                        );
-                  }
-                },
-                splashColor: Theme.of(context).scaffoldBackgroundColor,
-                child: Container(
-                  color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
-                  child: image,
+      child: BlocBuilder<BrightnessCubit, Brightness>(
+        builder: (context, state) {
+          return ListView(
+            children: [
+              Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                height: headerHeight,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    smilieReset(),
+                    // if (widget.showMineTimer)
+                    //   MSTimer(
+                    //     // showTimer: widget.showMineTimer,
+                    //     mineTimerSeconds: widget.mineTimerSeconds,
+                    //     mineTimerPauseSeconds: widget.mineTimerPauseSeconds,
+                    //     mineTimerStatus: widget.mineTimerStatus,
+                    //   ),
+                  ],
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: columnCount,
+                ),
+                itemCount: rowCount * columnCount,
+                itemBuilder: (context, position) {
+                  int rowNumber = (position / columnCount).floor();
+                  int columnNumber = (position % columnCount);
+
+                  Image image;
+
+                  if (openedSquares[position] == false) {
+                    if (flaggedSquares[position] == true) {
+                      image = getImage(ImageType.flagged, context, state);
+                    } else {
+                      image = getImage(ImageType.facingDown, context, state);
+                    }
+                  } else {
+                    if (board[rowNumber][columnNumber].hasBomb) {
+                      image = getImage(ImageType.bomb, context, state);
+                    } else {
+                      image = getImage(
+                        getImageTypeFromNumber(
+                          board[rowNumber][columnNumber].bombsAround,
+                        ),
+                        context,
+                        state,
+                      );
+                    }
+                  }
+
+                  return InkWell(
+                    // Opens squares
+                    onTap: () {
+                      if (board[rowNumber][columnNumber].hasBomb) {
+                        setState(() {
+                          openedSquares[position] = true;
+                          squaresLeft = squaresLeft - 1;
+                        });
+                        _handleGameOver();
+                      } else {
+                        if (board[rowNumber][columnNumber].bombsAround == 0) {
+                          _handleTap(rowNumber, columnNumber);
+
+                          context.read<MinesweeperBloc>().add(
+                                UpdateMinesweeperBoard(
+                                  squaresLeft: squaresLeft,
+                                  mineBoard: board,
+                                  openedSquares: openedSquares,
+                                  flaggedSquares: flaggedSquares,
+                                ),
+                              );
+                        } else {
+                          setState(() {
+                            openedSquares[position] = true;
+                            squaresLeft = squaresLeft - 1;
+                          });
+
+                          context.read<MinesweeperBloc>().add(
+                                UpdateMinesweeperBoard(
+                                  squaresLeft: squaresLeft,
+                                  mineBoard: board,
+                                  openedSquares: openedSquares,
+                                  flaggedSquares: flaggedSquares,
+                                ),
+                              );
+                        }
+
+                        if (squaresLeft <= bombCount) {
+                          _handleWin();
+                        }
+                      }
+                    },
+                    onLongPress: () {
+                      if (openedSquares[position] == false) {
+                        setState(() {
+                          flaggedSquares[position] = true;
+                        });
+
+                        context.read<MinesweeperBloc>().add(
+                              UpdateMinesweeperBoard(
+                                squaresLeft: squaresLeft,
+                                mineBoard: board,
+                                openedSquares: openedSquares,
+                                flaggedSquares: flaggedSquares,
+                              ),
+                            );
+                      }
+                    },
+                    splashColor: Theme.of(context).scaffoldBackgroundColor,
+                    child: Container(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .surface
+                          .withOpacity(0.5),
+                      child: image,
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
       ),
     );
   }

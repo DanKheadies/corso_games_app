@@ -105,8 +105,8 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
             BlocBuilder<MinesweeperBloc, MinesweeperState>(
               builder: (context, state) {
                 if (state.mineStatus != MinesweeperStatus.error) {
-                  print('bloc builder in ms settings icon');
-                  print(state.mineTimerStatus);
+                  // print('bloc builder in ms settings icon');
+                  // print(state.mineTimerStatus);
                   return IconButton(
                     tooltip: 'Settings',
                     icon: Icon(
@@ -118,35 +118,6 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                       Navigator.pushNamed(
                         context,
                         MSSettingsScreen.routeName,
-                      ).then(
-                        (value) {
-                          //     if (state.resetMinesweeper) {
-                          //       // cont.restart(
-                          //       //   context,
-                          //       //   state.size,
-                          //       //   state.pieces,
-                          //       //   state.indexMap,
-                          //       // );
-                          //     }
-                          print('post ms settings pop');
-                          print('state: ${state.mineTimerStatus}');
-
-                          // TODO: start ms timer after the pop
-                          // set to running if it's resumed
-                          // set to paused if it's.. anything else?
-                          // if (state.mineTimerStatus ==
-                          //     MinesweeperTimerStatus.resume) {
-                          //   print('set to resume to start running');
-                          //   context.read<MinesweeperBloc>().add(
-                          //         const UpdateMinesweeperTimer(
-                          //           mineTimerSeconds: 0,
-                          //           mineTimerPauseSeconds: 0,
-                          //           mineTimerStatus:
-                          //               MinesweeperTimerStatus.running,
-                          //         ),
-                          //       );
-                          // }
-                        },
                       );
                     },
                   );
