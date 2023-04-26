@@ -9,7 +9,8 @@ part 'solitare_state.dart';
 class SolitareBloc extends HydratedBloc<SolitareEvent, SolitareState> {
   SolitareBloc() : super(const SolitareState()) {
     on<LoadSolitare>(_onLoadSolitare);
-    on<ToggleSolitare>(_onToggleSolitare);
+    on<ToggleSolitareReset>(_onToggleSolitareReset);
+    on<TestSolitare>(_onTestSolitare);
     on<UpdateCards>(_onUpdateCards);
   }
 
@@ -22,6 +23,7 @@ class SolitareBloc extends HydratedBloc<SolitareEvent, SolitareState> {
     emit(
       const SolitareState(
         resetSolitare: false,
+        test: 0,
         solitareStatus: SolitareStatus.loaded,
         allCards: [],
         cardColumn1: [],
@@ -41,14 +43,45 @@ class SolitareBloc extends HydratedBloc<SolitareEvent, SolitareState> {
     );
   }
 
-  void _onToggleSolitare(
-    ToggleSolitare event,
+  void _onToggleSolitareReset(
+    ToggleSolitareReset event,
     Emitter<SolitareState> emit,
   ) {
     print('toggle solitare');
     emit(
       SolitareState(
         resetSolitare: !state.resetSolitare,
+        test: state.test,
+        solitareStatus: SolitareStatus.loaded,
+        allCards: state.allCards,
+        cardColumn1: state.cardColumn1,
+        cardColumn2: state.cardColumn2,
+        cardColumn3: state.cardColumn3,
+        cardColumn4: state.cardColumn4,
+        cardColumn5: state.cardColumn5,
+        cardColumn6: state.cardColumn6,
+        cardColumn7: state.cardColumn7,
+        cardDeckClosed: state.cardDeckClosed,
+        cardDeckOpened: state.cardDeckOpened,
+        finalClubsDeck: state.finalClubsDeck,
+        finalDiamondsDeck: state.finalDiamondsDeck,
+        finalHeartsDeck: state.finalHeartsDeck,
+        finalSpadesDeck: state.finalSpadesDeck,
+      ),
+    );
+  }
+
+  void _onTestSolitare(
+    TestSolitare event,
+    Emitter<SolitareState> emit,
+  ) {
+    print('test?');
+    print(state.test);
+    print(event.test);
+    emit(
+      SolitareState(
+        resetSolitare: state.resetSolitare,
+        test: event.test ?? state.test,
         solitareStatus: SolitareStatus.loaded,
         allCards: state.allCards,
         cardColumn1: state.cardColumn1,
@@ -90,6 +123,7 @@ class SolitareBloc extends HydratedBloc<SolitareEvent, SolitareState> {
     emit(
       SolitareState(
         resetSolitare: state.resetSolitare,
+        test: DateTime.now().second,
         solitareStatus: state.solitareStatus,
         allCards: event.allCards ?? state.allCards,
         cardColumn1: event.cardColumn1 ?? state.cardColumn1,
@@ -119,7 +153,7 @@ class SolitareBloc extends HydratedBloc<SolitareEvent, SolitareState> {
 
   @override
   Map<String, dynamic>? toJson(SolitareState state) {
-    print('toJson');
+    print('solitare toJson');
     // print(state.cardColumn2);
     // print(state.cardDeckOpened);
     // print(state.finalDiamondsDeck);

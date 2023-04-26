@@ -9,7 +9,20 @@ class SolitareEvent extends Equatable {
 
 class LoadSolitare extends SolitareEvent {}
 
-class ToggleSolitare extends SolitareEvent {}
+class ToggleSolitareReset extends SolitareEvent {}
+
+class TestSolitare extends SolitareEvent {
+  final int? test;
+
+  const TestSolitare({
+    this.test,
+  });
+
+  @override
+  List<Object?> get props => [
+        test,
+      ];
+}
 
 class UpdateCards extends SolitareEvent {
   final List<PlayingCard>? allCards;

@@ -96,13 +96,8 @@ class ColorsController {
     if (colorsPieces.length == (gridSize * gridSize)) {
       ScaffoldMessenger.of(context)
           .showSnackBar(
-            SnackBar(
-              content: Text(
-                'You can\'t add any more!',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.surface,
-                ),
-              ),
+            const SnackBar(
+              content: Text('You can\'t add any more!'),
             ),
           )
           .closed

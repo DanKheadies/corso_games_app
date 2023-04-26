@@ -9,6 +9,7 @@ enum SolitareStatus {
 
 class SolitareState extends Equatable {
   final bool resetSolitare;
+  final int test;
   final SolitareStatus solitareStatus;
   final List<PlayingCard> allCards;
   final List<PlayingCard> cardColumn1;
@@ -27,6 +28,7 @@ class SolitareState extends Equatable {
 
   const SolitareState({
     this.resetSolitare = false,
+    this.test = 0,
     this.solitareStatus = SolitareStatus.loading,
     this.allCards = const [],
     this.cardColumn1 = const [],
@@ -90,6 +92,7 @@ class SolitareState extends Equatable {
 
     return SolitareState(
       resetSolitare: json['resetSolitare'],
+      test: json['test'],
       solitareStatus: SolitareStatus.values.firstWhere(
         (status) => status.name.toString() == json['solitareStatus'],
       ),
@@ -135,6 +138,7 @@ class SolitareState extends Equatable {
 
     return {
       'resetSolitare': resetSolitare,
+      'test': test,
       'solitareStatus': solitareStatus.name,
       'allCards': allCards,
       'cardColumn1': cardColumn1,
@@ -156,6 +160,7 @@ class SolitareState extends Equatable {
   @override
   List<Object> get props => [
         resetSolitare,
+        test,
         solitareStatus,
         allCards,
         cardColumn1,

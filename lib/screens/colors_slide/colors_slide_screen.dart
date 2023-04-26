@@ -126,14 +126,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                     ),
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'There is an error.',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.surface,
-                            ),
-                          ),
-                          duration: const Duration(seconds: 3),
+                        const SnackBar(
+                          content: Text('There is an error.'),
+                          duration: Duration(seconds: 3),
                         ),
                       );
                     },
@@ -236,14 +231,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
                 ),
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'There is an error.',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.surface,
-                        ),
-                      ),
-                      duration: const Duration(seconds: 3),
+                    const SnackBar(
+                      content: Text('There is an error.'),
+                      duration: Duration(seconds: 3),
                     ),
                   );
                 },

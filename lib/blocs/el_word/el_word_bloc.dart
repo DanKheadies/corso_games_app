@@ -288,7 +288,7 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
 
   @override
   Map<String, dynamic>? toJson(ElWordState state) {
-    print('word toJson');
+    // print('word toJson');
     // print(state);
     return state.toJson();
   }

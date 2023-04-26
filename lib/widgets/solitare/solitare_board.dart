@@ -362,6 +362,9 @@ class _SolitareBoardState extends State<SolitareBoard> {
                     );
               }
             },
+            // onDoubleTap: () => context.read<SolitareBloc>().add(
+            //       TestSolitare(),
+            //     ),
             child: cardDeckClosed.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.all(4),
@@ -497,7 +500,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
     if (widget.resetSolitare) {
       _initializeGame();
       context.read<SolitareBloc>().add(
-            ToggleSolitare(),
+            ToggleSolitareReset(),
           );
     }
 

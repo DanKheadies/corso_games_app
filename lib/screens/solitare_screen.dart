@@ -82,10 +82,16 @@ class _SolitareScreenState extends State<SolitareScreen> {
               tooltip: 'Share',
               icon: Icon(
                 Icons.ios_share_outlined,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.surface,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                context.read<SolitareBloc>().add(
+                      TestSolitare(
+                        test: DateTime.now().second,
+                      ),
+                    );
+              },
             ),
           ],
         ),
@@ -93,7 +99,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
       floatingButton: FloatingActionButton(
         onPressed: () {
           context.read<SolitareBloc>().add(
-                ToggleSolitare(),
+                ToggleSolitareReset(),
               );
         },
         tooltip: 'Reset',
@@ -106,7 +112,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
           ),
           onPressed: () {
             context.read<SolitareBloc>().add(
-                  ToggleSolitare(),
+                  ToggleSolitareReset(),
                 );
           },
         ),
