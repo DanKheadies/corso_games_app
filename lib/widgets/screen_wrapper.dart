@@ -12,6 +12,7 @@ class ScreenWrapper extends StatefulWidget {
     required this.infoTitle,
     required this.infoDetails,
     this.showGLHF,
+    this.useSingleScroll,
     this.alignment,
     this.button,
     required this.backgroundOverride,
@@ -26,6 +27,7 @@ class ScreenWrapper extends StatefulWidget {
   final String infoTitle;
   final String infoDetails;
   final bool? showGLHF;
+  final bool? useSingleScroll;
   final TextAlign? alignment;
   final String? button;
   final Color backgroundOverride;
@@ -43,9 +45,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.backgroundOverride != Colors.transparent
-          ? widget.backgroundOverride
-          : Theme.of(context).scaffoldBackgroundColor,
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           widget.title,
@@ -101,11 +101,18 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           const SizedBox(width: 10),
         ],
       ),
+      backgroundColor: widget.backgroundOverride != Colors.transparent
+          ? widget.backgroundOverride
+          : Theme.of(context).scaffoldBackgroundColor,
+      body: widget.useSingleScroll != null
+          ? SingleChildScrollView(
+              child: widget.content,
+            )
+          : widget.content,
+      bottomNavigationBar: widget.bottomBar,
       drawer: GamesDrawer(
         handler: (String string) => widget.screenFunction(string),
       ),
-      body: widget.content,
-      bottomNavigationBar: widget.bottomBar,
       floatingActionButton: widget.floatingButton,
       floatingActionButtonLocation: widget.floatingButtonLoc,
     );

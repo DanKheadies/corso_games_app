@@ -37,6 +37,7 @@ class ProfileScreen extends StatelessWidget {
       infoTitle: 'Your Profile',
       infoDetails: 'See your account. Make updates. Ya know, that stuff.',
       backgroundOverride: Colors.transparent,
+      useSingleScroll: true,
       content: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UserLoading) {

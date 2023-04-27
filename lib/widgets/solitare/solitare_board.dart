@@ -69,7 +69,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
   @override
   void initState() {
     super.initState();
-    if (widget.allCards == []) {
+    if (widget.allCards == [] || widget.allCards.isEmpty) {
       _initializeGame();
     } else {
       setState(() {

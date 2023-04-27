@@ -159,7 +159,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         if (state.status == SignUpStatus.submitting) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
-                              vertical: 22,
+                              vertical: 2,
                             ),
                             child: CircularProgressIndicator(
                               color: Theme.of(context).colorScheme.tertiary,
