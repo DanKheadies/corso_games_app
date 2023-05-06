@@ -33,6 +33,9 @@ A collection of Flutter games. GLHF!
 > [Solo Noble](https://github.com/austincv/peg-solitaire)
 > via Austin Chungath Vincent
 
+> [Snake](https://www.youtube.com/watch?v=cxX16GBitpY)
+> via Mitch Koko
+
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)

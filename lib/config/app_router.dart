@@ -34,6 +34,8 @@ class AppRouter {
         return RegistrationScreen.route();
       case SlideToSlideScreen.routeName:
         return SlideToSlideScreen.route();
+      case SnakeScreen.routeName:
+        return SnakeScreen.route();
       case SolitareScreen.routeName:
         return SolitareScreen.route();
       case SoloNobleScreen.routeName:

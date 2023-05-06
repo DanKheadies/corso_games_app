@@ -52,10 +52,7 @@ class _MSSettingsScreenState extends State<MSSettingsScreen> {
             onPressed: () => showScreenInfo(
               context,
               'Settings',
-              '''
-- Change your difficulty \n
-- Show timer \n
-Heads up: changing any of the settings here will reset your game.''',
+              'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
               false,
               TextAlign.left,
               'GLHF',

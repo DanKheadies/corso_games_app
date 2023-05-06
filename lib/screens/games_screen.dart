@@ -85,6 +85,15 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             isIconic: true,
+            icon: Icons.all_inclusive,
+            title: 'Snake',
+            onPress: () => Navigator.pushNamed(
+              context,
+              SnakeScreen.routeName,
+            ),
+          ),
+          GameButton(
+            isIconic: true,
             icon: Icons.stacked_bar_chart,
             title: 'Solitare',
             onPress: () => Navigator.pushNamed(

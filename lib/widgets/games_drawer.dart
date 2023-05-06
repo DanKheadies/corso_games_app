@@ -215,6 +215,25 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
+              'Snake',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.all_inclusive,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.of(context).pushNamed(
+                SnakeScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
               'Solitare',
               style: TextStyle(
                 fontSize: 18,

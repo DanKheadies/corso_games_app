@@ -5,24 +5,24 @@ import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
-class CSSettingsScreen extends StatefulWidget {
-  static const String routeName = '/colors-slide-settings';
+class SnakeSettingsScreen extends StatefulWidget {
+  static const String routeName = '/snake-settings';
   static Route route() {
     return MaterialPageRoute(
-      builder: (_) => const CSSettingsScreen(),
+      builder: (_) => const SnakeSettingsScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
 
-  const CSSettingsScreen({
+  const SnakeSettingsScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CSSettingsScreen> createState() => _CSSettingsScreenState();
+  State<SnakeSettingsScreen> createState() => _SnakeSettingsScreenState();
 }
 
-class _CSSettingsScreenState extends State<CSSettingsScreen> {
+class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
   NeumorphicRadioStyle _neumorphRadioStyle(Brightness state) {
     return NeumorphicRadioStyle(
       unselectedColor: Theme.of(context).scaffoldBackgroundColor,
@@ -40,7 +40,7 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
-          'CS Settings',
+          'Snake Settings',
           style: TextStyle(
             color: Theme.of(context).colorScheme.background,
           ),
@@ -67,50 +67,25 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Column(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     const Text('timer'),
-                  //     const SizedBox(height: 30),
-                  //     NeumorphicSwitch(
-                  //       style: NeumorphicSwitchStyle(
-                  //         activeThumbColor:
-                  //             Theme.of(context).colorScheme.tertiary,
-                  //         activeTrackColor:
-                  //             Theme.of(context).scaffoldBackgroundColor,
-                  //         inactiveThumbColor:
-                  //             Theme.of(context).colorScheme.primary,
-                  //         inactiveTrackColor:
-                  //             Theme.of(context).scaffoldBackgroundColor,
-                  //       ),
-                  //       value: state.showColorsTimer,
-                  //       onChanged: (value) {
-                  //         context.read<ColorsSlideBloc>().add(
-                  //               ToggleColorsSlideTimer(),
-                  //             );
-                  //       },
-                  //     ),
-                  //   ],
-                  // ),
                   BlocBuilder<BrightnessCubit, Brightness>(
                     builder: (context, bright) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Text('size'),
+                          const Text('speed'),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(15),
                             value: ColorsSlideDifficulty.threeByThree,
                             groupValue: state.colorsDifficulty,
                             onChanged: (_) {
-                              context.read<ColorsSlideBloc>().add(
-                                    const UpdateColorsSlideDifficulty(
-                                      resetColors: true,
-                                      colorsDifficulty:
-                                          ColorsSlideDifficulty.threeByThree,
-                                      colorsSize: 3,
-                                    ),
-                                  );
+                              // context.read<ColorsSlideBloc>().add(
+                              //       const UpdateColorsSlideDifficulty(
+                              //         resetColors: true,
+                              //         colorsDifficulty:
+                              //             ColorsSlideDifficulty.threeByThree,
+                              //         colorsSize: 3,
+                              //       ),
+                              //     );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(

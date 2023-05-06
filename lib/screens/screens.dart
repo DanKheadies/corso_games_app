@@ -12,6 +12,8 @@ export 'puzzles_and_draggin_screen.dart';
 export 'registration_screen.dart';
 export 'slide_to_slide/puzzle_screen.dart';
 export 'slide_to_slide/slide_to_slide_screen.dart';
+export 'snake/snake_screen.dart';
+export 'snake/snake_settings_screen.dart';
 export 'solitare_screen.dart';
 export 'solo_noble_screen.dart';
 export 'splash_screen.dart';
