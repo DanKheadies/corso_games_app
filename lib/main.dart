@@ -82,6 +82,9 @@ class CorsoGames extends StatelessWidget {
             create: (context) => SolitareBloc()..add(LoadSolitare()),
           ),
           BlocProvider(
+            create: (context) => SnakeBloc()..add(LoadSnake()),
+          ),
+          BlocProvider(
             create: (context) => TimerBloc(ticker: const Ticker()),
           ),
           BlocProvider(

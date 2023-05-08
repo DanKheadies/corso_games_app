@@ -1,8 +1,7 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 
 class SnakeScreen extends StatefulWidget {
@@ -21,144 +20,9 @@ class SnakeScreen extends StatefulWidget {
 }
 
 class _SnakeScreenState extends State<SnakeScreen> {
-  int food = 45;
-  int gameSpeed = 300;
-  int numberOfSquares = 620; // 760
-  // int randomNumber = Random().nextInt(700);
-  List<int> snakePosition = [];
-  String direction = 'down';
-  String gameStatus = 'pause';
-
-  late Timer snakeTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    snakePosition = [45, 65, 85, 105, 125];
-    snakeTimer = Timer(
-      const Duration(milliseconds: 1),
-      () {},
-    );
-  }
-
-  void generateNewFood() {
-    // randomNumber = Random().nextInt(700);
-    food = Random().nextInt(700);
-    print('food: $food');
-  }
-
-  void startGame() {
-    if (snakeTimer.isActive) snakeTimer.cancel();
-    gameStatus = 'play';
-    snakePosition = [45, 65, 85, 105, 125];
-    generateNewFood();
-    snakeTimer = Timer.periodic(
-      Duration(milliseconds: gameSpeed),
-      (timer) {
-        updateSnake();
-        if (isGameOver()) {
-          timer.cancel();
-          gameOver();
-        }
-      },
-    );
-  }
-
-  void updateSnake() {
-    setState(() {
-      switch (direction) {
-        case 'down':
-          if (snakePosition.last > (numberOfSquares - 20)) {
-            snakePosition.add(snakePosition.last + 20 - numberOfSquares);
-          } else {
-            snakePosition.add(snakePosition.last + 20);
-          }
-          break;
-
-        case 'up':
-          if (snakePosition.last < 20) {
-            snakePosition.add(snakePosition.last - 20 + numberOfSquares);
-          } else {
-            snakePosition.add(snakePosition.last - 20);
-          }
-          break;
-
-        case 'left':
-          if (snakePosition.last % 20 == 0) {
-            snakePosition.add(snakePosition.last - 1 + 20);
-          } else {
-            snakePosition.add(snakePosition.last - 1);
-          }
-          break;
-
-        case 'right':
-          if ((snakePosition.last + 1) % 20 == 0) {
-            snakePosition.add(snakePosition.last + 1 - 20);
-          } else {
-            snakePosition.add(snakePosition.last + 1);
-          }
-          break;
-
-        default:
-          break;
-      }
-
-      if (snakePosition.last == food) {
-        generateNewFood();
-      } else {
-        snakePosition.removeAt(0);
-      }
-    });
-  }
-
-  bool isGameOver() {
-    for (int i = 0; i < snakePosition.length; i++) {
-      int count = 0;
-      for (int j = 0; j < snakePosition.length; j++) {
-        if (snakePosition[i] == snakePosition[j]) {
-          count += 1;
-        }
-        if (count == 2) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  void gameOver() {
-    setState(() {
-      gameStatus = 'pause';
-    });
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Game Over'),
-          content: Text(
-              'And in the end, you snaked by with ${snakePosition.length} points.'),
-          actions: [
-            TextButton(
-              child: const Text('Play Again'),
-              onPressed: () {
-                startGame();
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    snakeTimer.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    print('screen height: ${MediaQuery.of(context).size.height}');
     return ScreenWrapper(
       title: 'Snake',
       infoTitle: 'Snake',
@@ -166,80 +30,53 @@ class _SnakeScreenState extends State<SnakeScreen> {
           'Swipe the screen to change the snake\'s direction. Eat the food, avoid yourself!',
       button: 'Leggooo!',
       backgroundOverride: Theme.of(context).scaffoldBackgroundColor,
-      content: Column(
-        children: [
-          const SizedBox(height: 10),
-          Expanded(
-            child: GestureDetector(
-              onVerticalDragUpdate: (details) {
-                if (direction != 'up' && details.delta.dy > 0) {
-                  direction = 'down';
-                } else if (direction != 'down' && details.delta.dy < 0) {
-                  direction = 'up';
-                }
-              },
-              onHorizontalDragUpdate: (details) {
-                if (direction != 'left' && details.delta.dx > 0) {
-                  direction = 'right';
-                } else if (direction != 'right' && details.delta.dx < 0) {
-                  direction = 'left';
-                }
-              },
-              child: SizedBox(
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: numberOfSquares,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 20,
-                  ),
-                  itemBuilder: (context, index) {
-                    if (snakePosition.contains(index)) {
-                      return Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(2),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Container(
-                              // color: Colors.white,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    if (index == food) {
-                      return Container(
-                        padding: const EdgeInsets.all(2),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Container(
-                            color: Theme.of(context).colorScheme.tertiary,
-                          ),
-                        ),
-                      );
-                    } else {
-                      return Container(
-                        padding: const EdgeInsets.all(2),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Container(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withAlpha(150),
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
-          ),
-        ],
+      content: BlocBuilder<SnakeBloc, SnakeState>(
+        builder: (context, state) {
+          if (state.snakeStatus == SnakeStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state.snakeStatus != SnakeStatus.error) {
+            return SnakeBoard(
+              food: state.food,
+              gameSpeed: state.gameSpeed,
+              numberOfSquares: state.numberOfSquares,
+              snakePosition: state.snakePosition,
+              snakeDirection: state.snakeDirection,
+              snakeSpeed: state.snakeSpeed,
+              snakeStatus: state.snakeStatus,
+            );
+          } else {
+            return const Center(
+              child: Text('Something went wrong.'),
+            );
+          }
+        },
       ),
-      screenFunction: (String string) {},
-      // bottomBar: const BottomAppBar(),
+      screenFunction: (String string) {
+        if (string == 'drawerOpen') {
+          print('open');
+          // context.read<SnakeBloc>().add(
+          //       const UpdateSnakeBoard(
+          //         snakeStatus: SnakeStatus.pause,
+          //       ),
+          //     );
+        } else if (string == 'drawerClose') {
+          print('close');
+          // context.read<SnakeBloc>().add(
+          //       const UpdateSnakeBoard(
+          //         snakeStatus: SnakeStatus.play,
+          //       ),
+          //     );
+        } else if (string == 'drawerNavigate') {
+          print('nav');
+          // context.read<SnakeBloc>().add(
+          //       const UpdateSnakeBoard(
+          //         snakeStatus: SnakeStatus.reset,
+          //       ),
+          //     );
+        }
+      },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
         shape: const CircularNotchedRectangle(),
@@ -267,20 +104,64 @@ class _SnakeScreenState extends State<SnakeScreen> {
           ],
         ),
       ),
-      floatingButton: FloatingActionButton(
-        onPressed: startGame,
-        tooltip: 'Reset',
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: IconButton(
-          icon: Icon(
-            gameStatus == 'pause'
-                ? Icons.play_arrow
-                : Icons.settings_backup_restore_rounded,
-            color: Theme.of(context).colorScheme.background,
-            size: 30,
-          ),
-          onPressed: startGame,
-        ),
+      floatingButton: BlocBuilder<SnakeBloc, SnakeState>(
+        builder: (context, state) {
+          if (state.snakeStatus != SnakeStatus.error) {
+            return FloatingActionButton(
+              // onPressed: startGame,
+              onPressed: () {
+                print('start or reset: ${state.snakeStatus}');
+                context.read<SnakeBloc>().add(
+                      UpdateSnakeBoard(
+                        snakeStatus: state.snakeStatus == SnakeStatus.pause
+                            ? SnakeStatus.unpause
+                            : SnakeStatus.reset,
+                      ),
+                    );
+              },
+              tooltip: 'Reset',
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: IconButton(
+                icon: Icon(
+                  // gameStatus == 'pause'
+                  state.snakeStatus != SnakeStatus.play
+                      ? Icons.play_arrow
+                      : Icons.settings_backup_restore_rounded,
+                  color: Theme.of(context).colorScheme.background,
+                  size: 30,
+                ),
+                // onPressed: startGame,
+                onPressed: () {
+                  print('start or reset: ${state.snakeStatus}');
+                  context.read<SnakeBloc>().add(
+                        UpdateSnakeBoard(
+                          snakeStatus: state.snakeStatus == SnakeStatus.pause ||
+                                  state.snakeStatus == SnakeStatus.loaded
+                              ? SnakeStatus.unpause
+                              : SnakeStatus.reset,
+                        ),
+                      );
+                },
+              ),
+            );
+          } else {
+            return FloatingActionButton(
+              onPressed: () {
+                print('Error');
+              },
+              tooltip: 'Error',
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: IconButton(
+                icon: Icon(
+                  Icons.error,
+                  color: Theme.of(context).colorScheme.background,
+                  size: 30,
+                ),
+                onPressed: () => print('Error'),
+              ),
+            );
+          }
+        },
       ),
       floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
     );

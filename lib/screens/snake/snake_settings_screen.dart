@@ -60,9 +60,9 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
           )
         ],
       ),
-      body: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
+      body: BlocBuilder<SnakeBloc, SnakeState>(
         builder: (context, state) {
-          if (state.colorsStatus != ColorsSlideStatus.error) {
+          if (state.snakeStatus != ColorsSlideStatus.error) {
             return Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,21 +75,19 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                           const Text('speed'),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(15),
-                            value: ColorsSlideDifficulty.threeByThree,
-                            groupValue: state.colorsDifficulty,
+                            value: SnakeSpeed.slow,
+                            groupValue: state.snakeSpeed,
                             onChanged: (_) {
-                              // context.read<ColorsSlideBloc>().add(
-                              //       const UpdateColorsSlideDifficulty(
-                              //         resetColors: true,
-                              //         colorsDifficulty:
-                              //             ColorsSlideDifficulty.threeByThree,
-                              //         colorsSize: 3,
-                              //       ),
-                              //     );
+                              context.read<SnakeBloc>().add(
+                                    const UpdateSnakeSpeed(
+                                      snakeSpeed: SnakeSpeed.slow,
+                                      // snakeStatus: SnakeStatus.reset,
+                                    ),
+                                  );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(
-                              '3x3',
+                              'slow',
                               style: TextStyle(
                                 fontSize: 20,
                               ),
@@ -97,21 +95,19 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                           ),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(15),
-                            value: ColorsSlideDifficulty.fourByFour,
-                            groupValue: state.colorsDifficulty,
+                            value: SnakeSpeed.average,
+                            groupValue: state.snakeSpeed,
                             onChanged: (_) {
-                              context.read<ColorsSlideBloc>().add(
-                                    const UpdateColorsSlideDifficulty(
-                                      resetColors: true,
-                                      colorsDifficulty:
-                                          ColorsSlideDifficulty.fourByFour,
-                                      colorsSize: 4,
+                              context.read<SnakeBloc>().add(
+                                    const UpdateSnakeSpeed(
+                                      snakeSpeed: SnakeSpeed.slow,
+                                      // snakeStatus: SnakeStatus.reset,
                                     ),
                                   );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(
-                              '4x4',
+                              'average',
                               style: TextStyle(
                                 fontSize: 20,
                               ),
@@ -119,21 +115,19 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                           ),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(20),
-                            value: ColorsSlideDifficulty.fiveByFive,
-                            groupValue: state.colorsDifficulty,
+                            value: SnakeSpeed.fast,
+                            groupValue: state.snakeSpeed,
                             onChanged: (_) {
-                              context.read<ColorsSlideBloc>().add(
-                                    const UpdateColorsSlideDifficulty(
-                                      resetColors: true,
-                                      colorsDifficulty:
-                                          ColorsSlideDifficulty.fiveByFive,
-                                      colorsSize: 5,
+                              context.read<SnakeBloc>().add(
+                                    const UpdateSnakeSpeed(
+                                      snakeSpeed: SnakeSpeed.slow,
+                                      // snakeStatus: SnakeStatus.reset,
                                     ),
                                   );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(
-                              '5x5',
+                              'fast',
                               style: TextStyle(
                                 fontSize: 20,
                               ),
@@ -141,21 +135,19 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                           ),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(20),
-                            value: ColorsSlideDifficulty.sevenBySeven,
-                            groupValue: state.colorsDifficulty,
+                            value: SnakeSpeed.faster,
+                            groupValue: state.snakeSpeed,
                             onChanged: (_) {
-                              context.read<ColorsSlideBloc>().add(
-                                    const UpdateColorsSlideDifficulty(
-                                      resetColors: true,
-                                      colorsDifficulty:
-                                          ColorsSlideDifficulty.sevenBySeven,
-                                      colorsSize: 7,
+                              context.read<SnakeBloc>().add(
+                                    const UpdateSnakeSpeed(
+                                      snakeSpeed: SnakeSpeed.slow,
+                                      // snakeStatus: SnakeStatus.reset,
                                     ),
                                   );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(
-                              '7x7',
+                              'faster',
                               style: TextStyle(
                                 fontSize: 20,
                               ),
@@ -163,21 +155,19 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                           ),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(20),
-                            value: ColorsSlideDifficulty.tenByTen,
-                            groupValue: state.colorsDifficulty,
+                            value: SnakeSpeed.hell,
+                            groupValue: state.snakeSpeed,
                             onChanged: (_) {
-                              context.read<ColorsSlideBloc>().add(
-                                    const UpdateColorsSlideDifficulty(
-                                      resetColors: true,
-                                      colorsDifficulty:
-                                          ColorsSlideDifficulty.tenByTen,
-                                      colorsSize: 10,
+                              context.read<SnakeBloc>().add(
+                                    const UpdateSnakeSpeed(
+                                      snakeSpeed: SnakeSpeed.slow,
+                                      // snakeStatus: SnakeStatus.reset,
                                     ),
                                   );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(
-                              '10x10',
+                              'hell',
                               style: TextStyle(
                                 fontSize: 20,
                               ),
@@ -185,21 +175,19 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                           ),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(20),
-                            value: ColorsSlideDifficulty.yolo,
-                            groupValue: state.colorsDifficulty,
+                            value: SnakeSpeed.why,
+                            groupValue: state.snakeSpeed,
                             onChanged: (_) {
-                              context.read<ColorsSlideBloc>().add(
-                                    const UpdateColorsSlideDifficulty(
-                                      resetColors: true,
-                                      colorsDifficulty:
-                                          ColorsSlideDifficulty.yolo,
-                                      colorsSize: 0,
+                              context.read<SnakeBloc>().add(
+                                    const UpdateSnakeSpeed(
+                                      snakeSpeed: SnakeSpeed.slow,
+                                      // snakeStatus: SnakeStatus.reset,
                                     ),
                                   );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(
-                              'YOLO',
+                              'why',
                               style: TextStyle(
                                 fontSize: 20,
                               ),
