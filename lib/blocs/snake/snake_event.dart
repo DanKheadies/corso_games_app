@@ -9,8 +9,6 @@ class SnakeEvent extends Equatable {
 
 class LoadSnake extends SnakeEvent {}
 
-// class SetSnakeBoard extends SnakeEvent {}
-
 class ResetSnake extends SnakeEvent {
   final SnakeStatus snakeStatus;
 
@@ -57,16 +55,13 @@ class UpdateSnakeBoard extends SnakeEvent {
 
 class UpdateSnakeSpeed extends SnakeEvent {
   final SnakeSpeed snakeSpeed;
-  // final SnakeStatus snakeStatus;
 
   const UpdateSnakeSpeed({
     required this.snakeSpeed,
-    // required this.snakeStatus,
   });
 
   @override
   List<Object?> get props => [
         snakeSpeed,
-        // snakeStatus,
       ];
 }

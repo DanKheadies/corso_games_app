@@ -62,7 +62,7 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
       ),
       body: BlocBuilder<SnakeBloc, SnakeState>(
         builder: (context, state) {
-          if (state.snakeStatus != ColorsSlideStatus.error) {
+          if (state.snakeStatus != SnakeStatus.error) {
             return Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -81,7 +81,6 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                               context.read<SnakeBloc>().add(
                                     const UpdateSnakeSpeed(
                                       snakeSpeed: SnakeSpeed.slow,
-                                      // snakeStatus: SnakeStatus.reset,
                                     ),
                                   );
                             },
@@ -100,8 +99,7 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                             onChanged: (_) {
                               context.read<SnakeBloc>().add(
                                     const UpdateSnakeSpeed(
-                                      snakeSpeed: SnakeSpeed.slow,
-                                      // snakeStatus: SnakeStatus.reset,
+                                      snakeSpeed: SnakeSpeed.average,
                                     ),
                                   );
                             },
@@ -120,8 +118,7 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                             onChanged: (_) {
                               context.read<SnakeBloc>().add(
                                     const UpdateSnakeSpeed(
-                                      snakeSpeed: SnakeSpeed.slow,
-                                      // snakeStatus: SnakeStatus.reset,
+                                      snakeSpeed: SnakeSpeed.fast,
                                     ),
                                   );
                             },
@@ -140,8 +137,7 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                             onChanged: (_) {
                               context.read<SnakeBloc>().add(
                                     const UpdateSnakeSpeed(
-                                      snakeSpeed: SnakeSpeed.slow,
-                                      // snakeStatus: SnakeStatus.reset,
+                                      snakeSpeed: SnakeSpeed.faster,
                                     ),
                                   );
                             },
@@ -160,8 +156,7 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                             onChanged: (_) {
                               context.read<SnakeBloc>().add(
                                     const UpdateSnakeSpeed(
-                                      snakeSpeed: SnakeSpeed.slow,
-                                      // snakeStatus: SnakeStatus.reset,
+                                      snakeSpeed: SnakeSpeed.hell,
                                     ),
                                   );
                             },
@@ -175,19 +170,18 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
                           ),
                           NeumorphicRadio(
                             padding: const EdgeInsets.all(20),
-                            value: SnakeSpeed.why,
+                            value: SnakeSpeed.progression,
                             groupValue: state.snakeSpeed,
                             onChanged: (_) {
                               context.read<SnakeBloc>().add(
                                     const UpdateSnakeSpeed(
-                                      snakeSpeed: SnakeSpeed.slow,
-                                      // snakeStatus: SnakeStatus.reset,
+                                      snakeSpeed: SnakeSpeed.progression,
                                     ),
                                   );
                             },
                             style: _neumorphRadioStyle(bright),
                             child: const Text(
-                              'why',
+                              'progression',
                               style: TextStyle(
                                 fontSize: 20,
                               ),

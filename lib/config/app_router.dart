@@ -36,6 +36,8 @@ class AppRouter {
         return SlideToSlideScreen.route();
       case SnakeScreen.routeName:
         return SnakeScreen.route();
+      case SnakeSettingsScreen.routeName:
+        return SnakeSettingsScreen.route();
       case SolitareScreen.routeName:
         return SolitareScreen.route();
       case SoloNobleScreen.routeName:

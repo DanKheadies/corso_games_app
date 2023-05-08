@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:corso_games_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +25,19 @@ class SnakeScreen extends StatefulWidget {
 class _SnakeScreenState extends State<SnakeScreen> {
   @override
   Widget build(BuildContext context) {
-    print('screen height: ${MediaQuery.of(context).size.height}');
+    // print('screen height: ${MediaQuery.of(context).size.height}');
+    int squares =
+        (0.35088 * MediaQuery.of(context).size.height + 335.08772).floor();
+    // Make sure it's a multiple of 20
+    while (squares % 20 != 0) {
+      squares -= 1;
+    }
+    // TODO: Android has room for 2 more rows; find a better way to handle this
+    if (Platform.isAndroid) {
+      squares += 40;
+    }
+    // print('squares: $squares');
+
     return ScreenWrapper(
       title: 'Snake',
       infoTitle: 'Snake',
@@ -40,7 +55,7 @@ class _SnakeScreenState extends State<SnakeScreen> {
             return SnakeBoard(
               food: state.food,
               gameSpeed: state.gameSpeed,
-              numberOfSquares: state.numberOfSquares,
+              numberOfSquares: squares,
               snakePosition: state.snakePosition,
               snakeDirection: state.snakeDirection,
               snakeSpeed: state.snakeSpeed,
@@ -55,26 +70,21 @@ class _SnakeScreenState extends State<SnakeScreen> {
       ),
       screenFunction: (String string) {
         if (string == 'drawerOpen') {
-          print('open');
-          // context.read<SnakeBloc>().add(
-          //       const UpdateSnakeBoard(
-          //         snakeStatus: SnakeStatus.pause,
-          //       ),
-          //     );
+          // print('open');
+          context.read<SnakeBloc>().add(
+                const UpdateSnakeBoard(
+                  snakeStatus: SnakeStatus.pause,
+                ),
+              );
         } else if (string == 'drawerClose') {
-          print('close');
-          // context.read<SnakeBloc>().add(
-          //       const UpdateSnakeBoard(
-          //         snakeStatus: SnakeStatus.play,
-          //       ),
-          //     );
+          // print('close');
+          context.read<SnakeBloc>().add(
+                const UpdateSnakeBoard(
+                  snakeStatus: SnakeStatus.unpause,
+                ),
+              );
         } else if (string == 'drawerNavigate') {
-          print('nav');
-          // context.read<SnakeBloc>().add(
-          //       const UpdateSnakeBoard(
-          //         snakeStatus: SnakeStatus.reset,
-          //       ),
-          //     );
+          // print('nav');
         }
       },
       bottomBar: BottomAppBar(
@@ -87,10 +97,19 @@ class _SnakeScreenState extends State<SnakeScreen> {
               tooltip: 'Settings',
               icon: Icon(
                 Icons.settings,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.background,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                context.read<SnakeBloc>().add(
+                      const UpdateSnakeBoard(
+                        snakeStatus: SnakeStatus.pause,
+                      ),
+                    );
+                Navigator.of(context).pushNamed(
+                  SnakeSettingsScreen.routeName,
+                );
+              },
             ),
             IconButton(
               tooltip: 'Share',

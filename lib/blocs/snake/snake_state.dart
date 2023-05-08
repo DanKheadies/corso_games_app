@@ -14,7 +14,7 @@ enum SnakeSpeed {
   fast,
   faster,
   hell,
-  why,
+  progression,
 }
 
 enum SnakeStatus {
@@ -37,11 +37,12 @@ class SnakeState extends Equatable {
   final SnakeSpeed snakeSpeed;
   final SnakeStatus snakeStatus;
 
+  // Note: "absolute zero" for values; can update once loaded
   const SnakeState({
-    this.food = 0, // 45
-    this.gameSpeed = 0, // 300
-    this.numberOfSquares = 0, // 620
-    this.snakePosition = const [], // [45, 65, 85, 105, 125]
+    this.food = 0,
+    this.gameSpeed = 0,
+    this.numberOfSquares = 0,
+    this.snakePosition = const [],
     this.snakeDirection = SnakeDirection.none,
     this.snakeSpeed = SnakeSpeed.average,
     this.snakeStatus = SnakeStatus.loading,
@@ -71,7 +72,7 @@ class SnakeState extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    print('toJson');
+    // print('toJson');
 
     return {
       'food': food,
