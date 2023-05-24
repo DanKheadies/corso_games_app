@@ -53,7 +53,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }).onError((err) {
         // TODO: generating a lot of errors on sign out; related to user repo / stream
         print('user bloc error: $err');
-        throw Exception('user bloc exception: $err');
+        // throw Exception('user bloc exception: $err');
       });
     }
   }

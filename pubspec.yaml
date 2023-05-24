@@ -25,7 +25,10 @@ dependencies:
   firebase_messaging: ^14.3.0
   flutter_bloc: ^8.1.2
   flutter_local_notifications: ^13.0.0
-  flutter_neumorphic: ^3.2.0
+  flutter_neumorphic: 
+    git:
+      url: https://github.com/den0206/Flutter-Neumorphic.git
+      ref: feature/remoce_accentcolor
   flutter_pw_validator: ^1.5.0
   font_awesome_flutter: ^10.3.0
   hydrated_bloc: ^9.1.0

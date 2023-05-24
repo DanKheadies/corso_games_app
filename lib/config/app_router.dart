@@ -4,7 +4,7 @@ import 'package:corso_games_app/screens/screens.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    // print('This is route: ${settings.name}');
+    print('This is route: ${settings.name}');
 
     switch (settings.name) {
       case '/':

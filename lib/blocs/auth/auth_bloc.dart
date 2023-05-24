@@ -35,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
         }).onError((err) {
           print('auth bloc error: $err');
-          throw Exception('auth bloc exception: $err');
+          // throw Exception('auth bloc exception: $err');
         });
       } else {
         add(

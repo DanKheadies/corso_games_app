@@ -21,8 +21,8 @@ class CustomBoardTile extends StatelessWidget {
     // Set the color of the Board Tile
     Color color = (letterCount > letterIndex)
         // If the eval is equal to pending, no color.
-        ? letters[letterIndex]!.evaluation == Evaluation.pending ||
-                letters[letterIndex]!.evaluation == null
+        ? letters[letterIndex]!.evaluation == Evaluation.pending
+            // || letters[letterIndex]!.evaluation == null
             ? Colors.transparent
             // If the letter is correct, we use the primary red/pink.
             : letters[letterIndex]!.evaluation == Evaluation.correct

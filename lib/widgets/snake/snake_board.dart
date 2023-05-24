@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/widgets/widgets.dart';
 
 class SnakeBoard extends StatefulWidget {
   final int food;

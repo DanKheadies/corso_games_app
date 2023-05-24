@@ -7,7 +7,6 @@ import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
-  // static const String id = 'splash';
   static const String routeName = '/';
   static Route route() {
     return MaterialPageRoute(

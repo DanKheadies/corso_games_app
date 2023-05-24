@@ -233,8 +233,9 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
             evaluation: Evaluation.pending,
           )) {
         emit(
-          const ElWordState(
+          ElWordState(
             status: ElWordStatus.wrong,
+            solution: state.solution,
           ),
         );
       } else {
