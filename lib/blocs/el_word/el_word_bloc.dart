@@ -24,6 +24,7 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
   ) async {
     if (state.status == ElWordStatus.loaded) return;
 
+    // TODO: pass in difficulty to dictionary
     String wordsFile = await loadDictionary();
     List<String> words = wordsFile.split('\n');
     int randomIndex = Random().nextInt(words.length);
@@ -68,8 +69,9 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
     ResetElWord event,
     Emitter<ElWordState> emit,
   ) async {
-    // TODO: combine w/ load game
+    // TODO: combine w/ load game (?)
 
+    // TODO: pass in difficulty to dictionary
     String wordsFile = await loadDictionary();
     List<String> words = wordsFile.split('\n');
     int randomIndex = Random().nextInt(words.length);
@@ -157,6 +159,7 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
       );
 
       if (event.isCheckBtn) {
+        // TODO: pass in difficulty to dictionary
         String wordsFile = await loadDictionary();
         List<String> dictionary = wordsFile.split('\n');
 
@@ -276,8 +279,15 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
     }
   }
 
+  // TODO: pass in difficulty to dictionary
+  // Future<String> loadDictionary(ElWordDifficulty difficulty) async {
   Future<String> loadDictionary() async {
-    return await rootBundle.loadString('assets/el_word/words_full.txt');
+    return await rootBundle.loadString('data/el_word/words_2316.txt');
+    // if (difficulty == ElWordDifficulty.easier) {
+    //   return await rootBundle.loadString('assets/el_word/words_2316.txt');
+    // } else {
+    //   return await rootBundle.loadString('assets/el_word/words_14855.txt');
+    // }
   }
 
   @override

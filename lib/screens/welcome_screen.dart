@@ -76,6 +76,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listenWhen: (previous, current) => previous.status != current.status,
+      // listenWhen: (previous, current) => previous.status != current.status ||
+      // (previous.status == AuthStatus.authenticated && current.status == AuthStatus.unauthenticated)
       listener: (context, state) {
         // print('welcome listener triggered');
         if (state.authUser != null &&
