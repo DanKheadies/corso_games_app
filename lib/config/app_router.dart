@@ -16,6 +16,8 @@ class AppRouter {
         return CSSettingsScreen.route();
       case DinoRunScreen.routeName:
         return DinoRunScreen.route();
+      case ElSettingsScreen.routeName:
+        return ElSettingsScreen.route();
       case ElWordScreen.routeName:
         return ElWordScreen.route();
       case GamesScreen.routeName:

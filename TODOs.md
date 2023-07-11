@@ -25,10 +25,8 @@ A list of TODOs to improve Corso Games for all.
     2. User repository (and auth?) StreamSub runs too often on updates
     3. Show user email on ConvertWithEmail
 9. El Word
-    1. Show 'Sorry Charlie' word (DONE)
-    2. Difficulty setting for word bank / dictionary
-    3. Right letter, wrong spot -- don't show duplicates, etc
-        1. Word is UTTER; user guess NEEDY; only first E is colored
+    1. Right letter, wrong spot -- don't show duplicates, etc
+        1. ex: Word is UTTER; user guess NEEDY; only first E is colored
 
 ---
 

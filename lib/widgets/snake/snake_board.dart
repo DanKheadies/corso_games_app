@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:corso_games_app/blocs/blocs.dart';
 
 class SnakeBoard extends StatefulWidget {
+  final int colNum;
   final int food;
   final int gameSpeed;
   final int numberOfSquares;
@@ -17,6 +18,7 @@ class SnakeBoard extends StatefulWidget {
 
   const SnakeBoard({
     super.key,
+    required this.colNum,
     required this.food,
     required this.gameSpeed,
     required this.numberOfSquares,
@@ -33,13 +35,19 @@ class SnakeBoard extends StatefulWidget {
 class _SnakeBoardState extends State<SnakeBoard> {
   List<int> tempPositions = [];
   // TODO: number of squares calculation based on widgetSize / screen size
+  // @ 20 columns
   // iPhone 12 mini - device @ 812, widget @ 624 (diff 188) == 620 (31 rows)
   // iPhone 13 Pro Max - device @ 926, widget @ 741 (diff 185) == 660 (33 rows)
   // Android Pixel (??) - device @ 826.9, widget @ 673.5 (diff 153.4) == 660 (33 rows)
   // y = 0.34188 * x + 406.66667 (using widget)
-  // y = 0.35088 * x + 335.08772 (using screen)
+  // y = 0.35088 * x + 335.08772 (using screen) (using screen in snake_screen)
   // y = total # of squres
   // x = widget (column) / screen size
+  // UPDATE @ 15 columns
+  // iPhone 12 mini - device @ 812, widget @ 624 (diff 188) == 365 (24 rows)
+  // iPhone 13 Pro Max - device @ 926, widget @ 741 (diff 185) == 380 (25 rows)
+  // Android Pixel (??) - device @ 826.9, widget @ 673.5 (diff 153.4) == 380 (prob) (25 rows)
+  // y = 0.13158 * x + 258.1579 (screen)
 
   late Timer snakeTimer;
 
@@ -73,9 +81,11 @@ class _SnakeBoardState extends State<SnakeBoard> {
 
     context.read<SnakeBloc>().add(
           UpdateSnakeBoard(
+            colNum: widget.colNum,
             food: randomFood(),
             gameSpeed: gameSpeed,
-            snakePosition: const [45, 65, 85, 105, 125],
+            // snakePosition: const [45, 65, 85, 105, 125],
+            snakePosition: const [33, 48, 63, 78, 93],
             snakeStatus: SnakeStatus.play,
           ),
         );
@@ -88,8 +98,12 @@ class _SnakeBoardState extends State<SnakeBoard> {
 
     switch (widget.snakeDirection) {
       case SnakeDirection.down:
-        if (widget.snakePosition.last > (widget.numberOfSquares - 20)) {
-          tempPositions.add(tempPositions.last + 20 - widget.numberOfSquares);
+        // if (widget.snakePosition.last > (widget.numberOfSquares - 20)) {
+        if (widget.snakePosition.last >
+            (widget.numberOfSquares - widget.colNum)) {
+          // tempPositions.add(tempPositions.last + 20 - widget.numberOfSquares);
+          tempPositions
+              .add(tempPositions.last + widget.colNum - widget.numberOfSquares);
 
           context.read<SnakeBloc>().add(
                 UpdateSnakeBoard(
@@ -97,7 +111,8 @@ class _SnakeBoardState extends State<SnakeBoard> {
                 ),
               );
         } else {
-          tempPositions.add(tempPositions.last + 20);
+          // tempPositions.add(tempPositions.last + 20);
+          tempPositions.add(tempPositions.last + widget.colNum);
 
           context.read<SnakeBloc>().add(
                 UpdateSnakeBoard(
@@ -108,8 +123,11 @@ class _SnakeBoardState extends State<SnakeBoard> {
         break;
 
       case SnakeDirection.up:
-        if (widget.snakePosition.last < 20) {
-          tempPositions.add(tempPositions.last - 20 + widget.numberOfSquares);
+        // if (widget.snakePosition.last < 20) {
+        if (widget.snakePosition.last < widget.colNum) {
+          // tempPositions.add(tempPositions.last - 20 + widget.numberOfSquares);
+          tempPositions
+              .add(tempPositions.last - widget.colNum + widget.numberOfSquares);
 
           context.read<SnakeBloc>().add(
                 UpdateSnakeBoard(
@@ -117,7 +135,8 @@ class _SnakeBoardState extends State<SnakeBoard> {
                 ),
               );
         } else {
-          tempPositions.add(tempPositions.last - 20);
+          // tempPositions.add(tempPositions.last - 20);
+          tempPositions.add(tempPositions.last - widget.colNum);
 
           context.read<SnakeBloc>().add(
                 UpdateSnakeBoard(
@@ -128,8 +147,10 @@ class _SnakeBoardState extends State<SnakeBoard> {
         break;
 
       case SnakeDirection.left:
-        if (widget.snakePosition.last % 20 == 0) {
-          tempPositions.add(tempPositions.last - 1 + 20);
+        // if (widget.snakePosition.last % 20 == 0) {
+        if (widget.snakePosition.last % widget.colNum == 0) {
+          // tempPositions.add(tempPositions.last - 1 + 20);
+          tempPositions.add(tempPositions.last - 1 + widget.colNum);
 
           context.read<SnakeBloc>().add(
                 UpdateSnakeBoard(
@@ -148,8 +169,10 @@ class _SnakeBoardState extends State<SnakeBoard> {
         break;
 
       case SnakeDirection.right:
-        if ((widget.snakePosition.last + 1) % 20 == 0) {
-          tempPositions.add(tempPositions.last + 1 - 20);
+        // if ((widget.snakePosition.last + 1) % 20 == 0) {
+        if ((widget.snakePosition.last + 1) % widget.colNum == 0) {
+          // tempPositions.add(tempPositions.last + 1 - 20);
+          tempPositions.add(tempPositions.last + 1 - widget.colNum);
           context.read<SnakeBloc>().add(
                 UpdateSnakeBoard(
                   snakePosition: tempPositions,
@@ -201,7 +224,8 @@ class _SnakeBoardState extends State<SnakeBoard> {
   }
 
   void playSnake(int? gameSpeed) {
-    if (widget.food == 45) {
+    // if (widget.food == 45) {
+    if (widget.food == 33) {
       context.read<SnakeBloc>().add(
             UpdateSnakeBoard(
               food: randomFood(),
@@ -354,8 +378,9 @@ class _SnakeBoardState extends State<SnakeBoard> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: widget.numberOfSquares,
                   // itemCount: 660,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 20,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    // crossAxisCount: 20,
+                    crossAxisCount: widget.colNum,
                   ),
                   itemBuilder: (context, index) {
                     if (widget.snakePosition.contains(index)) {

@@ -23,6 +23,7 @@ class ResetSnake extends SnakeEvent {
 }
 
 class UpdateSnakeBoard extends SnakeEvent {
+  final int? colNum;
   final int? food;
   final int? gameSpeed;
   final int? numberOfSquares;
@@ -32,6 +33,7 @@ class UpdateSnakeBoard extends SnakeEvent {
   final SnakeStatus? snakeStatus;
 
   const UpdateSnakeBoard({
+    this.colNum,
     this.food,
     this.gameSpeed,
     this.numberOfSquares,
@@ -43,6 +45,7 @@ class UpdateSnakeBoard extends SnakeEvent {
 
   @override
   List<Object?> get props => [
+        colNum,
         food,
         gameSpeed,
         numberOfSquares,

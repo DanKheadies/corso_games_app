@@ -2,6 +2,7 @@ export 'colors_slide/colors_slide_screen.dart';
 export 'colors_slide/cs_settings_screen.dart';
 export 'dino_dash_screen.dart';
 export 'el_word/el_game_screen.dart';
+export 'el_word/el_settings_screen.dart';
 export 'el_word/el_word_screen.dart';
 export 'games_screen.dart';
 export 'login_screen.dart';

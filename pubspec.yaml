@@ -64,6 +64,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/data/el_word/
     - assets/fonts/slide_to_slide/
     - assets/images/dino_dash/
     - assets/images/dino_dash/cacti/

@@ -29,6 +29,7 @@ enum SnakeStatus {
 }
 
 class SnakeState extends Equatable {
+  final int colNum;
   final int food;
   final int gameSpeed;
   final int numberOfSquares;
@@ -39,6 +40,7 @@ class SnakeState extends Equatable {
 
   // Note: "absolute zero" for values; can update once loaded
   const SnakeState({
+    this.colNum = 0,
     this.food = 0,
     this.gameSpeed = 0,
     this.numberOfSquares = 0,
@@ -55,6 +57,7 @@ class SnakeState extends Equatable {
     // List<int> snakePositionList = snakeList;
 
     return SnakeState(
+      colNum: json['colNum'],
       food: json['food'],
       gameSpeed: json['gameSpeed'],
       numberOfSquares: json['numberOfSquares'],
@@ -75,6 +78,7 @@ class SnakeState extends Equatable {
     // print('toJson');
 
     return {
+      'colNum': colNum,
       'food': food,
       'gameSpeed': gameSpeed,
       'numberOfSquares': numberOfSquares,
@@ -87,6 +91,7 @@ class SnakeState extends Equatable {
 
   @override
   List<Object> get props => [
+        colNum,
         food,
         gameSpeed,
         numberOfSquares,

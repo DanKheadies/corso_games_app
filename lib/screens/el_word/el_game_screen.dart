@@ -61,7 +61,7 @@ class ElGameScreen extends StatelessWidget {
       listener: (context, state) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('That word is not in the Corso dictionary.'),
+            content: Text('That word is not in this Corso dictionary.'),
             duration: Duration(seconds: 3),
           ),
         );

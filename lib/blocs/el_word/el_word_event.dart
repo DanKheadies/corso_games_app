@@ -43,3 +43,16 @@ class ValidateGuess extends ElWordEvent {
   @override
   List<Object> get props => [word];
 }
+
+class UpdateElWordDifficulty extends ElWordEvent {
+  final ElWordDifficulty elDifficulty;
+
+  const UpdateElWordDifficulty({
+    required this.elDifficulty,
+  });
+
+  @override
+  List<Object> get props => [
+        elDifficulty,
+      ];
+}

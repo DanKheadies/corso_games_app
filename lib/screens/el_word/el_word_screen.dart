@@ -31,16 +31,21 @@ class ElWordScreen extends StatelessWidget {
         color: Theme.of(context).colorScheme.secondary,
         shape: const CircularNotchedRectangle(),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
               tooltip: 'Settings',
               icon: Icon(
                 Icons.settings,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.background,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  ElSettingsScreen.routeName,
+                );
+              },
             ),
             IconButton(
               tooltip: 'Share',

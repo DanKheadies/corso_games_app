@@ -23,18 +23,31 @@ class SnakeScreen extends StatefulWidget {
 }
 
 class _SnakeScreenState extends State<SnakeScreen> {
+  int colNum = 15; // 20
+
   @override
   Widget build(BuildContext context) {
     // print('screen height: ${MediaQuery.of(context).size.height}');
+    // @ 20 columns
+    // int squares =
+    //     (0.35088 * MediaQuery.of(context).size.height + 335.08772).floor();
+    // @ 15 columns
     int squares =
-        (0.35088 * MediaQuery.of(context).size.height + 335.08772).floor();
-    // Make sure it's a multiple of 20
-    while (squares % 20 != 0) {
+        (0.13158 * MediaQuery.of(context).size.height + 258.1579).floor();
+    // Tests:
+    // print(squares); // 660
+    // int squares = 365; // 380
+    // Make sure it's a multiple of 20 / colNum
+    // while (squares % 20 != 0) {
+    while (squares % colNum != 0) {
       squares -= 1;
     }
-    // TODO: Android has room for 2 more rows; find a better way to handle this
+    // TODO: Android has room for 2 more rows @ 20 cols
+    // Has 2 too many @ 15 cols
+    // Find a better way to handle this
     if (Platform.isAndroid) {
-      squares += 40;
+      // squares += 40;
+      squares -= colNum * 2;
     }
     // print('squares: $squares');
 
@@ -53,6 +66,7 @@ class _SnakeScreenState extends State<SnakeScreen> {
             );
           } else if (state.snakeStatus != SnakeStatus.error) {
             return SnakeBoard(
+              colNum: state.colNum,
               food: state.food,
               gameSpeed: state.gameSpeed,
               numberOfSquares: squares,

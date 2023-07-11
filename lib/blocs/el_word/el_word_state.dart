@@ -1,16 +1,22 @@
 part of 'el_word_bloc.dart';
 
+enum ElWordDifficulty {
+  normal,
+  hard,
+}
+
 enum ElWordStatus {
   initial,
   loading,
   loaded,
   solved,
   wrong,
-  reset, // TODO
+  // reset,
   error,
 }
 
 class ElWordState extends Equatable {
+  final ElWordDifficulty difficulty;
   final ElWordStatus status;
   final Word solution;
   final List<Word> guesses;
@@ -19,6 +25,7 @@ class ElWordState extends Equatable {
   final bool isNotInDictionary;
 
   const ElWordState({
+    this.difficulty = ElWordDifficulty.normal,
     this.status = ElWordStatus.initial,
     this.solution = const Word(),
     this.guesses = const [],
@@ -32,6 +39,9 @@ class ElWordState extends Equatable {
     List<Word> guessesList = list.map((word) => Word.fromJson(word)).toList();
 
     return ElWordState(
+      difficulty: ElWordDifficulty.values.firstWhere(
+        (difficulty) => difficulty.name.toString() == json['difficulty'],
+      ),
       status: ElWordStatus.values.firstWhere(
         (status) => status.name.toString() == json['status'],
       ),
@@ -45,6 +55,7 @@ class ElWordState extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
+      'difficulty': difficulty.name,
       'status': status.name,
       'solution': solution.toJson(),
       'guesses': guesses,
@@ -56,6 +67,7 @@ class ElWordState extends Equatable {
 
   @override
   List<Object> get props => [
+        difficulty,
         status,
         solution,
         guesses,

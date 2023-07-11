@@ -23,10 +23,13 @@ class SnakeBloc extends HydratedBloc<SnakeEvent, SnakeState> {
     // Note: load values from "absolute zero" to what the loaded condition should be
     emit(
       SnakeState(
-        food: 45,
+        colNum: 15,
+        // food: 45,
+        food: 33,
         gameSpeed: 300,
         numberOfSquares: state.numberOfSquares,
-        snakePosition: const [45, 65, 85, 105, 125],
+        // snakePosition: const [45, 65, 85, 105, 125],
+        snakePosition: const [33, 48, 63, 78, 93],
         snakeDirection: SnakeDirection.down,
         snakeSpeed: SnakeSpeed.average,
         snakeStatus: SnakeStatus.loaded,
@@ -40,10 +43,13 @@ class SnakeBloc extends HydratedBloc<SnakeEvent, SnakeState> {
   ) {
     emit(
       SnakeState(
-        food: 45,
+        colNum: 15,
+        // food: 45,
+        food: 33,
         gameSpeed: state.gameSpeed,
         numberOfSquares: state.numberOfSquares,
-        snakePosition: const [45, 65, 85, 105, 125],
+        // snakePosition: const [45, 65, 85, 105, 125],
+        snakePosition: const [33, 48, 63, 78, 93],
         snakeDirection: SnakeDirection.down,
         snakeSpeed: state.snakeSpeed,
         snakeStatus: state.snakeStatus != SnakeStatus.reset
@@ -64,6 +70,7 @@ class SnakeBloc extends HydratedBloc<SnakeEvent, SnakeState> {
     }
     emit(
       SnakeState(
+        colNum: event.colNum ?? state.colNum,
         food: event.food ?? state.food,
         gameSpeed: event.gameSpeed ?? state.gameSpeed,
         numberOfSquares: event.numberOfSquares ?? state.numberOfSquares,
@@ -81,10 +88,13 @@ class SnakeBloc extends HydratedBloc<SnakeEvent, SnakeState> {
   ) {
     emit(
       SnakeState(
-        food: 45,
+        colNum: 15,
+        // food: 45,
+        food: 33,
         gameSpeed: state.gameSpeed,
         numberOfSquares: state.numberOfSquares,
-        snakePosition: const [45, 65, 85, 105, 125],
+        // snakePosition: const [45, 65, 85, 105, 125],
+        snakePosition: const [33, 48, 63, 78, 93],
         snakeDirection: SnakeDirection.down,
         snakeSpeed: event.snakeSpeed,
         snakeStatus: SnakeStatus.reset,
