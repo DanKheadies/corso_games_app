@@ -1,9 +1,6 @@
-// import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:corso_games_app/config/theme.dart';
 import 'package:corso_games_app/data/data.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
@@ -42,9 +39,6 @@ class _NadGrid0State extends State<NadGrid0> {
   List<NadDragObject> nadGridDrags = [];
   List<NadGridUnit> nadGridUnits = [];
 
-  // double posLeft = 0;
-  // double posTop = 0;
-
   @override
   void initState() {
     super.initState();
@@ -53,14 +47,6 @@ class _NadGrid0State extends State<NadGrid0> {
   }
 
   void initializeGameBoard() {
-    // print('initialize');
-    // List<NadGridUnit> grid0 = nadGridData0(
-    //   widget.squareSize,
-    //   widget.boardPad,
-    //   widget.columns,
-    //   widget.rows,
-    //   'green',
-    // );
     nadGridUnits = nadGridData0(
       widget.squareSize,
       widget.boardPad,
@@ -68,58 +54,12 @@ class _NadGrid0State extends State<NadGrid0> {
       widget.rows,
       'green',
     );
-
-    // updateDraggables(grid0);
-    // updateDraggables(nadGridUnits);
   }
-
-  // bool canAcceptUnit(String unitId) {
-  //   // print('can accept');
-  //   return true;
-  //   // return selectedGridUnit != unitId;
-  //   // return selectedGridUnit != unitId && selectedGridUnit != '';
-  // }
-
-  // void updateDraggables(List<NadGridUnit> grid) {
-  //   print('update');
-  //   nadGridDrags.clear();
-
-  //   for (var unit in grid) {
-  //     // print('unit: ${unit.id}');
-  //     // print('sgu: $selectedGridUnit');
-  //     // print('index: ${grid.indexWhere((u) => u.id == unit.id)}');
-  //     // print('left: ${grid[grid.indexWhere((u) => u.id == unit.id)]}');
-  //     // print('left+: ${grid[grid.indexWhere((u) => u.id == unit.id)].left}');
-
-  //     nadGridDrags.add(
-  //       NadDragObject(
-  //         id: unit.id,
-  //         left: grid[grid.indexWhere((u) => u.id == unit.id)].left,
-  //         top: grid[grid.indexWhere((u) => u.id == unit.id)].top,
-  //         size: widget.squareSize,
-  //         color: unit.id == '0'
-  //             // ? Theme.of(context).colorScheme.tertiary
-  //             ? cgGreen1
-  //             // : Theme.of(context).colorScheme.background,
-  //             : cgYellow,
-  //         text: unit.id,
-  //         canAccept: selectedGridUnit != unit.id && selectedGridUnit != '',
-  //         // canAccept: true,
-  //         // canAccept: canAcceptUnit(unit.id),
-  //         canDrag: unit.id == '0' ? true : false,
-  //         onTapDown: unitSelected,
-  //         onTapUp: resetDraggables,
-  //         changePositions: changePositions,
-  //       ),
-  //     );
-  //   }
-  // }
 
   void unitSelected(String unit) {
     setState(() {
       selectedGridUnit = unit;
     });
-    // updateDraggables(nadGridUnits);
   }
 
   void resetDraggables(String id) {
@@ -157,66 +97,29 @@ class _NadGrid0State extends State<NadGrid0> {
         top: retTop,
       );
     });
-
-    // updateDraggables(nadGridUnits);
   }
 
   void checkForWin() {
-    // bool g2g0to29 = true;
-    // bool g2g1to0 = true;
-    // print('check');
-
     List<int> currentOrder = [];
     List<int> list0to29 = List.generate(30, (index) => index);
-    // print(list0to29);
 
     List<int> list1to0 = List.generate(30, (index) {
       int value = index + 1;
       if (value == 30) value = 0;
       return value;
     });
-    // print(list1to0);
 
     for (var unit in nadGridUnits) {
       currentOrder.add(
         int.parse(unit.id),
       );
     }
-    // print(currentOrder);
-
-    // for (var unit in nadGridUnits) {
-    //   if (nadGridUnits.indexWhere((gu) => gu.id == unit.id).toString() !=
-    //       unit.id) {
-    //     // if (unit.id)
-    //     g2g0to29 = false;
-    //   }
-    // }
-
-    // for (var unit in nadGridUnits) {
-    //   // print((int.parse(unit.id)).toString());
-    //   if (nadGridUnits.indexWhere((gu) => gu.id == unit.id).toString() !=
-    //       unit.id) {
-    //     // if (unit.id)
-    //     g2g1to0 = false;
-    //   }
-    // }
 
     if (listEquals(list0to29, currentOrder) ||
         listEquals(list1to0, currentOrder)) {
       widget.roundWon();
-      // if (listEquals(list0to29, currentOrder)) print('was g2g0to29');
-      // if (listEquals(list1to0, currentOrder)) print('was g2g1to0');
     }
   }
-
-  String randomizeGrid(String num) {
-    return '';
-  }
-
-  // List<NadDragObject> _buildGrid() {
-  //   updateDraggables(nadGridUnits);
-  //   return nadGridDrags;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -228,9 +131,8 @@ class _NadGrid0State extends State<NadGrid0> {
     return Padding(
       padding: EdgeInsets.all(widget.boardPad),
       child: Stack(
-        // children: nadGridDrags,
-        // children: _buildGrid(),
         children: [
+          // TODO: can this be procedurally generated to account for different col & row #
           NadDragObject(
             id: '0',
             left:
@@ -732,412 +634,6 @@ class _NadGrid0State extends State<NadGrid0> {
             changePositions: changePositions,
           ),
         ],
-        // children: [
-        //   NadDragObject(
-        //     id: '0',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '0')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '0')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '0',
-        //     canAccept: selectedGridUnit != '0' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '1',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '1')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '1')].top,
-        //     size: widget.squareSize,
-        //     color: Colors.white,
-        //     color: Theme.of(context).colorScheme.tertiary,
-        //     text: '',
-        //     canAccept: selectedGridUnit != '1' && selectedGridUnit != '',
-        //     canDrag: true,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '2',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '2')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '2')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '2',
-        //     canAccept: selectedGridUnit != '2' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '3',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '3')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '3')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '3',
-        //     canAccept: selectedGridUnit != '3' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '4',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '4')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '4')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '4',
-        //     canAccept: selectedGridUnit != '4' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '5',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '5')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '5')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '5',
-        //     canAccept: selectedGridUnit != '5' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '6',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '6')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '6')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '6',
-        //     canAccept: selectedGridUnit != '6' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '7',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '7')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '7')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '7',
-        //     canAccept: selectedGridUnit != '7' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '8',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '8')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '8')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '8',
-        //     canAccept: selectedGridUnit != '8' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '9',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '9')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '9')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '9',
-        //     canAccept: selectedGridUnit != '9' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '10',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '10')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '10')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '10',
-        //     canAccept: selectedGridUnit != '10' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '11',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '11')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '11')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '11',
-        //     canAccept: selectedGridUnit != '11' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '12',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '12')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '12')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '12',
-        //     canAccept: selectedGridUnit != '12' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '13',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '13')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '13')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '13',
-        //     canAccept: selectedGridUnit != '13' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '14',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '14')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '14')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '14',
-        //     canAccept: selectedGridUnit != '14' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '15',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '15')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '15')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '15',
-        //     canAccept: selectedGridUnit != '15' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '16',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '16')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '16')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '16',
-        //     canAccept: selectedGridUnit != '16' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '17',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '17')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '17')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '17',
-        //     canAccept: selectedGridUnit != '17' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '18',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '18')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '18')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '18',
-        //     canAccept: selectedGridUnit != '18' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '19',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '19')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '19')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '19',
-        //     canAccept: selectedGridUnit != '19' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '20',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '20')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '20')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '20',
-        //     canAccept: selectedGridUnit != '20' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '21',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '21')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '21')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '21',
-        //     canAccept: selectedGridUnit != '21' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '22',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '22')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '22')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '22',
-        //     canAccept: selectedGridUnit != '22' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '23',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '23')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '23')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '23',
-        //     canAccept: selectedGridUnit != '23' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '24',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '24')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '24')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '24',
-        //     canAccept: selectedGridUnit != '24' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '25',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '25')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '25')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '25',
-        //     canAccept: selectedGridUnit != '25' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '26',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '26')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '26')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '26',
-        //     canAccept: selectedGridUnit != '26' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '27',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '27')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '27')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '27',
-        //     canAccept: selectedGridUnit != '27' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '28',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '28')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '28')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '28',
-        //     canAccept: selectedGridUnit != '28' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '29',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '29')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '29')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '29',
-        //     canAccept: selectedGridUnit != '29' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        //   NadDragObject(
-        //     id: '30',
-        //     left: grid[grid.indexWhere((unit) => unit.id == '30')].left,
-        //     top: grid[grid.indexWhere((unit) => unit.id == '30')].top,
-        //     size: widget.squareSize,
-        //     color: Theme.of(context).colorScheme.background,
-        //     text: '30',
-        //     canAccept: selectedGridUnit != '30' && selectedGridUnit != '',
-        //     canDrag: false,
-        //     onTapDown: colorSelected,
-        //     onTapUp: resetDraggables,
-        //     changePositions: changePositions,
-        //   ),
-        // ],
       ),
     );
   }

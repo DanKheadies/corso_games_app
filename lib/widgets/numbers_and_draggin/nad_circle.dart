@@ -39,9 +39,9 @@ class NadCircle extends StatelessWidget {
           child: text == '' || text == '0'
               ? const SizedBox()
               : DefaultTextStyle(
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                   child: Text(text),
                 ),

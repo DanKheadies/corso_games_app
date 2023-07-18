@@ -164,7 +164,16 @@ class _SoloNobleBoardState extends State<SoloNobleBoard> {
       size.height / boardConfiguration.numberOfRows,
     );
 
-    List<Row> rows = [Row(), Row(), Row(), Row(), Row(), Row(), Row()];
+    List<Row> rows = [
+      const Row(),
+      const Row(),
+      const Row(),
+      const Row(),
+      const Row(),
+      const Row(),
+      const Row(),
+    ];
+
     for (int rowIndex = 0;
         rowIndex < boardConfiguration.numberOfRows;
         rowIndex++) {
@@ -177,6 +186,7 @@ class _SoloNobleBoardState extends State<SoloNobleBoard> {
         const SizedBox(),
         const SizedBox(),
       ];
+
       for (int columnIndex = 0;
           columnIndex < boardConfiguration.numberOfColumns;
           columnIndex++) {
