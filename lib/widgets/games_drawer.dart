@@ -174,6 +174,26 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
+              'Numbers And Draggin',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.numbers,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.pushNamed(
+                context,
+                NumbersAndDragginScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
               'Puzzles And Draggin',
               style: TextStyle(
                 fontSize: 18,

@@ -67,6 +67,15 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             isIconic: true,
+            icon: Icons.numbers,
+            title: 'NAD',
+            onPress: () => Navigator.pushNamed(
+              context,
+              NumbersAndDragginScreen.routeName,
+            ),
+          ),
+          GameButton(
+            isIconic: true,
             icon: Icons.drag_indicator,
             title: 'PAD',
             onPress: () => Navigator.pushNamed(

@@ -76,6 +76,7 @@ class DragObject extends StatelessWidget {
                   )
                 : Draggable<String>(
                     data: id,
+                    onDragStarted: () => onTapDown(id),
                     feedback: Container(
                       height: size,
                       width: size,
