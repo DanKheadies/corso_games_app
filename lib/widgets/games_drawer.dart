@@ -48,26 +48,46 @@ class _GamesDrawerState extends State<GamesDrawer> {
             },
             child: BlocBuilder<BrightnessCubit, Brightness>(
               builder: (context, state) {
-                return DrawerHeader(
+                return Container(
                   margin: const EdgeInsets.only(
                     bottom: 10,
-                    top: 35,
+                    top: 40,
                   ),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: state == Brightness.dark
-                          ? const AssetImage(
-                              'assets/images/main/corso-games-2.png')
-                          : const AssetImage(
-                              'assets/images/main/corso-games-1.png'),
-                      fit: BoxFit.contain,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  child: Image(
+                    image: AssetImage(
+                      state == Brightness.dark
+                          ? 'assets/images/main/corso-games-2.png'
+                          : 'assets/images/main/corso-games-1.png',
                     ),
                   ),
-                  child: const SizedBox(),
                 );
+                // return DrawerHeader(
+                //   margin: const EdgeInsets.only(
+                //     bottom: 10,
+                //     top: 35,
+                //   ),
+                //   decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //       image: state == Brightness.dark
+                //           ? const AssetImage(
+                //               'assets/images/main/corso-games-2.png')
+                //           : const AssetImage(
+                //               'assets/images/main/corso-games-1.png'),
+                //       fit: BoxFit.contain,
+                //     ),
+                //   ),
+                //   child: const SizedBox(),
+                // );
               },
             ),
           ),
+          // Image(
+          //   image: const AssetImage('assets/images/main/corso-games-2.png'),
+          //   fit: BoxFit.contain,
+          // ),
           // const SizedBox(height: 10),
           // BlocBuilder<BrightnessCubit, Brightness>(
           //   builder: (context, state) {

@@ -50,9 +50,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
+                  children: [
                     CSSize(),
                     ColorsScore(),
                   ],
@@ -85,6 +85,9 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
       },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        height: 45,
+        padding: EdgeInsets.zero,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -204,6 +207,7 @@ class _ColorsSlideScreenState extends State<ColorsSlideScreen> {
         onPressed: () {},
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const CircleBorder(),
         child: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
           builder: (context, state) {
             if (state.colorsStatus != ColorsSlideStatus.error) {

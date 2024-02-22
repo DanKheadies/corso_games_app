@@ -124,6 +124,9 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
       screenFunction: (String string) {},
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        height: 45,
+        padding: EdgeInsets.zero,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -155,6 +158,7 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
         onPressed: resetGameBoard,
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const CircleBorder(),
         child: IconButton(
           icon: Icon(
             Icons.settings_backup_restore_rounded,

@@ -287,30 +287,34 @@ class _DinoRunScreenState extends State<DinoRunScreen>
           },
           bottomBar: BottomAppBar(
             color: Theme.of(context).colorScheme.secondary,
+            elevation: 0,
+            height: 45,
+            padding: EdgeInsets.zero,
             shape: const CircularNotchedRectangle(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  tooltip: 'Settings',
-                  icon: Icon(
-                    Icons.settings,
-                    color: Theme.of(context).colorScheme.secondary,
-                    size: 30,
-                  ),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  tooltip: 'Share',
-                  icon: Icon(
-                    Icons.ios_share_outlined,
-                    color: Theme.of(context).colorScheme.secondary,
-                    size: 30,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
+            child: const SizedBox(),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     IconButton(
+            //       tooltip: 'Settings',
+            //       icon: Icon(
+            //         Icons.settings,
+            //         color: Theme.of(context).colorScheme.secondary,
+            //         size: 30,
+            //       ),
+            //       onPressed: null,
+            //     ),
+            //     IconButton(
+            //       tooltip: 'Share',
+            //       icon: Icon(
+            //         Icons.ios_share_outlined,
+            //         color: Theme.of(context).colorScheme.secondary,
+            //         size: 30,
+            //       ),
+            //       onPressed: null,
+            //     ),
+            //   ],
+            // ),
           ),
           floatingButton: FloatingActionButton(
             onPressed: () {
@@ -319,6 +323,7 @@ class _DinoRunScreenState extends State<DinoRunScreen>
             },
             tooltip: 'Reset',
             backgroundColor: Theme.of(context).colorScheme.primary,
+            shape: const CircleBorder(),
             child: IconButton(
               icon: Icon(
                 Icons.settings_backup_restore_rounded,

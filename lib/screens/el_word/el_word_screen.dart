@@ -29,33 +29,39 @@ class ElWordScreen extends StatelessWidget {
       screenFunction: (String string) {},
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        height: 45,
+        padding: EdgeInsets.zero,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            IconButton(
-              tooltip: 'Settings',
-              icon: Icon(
-                Icons.settings,
-                color: Theme.of(context).colorScheme.background,
-                size: 30,
+            Container(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                tooltip: 'Settings',
+                icon: Icon(
+                  Icons.settings,
+                  color: Theme.of(context).colorScheme.background,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    ElSettingsScreen.routeName,
+                  );
+                },
               ),
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  ElSettingsScreen.routeName,
-                );
-              },
             ),
-            IconButton(
-              tooltip: 'Share',
-              icon: Icon(
-                Icons.ios_share_outlined,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 30,
-              ),
-              onPressed: () {},
-            ),
+            // IconButton(
+            //   tooltip: 'Share',
+            //   icon: Icon(
+            //     Icons.ios_share_outlined,
+            //     color: Theme.of(context).colorScheme.secondary,
+            //     size: 30,
+            //   ),
+            //   onPressed: () {},
+            // ),
           ],
         ),
       ),
@@ -68,6 +74,7 @@ class ElWordScreen extends StatelessWidget {
         },
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const CircleBorder(),
         child: IconButton(
           icon: Icon(
             Icons.settings_backup_restore_rounded,

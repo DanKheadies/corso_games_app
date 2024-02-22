@@ -65,6 +65,9 @@ class _SolitareScreenState extends State<SolitareScreen> {
       // bottomBar: const BottomAppBar(),
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        height: 45,
+        padding: EdgeInsets.zero,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -98,6 +101,7 @@ class _SolitareScreenState extends State<SolitareScreen> {
         },
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const CircleBorder(),
         child: IconButton(
           icon: Icon(
             Icons.settings_backup_restore_rounded,

@@ -44,8 +44,9 @@ class ScreenWrapper extends StatefulWidget {
 class _ScreenWrapperState extends State<ScreenWrapper> {
   @override
   Widget build(BuildContext context) {
+    print('build screen wrapper');
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
           widget.title,

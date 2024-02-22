@@ -99,6 +99,9 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
       },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        height: 45,
+        padding: EdgeInsets.zero,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
