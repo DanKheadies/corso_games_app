@@ -25,18 +25,18 @@ class TicTacToeScreen extends StatelessWidget {
       backgroundOverride: Colors.transparent,
       content: ChangeNotifierProvider(
         create: (context) => GameProvider(),
-        child: SafeArea(
+        child: const SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(),
+              SizedBox(),
               Column(
-                children: const [
+                children: [
                   WhoseMove(),
                   TicTacToeBoard(),
                 ],
               ),
-              const Results(),
+              Results(),
             ],
           ),
         ),

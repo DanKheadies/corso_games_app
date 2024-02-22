@@ -293,6 +293,25 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
+              'Tappy Bird',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.airline_stops,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              Navigator.of(context).pushNamed(
+                TappyBirdScreen.routeName,
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
               'Tic Tac Toe',
               style: TextStyle(
                 fontSize: 18,

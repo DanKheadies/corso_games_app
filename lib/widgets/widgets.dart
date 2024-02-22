@@ -8,6 +8,7 @@ export 'slide_to_slide/widgets.dart';
 export 'snake/widgets.dart';
 export 'solitare/widgets.dart';
 export 'solo_noble/widgets.dart';
+export 'tappy_bird/widgets.dart';
 export 'tic_tac_toe/widgets.dart';
 export 'action_link.dart';
 export 'coming_soon.dart';

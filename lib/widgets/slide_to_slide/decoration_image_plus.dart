@@ -215,8 +215,14 @@ class DecorationImagePainterPlus implements DecorationImagePainter {
   /// because it had not yet been loaded the first time this method was called,
   /// then the `onChanged` callback passed to [DecorationImagePlus.createPainter]
   /// will be called.
-  void paint(Canvas canvas, Rect rect, Path? clipPath,
-      ImageConfiguration configuration) {
+  void paint(
+    Canvas canvas,
+    Rect rect,
+    Path? clipPath,
+    ImageConfiguration configuration, {
+    double? blend,
+    BlendMode? blendMode,
+  }) {
     if (_details.matchTextDirection) {
       assert(() {
         // We check this first so that the assert will fire immediately, not just

@@ -46,6 +46,8 @@ class AppRouter {
         return SolitareScreen.route();
       case SoloNobleScreen.routeName:
         return SoloNobleScreen.route();
+      case TappyBirdScreen.routeName:
+        return TappyBirdScreen.route();
       case TicTacToeScreen.routeName:
         return TicTacToeScreen.route();
       case WelcomeScreen.routeName:

@@ -74,6 +74,7 @@ flutter:
     - assets/images/minesweeper/
     - assets/images/slide_to_slide/
     - assets/images/solitare/
+    - assets/images/tappy_bird/
 
   fonts:
     - family: Plaster

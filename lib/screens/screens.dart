@@ -19,5 +19,6 @@ export 'snake/snake_settings_screen.dart';
 export 'solitare_screen.dart';
 export 'solo_noble_screen.dart';
 export 'splash_screen.dart';
+export 'tappy_bird_screen.dart';
 export 'tic_tac_toe_screen.dart';
 export 'welcome_screen.dart';

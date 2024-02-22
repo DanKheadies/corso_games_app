@@ -121,6 +121,15 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             isIconic: true,
+            icon: Icons.airline_stops,
+            title: 'Tappy Bird',
+            onPress: () => Navigator.pushNamed(
+              context,
+              TappyBirdScreen.routeName,
+            ),
+          ),
+          GameButton(
+            isIconic: true,
             icon: Icons.tag,
             title: 'Tic Tac Toe',
             onPress: () => Navigator.pushNamed(
