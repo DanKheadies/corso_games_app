@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:corso_games_app/cubits/cubits.dart';
@@ -44,9 +43,8 @@ class ScreenWrapper extends StatefulWidget {
 class _ScreenWrapperState extends State<ScreenWrapper> {
   @override
   Widget build(BuildContext context) {
-    print('build screen wrapper');
+    // print('build screen wrapper');
     return Scaffold(
-      // resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
           widget.title,
@@ -55,11 +53,6 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        // brightness: ,
-        // systemOverlayStyle: SystemUiOverlayStyle(),
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   statusBarBrightness: Brightness.dark,
-        // ),
         actions: [
           IconButton(
             icon: const Icon(

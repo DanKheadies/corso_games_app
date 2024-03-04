@@ -24,10 +24,8 @@ class BirdBarrier extends StatelessWidget {
         isThisBottomBarrier ? 1 : -1,
       ),
       child: Container(
-        // color: Colors.green,
-        // color: Theme.of(context).colorScheme.tertiary,
-        color: color,
-        // color: color ?? Theme.of(context).colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.tertiary,
+        // color: color,
         height:
             MediaQuery.of(context).size.height * (3 / 4) * (barrierHeight / 2),
         width: MediaQuery.of(context).size.width * barrierWidth / 2,

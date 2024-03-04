@@ -63,10 +63,6 @@ class CorsoGames extends StatelessWidget {
             create: (context) => UserBloc(
               authBloc: context.read<AuthBloc>(),
               userRepository: context.read<UserRepository>(),
-              //   )..add(
-              //       LoadUser(
-              //         context.read<AuthBloc>().state.authUser,
-              //       ),
             ),
           ),
           BlocProvider(
@@ -100,6 +96,9 @@ class CorsoGames extends StatelessWidget {
             create: (context) => SignUpCubit(
               authRepository: context.read<AuthRepository>(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => TappyBirdCubit(),
           ),
         ],
         child: BlocBuilder<BrightnessCubit, Brightness>(
