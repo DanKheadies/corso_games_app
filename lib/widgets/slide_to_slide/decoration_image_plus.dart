@@ -121,18 +121,18 @@ class DecorationImagePlus implements DecorationImage {
       DecorationImagePainterPlus._(this, onChanged);
 
   @override
-  bool operator ==(dynamic other) {
-    if (identical(this, other)) return true;
-    return other is DecorationImagePlus &&
-        other.runtimeType == runtimeType &&
-        image == other.image &&
-        colorFilter == other.colorFilter &&
-        fit == other.fit &&
-        alignment == other.alignment &&
-        centerSlice == other.centerSlice &&
-        repeat == other.repeat &&
-        matchTextDirection == other.matchTextDirection;
-  }
+  // bool operator (dynamic other) {
+  //   if (identical(this, other)) return true;
+  //   return other is DecorationImagePlus &&
+  //       other.runtimeType == runtimeType &&
+  //       image == other.image &&
+  //       colorFilter == other.colorFilter &&
+  //       fit == other.fit &&
+  //       alignment == other.alignment &&
+  //       centerSlice == other.centerSlice &&
+  //       repeat == other.repeat &&
+  //       matchTextDirection == other.matchTextDirection;
+  // }
 
   @override
   int get hashCode => hashValues(image, colorFilter, fit, alignment,

@@ -13,3 +13,8 @@ We've added games, themes, cleaned up some of the general interaction and memory
 
 What's New:
 Check out Numbers and Draggin! We've also optimized the general Puzzles and Draggin interaction. Enjoy!
+
+
+Release notes
+16 (2.0.3)
+Enjoy Tappy Bird and the general house cleaning!
