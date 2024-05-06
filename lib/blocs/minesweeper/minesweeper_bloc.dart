@@ -1,7 +1,6 @@
+import 'package:corso_games_app/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-
-import 'package:corso_games_app/models/models.dart';
 
 part 'minesweeper_event.dart';
 part 'minesweeper_state.dart';

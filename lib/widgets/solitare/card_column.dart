@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 typedef CardAcceptCallback = Null Function(
   List<PlayingCard> card,
@@ -27,9 +26,11 @@ class CardColumn extends StatefulWidget {
 class _CardColumnState extends State<CardColumn> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
-      height: MediaQuery.of(context).size.height / 2,
-      width: MediaQuery.of(context).size.width / 7,
+      height: size.height / 2,
+      width: size.width / 7,
       margin: const EdgeInsets.all(2),
       child: DragTarget(
         builder: (context, listOne, listTwo) {
@@ -44,16 +45,17 @@ class _CardColumnState extends State<CardColumn> {
                   widget.cards.length,
                 ),
                 columnIndex: widget.columnIndex,
+                screenWidth: size.width,
               );
             }).toList(),
           );
         },
-        onWillAccept: (data) {
+        onWillAcceptWithDetails: (data) {
           if (widget.cards.isEmpty) {
             return true;
           }
 
-          final dataValues = data as Map;
+          final dataValues = data.data as Map;
           List<PlayingCard> draggedCards = dataValues['cards'];
           PlayingCard firstCard = draggedCards.first;
           if (firstCard.cardColor == CardColor.red) {
@@ -85,8 +87,8 @@ class _CardColumnState extends State<CardColumn> {
           }
           return true;
         },
-        onAccept: (data) {
-          final dataValues = data as Map;
+        onAcceptWithDetails: (data) {
+          final dataValues = data.data as Map;
           widget.onCardsAdded(
             dataValues['cards'],
             dataValues['fromIndex'],

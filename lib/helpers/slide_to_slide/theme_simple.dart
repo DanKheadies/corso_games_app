@@ -3,10 +3,9 @@
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:corso_games_app/helpers/helpers.dart';
+import 'package:corso_games_app/models/models.dart';
 import 'package:flutter/material.dart';
-
-import 'package:corso_games_app/helpers/slide_to_slide/shared_theme.dart';
-import 'package:corso_games_app/models/slide_to_slide/puzzle_proxy.dart';
 
 // const _accentBlue = Color(0xff000579);
 final darkMode = WidgetsBinding.instance.window.platformBrightness;

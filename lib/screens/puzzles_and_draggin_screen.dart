@@ -1,12 +1,11 @@
 import 'dart:async';
 
+import 'package:corso_games_app/config/config.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:corso_games_app/widgets/widgets.dart';
-
 class PuzzlesAndDragginScreen extends StatefulWidget {
-  // static const String id = 'puzzles-and-draggin';
   static const String routeName = '/puzzles-and-draggin';
   static Route route() {
     return MaterialPageRoute(
@@ -42,6 +41,11 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
     'Form a green rectangle at the center.',
     'Form a green rectangle at the center in 3 turns.'
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void turnTicker() {
     // Stop ticking when challenge is won.
@@ -190,7 +194,12 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
+    final bool isSmall =
+        Responsive.isMobile(context) || Responsive.isTablet(context);
+    final double width = MediaQuery.of(context).size.width;
+    final double screenWidth =
+        // MediaQuery.of(context).size.width;
+        isSmall ? width : 800;
     final double squareSize = (screenWidth - boardPad * 2) /
         (squaresPerRow * 1); // for 6 squares w/out padding
 
@@ -203,13 +212,16 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
       backgroundOverride: Colors.transparent,
       content: Padding(
         padding: EdgeInsets.only(
-          top: topPad,
-          bottom: bottPad,
+          top: isSmall ? topPad : 10,
+          bottom: isSmall ? bottPad : 5,
+          left: isSmall ? 0 : (width - 800) / 2,
+          right: isSmall ? 0 : (width - 800) / 2,
         ),
         child: Column(
           children: [
             Expanded(
-              flex: 10,
+              // flex: 10,
+              flex: Responsive.isMobile(context) ? 10 : 5,
               child: SizedBox(
                 width: double.infinity,
                 height: double.infinity,
@@ -258,7 +270,7 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                               ),
                       ],
                     ),
-                    const SizedBox(height: 25),
+                    SizedBox(height: isSmall ? 25 : 10),
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(
@@ -320,7 +332,8 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
               ),
             ),
             Expanded(
-              flex: 15,
+              // flex: 15,
+              flex: Responsive.isMobile(context) ? 15 : 18,
               child: SizedBox(
                 width: double.infinity,
                 height: double.infinity,

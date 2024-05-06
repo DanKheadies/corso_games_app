@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
-class AuthRepository extends BaseAuthRepository {
+class AuthRepository {
   final auth.FirebaseAuth _firebaseAuth;
   final UserRepository _userRepository;
 
@@ -13,10 +12,8 @@ class AuthRepository extends BaseAuthRepository {
   })  : _firebaseAuth = firebaseAuth ?? auth.FirebaseAuth.instance,
         _userRepository = userRepository;
 
-  @override
   Stream<auth.User?> get user => _firebaseAuth.userChanges();
 
-  @override
   Future<auth.User?> signUp({
     required String email,
     required String password,
@@ -51,7 +48,6 @@ class AuthRepository extends BaseAuthRepository {
     }
   }
 
-  @override
   Future<auth.User?> signUpAnonymously({
     required String createdOn,
     required String lastLogin,
@@ -74,11 +70,11 @@ class AuthRepository extends BaseAuthRepository {
           );
       return null;
     } catch (err) {
+      print('auth repo anon sign up err: $err');
       throw Exception(err);
     }
   }
 
-  @override
   Future<void> logInWithEmailAndPassword({
     required String email,
     required String password,
@@ -93,7 +89,6 @@ class AuthRepository extends BaseAuthRepository {
     }
   }
 
-  @override
   Future<void> resetPassword({
     required String email,
   }) async {
@@ -106,7 +101,6 @@ class AuthRepository extends BaseAuthRepository {
     }
   }
 
-  @override
   Future<auth.User?> convertWithEmail({
     required String email,
     required String password,
@@ -124,7 +118,6 @@ class AuthRepository extends BaseAuthRepository {
     }
   }
 
-  @override
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }

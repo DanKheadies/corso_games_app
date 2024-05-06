@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
-// import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String routeName = '/welcome';
@@ -109,20 +107,25 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 BlocBuilder<BrightnessCubit, Brightness>(
                   builder: (context, state) {
                     return SizedBox(
-                      // width:
+                      width: Responsive.isMobile(context) ||
+                              Responsive.isTablet(context)
+                          ? double.infinity
+                          : 800,
                       child: Image.asset(
                         state == Brightness.dark
                             ? 'assets/images/main/corso-games-2.png'
                             : 'assets/images/main/corso-games-1.png',
+                        fit: BoxFit.cover,
                       ),
                     );
                   },
                 ),
+                const SizedBox(width: double.infinity),
                 Column(
                   children: [
                     GameButton(
@@ -152,9 +155,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               text: 'Maybe Later',
                               resetLink: false,
                               isDisable: false,
-                              onTap: () => context
-                                  .read<SignUpCubit>()
-                                  .signUpAnonymously(),
+                              onTap: () {
+                                context.read<SignUpCubit>().signUpAnonymously();
+                              },
                             ),
                           );
                         }

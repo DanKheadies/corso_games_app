@@ -51,7 +51,6 @@ class ColorsSlideState extends Equatable {
   });
 
   factory ColorsSlideState.fromJson(Map<String, dynamic> json) {
-    // print('fromJson');
     // Get colorsPieces list from JSON
     var pList = json['colorsPieces'] as List;
     // Create empty List of GamePieces

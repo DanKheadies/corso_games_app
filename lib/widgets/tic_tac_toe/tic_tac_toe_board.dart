@@ -1,6 +1,6 @@
+import 'package:corso_games_app/config/config.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-
-import 'package:corso_games_app/widgets/tic_tac_toe/field.dart';
 
 class TicTacToeBoard extends StatelessWidget {
   const TicTacToeBoard({Key? key}) : super(key: key);
@@ -8,8 +8,8 @@ class TicTacToeBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
-    final double boardSize = size.width * 0.75;
+    final double boardSize =
+        (Responsive.isMobile(context) ? size.width : 600) * 0.75;
 
     return Container(
       margin: EdgeInsets.only(top: size.height * 0.1),

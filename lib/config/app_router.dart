@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:corso_games_app/screens/screens.dart';
+import 'package:flutter/material.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {

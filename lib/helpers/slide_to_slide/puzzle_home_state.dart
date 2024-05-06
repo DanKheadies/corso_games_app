@@ -5,16 +5,11 @@
 
 import 'dart:async';
 
+import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/scheduler.dart' show Ticker;
 
-import 'package:corso_games_app/helpers/slide_to_slide/app_state.dart';
-import 'package:corso_games_app/helpers/slide_to_slide/puzzle_controls.dart';
-import 'package:corso_games_app/helpers/slide_to_slide/puzzle_flow_delegate.dart';
-import 'package:corso_games_app/helpers/slide_to_slide/shared_theme.dart';
-import 'package:corso_games_app/helpers/slide_to_slide/themes.dart';
-import 'package:corso_games_app/helpers/slide_to_slide/value_tab_controller.dart';
 import 'package:corso_games_app/models/slide_to_slide/puzzle_animator.dart';
 import 'package:corso_games_app/models/slide_to_slide/puzzle_proxy.dart';
 
@@ -52,7 +47,7 @@ class PuzzleHomeState extends State
   final PuzzleAnimator puzzle;
 
   @override
-  final _AnimationNotifier animationNotifier = _AnimationNotifier();
+  final AnimationNotifier animationNotifier = AnimationNotifier();
 
   Duration _tickerTimeSinceLastEvent = Duration.zero;
   late Ticker _ticker;
@@ -96,9 +91,9 @@ class PuzzleHomeState extends State
             value: _autoPlayListenable,
           )
         ],
-        child: Material(
+        child: const Material(
           child: Stack(
-            children: const <Widget>[
+            children: <Widget>[
               SizedBox.expand(
                 child: FittedBox(
                   fit: BoxFit.cover,
@@ -179,7 +174,7 @@ class PuzzleHomeState extends State
   }
 }
 
-class _AnimationNotifier extends ChangeNotifier {
+class AnimationNotifier extends ChangeNotifier {
   void animate() {
     notifyListeners();
   }

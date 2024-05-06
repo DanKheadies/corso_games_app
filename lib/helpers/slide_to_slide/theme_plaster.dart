@@ -3,10 +3,9 @@
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:corso_games_app/helpers/helpers.dart';
+import 'package:corso_games_app/models/models.dart';
 import 'package:flutter/material.dart';
-
-import 'package:corso_games_app/helpers/slide_to_slide/shared_theme.dart';
-import 'package:corso_games_app/models/slide_to_slide/puzzle_proxy.dart';
 
 const _yellowIsh = Color.fromARGB(255, 248, 244, 233);
 const _chocolate = Color.fromARGB(255, 66, 66, 68);

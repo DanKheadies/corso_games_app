@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/config/config.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/widgets/widgets.dart';
 
 class ColorsGamePieceModel extends ChangeNotifier {
   final int gridSize;
@@ -113,7 +113,9 @@ class ColorsGamePieceView extends AnimatedWidget {
   Widget build(BuildContext context) {
     model.prev = model.position;
 
-    Size size = MediaQuery.of(context).size;
+    Size size = Responsive.isMobile(context) || Responsive.isTablet(context)
+        ? MediaQuery.of(context).size
+        : const Size(800, 800);
     double itemSize = size.width / gridSize;
 
     return Align(

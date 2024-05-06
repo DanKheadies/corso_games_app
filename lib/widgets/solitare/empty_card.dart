@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmptyCardDeck extends StatefulWidget {
   final CardSuit cardSuit;
-  final List<PlayingCard> cardsAdded;
   final CardAcceptCallback onCardAdded;
+  final double screenWidth;
+  final List<PlayingCard> cardsAdded;
   final int columnIndex;
 
   const EmptyCardDeck({
@@ -16,6 +17,7 @@ class EmptyCardDeck extends StatefulWidget {
     required this.cardSuit,
     required this.cardsAdded,
     required this.onCardAdded,
+    required this.screenWidth,
     this.columnIndex = 0,
   });
 
@@ -50,7 +52,10 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
                   builder: (context, state) {
                     return Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(
+                          // 8,
+                          Responsive.isMobile(context) ? 8 : 16,
+                        ),
                         color: state == Brightness.dark
                             ? Theme.of(context)
                                 .colorScheme
@@ -60,15 +65,24 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
                                 .withRed(175)
                             : Theme.of(context).colorScheme.background,
                       ),
-                      height: 60,
-                      width: 40,
+                      // height: 60,
+                      height: Responsive.isMobile(context)
+                          ? 60
+                          : (widget.screenWidth / 10),
+                      // width: 40,
+                      width: Responsive.isMobile(context)
+                          ? 40
+                          : (widget.screenWidth / 15),
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Center(
                               child: SizedBox(
-                                height: 20,
+                                // height: 20,
+                                height: Responsive.isMobile(context)
+                                    ? 20
+                                    : (widget.screenWidth / 30),
                                 child: _suitToImage(),
                               ),
                             ),
@@ -85,10 +99,11 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
                 attachedCards: [
                   widget.cardsAdded.last,
                 ],
+                screenWidth: widget.screenWidth,
               );
       },
-      onWillAccept: (value) {
-        final dataValues = value as Map;
+      onWillAcceptWithDetails: (value) {
+        final dataValues = value.data as Map;
         PlayingCard cardAdded = dataValues['cards'].last;
 
         if (cardAdded.cardSuit == widget.cardSuit) {
@@ -99,8 +114,8 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
         }
         return false;
       },
-      onAccept: (value) {
-        final dataValues = value as Map;
+      onAcceptWithDetails: (value) {
+        final dataValues = value.data as Map;
         widget.onCardAdded(
           dataValues['cards'],
           dataValues['fromIndex'],

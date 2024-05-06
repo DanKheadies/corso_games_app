@@ -1,11 +1,10 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SolitareBoard extends StatefulWidget {
   final bool resetSolitare;
@@ -325,7 +324,9 @@ class _SolitareBoardState extends State<SolitareBoard> {
     }
   }
 
-  SizedBox _buildCardDeck() {
+  SizedBox _buildCardDeck(
+    double screenWidth,
+  ) {
     return SizedBox(
       child: Row(
         children: [
@@ -371,6 +372,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
                     padding: const EdgeInsets.all(4),
                     child: TransformedCard(
                       playingCard: cardDeckClosed.last,
+                      screenWidth: screenWidth,
                     ),
                   )
                 : Opacity(
@@ -382,6 +384,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
                           cardSuit: CardSuit.diamonds,
                           cardType: CardType.five,
                         ),
+                        screenWidth: screenWidth,
                       ),
                     ),
                   ),
@@ -395,6 +398,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
                       cardDeckOpened.last,
                     ],
                     columnIndex: 0,
+                    screenWidth: screenWidth,
                   ),
                 )
               : const SizedBox(width: 40),
@@ -403,7 +407,9 @@ class _SolitareBoardState extends State<SolitareBoard> {
     );
   }
 
-  SizedBox _buildFinalDecks() {
+  SizedBox _buildFinalDecks(
+    double screenWidth,
+  ) {
     return SizedBox(
       child: Row(
         children: [
@@ -426,6 +432,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
                     );
               },
               columnIndex: 8,
+              screenWidth: screenWidth,
             ),
           ),
           Padding(
@@ -447,6 +454,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
                     );
               },
               columnIndex: 9,
+              screenWidth: screenWidth,
             ),
           ),
           Padding(
@@ -468,6 +476,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
                     );
               },
               columnIndex: 10,
+              screenWidth: screenWidth,
             ),
           ),
           Padding(
@@ -489,6 +498,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
                     );
               },
               columnIndex: 11,
+              screenWidth: screenWidth,
             ),
           ),
         ],
@@ -498,6 +508,8 @@ class _SolitareBoardState extends State<SolitareBoard> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     if (widget.resetSolitare) {
       _initializeGame();
       context.read<SolitareBloc>().add(
@@ -512,8 +524,8 @@ class _SolitareBoardState extends State<SolitareBoard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildCardDeck(),
-              _buildFinalDecks(),
+              _buildCardDeck(screenWidth),
+              _buildFinalDecks(screenWidth),
             ],
           ),
           const SizedBox(

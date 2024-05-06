@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
+import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+// import 'package:firebase_messaging/firebase_messaging.dart';
 
 part 'login_state.dart';
 
@@ -64,7 +63,7 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
     } catch (err) {
-      print(err);
+      print('login cubit creds err: $err');
       emit(
         state.copyWith(
           status: LoginStatus.error,
@@ -78,12 +77,13 @@ class LoginCubit extends Cubit<LoginState> {
     required User user,
   }) async {
     var lastLogin = DateTime.now().toString();
-    var notificationToken = await FirebaseMessaging.instance.getToken();
+    // var notificationToken = await FirebaseMessaging.instance.getToken();
 
     await _userRepository.updateUser(
       user.copyWith(
         lastLogin: lastLogin,
-        notificationToken: notificationToken ?? '',
+        // notificationToken: notificationToken ?? '',
+        notificationToken: '',
       ),
     );
   }

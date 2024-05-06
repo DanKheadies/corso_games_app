@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class GamesScreen extends StatelessWidget {
   static const String routeName = '/games';

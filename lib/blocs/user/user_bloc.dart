@@ -1,14 +1,12 @@
 import 'dart:async';
 
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:meta/meta.dart';
-
-import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/models/models.dart';
-import 'package:corso_games_app/repositories/repositories.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

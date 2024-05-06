@@ -3,10 +3,9 @@
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:flutter/material.dart';
-
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/helpers/helpers.dart';
+import 'package:flutter/material.dart';
 
 class PuzzleScreen extends StatelessWidget {
   final int rows, columns;

@@ -52,7 +52,7 @@ class DragObject extends StatelessWidget {
                               // Non-selected circles
                               color: Theme.of(context).colorScheme.surface,
                             ),
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: BorderRadius.circular(250),
                             color: color,
                           ),
                           child: const Center(
@@ -87,7 +87,7 @@ class DragObject extends StatelessWidget {
                             // Dragging circle
                             color: Theme.of(context).colorScheme.surface,
                           ),
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(250),
                           color: color.withOpacity(0.666),
                         ),
                         child: const Center(
@@ -116,7 +116,7 @@ class DragObject extends StatelessWidget {
                                 .surface
                                 .withOpacity(0.333),
                           ),
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(250),
                           color: color.withOpacity(0.333),
                         ),
                         child: const Center(
@@ -135,7 +135,7 @@ class DragObject extends StatelessWidget {
                             // Stationary border
                             color: Theme.of(context).colorScheme.surface,
                           ),
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(250),
                           color: color,
                         ),
                         child: const Center(

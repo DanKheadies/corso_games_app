@@ -1,9 +1,8 @@
 import 'dart:math';
 
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-
-import 'package:corso_games_app/widgets/widgets.dart';
 
 part 'colors_slide_event.dart';
 part 'colors_slide_state.dart';

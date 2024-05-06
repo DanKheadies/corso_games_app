@@ -1,12 +1,11 @@
 import 'dart:async';
 
+import 'package:corso_games_app/cubits/cubits.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-
-import 'package:corso_games_app/cubits/cubits.dart';
-import 'package:corso_games_app/widgets/widgets.dart';
 
 class Registration extends StatefulWidget {
   final bool isAnon;

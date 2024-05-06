@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:corso_games_app/blocs/blocs.dart';
 
 class SnakeBoard extends StatefulWidget {
   final int colNum;
@@ -323,8 +322,10 @@ class _SnakeBoardState extends State<SnakeBoard> {
     checkGameStatus(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 5,
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width < 525
+            ? 5
+            : (MediaQuery.of(context).size.width - 525) / 2,
       ),
       child: Column(
         children: [

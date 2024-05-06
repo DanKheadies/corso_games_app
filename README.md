@@ -36,6 +36,9 @@ A collection of Flutter games. GLHF!
 > [Snake](https://www.youtube.com/watch?v=cxX16GBitpY)
 > via Mitch Koko
 
+> [Tappy Bird](https://www.youtube.com/watch?v=vgmVPpFP0fI)
+> via Mitch Koko
+
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)
@@ -46,4 +49,4 @@ A collection of Flutter games. GLHF!
 
 ---
 
-Compliments of DTFun LLC 2023
+Compliments of DTFun LLC 2024

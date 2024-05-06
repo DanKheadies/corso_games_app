@@ -1,7 +1,6 @@
+import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:corso_games_app/blocs/blocs.dart';
 
 class ColorsScore extends StatefulWidget {
   const ColorsScore({

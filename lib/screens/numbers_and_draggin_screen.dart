@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class NumbersAndDragginScreen extends StatefulWidget {
-  // static const String id = 'puzzles-and-draggin';
   static const String routeName = '/numbers-and-draggin';
   static Route route() {
     return MaterialPageRoute(
@@ -98,7 +96,11 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
+    final Size size = MediaQuery.of(context).size;
+    final double screenWidth =
+        Responsive.isMobile(context) || Responsive.isTablet(context)
+            ? size.width
+            : 800;
     final double squareSize =
         (screenWidth - boardPad * 2) / columns; // for 6 squares w/out padding
 
@@ -111,9 +113,14 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
       backgroundOverride: Colors.transparent,
       content: Padding(
         padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height / 6,
+          top: Responsive.isMobile(context) || Responsive.isTablet(context)
+              ? size.height / 6
+              : (size.height - 800) / 2,
+          left: Responsive.isMobile(context) || Responsive.isTablet(context)
+              ? 0
+              : (size.width - 800) / 2,
         ),
-        child: Container(
+        child: SizedBox(
           child: _buildGameGrid(
             screenWidth,
             squareSize,

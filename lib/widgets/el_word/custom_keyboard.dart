@@ -1,9 +1,8 @@
+import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:corso_games_app/blocs/el_word/el_word_bloc.dart';
-import 'package:corso_games_app/models/el_word/letter.dart';
-import 'package:corso_games_app/widgets/el_word/custom_key.dart';
 
 class CustomKeyboard extends StatelessWidget {
   const CustomKeyboard({Key? key}) : super(key: key);

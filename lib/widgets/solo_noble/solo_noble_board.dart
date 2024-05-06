@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-
 import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class SoloNobleBoard extends StatefulWidget {
   final SoloNobleBuilder builder;

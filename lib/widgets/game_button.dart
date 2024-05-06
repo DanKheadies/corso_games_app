@@ -1,9 +1,8 @@
 import 'dart:async';
 
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
-import 'package:corso_games_app/cubits/cubits.dart';
 
 class GameButton extends StatefulWidget {
   const GameButton({

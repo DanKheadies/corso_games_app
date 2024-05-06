@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-
-import 'package:corso_games_app/widgets/dino_dash/cactus.dart';
-import 'package:corso_games_app/widgets/dino_dash/cloud.dart';
-import 'package:corso_games_app/widgets/dino_dash/ground.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/widgets.dart';
 
 const int gravityPPSS = 1420;
 const int worldToPixelRatio = 10;

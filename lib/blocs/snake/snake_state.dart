@@ -51,11 +51,6 @@ class SnakeState extends Equatable {
   });
 
   factory SnakeState.fromJson(Map<String, dynamic> json) {
-    print('fromJson');
-
-    // var snakeList = json['snakePosition'] as List<int>;
-    // List<int> snakePositionList = snakeList;
-
     return SnakeState(
       colNum: json['colNum'],
       food: json['food'],

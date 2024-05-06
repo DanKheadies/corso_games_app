@@ -1,6 +1,5 @@
+import 'package:corso_games_app/models/models.dart';
 import 'package:flutter/material.dart';
-
-import 'package:corso_games_app/models/el_word/letter.dart';
 
 class CustomBoardTile extends StatelessWidget {
   const CustomBoardTile({

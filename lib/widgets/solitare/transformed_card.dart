@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TransformedCard extends StatefulWidget {
   final PlayingCard playingCard;
+  final double screenWidth;
   final double transformDistance;
   final int transformIndex;
   final int columnIndex;
@@ -15,6 +16,7 @@ class TransformedCard extends StatefulWidget {
   const TransformedCard({
     super.key,
     required this.playingCard,
+    required this.screenWidth,
     this.transformDistance = 15.0,
     this.transformIndex = 0,
     this.columnIndex = 0,
@@ -77,19 +79,29 @@ class _TransformedCardState extends State<TransformedCard> {
   Widget _buildCard(Brightness state) {
     return !widget.playingCard.faceUp
         ? Container(
-            height: 60,
-            width: 40,
+            // height: 60,
+            height: Responsive.isMobile(context)
+                ? 60
+                : (widget.screenWidth / 10) + 10,
+            // width: 40,
+            width: Responsive.isMobile(context)
+                ? 40
+                : (widget.screenWidth / 15) + 10,
             decoration: BoxDecoration(
               border: Border.all(
                 color: state == Brightness.dark
                     ? Theme.of(context).colorScheme.background
                     : Theme.of(context).colorScheme.onBackground,
               ),
-              borderRadius: BorderRadius.circular(8),
+              // borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(
+                // Responsive.isMobile(context) ? 8 : (widget.screenWidth / 75),
+                Responsive.isMobile(context) ? 8 : 16,
+              ),
               color: Theme.of(context).colorScheme.primary,
             ),
           )
-        : Draggable<Map>(
+        : Draggable<Map<dynamic, dynamic>>(
             feedback: CardColumn(
               cards: widget.attachedCards,
               columnIndex: 1,
@@ -117,7 +129,10 @@ class _TransformedCardState extends State<TransformedCard> {
                 ? Theme.of(context).colorScheme.background
                 : Theme.of(context).colorScheme.onBackground,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(
+            // 8,
+            Responsive.isMobile(context) ? 8 : 16,
+          ),
           color: state == Brightness.dark
               ? Theme.of(context)
                   .colorScheme
@@ -127,8 +142,12 @@ class _TransformedCardState extends State<TransformedCard> {
                   .withRed(175)
               : Theme.of(context).colorScheme.onSurface,
         ),
-        height: 60,
-        width: 40,
+        // height: 60,
+        height:
+            Responsive.isMobile(context) ? 60 : (widget.screenWidth / 10) + 10,
+        // width: 40,
+        width:
+            Responsive.isMobile(context) ? 40 : (widget.screenWidth / 15) + 10,
         child: Stack(
           children: [
             Center(
@@ -142,19 +161,28 @@ class _TransformedCardState extends State<TransformedCard> {
                         color: state == Brightness.dark
                             ? Theme.of(context).colorScheme.background
                             : Theme.of(context).colorScheme.onBackground,
-                        fontSize: 16,
+                        // fontSize: 16,
+                        fontSize: Responsive.isMobile(context)
+                            ? 16
+                            : (widget.screenWidth / 37.5),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    // height: 20,
+                    height: Responsive.isMobile(context)
+                        ? 20
+                        : (widget.screenWidth / 30),
                     child: _suitToImage(),
                   ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(4),
+              // padding: const EdgeInsets.all(4),
+              padding: EdgeInsets.all(
+                Responsive.isMobile(context) ? 4 : (widget.screenWidth / 150),
+              ),
               child: Align(
                 alignment: Alignment.topRight,
                 child: Row(
@@ -167,11 +195,17 @@ class _TransformedCardState extends State<TransformedCard> {
                         color: state == Brightness.dark
                             ? Theme.of(context).colorScheme.background
                             : Theme.of(context).colorScheme.onBackground,
-                        fontSize: 10,
+                        // fontSize: 10,
+                        fontSize: Responsive.isMobile(context)
+                            ? 10
+                            : (widget.screenWidth / 60),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      // height: 10,
+                      height: Responsive.isMobile(context)
+                          ? 10
+                          : (widget.screenWidth / 60),
                       child: _suitToImage(),
                     ),
                   ],
@@ -192,7 +226,9 @@ class _TransformedCardState extends State<TransformedCard> {
           transform: Matrix4.identity()
             ..translate(
               0.0,
-              widget.transformIndex * widget.transformDistance,
+              widget.transformIndex *
+                  widget.transformDistance *
+                  (Responsive.isMobile(context) ? 1 : 2),
               0.0,
             ),
           child: _buildCard(state),

@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:corso_games_app/config/config.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
-import 'package:corso_games_app/widgets/colors_slide/colors_controller.dart';
-import 'package:corso_games_app/widgets/colors_slide/colors_game_piece.dart';
 
 class ColorsGameBoard extends StatefulWidget {
   const ColorsGameBoard({
@@ -91,8 +90,14 @@ class _ColorsGameBoardState extends State<ColorsGameBoard> {
                   Theme.of(context).colorScheme.background.withOpacity(0.575),
             ),
             child: SizedBox(
-              width: root,
-              height: root,
+              width:
+                  Responsive.isMobile(context) || Responsive.isTablet(context)
+                      ? root
+                      : 800,
+              height:
+                  Responsive.isMobile(context) || Responsive.isTablet(context)
+                      ? root
+                      : 800,
               child: Stack(
                 key: UniqueKey(),
                 children: widget.pieces,

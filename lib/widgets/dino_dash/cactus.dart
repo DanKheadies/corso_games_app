@@ -1,10 +1,8 @@
 import 'dart:math';
 
+import 'package:corso_games_app/models/models.dart';
+import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:corso_games_app/models/dino_dash/sprite.dart';
-import 'package:corso_games_app/widgets/dino_dash/constants.dart';
-import 'package:corso_games_app/widgets/dino_dash/game_object.dart';
 
 List<Sprite> cacti = [
   Sprite(

@@ -1,7 +1,6 @@
+import 'package:corso_games_app/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:corso_games_app/providers/tic_tac_toe/game_provider.dart';
 
 class Results extends StatelessWidget {
   const Results({Key? key}) : super(key: key);

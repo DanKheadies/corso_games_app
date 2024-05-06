@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
-// import 'package:corso_games_app/data/data.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class GameGridCore extends StatefulWidget {
   final double boardPad;

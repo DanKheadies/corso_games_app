@@ -1,11 +1,10 @@
 import 'dart:math';
 
+import 'package:corso_games_app/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-
-import 'package:corso_games_app/models/models.dart';
 
 part 'el_word_event.dart';
 part 'el_word_state.dart';

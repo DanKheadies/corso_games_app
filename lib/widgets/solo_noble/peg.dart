@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:corso_games_app/models/models.dart';
+import 'package:flutter/material.dart';
 
 class Peg extends StatelessWidget {
   final Index index;

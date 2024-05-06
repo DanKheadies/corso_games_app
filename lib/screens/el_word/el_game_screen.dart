@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ElGameScreen extends StatelessWidget {
   static const String routeName = '/el-game';
@@ -17,11 +17,18 @@ class ElGameScreen extends StatelessWidget {
   const ElGameScreen({super.key});
 
   Widget _buildBoard(BuildContext context, ElWordState state) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = Responsive.isMobile(context) || Responsive.isTablet(context)
+        ? MediaQuery.of(context).size.height
+        : 800;
+    double width = Responsive.isMobile(context) || Responsive.isTablet(context)
+        ? MediaQuery.of(context).size.width
+        : 800;
 
     return SizedBox(
-      height: height * .475,
+      height: height *
+          (Responsive.isMobile(context) || Responsive.isTablet(context)
+              ? .475
+              : .5),
       width: width > 620 ? width * .5 : width * .8,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -49,7 +56,9 @@ class ElGameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    double height = Responsive.isMobile(context) || Responsive.isTablet(context)
+        ? MediaQuery.of(context).size.height
+        : 800;
 
     return BlocConsumer<ElWordBloc, ElWordState>(
       listenWhen: (previous, current) {
@@ -78,7 +87,10 @@ class ElGameScreen extends StatelessWidget {
         if (state.status == ElWordStatus.loaded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment:
+                Responsive.isMobile(context) || Responsive.isTablet(context)
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.spaceEvenly,
             children: [
               _buildBoard(context, state),
               const CustomKeyboard(),

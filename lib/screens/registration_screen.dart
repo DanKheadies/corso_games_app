@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatelessWidget {
   static const String routeName = '/registration';

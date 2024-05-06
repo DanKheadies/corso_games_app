@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:corso_games_app/providers/tic_tac_toe/game_provider.dart';
 import 'package:corso_games_app/widgets/tic_tac_toe/shapes.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WhoseMove extends StatelessWidget {
   const WhoseMove({Key? key}) : super(key: key);
