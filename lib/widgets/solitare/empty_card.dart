@@ -51,6 +51,9 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
                 child: BlocBuilder<BrightnessCubit, Brightness>(
                   builder: (context, state) {
                     return Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: Responsive.isMobile(context) ? 0 : 5,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
                           // 8,
@@ -68,11 +71,11 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
                       // height: 60,
                       height: Responsive.isMobile(context)
                           ? 60
-                          : (widget.screenWidth / 10),
+                          : (widget.screenWidth / 5), // 10
                       // width: 40,
                       width: Responsive.isMobile(context)
                           ? 40
-                          : (widget.screenWidth / 15),
+                          : (widget.screenWidth / 8), // 15
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -82,7 +85,7 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
                                 // height: 20,
                                 height: Responsive.isMobile(context)
                                     ? 20
-                                    : (widget.screenWidth / 30),
+                                    : (widget.screenWidth / 20), // 30
                                 child: _suitToImage(),
                               ),
                             ),

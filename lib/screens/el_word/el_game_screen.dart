@@ -6,14 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ElGameScreen extends StatelessWidget {
-  static const String routeName = '/el-game';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const ElGameScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
   const ElGameScreen({super.key});
 
   Widget _buildBoard(BuildContext context, ElWordState state) {

@@ -82,11 +82,11 @@ class _TransformedCardState extends State<TransformedCard> {
             // height: 60,
             height: Responsive.isMobile(context)
                 ? 60
-                : (widget.screenWidth / 10) + 10,
+                : (widget.screenWidth / 5) + 10, // 10 + 10
             // width: 40,
             width: Responsive.isMobile(context)
                 ? 40
-                : (widget.screenWidth / 15) + 10,
+                : (widget.screenWidth / 8) + 10, // 15 + 10
             decoration: BoxDecoration(
               border: Border.all(
                 color: state == Brightness.dark
@@ -143,11 +143,13 @@ class _TransformedCardState extends State<TransformedCard> {
               : Theme.of(context).colorScheme.onSurface,
         ),
         // height: 60,
-        height:
-            Responsive.isMobile(context) ? 60 : (widget.screenWidth / 10) + 10,
+        height: Responsive.isMobile(context)
+            ? 60
+            : (widget.screenWidth / 5) + 10, // 10 + 10
         // width: 40,
-        width:
-            Responsive.isMobile(context) ? 40 : (widget.screenWidth / 15) + 10,
+        width: Responsive.isMobile(context)
+            ? 40
+            : (widget.screenWidth / 8) + 10, // 15 + 10
         child: Stack(
           children: [
             Center(

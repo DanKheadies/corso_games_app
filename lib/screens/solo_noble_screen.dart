@@ -7,14 +7,6 @@ typedef SoloNobleBuilder = void Function(
 );
 
 class SoloNobleScreen extends StatefulWidget {
-  static const String routeName = '/solo-noble';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const SoloNobleScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
   const SoloNobleScreen({super.key});
 
   @override
@@ -29,17 +21,7 @@ class _SoloNobleScreenState extends State<SoloNobleScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      title: 'Solo Noble',
-      infoTitle: 'Solo Noble',
-      infoDetails:
-          'Remove pegs by jumping them with other pegs. Try to get your last peg to end up in the center.',
-      backgroundOverride: Colors.transparent,
-      content: SoloNobleBoard(
-        builder: (context, void Function() resetGame) {
-          resetSoloNoble = resetGame;
-        },
-      ),
-      screenFunction: (String string) {},
+      screen: 'Solo Noble',
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
         elevation: 0,
@@ -70,8 +52,7 @@ class _SoloNobleScreenState extends State<SoloNobleScreen> {
           ],
         ),
       ),
-      floatingButton: FloatingActionButton(
-        // onPressed: resetGameBoard,
+      flactionButton: FloatingActionButton(
         onPressed: () => resetSoloNoble.call(),
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -85,7 +66,16 @@ class _SoloNobleScreenState extends State<SoloNobleScreen> {
           onPressed: () => resetSoloNoble.call(),
         ),
       ),
-      floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
+      flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
+      infoTitle: 'Solo Noble',
+      infoDetails:
+          'Remove pegs by jumping them with other pegs. Try to get your last peg to end up in the center.',
+      screenFunction: (_) {},
+      child: SoloNobleBoard(
+        builder: (context, void Function() resetGame) {
+          resetSoloNoble = resetGame;
+        },
+      ),
     );
   }
 }

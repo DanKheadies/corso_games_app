@@ -6,15 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PuzzlesAndDragginScreen extends StatefulWidget {
-  static const String routeName = '/puzzles-and-draggin';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const PuzzlesAndDragginScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const PuzzlesAndDragginScreen({Key? key}) : super(key: key);
+  const PuzzlesAndDragginScreen({super.key});
 
   @override
   State<PuzzlesAndDragginScreen> createState() =>
@@ -197,20 +189,63 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
     final bool isSmall =
         Responsive.isMobile(context) || Responsive.isTablet(context);
     final double width = MediaQuery.of(context).size.width;
-    final double screenWidth =
-        // MediaQuery.of(context).size.width;
-        isSmall ? width : 800;
+    final double screenWidth = isSmall ? width : 750;
     final double squareSize = (screenWidth - boardPad * 2) /
         (squaresPerRow * 1); // for 6 squares w/out padding
 
     return ScreenWrapper(
-      title: 'Puzzles & Draggin',
+      screen: 'Puzzles & Draggin',
+      bottomBar: BottomAppBar(
+        color: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        height: 45,
+        padding: EdgeInsets.zero,
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              tooltip: 'Settings',
+              icon: Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              tooltip: 'Share',
+              icon: Icon(
+                Icons.ios_share_outlined,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      button: 'Leggooo!',
+      flactionButton: FloatingActionButton(
+        onPressed: resetGameBoard,
+        tooltip: 'Reset',
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const CircleBorder(),
+        child: IconButton(
+          icon: Icon(
+            Icons.settings_backup_restore_rounded,
+            color: Theme.of(context).colorScheme.background,
+            size: 30,
+          ),
+          onPressed: resetGameBoard,
+        ),
+      ),
+      flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
       infoTitle: 'Puzzles And Draggin',
       infoDetails:
           'Drag the circles. Use the force. Follow the instructions. Use the circle you\'re dragging to move other circles.',
-      button: 'Leggooo!',
-      backgroundOverride: Colors.transparent,
-      content: Padding(
+      screenFunction: (_) {},
+      child: Padding(
         padding: EdgeInsets.only(
           top: isSmall ? topPad : 10,
           bottom: isSmall ? bottPad : 5,
@@ -228,11 +263,6 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Text(
-                    //   'Puzzles & Draggin',
-                    //   style: Theme.of(context).textTheme.headline5,
-                    // ),
-                    // const SizedBox(height: 25),
                     const Text('Turns'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -349,54 +379,6 @@ class _PuzzlesAndDragginScreenState extends State<PuzzlesAndDragginScreen> {
           ],
         ),
       ),
-      screenFunction: (String string) {},
-      bottomBar: BottomAppBar(
-        color: Theme.of(context).colorScheme.secondary,
-        elevation: 0,
-        height: 45,
-        padding: EdgeInsets.zero,
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              tooltip: 'Settings',
-              icon: Icon(
-                Icons.settings,
-                // color: Colors.white,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 30,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              tooltip: 'Share',
-              icon: Icon(
-                Icons.ios_share_outlined,
-                // color: Colors.white,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 30,
-              ),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
-      floatingButton: FloatingActionButton(
-        onPressed: resetGameBoard,
-        tooltip: 'Reset',
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        shape: const CircleBorder(),
-        child: IconButton(
-          icon: Icon(
-            Icons.settings_backup_restore_rounded,
-            color: Theme.of(context).colorScheme.background,
-            size: 30,
-          ),
-          onPressed: resetGameBoard,
-        ),
-      ),
-      floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

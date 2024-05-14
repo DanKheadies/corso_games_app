@@ -8,17 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class ElSettingsScreen extends StatefulWidget {
-  static const String routeName = '/el-word-settings';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const ElSettingsScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const ElSettingsScreen({
-    Key? key,
-  }) : super(key: key);
+  const ElSettingsScreen({super.key});
 
   @override
   State<ElSettingsScreen> createState() => _ElSettingsScreenState();
@@ -38,31 +28,15 @@ class _ElSettingsScreenState extends State<ElSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text(
-          'El Word Settings',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.background,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => showScreenInfo(
-              context,
-              'Settings',
-              'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
-              false,
-              TextAlign.left,
-              'GLHF',
-            ),
-          )
-        ],
-      ),
-      body: BlocBuilder<ElWordBloc, ElWordState>(
+    return ScreenWrapper(
+      screen: 'El Word Settings',
+      bottomBar: const SizedBox(),
+      infoDetails:
+          'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
+      infoTitle: 'Settings',
+      nav: 'elWord',
+      screenFunction: (_) {},
+      child: BlocBuilder<ElWordBloc, ElWordState>(
         builder: (context, state) {
           if (state.status != ElWordStatus.error) {
             return Center(

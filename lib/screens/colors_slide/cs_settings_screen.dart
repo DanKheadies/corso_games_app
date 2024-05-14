@@ -5,17 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class CSSettingsScreen extends StatefulWidget {
-  static const String routeName = '/colors-slide-settings';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const CSSettingsScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const CSSettingsScreen({
-    Key? key,
-  }) : super(key: key);
+  const CSSettingsScreen({super.key});
 
   @override
   State<CSSettingsScreen> createState() => _CSSettingsScreenState();
@@ -35,62 +25,23 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text(
-          'CS Settings',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.background,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => showScreenInfo(
-              context,
-              'Settings',
-              'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
-              false,
-              TextAlign.left,
-              'GLHF',
-            ),
-          )
-        ],
-      ),
-      body: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
+    return ScreenWrapper(
+      screen: 'Colors Slide Settings',
+      bottomBar: const SizedBox(),
+      hasAppBar: true,
+      hasDrawer: false,
+      infoTitle: 'Settings',
+      infoDetails:
+          'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
+      nav: 'colorsSlide',
+      screenFunction: (_) {},
+      child: BlocBuilder<ColorsSlideBloc, ColorsSlideState>(
         builder: (context, state) {
           if (state.colorsStatus != ColorsSlideStatus.error) {
             return Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Column(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     const Text('timer'),
-                  //     const SizedBox(height: 30),
-                  //     NeumorphicSwitch(
-                  //       style: NeumorphicSwitchStyle(
-                  //         activeThumbColor:
-                  //             Theme.of(context).colorScheme.tertiary,
-                  //         activeTrackColor:
-                  //             Theme.of(context).scaffoldBackgroundColor,
-                  //         inactiveThumbColor:
-                  //             Theme.of(context).colorScheme.primary,
-                  //         inactiveTrackColor:
-                  //             Theme.of(context).scaffoldBackgroundColor,
-                  //       ),
-                  //       value: state.showColorsTimer,
-                  //       onChanged: (value) {
-                  //         context.read<ColorsSlideBloc>().add(
-                  //               ToggleColorsSlideTimer(),
-                  //             );
-                  //       },
-                  //     ),
-                  //   ],
-                  // ),
                   BlocBuilder<BrightnessCubit, Brightness>(
                     builder: (context, bright) {
                       return Column(

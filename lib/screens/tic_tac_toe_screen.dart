@@ -4,25 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TicTacToeScreen extends StatelessWidget {
-  // static const String id = 'tic-tac-toe';
-  static const String routeName = '/tic-tac-toe';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const TicTacToeScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const TicTacToeScreen({Key? key}) : super(key: key);
+  const TicTacToeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      title: 'Tic Tac Toe',
+      screen: 'Tic Tac Toe',
+      bottomBar: const SizedBox(),
       infoTitle: 'Tic Tac Toe',
       infoDetails: 'Play with a friend. Or don\'t..',
-      backgroundOverride: Colors.transparent,
-      content: ChangeNotifierProvider(
+      screenFunction: (_) {},
+      child: ChangeNotifierProvider(
         create: (context) => GameProvider(),
         child: const SafeArea(
           child: Column(
@@ -40,8 +32,6 @@ class TicTacToeScreen extends StatelessWidget {
           ),
         ),
       ),
-      screenFunction: (String string) {},
-      bottomBar: const SizedBox(),
     );
   }
 }

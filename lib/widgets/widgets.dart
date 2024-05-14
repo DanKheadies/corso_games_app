@@ -1,8 +1,10 @@
+export 'authentication/widgetes.dart';
 export 'colors_slide/widgets.dart';
 export 'dino_dash/widgets.dart';
 export 'el_word/widgets.dart';
 export 'minesweeper/widgets.dart';
 export 'numbers_and_draggin/widgets.dart';
+export 'profile/widgets.dart';
 export 'puzzles_and_draggin/widgets.dart';
 export 'slide_to_slide/widgets.dart';
 export 'snake/widgets.dart';
@@ -12,6 +14,7 @@ export 'tappy_bird/widgets.dart';
 export 'tic_tac_toe/widgets.dart';
 export 'action_link.dart';
 export 'coming_soon.dart';
+export 'custom_center.dart';
 export 'custom_text_form_field.dart';
 export 'game_button.dart';
 export 'games_drawer.dart';

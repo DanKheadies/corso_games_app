@@ -1,20 +1,12 @@
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class MinesweeperScreen extends StatefulWidget {
-  static const String routeName = '/minesweeper';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const MinesweeperScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const MinesweeperScreen({Key? key}) : super(key: key);
+  const MinesweeperScreen({super.key});
 
   @override
   State<MinesweeperScreen> createState() => _MinesweeperScreenState();
@@ -26,76 +18,9 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      title: 'Minesweeper',
-      infoTitle: 'Minesweeper',
-      infoDetails: 'Press to pop a mine. Long press to set a flag.',
-      backgroundOverride:
+      screen: 'Minesweeper',
+      backgroundColor:
           Theme.of(context).colorScheme.background.withOpacity(0.825),
-      content: BlocBuilder<MinesweeperBloc, MinesweeperState>(
-        builder: (context, state) {
-          // Reset on difficulty change
-          // if (state.resetMinesweeper) {
-          //   // cont.restart(
-          //   //   context,
-          //   //   state.size,
-          //   //   state.pieces,
-          //   //   state.indexMap,
-          //   // );
-          //   context.read<ColorsSlideBloc>().add(
-          //         ToggleColorsSlideReset(),
-          //       );
-          // }
-
-          if (state.mineStatus != MinesweeperStatus.error) {
-            return MinesweeperGame(
-              resetMinesweeper: state.resetMinesweeper,
-              showMineTimer: state.showMineTimer,
-              mineDifficulty: state.mineDifficulty,
-              mineTimerSeconds: state.mineTimerSeconds,
-              mineTimerPauseSeconds: state.mineTimerPauseSeconds,
-              mineTimerStatus: state.mineTimerStatus,
-              bombProbability: state.bombProbability,
-              maxProbability: state.maxProbability,
-              bombCount: state.bombCount,
-              squaresLeft: state.squaresLeft,
-              board: state.mineBoard,
-              openedSquares: state.openedSquares,
-              flaggedSquares: state.flaggedSquares,
-            );
-          } else {
-            return const Center(
-              child: Text('Something went wrong.'),
-            );
-          }
-        },
-      ),
-      screenFunction: (String string) {
-        if (string == 'drawerOpen') {
-          // setState(() {
-          //   timerStatus = 'pause';
-          // });
-          // context.read<MinesweeperBloc>().add(
-          //       UpdateMinesweeperTimer(
-          //         mineTimerSeconds: mineTimerSeconds,
-          //         mineTimerPauseSeconds: mineTimerPauseSeconds,
-          //         mineTimerStatus: mineTimerStatus,
-          //       ),
-          //     );
-        } else if (string == 'drawerClose') {
-          // setState(() {
-          //   timerStatus = 'resume';
-          // });
-        } else if (string == 'drawerNavigate') {
-          // setState(() {
-          //   timerStatus = 'stop';
-          // });
-        }
-        // Timer(const Duration(milliseconds: 100), () {
-        //   setState(() {
-        //     timerStatus = '';
-        //   });
-        // });
-      },
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
         elevation: 0,
@@ -107,8 +32,6 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
             BlocBuilder<MinesweeperBloc, MinesweeperState>(
               builder: (context, state) {
                 if (state.mineStatus != MinesweeperStatus.error) {
-                  // print('bloc builder in ms settings icon');
-                  // print(state.mineTimerStatus);
                   return IconButton(
                     tooltip: 'Settings',
                     icon: Icon(
@@ -117,10 +40,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                       size: 30,
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        MSSettingsScreen.routeName,
-                      );
+                      context.goNamed('minesweeperSettings');
                     },
                   );
                 } else {
@@ -203,6 +123,73 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
             ),
           ],
         ),
+      ),
+      infoTitle: 'Minesweeper',
+      infoDetails: 'Press to pop a mine. Long press to set a flag.',
+      screenFunction: (String string) {
+        if (string == 'drawerOpen') {
+          // setState(() {
+          //   timerStatus = 'pause';
+          // });
+          // context.read<MinesweeperBloc>().add(
+          //       UpdateMinesweeperTimer(
+          //         mineTimerSeconds: mineTimerSeconds,
+          //         mineTimerPauseSeconds: mineTimerPauseSeconds,
+          //         mineTimerStatus: mineTimerStatus,
+          //       ),
+          //     );
+        } else if (string == 'drawerClose') {
+          // setState(() {
+          //   timerStatus = 'resume';
+          // });
+        } else if (string == 'drawerNavigate') {
+          // setState(() {
+          //   timerStatus = 'stop';
+          // });
+        }
+        // Timer(const Duration(milliseconds: 100), () {
+        //   setState(() {
+        //     timerStatus = '';
+        //   });
+        // });
+      },
+      child: BlocBuilder<MinesweeperBloc, MinesweeperState>(
+        builder: (context, state) {
+          // Reset on difficulty change
+          // if (state.resetMinesweeper) {
+          //   // cont.restart(
+          //   //   context,
+          //   //   state.size,
+          //   //   state.pieces,
+          //   //   state.indexMap,
+          //   // );
+          //   context.read<ColorsSlideBloc>().add(
+          //         ToggleColorsSlideReset(),
+          //       );
+          // }
+
+          if (state.mineStatus != MinesweeperStatus.error) {
+            return MinesweeperGame(
+              resetMinesweeper: state.resetMinesweeper,
+              showMineTimer: state.showMineTimer,
+              mineDifficulty: state.mineDifficulty,
+              mineTimerSeconds: state.mineTimerSeconds,
+              mineTimerPauseSeconds: state.mineTimerPauseSeconds,
+              mineTimerStatus: state.mineTimerStatus,
+              bombProbability: state.bombProbability,
+              maxProbability: state.maxProbability,
+              bombCount: state.bombCount,
+              squaresLeft: state.squaresLeft,
+              board: state.mineBoard,
+              openedSquares: state.openedSquares,
+              flaggedSquares: state.flaggedSquares,
+            );
+          } else {
+            return const Center(
+              child: Text('Something went wrong.'),
+            );
+          }
+        },
       ),
     );
   }

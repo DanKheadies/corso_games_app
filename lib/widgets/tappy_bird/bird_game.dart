@@ -83,6 +83,11 @@ class _BirdGameState extends State<BirdGame> {
     barrierX = initBarrierX;
     barrierHeight = initBarrierHeight;
     birdInitialPos = birdY;
+
+    tapTimer = Timer(
+      Duration.zero,
+      () {},
+    );
   }
 
   bool isBirdDead() {
@@ -185,11 +190,9 @@ class _BirdGameState extends State<BirdGame> {
   }
 
   void initializeTimer() {
-    // print('init timer');
     tapTimer = Timer.periodic(
       const Duration(milliseconds: 10),
       (timer) {
-        // print('run timer: ${timer.tick}');
         height = gravity * (time * time) + velocity * time;
 
         setState(() {
@@ -218,7 +221,6 @@ class _BirdGameState extends State<BirdGame> {
   }
 
   void cancelTimer() {
-    // print('cancel timer');
     tapTimer.cancel();
   }
 
@@ -231,13 +233,11 @@ class _BirdGameState extends State<BirdGame> {
   @override
   Widget build(BuildContext context) {
     if (widget.pauseGame && !isPaused) {
-      // print('pause');
       tapTimer.cancel();
       setState(() {
         isPaused = !isPaused;
       });
     } else if (!widget.pauseGame && isPaused) {
-      // print('unpause');
       initializeTimer();
       setState(() {
         isPaused = !isPaused;
@@ -245,11 +245,9 @@ class _BirdGameState extends State<BirdGame> {
     }
 
     if (widget.isLeaving) {
-      // print('game leaving');
       cancelTimer();
     }
 
-    // print('build game: $time');
     return GestureDetector(
       onTap: hasGameStarted ? jump : startGame,
       child: Column(

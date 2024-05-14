@@ -5,15 +5,7 @@ import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class NumbersAndDragginScreen extends StatefulWidget {
-  static const String routeName = '/numbers-and-draggin';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const NumbersAndDragginScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const NumbersAndDragginScreen({Key? key}) : super(key: key);
+  const NumbersAndDragginScreen({super.key});
 
   @override
   State<NumbersAndDragginScreen> createState() =>
@@ -105,30 +97,7 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
         (screenWidth - boardPad * 2) / columns; // for 6 squares w/out padding
 
     return ScreenWrapper(
-      title: 'NAD',
-      infoTitle: 'Numbers And Draggin',
-      infoDetails:
-          'Drag the green cricle to order the numbers from lowest to highest (left to right, then top down).',
-      button: 'Leggooo!',
-      backgroundOverride: Colors.transparent,
-      content: Padding(
-        padding: EdgeInsets.only(
-          top: Responsive.isMobile(context) || Responsive.isTablet(context)
-              ? size.height / 6
-              : (size.height - 800) / 2,
-          left: Responsive.isMobile(context) || Responsive.isTablet(context)
-              ? 0
-              : (size.width - 800) / 2,
-        ),
-        child: SizedBox(
-          child: _buildGameGrid(
-            screenWidth,
-            squareSize,
-            resetGrid,
-          ),
-        ),
-      ),
-      screenFunction: (String string) {},
+      screen: 'NAD',
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
         elevation: 0,
@@ -161,7 +130,8 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
           ],
         ),
       ),
-      floatingButton: FloatingActionButton(
+      button: 'Leggooo!',
+      flactionButton: FloatingActionButton(
         onPressed: resetGameBoard,
         tooltip: 'Reset',
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -175,7 +145,28 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
           onPressed: resetGameBoard,
         ),
       ),
-      floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
+      flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
+      infoTitle: 'Numbers And Draggin',
+      infoDetails:
+          'Drag the green cricle to order the numbers from lowest to highest (left to right, then top down).',
+      screenFunction: (_) {},
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: Responsive.isMobile(context) || Responsive.isTablet(context)
+              ? size.height / 6
+              : (size.height - 800) / 2,
+          left: Responsive.isMobile(context) || Responsive.isTablet(context)
+              ? 0
+              : (size.width - 800) / 2,
+        ),
+        child: SizedBox(
+          child: _buildGameGrid(
+            screenWidth,
+            squareSize,
+            resetGrid,
+          ),
+        ),
+      ),
     );
   }
 }

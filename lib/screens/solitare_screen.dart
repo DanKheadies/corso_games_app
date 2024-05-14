@@ -4,14 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SolitareScreen extends StatefulWidget {
-  static const String routeName = '/solitare';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const SolitareScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
   const SolitareScreen({super.key});
 
   @override
@@ -22,13 +14,67 @@ class _SolitareScreenState extends State<SolitareScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      title: 'Solitare',
+      screen: 'Solitare',
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      bottomBar: BottomAppBar(
+        color: Theme.of(context).colorScheme.secondary,
+        elevation: 0,
+        height: 45,
+        padding: EdgeInsets.zero,
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              tooltip: 'Settings',
+              icon: Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              tooltip: 'Share',
+              icon: Icon(
+                Icons.ios_share_outlined,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      button: 'Leggooo!',
+      flactionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<SolitareBloc>().add(
+                ToggleSolitareReset(),
+              );
+        },
+        tooltip: 'Reset',
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const CircleBorder(),
+        child: IconButton(
+          icon: Icon(
+            Icons.settings_backup_restore_rounded,
+            color: Theme.of(context).colorScheme.background,
+            size: 30,
+          ),
+          onPressed: () {
+            context.read<SolitareBloc>().add(
+                  ToggleSolitareReset(),
+                );
+          },
+        ),
+      ),
+      flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
       infoTitle: 'Solitare',
       infoDetails:
           'Stack cards sequentially in their suit. You can reveal new cards by moving opposite colored cards onto cards that are one higher than their own value, e.g. a red six can be placed on a black seven.',
-      button: 'Leggooo!',
-      backgroundOverride: Theme.of(context).colorScheme.tertiary,
-      content: BlocBuilder<SolitareBloc, SolitareState>(
+      screenFunction: (_) {},
+      child: BlocBuilder<SolitareBloc, SolitareState>(
         builder: (context, state) {
           if (state.solitareStatus == SolitareStatus.loading) {
             return const Center(
@@ -60,61 +106,6 @@ class _SolitareScreenState extends State<SolitareScreen> {
           }
         },
       ),
-      screenFunction: (String string) {},
-      // bottomBar: const BottomAppBar(),
-      bottomBar: BottomAppBar(
-        color: Theme.of(context).colorScheme.secondary,
-        elevation: 0,
-        height: 45,
-        padding: EdgeInsets.zero,
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              tooltip: 'Settings',
-              icon: Icon(
-                Icons.settings,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 30,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              tooltip: 'Share',
-              icon: Icon(
-                Icons.ios_share_outlined,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 30,
-              ),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
-      floatingButton: FloatingActionButton(
-        onPressed: () {
-          context.read<SolitareBloc>().add(
-                ToggleSolitareReset(),
-              );
-        },
-        tooltip: 'Reset',
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        shape: const CircleBorder(),
-        child: IconButton(
-          icon: Icon(
-            Icons.settings_backup_restore_rounded,
-            color: Theme.of(context).colorScheme.background,
-            size: 30,
-          ),
-          onPressed: () {
-            context.read<SolitareBloc>().add(
-                  ToggleSolitareReset(),
-                );
-          },
-        ),
-      ),
-      floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -3,20 +3,19 @@ import 'dart:async';
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
-import 'package:corso_games_app/screens/screens.dart';
+// import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  static const String routeName = '/welcome';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const WelcomeScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
+enum AuthMethod {
+  login,
+  register,
+  tbd,
+}
 
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
   @override
@@ -25,186 +24,333 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-  bool _contentVisible = false;
+  AuthMethod method = AuthMethod.tbd;
+  bool contentVisible = false;
+  bool imageLinkVisible = false;
 
-  late AnimationController _controller;
-  late Timer _showContentTimer;
+  late AnimationController controller;
+  late Timer showContentTimer;
+  late Timer showImageLinkTimer;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
+    controller = AnimationController(
       duration: const Duration(
         seconds: 2,
       ),
       vsync: this,
     );
 
-    _showContentTimer = Timer(
+    showContentTimer = Timer(
       const Duration(milliseconds: 600),
       showContent,
     );
 
-    _controller.forward();
+    controller.forward();
 
-    _controller.addListener(() {
+    controller.addListener(() {
       setState(() {});
     });
 
-    _showContentTimer;
+    showContentTimer;
   }
 
   void showContent() {
-    if (!_contentVisible) {
+    int duration = 300;
+    if (!contentVisible) {
+      duration = 0;
       setState(() {
-        _contentVisible = true;
+        contentVisible = true;
       });
     }
+    if (!imageLinkVisible) {
+      showImageLinkTimer = Timer(
+        Duration(milliseconds: duration),
+        () => setState(() {
+          imageLinkVisible = true;
+        }),
+      );
+    }
+  }
+
+  Future<void> handleError(
+    AuthState state,
+    BuildContext context,
+  ) async {
+    var authCont = context.read<AuthBloc>();
+    var scaffCont = ScaffoldMessenger.of(context);
+
+    String errorMsg = state.errorMessage!
+        .replaceAll('Exception: ', '')
+        .replaceAll(RegExp('\\[.*?\\]'), '')
+        .replaceFirst(' ', '');
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    scaffCont
+      ..removeCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(errorMsg),
+        ),
+      );
+
+    authCont.add(
+      ResetError(),
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
-    _showContentTimer.cancel();
+    controller.dispose();
+    showContentTimer.cancel();
+    showImageLinkTimer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listenWhen: (previous, current) => previous.status != current.status,
-      // listenWhen: (previous, current) => previous.status != current.status ||
-      // (previous.status == AuthStatus.authenticated && current.status == AuthStatus.unauthenticated)
-      listener: (context, state) {
-        // print('welcome listener triggered');
-        if (state.authUser != null &&
-            state.status == AuthStatus.authenticated) {
-          // print('welcome is authUser & auth\'d so push');
+    Size screenSize = MediaQuery.of(context).size;
 
-          if (state.user!.lastLogin != '') {
-            context.read<LoginCubit>().updateLogin(
-                  user: state.user!,
-                );
-          }
-
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            GamesScreen.routeName,
-            (route) => false,
-          );
-        }
-      },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: AnimatedOpacity(
-          opacity: _contentVisible ? 1 : 0,
-          duration: const Duration(
-            milliseconds: 1000,
+    return ScreenWrapper(
+      screen: method == AuthMethod.login
+          ? 'Login'
+          : method == AuthMethod.register
+              ? 'Register'
+              : 'CruiseCalls',
+      actions: [
+        IconButton(
+          icon: Icon(
+            context.read<BrightnessCubit>().state == Brightness.dark
+                ? Icons.dark_mode
+                : Icons.light_mode,
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                BlocBuilder<BrightnessCubit, Brightness>(
-                  builder: (context, state) {
-                    return SizedBox(
-                      width: Responsive.isMobile(context) ||
-                              Responsive.isTablet(context)
-                          ? double.infinity
-                          : 800,
-                      child: Image.asset(
-                        state == Brightness.dark
-                            ? 'assets/images/main/corso-games-2.png'
-                            : 'assets/images/main/corso-games-1.png',
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
+          onPressed: () {
+            context.read<BrightnessCubit>().toggleBrightness();
+          },
+        ),
+      ],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      bottomBar: const SizedBox(),
+      button: 'GG',
+      hasAppBar: method == AuthMethod.tbd ? false : true,
+      hasDrawer: false,
+      useSingleScroll: true,
+      flactionButton: method != AuthMethod.tbd
+          ? GameButton(
+              isIconic: false,
+              icon: Icons.arrow_back,
+              title: '',
+              onPress: () {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                showContent();
+                setState(() {
+                  method = AuthMethod.tbd;
+                });
+              },
+            )
+          : null,
+      infoTitle: 'Corso Games',
+      infoDetails:
+          'Welcome to Corso Games. Login or sign up to play. Have a request? Reach out to us at support@holisticgaming.com.',
+      screenFunction: (_) {},
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state.status == AuthStatus.submitting) {
+            return CustomCenter(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
+            );
+          } else if (state.status == AuthStatus.authenticated) {
+            return CustomCenter(
+              child: GestureDetector(
+                onLongPress: () {
+                  context.read<AuthBloc>().add(
+                        SignOut(),
+                      );
+                },
+                child: Icon(
+                  Icons.thumb_up_alt_outlined,
+                  color: method != AuthMethod.tbd
+                      ? Theme.of(context).colorScheme.surface
+                      : Theme.of(context).colorScheme.surfaceVariant,
+                  size: 50,
                 ),
-                const SizedBox(width: double.infinity),
-                Column(
-                  children: [
-                    GameButton(
-                      isIconic: false,
-                      icon: Icons.login,
-                      title: 'Log In',
-                      onPress: () => Navigator.of(context)
-                          .pushNamed(LoginScreen.routeName),
+              ),
+            );
+          } else {
+            // TODO: this spams if email in use (i.e. doesn't get cleared)
+            if (state.errorMessage != '' && state.errorMessage != null) {
+              handleError(state, context);
+            }
+
+            if (method == AuthMethod.tbd) {
+              return SizedBox(
+                height: screenSize.height,
+                width: screenSize.width,
+                child: GestureDetector(
+                  onTap: () {
+                    showContentTimer.cancel();
+
+                    setState(() {
+                      contentVisible = true;
+                    });
+                  },
+                  child: AnimatedOpacity(
+                    opacity: contentVisible ? 1 : 0,
+                    duration: const Duration(
+                      milliseconds: 1000,
                     ),
-                    const SizedBox(height: 35),
-                    GameButton(
-                      isIconic: false,
-                      icon: Icons.app_registration_rounded,
-                      title: 'Sign Up',
-                      onPress: () => Navigator.of(context)
-                          .pushNamed(RegistrationScreen.routeName),
-                    ),
-                    const SizedBox(height: 45),
-                    BlocBuilder<SignUpCubit, SignUpState>(
-                      builder: (context, state) {
-                        if (state.status == SignUpStatus.initial) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                            ),
-                            child: ActionLink(
-                              text: 'Maybe Later',
-                              resetLink: false,
-                              isDisable: false,
-                              onTap: () {
-                                context.read<SignUpCubit>().signUpAnonymously();
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 25,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(),
+                          AnimatedOpacity(
+                            opacity: imageLinkVisible ? 1 : 0,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeIn,
+                            child: BlocBuilder<BrightnessCubit, Brightness>(
+                              builder: (context, state) {
+                                return SizedBox(
+                                  width: Responsive.isMobile(context) ||
+                                          Responsive.isTablet(context)
+                                      ? double.infinity
+                                      : screenSize.height / 1.5,
+                                  child: Image.asset(
+                                    state == Brightness.dark
+                                        ? 'assets/images/main/corso-games-2.png'
+                                        : 'assets/images/main/corso-games-1.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
                               },
                             ),
-                          );
-                        }
-                        if (state.status == SignUpStatus.submitting) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 2,
-                            ),
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).colorScheme.tertiary,
-                            ),
-                          );
-                        }
-                        if (state.status == SignUpStatus.success) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                            ),
-                            child: Text(
-                              'Succes! Try closing and re-opening the app.',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.tertiary,
+                          ),
+                          const SizedBox(width: double.infinity),
+                          Column(
+                            children: [
+                              GameButton(
+                                isIconic: false,
+                                icon: Icons.login,
+                                title: 'Log In',
+                                onPress: showContentTimer.isActive
+                                    ? () {}
+                                    : () {
+                                        setState(() {
+                                          imageLinkVisible = false;
+                                          method = AuthMethod.login;
+                                        });
+                                      },
                               ),
-                            ),
-                          );
-                        } else {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                            ),
-                            child: Text(
-                              'Something went wrong.',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.tertiary,
+                              const SizedBox(height: 35),
+                              GameButton(
+                                isIconic: false,
+                                icon: Icons.app_registration_rounded,
+                                title: 'Sign Up',
+                                onPress: showContentTimer.isActive
+                                    ? () {}
+                                    : () {
+                                        setState(() {
+                                          imageLinkVisible = false;
+                                          method = AuthMethod.register;
+                                        });
+                                      },
                               ),
-                            ),
-                          );
-                        }
-                      },
+                              const SizedBox(height: 45),
+                              AnimatedOpacity(
+                                opacity: imageLinkVisible ? 1 : 0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeIn,
+                                child: BlocBuilder<AuthBloc, AuthState>(
+                                  builder: (context, state) {
+                                    if (state.status ==
+                                            AuthStatus.unauthenticated ||
+                                        state.status == AuthStatus.unknown) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
+                                        child: ActionLink(
+                                          text: 'Maybe Later',
+                                          resetLink: false,
+                                          isDisable: false,
+                                          onTap: () {
+                                            context.read<AuthBloc>().add(
+                                                  const RegisterAnonymously(),
+                                                );
+                                          },
+                                        ),
+                                      );
+                                    }
+                                    if (state.status == AuthStatus.submitting) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 2,
+                                        ),
+                                        child: CircularProgressIndicator(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                        ),
+                                      );
+                                    }
+                                    if (state.status ==
+                                        AuthStatus.authenticated) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
+                                        child: Text(
+                                          'Succes! Try closing and re-opening the app.',
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
+                                        child: Text(
+                                          'Something went wrong.',
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 25),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 25),
-                  ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              );
+            } else {
+              return AuthenticationWidget(
+                isRegister: method == AuthMethod.register ? true : false,
+              );
+            }
+          }
+        },
       ),
     );
   }

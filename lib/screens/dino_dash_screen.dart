@@ -5,23 +5,14 @@ import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DinoRunScreen extends StatefulWidget {
-  // static const String id = 'dino-dash';
-  static const String routeName = '/dino-dash';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const DinoRunScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const DinoRunScreen({Key? key}) : super(key: key);
+class DinoDashScreen extends StatefulWidget {
+  const DinoDashScreen({super.key});
 
   @override
-  State<DinoRunScreen> createState() => _DinoRunScreenState();
+  State<DinoDashScreen> createState() => _DinoDashScreenState();
 }
 
-class _DinoRunScreenState extends State<DinoRunScreen>
+class _DinoDashScreenState extends State<DinoDashScreen>
     with SingleTickerProviderStateMixin {
   Dino dino = Dino();
   double deathCounter = 0;
@@ -262,28 +253,7 @@ class _DinoRunScreenState extends State<DinoRunScreen>
           startTimer(context, state);
         }
         return ScreenWrapper(
-          title: 'Dino Dash',
-          infoTitle: 'Dino Dash',
-          infoDetails:
-              'Run for your life! If you die, you may come back. Or go to Heaven. Or to Hell.. Or the mantle?.. Don\'t die!',
-          backgroundOverride: Colors.transparent,
-          content: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => dino.jump(),
-            child: Stack(
-              alignment: Alignment.center,
-              children: children,
-            ),
-          ),
-          screenFunction: (String string) {
-            if (string == 'drawerOpen') {
-              stopTimer(context);
-              worldController.stop();
-            } else if (string == 'drawerClose') {
-              startTimer(context, state);
-              worldController.repeat();
-            }
-          },
+          screen: 'Dino Dash',
           bottomBar: BottomAppBar(
             color: Theme.of(context).colorScheme.secondary,
             elevation: 0,
@@ -291,31 +261,8 @@ class _DinoRunScreenState extends State<DinoRunScreen>
             padding: EdgeInsets.zero,
             shape: const CircularNotchedRectangle(),
             child: const SizedBox(),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: [
-            //     IconButton(
-            //       tooltip: 'Settings',
-            //       icon: Icon(
-            //         Icons.settings,
-            //         color: Theme.of(context).colorScheme.secondary,
-            //         size: 30,
-            //       ),
-            //       onPressed: null,
-            //     ),
-            //     IconButton(
-            //       tooltip: 'Share',
-            //       icon: Icon(
-            //         Icons.ios_share_outlined,
-            //         color: Theme.of(context).colorScheme.secondary,
-            //         size: 30,
-            //       ),
-            //       onPressed: null,
-            //     ),
-            //   ],
-            // ),
           ),
-          floatingButton: FloatingActionButton(
+          flactionButton: FloatingActionButton(
             onPressed: () {
               restartTimer(context);
               reset();
@@ -335,7 +282,27 @@ class _DinoRunScreenState extends State<DinoRunScreen>
               },
             ),
           ),
-          floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
+          flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
+          infoTitle: 'Dino Dash',
+          infoDetails:
+              'Run for your life! If you die, you may come back. Or go to Heaven. Or to Hell.. Or the mantle?.. Don\'t die!',
+          screenFunction: (String string) {
+            if (string == 'drawerOpen') {
+              stopTimer(context);
+              worldController.stop();
+            } else if (string == 'drawerClose') {
+              startTimer(context, state);
+              worldController.repeat();
+            }
+          },
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => dino.jump(),
+            child: Stack(
+              alignment: Alignment.center,
+              children: children,
+            ),
+          ),
         );
       },
     );

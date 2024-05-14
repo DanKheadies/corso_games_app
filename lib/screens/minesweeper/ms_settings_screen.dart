@@ -5,17 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class MSSettingsScreen extends StatefulWidget {
-  static const String routeName = '/minesweeper-settings';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const MSSettingsScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const MSSettingsScreen({
-    Key? key,
-  }) : super(key: key);
+  const MSSettingsScreen({super.key});
 
   @override
   State<MSSettingsScreen> createState() => _MSSettingsScreenState();
@@ -35,31 +25,17 @@ class _MSSettingsScreenState extends State<MSSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text(
-          'MS Settings',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.background,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => showScreenInfo(
-              context,
-              'Settings',
-              'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
-              false,
-              TextAlign.left,
-              'GLHF',
-            ),
-          )
-        ],
-      ),
-      body: BlocBuilder<MinesweeperBloc, MinesweeperState>(
+    return ScreenWrapper(
+      screen: 'Minesweeper Settings',
+      bottomBar: const SizedBox(),
+      hasAppBar: true,
+      hasDrawer: false,
+      infoTitle: 'MS Settings',
+      infoDetails:
+          'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
+      screenFunction: (_) {},
+      nav: 'minesweeper',
+      child: BlocBuilder<MinesweeperBloc, MinesweeperState>(
         builder: (context, state) {
           if (state.mineStatus != MinesweeperStatus.error) {
             return Center(

@@ -7,14 +7,14 @@ Good luck, have fun!
 
 
 Promotional:
-The 2.0.2 release of "Corso Games."
-We've added games, themes, cleaned up some of the general interaction and memory to make the games more fun and funtastic. Enjoy!
+The 2.1.0 release of "Corso Games."
+We've cleaned house and given the app some new infrastructure. Stay tuned for more fun and games coming soon..
 
 
 What's New:
-Check out Numbers and Draggin! We've also optimized the general Puzzles and Draggin interaction. Enjoy!
+Internals and a few externals. More coming soon.
 
 
 Release notes
-16 (2.0.3)
-Enjoy Tappy Bird and the general house cleaning!
+17 (2.1.0)
+Good luck, have fun!

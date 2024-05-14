@@ -1,42 +1,71 @@
 part of 'auth_bloc.dart';
 
 enum AuthStatus {
-  unknown,
   authenticated,
+  submitting,
   unauthenticated,
+  unknown,
+}
+
+enum ResetStatus {
+  error,
+  initial,
+  loaded,
+  loading,
 }
 
 class AuthState extends Equatable {
-  final AuthStatus status;
   final auth.User? authUser;
-  final User? user;
+  final AuthStatus status;
+  final ResetStatus resetStatus;
+  final String? errorMessage;
 
-  const AuthState._({
-    this.status = AuthStatus.unknown,
+  const AuthState({
     this.authUser,
-    this.user,
+    this.errorMessage,
+    this.resetStatus = ResetStatus.initial,
+    this.status = AuthStatus.unknown,
   });
-
-  const AuthState.unknown() : this._();
-
-  const AuthState.authenticated({
-    required auth.User authUser,
-    required User user,
-  }) : this._(
-          status: AuthStatus.authenticated,
-          authUser: authUser,
-          user: user,
-        );
-
-  const AuthState.unauthenticated()
-      : this._(
-          status: AuthStatus.unauthenticated,
-        );
 
   @override
   List<Object?> get props => [
-        status,
         authUser,
-        user,
+        errorMessage,
+        resetStatus,
+        status,
       ];
+
+  AuthState copyWith({
+    auth.User? authUser,
+    AuthStatus? status,
+    ResetStatus? resetStatus,
+    String? errorMessage,
+  }) {
+    return AuthState(
+      authUser: authUser ?? this.authUser,
+      errorMessage: errorMessage ?? this.errorMessage,
+      resetStatus: resetStatus ?? this.resetStatus,
+      status: status ?? this.status,
+    );
+  }
+
+  factory AuthState.fromJson(Map<String, dynamic> json) {
+    return AuthState(
+      errorMessage: json['errorMessage'],
+      resetStatus: ResetStatus.values.firstWhere(
+        (status) => status.name.toString() == json['resetStatus'],
+      ),
+      status: AuthStatus.values.firstWhere(
+        (status) => status.name.toString() == json['status'],
+      ),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'errorMessage': errorMessage,
+      'resetStatus': resetStatus.name,
+      'status': status.name,
+    };
+  }
 }

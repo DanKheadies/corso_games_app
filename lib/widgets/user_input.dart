@@ -14,7 +14,7 @@ class UserInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCubit, SignUpState>(
+    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
       builder: (context, state) {
         return TextField(
           onChanged: onChanged,

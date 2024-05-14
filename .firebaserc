@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "corso-games-app"
-  }
+    "default": "corso-games-app",
+    "deployment": "corso-games-app"
+  },
+  "targets": {},
+  "etags": {}
 }

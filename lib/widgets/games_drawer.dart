@@ -1,7 +1,7 @@
 import 'package:corso_games_app/cubits/cubits.dart';
-import 'package:corso_games_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class GamesDrawer extends StatefulWidget {
   const GamesDrawer({
@@ -40,10 +40,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
           GestureDetector(
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                GamesScreen.routeName,
-              );
+              context.goNamed('games');
             },
             child: BlocBuilder<BrightnessCubit, Brightness>(
               builder: (context, state) {
@@ -52,6 +49,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
                     bottom: 10,
                     top: 40,
                   ),
+                  height: 225,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
                   ),
@@ -63,54 +61,9 @@ class _GamesDrawerState extends State<GamesDrawer> {
                     ),
                   ),
                 );
-                // return DrawerHeader(
-                //   margin: const EdgeInsets.only(
-                //     bottom: 10,
-                //     top: 35,
-                //   ),
-                //   decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //       image: state == Brightness.dark
-                //           ? const AssetImage(
-                //               'assets/images/main/corso-games-2.png')
-                //           : const AssetImage(
-                //               'assets/images/main/corso-games-1.png'),
-                //       fit: BoxFit.contain,
-                //     ),
-                //   ),
-                //   child: const SizedBox(),
-                // );
               },
             ),
           ),
-          // Image(
-          //   image: const AssetImage('assets/images/main/corso-games-2.png'),
-          //   fit: BoxFit.contain,
-          // ),
-          // const SizedBox(height: 10),
-          // BlocBuilder<BrightnessCubit, Brightness>(
-          //   builder: (context, state) {
-          //     return Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         InkWell(
-          //           borderRadius: BorderRadius.circular(50),
-          //           child: Icon(
-          //             state == Brightness.dark
-          //                 ? Icons.dark_mode
-          //                 : Icons.light_mode,
-          //             size: 45,
-          //             color: Theme.of(context).colorScheme.primary,
-          //           ),
-          //           onTap: () {
-          //             context.read<BrightnessCubit>().toggleBrightness();
-          //           },
-          //         ),
-          //       ],
-          //     );
-          //   },
-          // ),
-          // const SizedBox(height: 10),
           ListTile(
             title: Text(
               'Colors Slide',
@@ -125,10 +78,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                ColorsSlideScreen.routeName,
-              );
+              context.goNamed('colorsSlide');
             },
           ),
           ListTile(
@@ -145,10 +95,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                DinoRunScreen.routeName,
-              );
+              context.goNamed('dinoDash');
             },
           ),
           ListTile(
@@ -165,10 +112,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                ElWordScreen.routeName,
-              );
+              context.goNamed('elWord');
             },
           ),
           ListTile(
@@ -185,10 +129,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                MinesweeperScreen.routeName,
-              );
+              context.goNamed('minesweeper');
             },
           ),
           ListTile(
@@ -205,10 +146,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                NumbersAndDragginScreen.routeName,
-              );
+              context.goNamed('numbersAndDraggin');
             },
           ),
           ListTile(
@@ -225,10 +163,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                PuzzlesAndDragginScreen.routeName,
-              );
+              context.goNamed('puzzlesAndDraggin');
             },
           ),
           ListTile(
@@ -245,10 +180,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                SlideToSlideScreen.routeName,
-              );
+              context.goNamed('slideToSlide');
             },
           ),
           ListTile(
@@ -265,9 +197,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.of(context).pushNamed(
-                SnakeScreen.routeName,
-              );
+              context.goNamed('snake');
             },
           ),
           ListTile(
@@ -284,10 +214,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                SolitareScreen.routeName,
-              );
+              context.goNamed('solitare');
             },
           ),
           ListTile(
@@ -304,10 +231,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.pushNamed(
-                context,
-                SoloNobleScreen.routeName,
-              );
+              context.goNamed('soloNoble');
             },
           ),
           ListTile(
@@ -324,9 +248,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.of(context).pushNamed(
-                TappyBirdScreen.routeName,
-              );
+              context.goNamed('tappyBird');
             },
           ),
           ListTile(
@@ -343,9 +265,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
             ),
             onTap: () {
               widget.handler('drawerNavigate');
-              Navigator.of(context).pushNamed(
-                TicTacToeScreen.routeName,
-              );
+              context.goNamed('ticTacToe');
             },
           ),
           const SizedBox(height: 25),
@@ -362,9 +282,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {
-              Navigator.of(context).pushNamed(
-                ProfileScreen.routeName,
-              );
+              context.goNamed('profile');
             },
           ),
           // const SizedBox(height: 15),

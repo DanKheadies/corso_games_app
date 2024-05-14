@@ -1,20 +1,12 @@
 import 'dart:async';
 
 import 'package:corso_games_app/cubits/cubits.dart';
-import 'package:corso_games_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const String routeName = '/';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const SplashScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -44,10 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     timer = Timer(
       const Duration(seconds: 4),
-      () => Navigator.pushNamed(
-        context,
-        WelcomeScreen.routeName,
-      ),
+      () => context.goNamed('welcome'),
     );
   }
 
@@ -65,10 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: InkWell(
         onTap: () {
           timer.cancel();
-          Navigator.pushNamed(
-            context,
-            WelcomeScreen.routeName,
-          );
+          context.goNamed('welcome');
         },
         child: Center(
           child: ScaleTransition(

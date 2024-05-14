@@ -93,11 +93,11 @@ class _ColorsGameBoardState extends State<ColorsGameBoard> {
               width:
                   Responsive.isMobile(context) || Responsive.isTablet(context)
                       ? root
-                      : 800,
+                      : 750,
               height:
                   Responsive.isMobile(context) || Responsive.isTablet(context)
                       ? root
-                      : 800,
+                      : 750,
               child: Stack(
                 key: UniqueKey(),
                 children: widget.pieces,

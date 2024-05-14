@@ -9,16 +9,72 @@ abstract class AuthEvent extends Equatable {
 
 class AuthUserChanged extends AuthEvent {
   final auth.User? authUser;
-  final User? user;
 
   const AuthUserChanged({
     required this.authUser,
-    this.user,
   });
 
   @override
   List<Object?> get props => [
         authUser,
-        user,
       ];
 }
+
+class LoginWithEmailAndPassword extends AuthEvent {
+  final String email;
+  final String password;
+
+  const LoginWithEmailAndPassword({
+    required this.email,
+    required this.password,
+  });
+
+  @override
+  List<Object?> get props => [
+        email,
+        password,
+      ];
+}
+
+class RegisterAnonymously extends AuthEvent {
+  const RegisterAnonymously();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class RegisterWithEmailAndPassword extends AuthEvent {
+  final String email;
+  final String name;
+  final String password;
+
+  const RegisterWithEmailAndPassword({
+    required this.email,
+    required this.name,
+    required this.password,
+  });
+
+  @override
+  List<Object?> get props => [
+        email,
+        name,
+        password,
+      ];
+}
+
+class ResetError extends AuthEvent {}
+
+class ResetPassword extends AuthEvent {
+  final String email;
+
+  const ResetPassword({
+    required this.email,
+  });
+
+  @override
+  List<Object?> get props => [
+        email,
+      ];
+}
+
+class SignOut extends AuthEvent {}

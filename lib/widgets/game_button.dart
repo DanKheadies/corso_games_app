@@ -16,7 +16,7 @@ class GameButton extends StatefulWidget {
   final bool isIconic;
   final IconData icon;
   final String title;
-  final Function() onPress;
+  final Function()? onPress;
 
   @override
   State<GameButton> createState() => _GameButtonState();
@@ -140,7 +140,7 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
               onPressed: () {
                 Timer(
                   const Duration(milliseconds: 200),
-                  () => widget.onPress(),
+                  widget.onPress != null ? () => widget.onPress!() : () {},
                 );
               },
               child: widget.isIconic

@@ -1,133 +1,109 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  final String? id;
-  final String fullName;
-  final String email;
-  final String phone;
-  final String city;
-  final String country;
-  final String createdOn;
-  final String lastLogin;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
   final String deviceOS;
   final String deviceType;
-  final String notificationToken;
-  final bool isSubscribedToNotifications;
+  final String email;
+  final String id;
+  final String name;
 
   const User({
-    this.id,
-    this.fullName = '',
-    this.email = '',
-    this.phone = '',
-    this.city = '',
-    this.country = '',
-    this.createdOn = '',
-    this.lastLogin = '',
-    this.deviceOS = '',
-    this.deviceType = '',
-    this.notificationToken = '',
-    this.isSubscribedToNotifications = false,
+    required this.deviceOS,
+    required this.deviceType,
+    required this.email,
+    required this.id,
+    required this.name,
+    this.createdAt,
+    this.updatedAt,
   });
 
+  @override
+  List<Object?> get props => [
+        createdAt,
+        deviceOS,
+        deviceType,
+        email,
+        id,
+        name,
+        updatedAt,
+      ];
+
   User copyWith({
-    String? id,
-    String? fullName,
-    String? email,
-    String? phone,
-    String? city,
-    String? country,
-    String? createdOn,
-    String? lastLogin,
+    DateTime? createdAt,
+    DateTime? updatedAt,
     String? deviceOS,
     String? deviceType,
-    String? notificationToken,
-    bool? isSubscribedToNotifications,
+    String? email,
+    String? id,
+    String? name,
   }) {
     return User(
-      id: id ?? this.id,
-      fullName: fullName ?? this.fullName,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      city: city ?? this.city,
-      country: country ?? this.country,
-      createdOn: createdOn ?? this.createdOn,
-      lastLogin: lastLogin ?? this.lastLogin,
+      createdAt: createdAt ?? this.createdAt,
       deviceOS: deviceOS ?? this.deviceOS,
       deviceType: deviceType ?? this.deviceType,
-      notificationToken: notificationToken ?? this.notificationToken,
-      isSubscribedToNotifications:
-          isSubscribedToNotifications ?? this.isSubscribedToNotifications,
+      email: email ?? this.email,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   factory User.fromJson(
-    Map<String, dynamic> json, [
+    Map<String, dynamic> json, {
     String? id,
-  ]) {
-    // Timestamp fbStamp = json['createdOn'] ??
-    //     Timestamp.fromDate(DateTime.utc(1900, 1, 1, 0, 0, 0, 0, 0));
-    // DateTime createdOn = fbStamp.toDate();
+  }) {
+    // If an Id is present, we're using Firebase's fromSnapshot, so it's a timestamp.
+    // If there's no Id and a json value is present, it's in a DateTime format.
+    DateTime? createdTime = id != null
+        ? (json['createdAt'] as Timestamp).toDate()
+        : json['createdAt'] != null
+            ? DateTime.parse(json['createdAt'])
+            : null;
+
+    DateTime? updatedTime = id != null
+        ? (json['updatedAt'] as Timestamp).toDate()
+        : json['updatedAt'] != null
+            ? DateTime.parse(json['updatedAt'])
+            : null;
 
     return User(
-      id: id ?? json['id'],
-      fullName: json['fullName'] ?? '',
-      email: json['email'] ?? '',
-      phone: json['phone'] ?? '',
-      city: json['city'] ?? '',
-      country: json['country'] ?? '',
-      createdOn: json['createdOn'] ?? '', // createdOn,
-      lastLogin: json['lastLogin'] ?? '',
+      createdAt: createdTime,
       deviceOS: json['deviceOS'] ?? '',
       deviceType: json['deviceType'] ?? '',
-      notificationToken: json['notificationToken'] ?? '',
-      isSubscribedToNotifications: json['isSubscribedToNotifications'] ?? false,
+      email: json['email'] ?? '',
+      id: id ?? json['id'] ?? '',
+      name: json['name'] ?? '',
+      updatedAt: updatedTime,
     );
   }
 
-  Map<String, Object> toJson() {
+  Map<String, dynamic> toJson({
+    bool? isFirebase,
+  }) {
+    DateTime createdDT = createdAt ?? DateTime.now();
+    DateTime updatedDT = updatedAt ?? DateTime.now();
+
     return {
-      'fullName': fullName,
-      'email': email,
-      'phone': phone,
-      'city': city,
-      'country': country,
-      'createdOn': createdOn,
-      'lastLogin': lastLogin,
+      'createdAt':
+          isFirebase != null ? createdDT.toUtc() : createdDT.toIso8601String(),
       'deviceOS': deviceOS,
       'deviceType': deviceType,
-      'notificationToken': notificationToken,
-      'isSubscribedToNotifications': isSubscribedToNotifications,
+      'email': email,
+      'id': id,
+      'name': name,
+      'updatedAt':
+          isFirebase != null ? updatedDT.toUtc() : updatedDT.toIso8601String(),
     };
   }
 
-  static const empty = User(
+  static const emptyUser = User(
+    deviceOS: '',
+    deviceType: '',
+    email: '',
     id: '',
-    // fullName = '',
-    // email = '',
-    // phone = '',
-    // city = '',
-    // country = '',
-    // createdOn = '',
-    // lastLogin = '',
-    // deviceOS = '',
-    // deviceType = '',
-    // notificationToken = '',
-    // isSubscribedToNotifications = false,
+    name: '',
   );
-
-  @override
-  List<Object?> get props => [
-        id,
-        fullName,
-        email,
-        phone,
-        city,
-        country,
-        createdOn,
-        lastLogin,
-        deviceOS,
-        deviceType,
-        notificationToken,
-        isSubscribedToNotifications,
-      ];
 }

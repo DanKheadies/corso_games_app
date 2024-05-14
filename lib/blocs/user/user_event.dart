@@ -1,33 +1,29 @@
 part of 'user_bloc.dart';
 
 abstract class UserEvent extends Equatable {
-// class UserEvent extends Equatable {
   const UserEvent();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
-class LoadUser extends UserEvent {
-  final auth.User? authUser;
-
-  const LoadUser(this.authUser);
-
-  @override
-  List<Object?> get props => [
-        authUser,
-      ];
-}
+class ClearUser extends UserEvent {}
 
 class UpdateUser extends UserEvent {
+  final bool accountCreation;
+  final bool updateFirebase;
   final User user;
 
   const UpdateUser({
+    required this.updateFirebase,
     required this.user,
+    this.accountCreation = false,
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
+        accountCreation,
+        updateFirebase,
         user,
       ];
 }

@@ -1,20 +1,13 @@
 import 'dart:io';
 
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SnakeScreen extends StatefulWidget {
-  static const String routeName = '/snake';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const SnakeScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
   const SnakeScreen({super.key});
 
   @override
@@ -22,7 +15,14 @@ class SnakeScreen extends StatefulWidget {
 }
 
 class _SnakeScreenState extends State<SnakeScreen> {
+  bool hasLeft = false;
   int colNum = 15; // 20
+
+  @override
+  void didChangeDependencies() {
+    hasLeft = true;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,62 +44,15 @@ class _SnakeScreenState extends State<SnakeScreen> {
     // TODO: Android has room for 2 more rows @ 20 cols
     // Has 2 too many @ 15 cols
     // Find a better way to handle this
-    if (Platform.isAndroid) {
-      // squares += 40;
-      squares -= colNum * 2;
+    if (!kIsWeb) {
+      if (Platform.isAndroid) {
+        // squares += 40;
+        squares -= colNum * 2;
+      }
     }
-    // print('squares: $squares');
 
     return ScreenWrapper(
-      title: 'Snake',
-      infoTitle: 'Snake',
-      infoDetails:
-          'Swipe the screen to change the snake\'s direction. Eat the food, avoid yourself!',
-      button: 'Leggooo!',
-      backgroundOverride: Theme.of(context).scaffoldBackgroundColor,
-      content: BlocBuilder<SnakeBloc, SnakeState>(
-        builder: (context, state) {
-          if (state.snakeStatus == SnakeStatus.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state.snakeStatus != SnakeStatus.error) {
-            return SnakeBoard(
-              colNum: state.colNum,
-              food: state.food,
-              gameSpeed: state.gameSpeed,
-              numberOfSquares: squares,
-              snakePosition: state.snakePosition,
-              snakeDirection: state.snakeDirection,
-              snakeSpeed: state.snakeSpeed,
-              snakeStatus: state.snakeStatus,
-            );
-          } else {
-            return const Center(
-              child: Text('Something went wrong.'),
-            );
-          }
-        },
-      ),
-      screenFunction: (String string) {
-        if (string == 'drawerOpen') {
-          // print('open');
-          context.read<SnakeBloc>().add(
-                const UpdateSnakeBoard(
-                  snakeStatus: SnakeStatus.pause,
-                ),
-              );
-        } else if (string == 'drawerClose') {
-          // print('close');
-          context.read<SnakeBloc>().add(
-                const UpdateSnakeBoard(
-                  snakeStatus: SnakeStatus.unpause,
-                ),
-              );
-        } else if (string == 'drawerNavigate') {
-          // print('nav');
-        }
-      },
+      screen: 'Snake',
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
         elevation: 0,
@@ -122,9 +75,7 @@ class _SnakeScreenState extends State<SnakeScreen> {
                         snakeStatus: SnakeStatus.pause,
                       ),
                     );
-                Navigator.of(context).pushNamed(
-                  SnakeSettingsScreen.routeName,
-                );
+                context.goNamed('snakeSettings');
               },
             ),
             IconButton(
@@ -139,13 +90,15 @@ class _SnakeScreenState extends State<SnakeScreen> {
           ],
         ),
       ),
-      floatingButton: BlocBuilder<SnakeBloc, SnakeState>(
+      button: 'Leggooo!',
+      infoTitle: 'Snake',
+      infoDetails:
+          'Swipe the screen to change the snake\'s direction. Eat the food, avoid yourself!',
+      flactionButton: BlocBuilder<SnakeBloc, SnakeState>(
         builder: (context, state) {
           if (state.snakeStatus != SnakeStatus.error) {
             return FloatingActionButton(
-              // onPressed: startGame,
               onPressed: () {
-                print('start or reset: ${state.snakeStatus}');
                 context.read<SnakeBloc>().add(
                       UpdateSnakeBoard(
                         snakeStatus: state.snakeStatus == SnakeStatus.pause
@@ -159,16 +112,13 @@ class _SnakeScreenState extends State<SnakeScreen> {
               shape: const CircleBorder(),
               child: IconButton(
                 icon: Icon(
-                  // gameStatus == 'pause'
                   state.snakeStatus != SnakeStatus.play
                       ? Icons.play_arrow
                       : Icons.settings_backup_restore_rounded,
                   color: Theme.of(context).colorScheme.background,
                   size: 30,
                 ),
-                // onPressed: startGame,
                 onPressed: () {
-                  print('start or reset: ${state.snakeStatus}');
                   context.read<SnakeBloc>().add(
                         UpdateSnakeBoard(
                           snakeStatus: state.snakeStatus == SnakeStatus.pause ||
@@ -199,7 +149,50 @@ class _SnakeScreenState extends State<SnakeScreen> {
           }
         },
       ),
-      floatingButtonLoc: FloatingActionButtonLocation.centerDocked,
+      flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
+      screenFunction: (String string) {
+        if (string == 'drawerOpen') {
+          context.read<SnakeBloc>().add(
+                const UpdateSnakeBoard(
+                  snakeStatus: SnakeStatus.pause,
+                ),
+              );
+        } else if (string == 'drawerClose') {
+          if (!hasLeft) {
+            context.read<SnakeBloc>().add(
+                  const UpdateSnakeBoard(
+                    snakeStatus: SnakeStatus.unpause,
+                  ),
+                );
+          }
+        } else if (string == 'drawerNavigate') {
+          // print('nav');
+        }
+      },
+      child: BlocBuilder<SnakeBloc, SnakeState>(
+        builder: (context, state) {
+          if (state.snakeStatus == SnakeStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state.snakeStatus != SnakeStatus.error) {
+            return SnakeBoard(
+              colNum: state.colNum,
+              food: state.food,
+              gameSpeed: state.gameSpeed,
+              numberOfSquares: squares,
+              snakePosition: state.snakePosition,
+              snakeDirection: state.snakeDirection,
+              snakeSpeed: state.snakeSpeed,
+              snakeStatus: state.snakeStatus,
+            );
+          } else {
+            return const Center(
+              child: Text('Something went wrong.'),
+            );
+          }
+        },
+      ),
     );
   }
 }

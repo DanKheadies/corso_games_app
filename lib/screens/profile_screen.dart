@@ -1,84 +1,65 @@
 import 'dart:async';
 
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/cubits/cubits.dart';
-import 'package:corso_games_app/repositories/repositories.dart';
-import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileScreen extends StatelessWidget {
-  static const String routeName = '/profile';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => BlocProvider(
-        create: (context) => UserBloc(
-          authBloc: context.read<AuthBloc>(),
-          userRepository: context.read<UserRepository>(),
-        )..add(
-            LoadUser(
-              context.read<AuthBloc>().state.authUser,
-            ),
-          ),
-        child: const ProfileScreen(),
-      ),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  String name = '';
 
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      title: 'Profile',
+      screen: 'Profile',
+      hasDrawer: true,
       infoTitle: 'Your Profile',
       infoDetails: 'See your account. Make updates. Ya know, that stuff.',
-      backgroundOverride: Colors.transparent,
       useSingleScroll: true,
-      content: BlocBuilder<UserBloc, UserState>(
-        builder: (context, state) {
-          if (state is UserLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+      screenFunction: (_) {},
+      bottomBar: const SizedBox(),
+      child: BlocBuilder<UserBloc, UserState>(
+        builder: (context, userState) {
+          if (userState.userStatus == UserStatus.initial ||
+              userState.userStatus == UserStatus.loading) {
+            return GestureDetector(
+              onLongPress: () => context.read<AuthBloc>().add(
+                    SignOut(),
+                  ),
+              child: const CustomCenter(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
-          if (state is UserLoaded) {
-            if (context.read<AuthBloc>().state.authUser!.email == null) {
-              // return Column(
-              //   children: [
-              //     Text('Derp'),
-              //     Registration(
-              //       isAnon: true,
-              //       updateEmail: (value) {
-              //         context.read<SignUpCubit>().emailChanged(value);
-              //       },
-              //     ),
-              //   ],
-              // );
-              return Registration(
-                isAnon: true,
-                updateEmail: (value) {
-                  context.read<SignUpCubit>().emailChanged(value);
-                },
-              );
-            } else {
-              return Padding(
+          if (userState.userStatus == UserStatus.loaded) {
+            name = userState.user.name;
+
+            return Center(
+              child: Container(
                 padding: const EdgeInsets.all(20.0),
+                width: 400,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    BlocBuilder<LoginCubit, LoginState>(
-                      builder: (context, cubitState) {
-                        if (cubitState.status == LoginStatus.error) {
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, authState) {
+                        if (authState.status == AuthStatus.unauthenticated ||
+                            authState.status == AuthStatus.unknown ||
+                            authState.resetStatus == ResetStatus.error) {
                           var errorMessage = 'Authentication failed.';
-                          if (cubitState.errorMessage!
+                          if (authState.errorMessage!
                               .contains('user-not-found')) {
                             errorMessage =
                                 'There is no account associated with this email.';
-                          } else if (cubitState.errorMessage!
+                          } else if (authState.errorMessage!
                               .contains('wrong-password')) {
                             errorMessage =
                                 'That password does not match our records.';
@@ -95,7 +76,8 @@ class ProfileScreen extends StatelessWidget {
                                 );
                             },
                           );
-                        } else if (cubitState.status == LoginStatus.reset) {
+                        } else if (authState.resetStatus ==
+                            ResetStatus.loaded) {
                           Timer(
                             const Duration(milliseconds: 100),
                             () {
@@ -112,62 +94,47 @@ class ProfileScreen extends StatelessWidget {
                         }
                         return Column(
                           children: [
-                            // Text(
-                            //   'Your Profile',
-                            //   style: Theme.of(context).textTheme.headlineSmall,
-                            // ),
                             const SizedBox(height: 25),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 75,
-                                    child: Text(
-                                      'Email',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      state.user.email,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            ActionLink(
-                              text: 'Reset Password',
-                              resetLink:
-                                  cubitState.status == LoginStatus.initial ||
-                                      cubitState.status == LoginStatus.error,
-                              isDisable: false,
-                              onTap: () {
-                                context.read<LoginCubit>().resetPassword(
-                                      email: state.user.email,
-                                    );
+                            ProfileDetailRow(
+                              label: 'Name',
+                              content: name,
+                              onChange: (value) {
+                                setState(() {
+                                  name = value;
+                                });
                               },
-                            ),
-                            const SizedBox(height: 25),
-                            CustomTextFormField(
-                              title: 'Name',
-                              initialValue: state.user.fullName,
-                              onSave: (value) {
+                              onSubmit: (value) {
                                 context.read<UserBloc>().add(
                                       UpdateUser(
-                                        user: state.user.copyWith(
-                                          fullName: value,
+                                        updateFirebase: true,
+                                        user: userState.user.copyWith(
+                                          name: value,
                                         ),
                                       ),
                                     );
                               },
                             ),
+                            ProfileDetailRow(
+                              label: 'Email',
+                              content: userState.user.email,
+                              isEditable: false,
+                              onChange: (value) {},
+                              onSubmit: (value) {},
+                            ),
+                            userState.user.email == 'anon@mous.ly'
+                                ? const SizedBox()
+                                : ProfileDetailRow(
+                                    label: 'Password',
+                                    content: userState.user.email,
+                                    isEditable: false,
+                                    isObscure: true,
+                                    onChange: (value) {},
+                                    onSubmit: (value) {},
+                                    onPopup: () => showPasswordResetModal(
+                                      context: context,
+                                      email: userState.user.email,
+                                    ),
+                                  ),
                             const SizedBox(height: 25),
                           ],
                         );
@@ -180,18 +147,9 @@ class ProfileScreen extends StatelessWidget {
                           resetLink: false,
                           isDisable: false,
                           onTap: () {
-                            // var nav = Navigator.of(context);
-                            // await context.read<AuthRepository>().signOut();
-                            // nav.pushNamedAndRemoveUntil('/', (route) => false);
-
-                            context.read<AuthRepository>().signOut();
-                            context.read<LoginCubit>().signOut();
-                            context.read<SignUpCubit>().signOut();
-
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              SplashScreen.routeName,
-                              (route) => false,
-                            );
+                            context.read<AuthBloc>().add(
+                                  SignOut(),
+                                );
                           },
                         ),
                         const SizedBox(height: 50),
@@ -200,8 +158,8 @@ class ProfileScreen extends StatelessWidget {
                   ],
                   // ),
                 ),
-              );
-            }
+              ),
+            );
           } else {
             return const Center(
               child: Text('Something went wrong.'),
@@ -209,8 +167,6 @@ class ProfileScreen extends StatelessWidget {
           }
         },
       ),
-      screenFunction: (String string) {},
-      bottomBar: const SizedBox(),
     );
   }
 }

@@ -325,7 +325,7 @@ class _SnakeBoardState extends State<SnakeBoard> {
       padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width < 525
             ? 5
-            : (MediaQuery.of(context).size.width - 525) / 2,
+            : (MediaQuery.of(context).size.width - 525) / 2 + 15,
       ),
       child: Column(
         children: [

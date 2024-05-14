@@ -4,12 +4,11 @@ import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/firebase_options.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
-import 'package:corso_games_app/screens/screens.dart';
 // import 'package:corso_games_app/simple_bloc_observer.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -31,6 +30,9 @@ Future<void> main() async {
 
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // Bloc.observer = SimpleBlocObserver();
+
+  SystemChannels.textInput.invokeMethod('TextInput.hide');
+
   runApp(const CorsoGames());
 }
 
@@ -42,26 +44,41 @@ class CorsoGames extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (context) => UserRepository(),
+          create: (context) => DatabaseRepository(),
         ),
         RepositoryProvider(
           create: (context) => AuthRepository(
-            userRepository: context.read<UserRepository>(),
+            userRepository: context.read<DatabaseRepository>(),
           ),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AuthBloc(
+            create: (context) => AuthenticationCubit(
               authRepository: context.read<AuthRepository>(),
-              userRepository: context.read<UserRepository>(),
             ),
           ),
           BlocProvider(
+            create: (context) => BrightnessCubit(),
+          ),
+          BlocProvider(
+            create: (context) => NavCubit(),
+          ),
+          BlocProvider(
+            create: (context) => TappyBirdCubit(),
+          ),
+          BlocProvider(
             create: (context) => UserBloc(
-              authBloc: context.read<AuthBloc>(),
-              userRepository: context.read<UserRepository>(),
+              databaseRepository: context.read<DatabaseRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => AuthBloc(
+              authCubit: context.read<AuthenticationCubit>(),
+              authRepository: context.read<AuthRepository>(),
+              databaseRepository: context.read<DatabaseRepository>(),
+              userBloc: context.read<UserBloc>(),
             ),
           ),
           BlocProvider(
@@ -82,31 +99,13 @@ class CorsoGames extends StatelessWidget {
           BlocProvider(
             create: (context) => TimerBloc(ticker: const Ticker()),
           ),
-          BlocProvider(
-            create: (context) => BrightnessCubit(),
-          ),
-          BlocProvider(
-            create: (context) => LoginCubit(
-              authRepository: context.read<AuthRepository>(),
-              userRepository: context.read<UserRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => SignUpCubit(
-              authRepository: context.read<AuthRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => TappyBirdCubit(),
-          ),
         ],
         child: BlocBuilder<BrightnessCubit, Brightness>(
           builder: (context, state) {
-            return MaterialApp(
+            return MaterialApp.router(
               debugShowCheckedModeBanner: false,
+              routerConfig: goRouter,
               theme: state == Brightness.dark ? darkTheme() : lightTheme(),
-              initialRoute: SplashScreen.routeName,
-              onGenerateRoute: AppRouter.onGenerateRoute,
             );
           },
         ),

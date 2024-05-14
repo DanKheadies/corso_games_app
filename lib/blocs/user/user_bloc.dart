@@ -1,76 +1,86 @@
-import 'dart:async';
-
-import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
 
-class UserBloc extends Bloc<UserEvent, UserState> {
-  final AuthBloc _authBloc;
-  final UserRepository _userRepository;
-  StreamSubscription? _authSubscription;
+class UserBloc extends HydratedBloc<UserEvent, UserState> {
+  final DatabaseRepository _databaseRepository;
 
   UserBloc({
-    required AuthBloc authBloc,
-    required UserRepository userRepository,
-  })  : _authBloc = authBloc,
-        _userRepository = userRepository,
-        super(UserLoading()) {
-    on<LoadUser>(_onLoadUser);
+    required DatabaseRepository databaseRepository,
+  })  : _databaseRepository = databaseRepository,
+        super(const UserState()) {
+    on<ClearUser>(_onClearUser);
     on<UpdateUser>(_onUpdateUser);
-
-    _authSubscription = _authBloc.stream.listen((state) {
-      if (state.user != null) {
-        add(
-          LoadUser(state.authUser),
-        );
-      }
-    });
   }
 
-  void _onLoadUser(
-    LoadUser event,
+  void _onClearUser(
+    ClearUser event,
     Emitter<UserState> emit,
   ) {
-    emit(UserLoading());
-
-    if (event.authUser != null) {
-      _userRepository.getUser(event.authUser!.uid).listen((user) {
-        // print('here');
-        add(
-          UpdateUser(
-            user: user,
-          ),
-        );
-      }).onError((err) {
-        // TODO: generating a lot of errors on sign out; related to user repo / stream
-        print('user bloc error: $err');
-        // throw Exception('user bloc exception: $err');
-      });
-    }
+    emit(
+      state.copyWith(
+        user: User.emptyUser,
+        userStatus: UserStatus.initial,
+      ),
+    );
   }
 
   void _onUpdateUser(
     UpdateUser event,
     Emitter<UserState> emit,
-  ) {
-    _userRepository.updateUser(event.user);
+  ) async {
+    User updatedUser = User.emptyUser;
+    if (state.userStatus == UserStatus.loading) return;
+
     emit(
-      UserLoaded(
-        user: event.user,
+      state.copyWith(
+        userStatus: UserStatus.loading,
       ),
     );
+
+    if (!event.accountCreation) {
+      updatedUser = event.user.copyWith(
+        updatedAt: DateTime.now(),
+      );
+    } else {
+      updatedUser = event.user;
+    }
+
+    try {
+      if (event.updateFirebase) {
+        await _databaseRepository.updateUser(
+          user: updatedUser,
+        );
+      }
+
+      emit(
+        state.copyWith(
+          user: updatedUser,
+          userStatus: UserStatus.loaded,
+        ),
+      );
+    } catch (err) {
+      print('update user error: $err');
+      emit(
+        state.copyWith(
+          user: updatedUser,
+          userStatus: UserStatus.error,
+        ),
+      );
+    }
   }
 
   @override
-  Future<void> close() async {
-    _authSubscription?.cancel();
-    super.close();
+  UserState? fromJson(Map<String, dynamic> json) {
+    return UserState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(UserState state) {
+    return state.toJson();
   }
 }

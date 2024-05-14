@@ -5,17 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class SnakeSettingsScreen extends StatefulWidget {
-  static const String routeName = '/snake-settings';
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => const SnakeSettingsScreen(),
-      settings: const RouteSettings(name: routeName),
-    );
-  }
-
-  const SnakeSettingsScreen({
-    Key? key,
-  }) : super(key: key);
+  const SnakeSettingsScreen({super.key});
 
   @override
   State<SnakeSettingsScreen> createState() => _SnakeSettingsScreenState();
@@ -35,31 +25,17 @@ class _SnakeSettingsScreenState extends State<SnakeSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text(
-          'Snake Settings',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.background,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => showScreenInfo(
-              context,
-              'Settings',
-              'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
-              false,
-              TextAlign.left,
-              'GLHF',
-            ),
-          )
-        ],
-      ),
-      body: BlocBuilder<SnakeBloc, SnakeState>(
+    return ScreenWrapper(
+      screen: 'Snake Settings',
+      bottomBar: const SizedBox(),
+      hasAppBar: true,
+      hasDrawer: false,
+      infoTitle: 'Snake Settings',
+      infoDetails:
+          'Change your difficulty for more fun. As a heads up, changing any of the settings here will reset your game.',
+      screenFunction: (_) {},
+      nav: 'snake',
+      child: BlocBuilder<SnakeBloc, SnakeState>(
         builder: (context, state) {
           if (state.snakeStatus != SnakeStatus.error) {
             return Center(
