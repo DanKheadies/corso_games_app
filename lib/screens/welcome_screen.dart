@@ -85,7 +85,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     String errorMsg = state.errorMessage!
         .replaceAll('Exception: ', '')
         .replaceAll(RegExp('\\[.*?\\]'), '')
-        .replaceFirst(' ', '');
+        .trim();
 
     await Future.delayed(const Duration(milliseconds: 300));
 

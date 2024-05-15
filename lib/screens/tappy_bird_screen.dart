@@ -10,18 +10,10 @@ class TappyBirdScreen extends StatefulWidget {
 
 class _TappyBirdScreenState extends State<TappyBirdScreen> {
   bool hasLeft = false;
-  bool isLeaving = false;
   bool pauseGame = false;
 
   @override
-  void didChangeDependencies() {
-    hasLeft = true;
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // print('build tb screen');
     double height = MediaQuery.of(context).size.height;
 
     return ScreenWrapper(
@@ -30,28 +22,25 @@ class _TappyBirdScreenState extends State<TappyBirdScreen> {
       infoTitle: 'Tappy Bird',
       infoDetails: 'Tap to stay a float. Or don\'t..',
       screenFunction: (String string) {
-        if (!hasLeft) {
-          if (string == 'drawerOpen') {
-            // print('open');
-            setState(() {
-              pauseGame = true;
-            });
-          } else if (string == 'drawerClose') {
-            // print('close');
+        if (string == 'drawerOpen') {
+          setState(() {
+            pauseGame = true;
+          });
+        } else if (string == 'drawerClose') {
+          if (!hasLeft) {
             setState(() {
               pauseGame = false;
             });
-          } else if (string == 'drawerNavigate') {
-            // print('navigating');
-            setState(() {
-              isLeaving = true;
-            });
           }
+        } else if (string == 'drawerNavigate') {
+          setState(() {
+            hasLeft = true;
+          });
         }
       },
       child: BirdGame(
         height: height,
-        isLeaving: isLeaving,
+        isLeaving: hasLeft,
         pauseGame: pauseGame,
       ),
     );

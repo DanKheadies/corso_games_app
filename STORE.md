@@ -8,7 +8,7 @@ Good luck, have fun!
 
 Promotional:
 The 2.1.0 release of "Corso Games."
-We've cleaned house and given the app some new infrastructure. Stay tuned for more fun and games coming soon..
+We've cleaned house and given the app some new infrastructure. Enjoy Corso Games on the web and macOS. Stay tuned for more fun and games coming soon..
 
 
 What's New:

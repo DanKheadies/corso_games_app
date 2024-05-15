@@ -14,6 +14,7 @@ class DinoDashScreen extends StatefulWidget {
 
 class _DinoDashScreenState extends State<DinoDashScreen>
     with SingleTickerProviderStateMixin {
+  bool hasLeft = false;
   Dino dino = Dino();
   double deathCounter = 0;
   double runDistance = 0;
@@ -138,6 +139,13 @@ class _DinoDashScreenState extends State<DinoDashScreen>
 
     worldController.forward();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   print('did');
+  //   hasLeft = true;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   void dispose() {
@@ -287,12 +295,30 @@ class _DinoDashScreenState extends State<DinoDashScreen>
           infoDetails:
               'Run for your life! If you die, you may come back. Or go to Heaven. Or to Hell.. Or the mantle?.. Don\'t die!',
           screenFunction: (String string) {
+            // if (!hasLeft) {
+            //   if (string == 'drawerOpen') {
+            //     stopTimer(context);
+            //     worldController.stop();
+            //   } else if (string == 'drawerClose') {
+            //     startTimer(context, state);
+            //     worldController.repeat();
+            //   }
+            // }
             if (string == 'drawerOpen') {
+              print(hasLeft);
               stopTimer(context);
               worldController.stop();
             } else if (string == 'drawerClose') {
-              startTimer(context, state);
-              worldController.repeat();
+              print(hasLeft);
+              if (!hasLeft) {
+                startTimer(context, state);
+                worldController.repeat();
+              }
+            } else if (string == 'drawerNavigate') {
+              // print('nav');
+              setState(() {
+                hasLeft = true;
+              });
             }
           },
           child: GestureDetector(

@@ -19,12 +19,6 @@ class _SnakeScreenState extends State<SnakeScreen> {
   int colNum = 15; // 20
 
   @override
-  void didChangeDependencies() {
-    hasLeft = true;
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // print('screen height: ${MediaQuery.of(context).size.height}');
     // @ 20 columns
@@ -166,7 +160,9 @@ class _SnakeScreenState extends State<SnakeScreen> {
                 );
           }
         } else if (string == 'drawerNavigate') {
-          // print('nav');
+          setState(() {
+            hasLeft = true;
+          });
         }
       },
       child: BlocBuilder<SnakeBloc, SnakeState>(
