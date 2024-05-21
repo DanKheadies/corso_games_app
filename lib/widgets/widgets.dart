@@ -2,6 +2,7 @@ export 'authentication/widgetes.dart';
 export 'colors_slide/widgets.dart';
 export 'dino_dash/widgets.dart';
 export 'el_word/widgets.dart';
+export 'honeygram/widgets.dart';
 export 'minesweeper/widgets.dart';
 export 'numbers_and_draggin/widgets.dart';
 export 'profile/widgets.dart';

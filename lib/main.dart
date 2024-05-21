@@ -88,6 +88,14 @@ class CorsoGames extends StatelessWidget {
             create: (context) => ElWordBloc()..add(LoadElWord()),
           ),
           BlocProvider(
+            create: (context) => HoneygramBloc()
+              ..add(
+                LoadHoneygramBoard(
+                  context: context,
+                ),
+              ),
+          ),
+          BlocProvider(
             create: (context) => MinesweeperBloc()..add(LoadMinesweeper()),
           ),
           BlocProvider(

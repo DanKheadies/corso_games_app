@@ -117,6 +117,23 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
+              'Honeygram',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.hexagon_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              context.goNamed('honeygram');
+            },
+          ),
+          ListTile(
+            title: Text(
               'Minesweeper',
               style: TextStyle(
                 fontSize: 18,

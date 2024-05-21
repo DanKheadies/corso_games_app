@@ -39,6 +39,9 @@ A collection of Flutter games. GLHF!
 > [Tappy Bird](https://www.youtube.com/watch?v=vgmVPpFP0fI)
 > via Mitch Koko
 
+> [Pangram](https://github.com/RubberDuckEng/pangram)
+> via Eric Seidel
+
 
 ### Special Thanks:
 - [Flutter](https://docs.flutter.dev/)

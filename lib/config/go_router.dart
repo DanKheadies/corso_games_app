@@ -99,8 +99,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case ElWordScreen.routeName:
-    //   return ElWordScreen.route();
     GoRoute(
       path: '/elWord',
       name: 'elWord',
@@ -118,8 +116,23 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case GamesScreen.routeName:
-    //   return GamesScreen.route();
+    GoRoute(
+      path: '/honeygram',
+      name: 'honeygram',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const HoneygramScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
     GoRoute(
       path: '/games',
       name: 'games',
@@ -137,8 +150,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case MinesweeperScreen.routeName:
-    //   return MinesweeperScreen.route();
     GoRoute(
       path: '/minesweeper',
       name: 'minesweeper',
@@ -156,8 +167,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case MSSettingsScreen.routeName:
-    //   return MSSettingsScreen.route();
     GoRoute(
       path: '/minesweeperSettings',
       name: 'minesweeperSettings',
@@ -175,8 +184,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case NumbersAndDragginScreen.routeName:
-    //   return NumbersAndDragginScreen.route();
     GoRoute(
       path: '/numbersAndDraggin',
       name: 'numbersAndDraggin',
@@ -194,8 +201,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case ProfileScreen.routeName:
-    //   return ProfileScreen.route();
     GoRoute(
       path: '/profile',
       name: 'profile',
@@ -213,8 +218,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case PuzzlesAndDragginScreen.routeName:
-    //   return PuzzlesAndDragginScreen.route();
     GoRoute(
       path: '/puzzlesAndDraggin',
       name: 'puzzlesAndDraggin',
@@ -232,8 +235,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case SlideToSlideScreen.routeName:
-    //   return SlideToSlideScreen.route();
     GoRoute(
       path: '/slideToSlide',
       name: 'slideToSlide',
@@ -251,8 +252,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case SnakeScreen.routeName:
-    //   return SnakeScreen.route();
     GoRoute(
       path: '/snake',
       name: 'snake',
@@ -270,8 +269,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case SnakeSettingsScreen.routeName:
-    //   return SnakeSettingsScreen.route();
     GoRoute(
       path: '/snakeSettings',
       name: 'snakeSettings',
@@ -289,8 +286,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case SolitareScreen.routeName:
-    //   return SolitareScreen.route();
     GoRoute(
       path: '/solitare',
       name: 'solitare',
@@ -308,8 +303,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case SoloNobleScreen.routeName:
-    //   return SoloNobleScreen.route();
     GoRoute(
       path: '/soloNoble',
       name: 'soloNoble',
@@ -327,8 +320,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case TappyBirdScreen.routeName:
-    //   return TappyBirdScreen.route();
     GoRoute(
       path: '/tappyBird',
       name: 'tappyBird',
@@ -346,8 +337,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case TicTacToeScreen.routeName:
-    //   return TicTacToeScreen.route();
     GoRoute(
       path: '/ticTacToe',
       name: 'ticTacToe',
@@ -365,12 +354,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case WelcomeScreen.routeName:
-    //   return WelcomeScreen.route();
-    // case LoginScreen.routeName:
-    //   return LoginScreen.route();
-    // case RegistrationScreen.routeName:
-    //   return RegistrationScreen.route();
     GoRoute(
       path: '/welcome',
       name: 'welcome',

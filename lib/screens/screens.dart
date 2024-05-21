@@ -6,6 +6,7 @@ export 'el_word/el_settings_screen.dart';
 export 'el_word/el_word_screen.dart';
 export 'errors_screen.dart';
 export 'games_screen.dart';
+export 'honeygram_screen.dart';
 export 'minesweeper/minesweeper_screen.dart';
 export 'minesweeper/ms_settings_screen.dart';
 export 'numbers_and_draggin_screen.dart';

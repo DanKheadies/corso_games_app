@@ -41,6 +41,12 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             isIconic: true,
+            icon: Icons.hexagon_outlined,
+            title: 'Honeygram',
+            onPress: () => context.goNamed('honeygram'),
+          ),
+          GameButton(
+            isIconic: true,
             icon: Icons.flag_rounded,
             title: 'Minesweeper',
             onPress: () => context.goNamed('minesweeper'),
