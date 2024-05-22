@@ -20,30 +20,37 @@ class FoundWord extends HoneygramEvent {
       ];
 }
 
+class GetNewHoneygramBoard extends HoneygramEvent {}
+
+class LoadBoardsFromFile extends HoneygramEvent {
+  final dynamic data;
+
+  const LoadBoardsFromFile({
+    required this.data,
+  });
+
+  @override
+  List<Object> get props => [
+        data,
+      ];
+}
+
 class LoadHoneygramBoard extends HoneygramEvent {
+  final bool loadFromFile;
   final BuildContext context;
 
   const LoadHoneygramBoard({
     required this.context,
+    required this.loadFromFile,
   });
 
   @override
   List<Object> get props => [
         context,
+        loadFromFile,
       ];
 }
 
-// class ScoreForWord extends HoneygramEvent {
-//   final String word;
-
-//   const ScoreForWord({
-//     required this.word,
-//   });
-
-//   @override
-//   List<Object> get props => [
-//         word,
-//       ];
-// }
+// class SaveBoardsToJSON extends HoneygramEvent {}
 
 class UpdateBoard extends HoneygramEvent {}

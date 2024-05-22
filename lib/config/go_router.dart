@@ -134,6 +134,40 @@ final GoRouter goRouter = GoRouter(
       ),
     ),
     GoRoute(
+      path: '/honeygramStats',
+      name: 'honeygramStats',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const HoneygramStatsScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
+    GoRoute(
+      path: '/honeygramWords',
+      name: 'honeygramWords',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const HoneygramWordsScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
+    GoRoute(
       path: '/games',
       name: 'games',
       pageBuilder: (context, state) => CustomTransitionPage(

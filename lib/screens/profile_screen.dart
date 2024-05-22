@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'dart:html' as webFile;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -140,21 +143,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       },
                     ),
-                    Column(
-                      children: [
-                        ActionLink(
-                          text: 'Sign Out',
-                          resetLink: false,
-                          isDisable: false,
-                          onTap: () {
-                            context.read<AuthBloc>().add(
-                                  SignOut(),
-                                );
-                          },
-                        ),
-                        const SizedBox(height: 50),
-                      ],
+                    const SizedBox(height: 50),
+                    GameButton(
+                      isIconic: false,
+                      icon: Icons.abc,
+                      onPress: () async {
+                        if (kIsWeb) {
+                          var toJson = {
+                            {
+                              "\"letterSet\"": "\"{e, f, n, o, r, u, z}\"",
+                              "\"letters\"": "\"efnoruz\"",
+                              "\"words\"": "\"[erne, euro, fere]\"",
+                            },
+                            {
+                              "\"letterSet\"": "\"{a, b, c, d, e, f}\"",
+                              "\"letters\"": "\"abcdef\"",
+                              "\"words\"": "\"[abcd, efda, bacd]\"",
+                            },
+                          };
+                          var blob =
+                              webFile.Blob([toJson], 'text/plain', 'native');
+
+                          webFile.AnchorElement(
+                            href: webFile.Url.createObjectUrlFromBlob(blob)
+                                .toString(),
+                          )
+                            ..setAttribute("download", "json.txt")
+                            ..click();
+                        }
+                      },
+                      title: 'Testicle',
                     ),
+                    const SizedBox(height: 50),
+                    ActionLink(
+                      text: 'Sign Out',
+                      resetLink: false,
+                      isDisable: false,
+                      onTap: () {
+                        context.read<AuthBloc>().add(
+                              SignOut(),
+                            );
+                      },
+                    ),
+                    const SizedBox(height: 50),
                   ],
                   // ),
                 ),

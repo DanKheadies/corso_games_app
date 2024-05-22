@@ -26,7 +26,7 @@ class _HoneygramFoundWordsState extends State<HoneygramFoundWords> {
   }
 
   String capitalize(String string) {
-    return "${string[0].toUpperCase()}${string.substring(1)}";
+    return '${string[0].toUpperCase()}${string.substring(1)}';
   }
 
   @override
@@ -37,37 +37,57 @@ class _HoneygramFoundWordsState extends State<HoneygramFoundWords> {
     alphabeticalOrder.sort();
 
     return ExpansionTileCard(
-      title: expanded
-          ? const Text("Found")
-          : Text(
-              capitalizedWords.reversed.join(", "),
-              overflow: TextOverflow.ellipsis,
-            ),
+      baseColor: Theme.of(context).colorScheme.onSurface,
+      expandedTextColor: Theme.of(context).colorScheme.primary,
       onExpansionChanged: expansionChanged,
       subtitle: expanded
           ? null
           : Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                "${widget.wordsInOrderFound.length} of ${widget.board.validWords.length}",
+                '${widget.wordsInOrderFound.length} of ${widget.board.validWords.length}',
                 style: const TextStyle(
                   fontSize: 10,
                 ),
               ),
             ),
+      title: expanded
+          ? Text(
+              'Found',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            )
+          : Text(
+              capitalizedWords.reversed.join(', '),
+              overflow: TextOverflow.ellipsis,
+            ),
       children: [
-        const Divider(
-          thickness: 1.0,
+        Divider(
+          color: Theme.of(context).colorScheme.primary,
           height: 1.0,
+          thickness: 1.0,
         ),
-        SizedBox(
+        Container(
           height: 200,
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
+          ),
           child: ListView(
             children: alphabeticalOrder
-                .map((word) => ListTile(title: Text(word)))
+                .map(
+                  (word) => ListTile(
+                    title: Text(
+                      word,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                    ),
+                  ),
+                )
                 .toList(),
           ),
-        )
+        ),
       ],
     );
   }

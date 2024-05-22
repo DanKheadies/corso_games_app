@@ -18,7 +18,7 @@ class HoneygramDifficulty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('difficultyPercentile: $difficultyPercentile');
+    // print('difficultyPercentile: $difficultyPercentile');
     return difficultyPercentile == 0.0 || difficultyPercentile == null
         ? const Text("Difficulty: Unknown")
         : Text(

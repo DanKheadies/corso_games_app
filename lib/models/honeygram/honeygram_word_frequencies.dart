@@ -24,8 +24,12 @@ class HoneygramWordFrequencies {
   }
 
   double rarityPercentile(String word) {
+    // print('rarity percentile');
+    // print(word);
+    // print(wordToFrequency[word]);
     // FIXME: Should this use minFrequency somewhere?
     int frequency = wordToFrequency[word] ?? 0;
+    // print(frequency);
     return 1.0 - (frequency / maxFrequency);
   }
 }

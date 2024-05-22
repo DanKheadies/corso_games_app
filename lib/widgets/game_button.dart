@@ -5,18 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class GameButton extends StatefulWidget {
-  const GameButton({
-    Key? key,
-    this.isIconic = false,
-    required this.icon,
-    required this.title,
-    required this.onPress,
-  }) : super(key: key);
-
-  final bool isIconic;
+  final bool? isIconic;
+  final Function()? onPress;
   final IconData icon;
   final String title;
-  final Function()? onPress;
+
+  const GameButton({
+    super.key,
+    required this.icon,
+    required this.onPress,
+    required this.title,
+    this.isIconic = false,
+  });
 
   @override
   State<GameButton> createState() => _GameButtonState();
@@ -143,7 +143,7 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
                   widget.onPress != null ? () => widget.onPress!() : () {},
                 );
               },
-              child: widget.isIconic
+              child: widget.isIconic!
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

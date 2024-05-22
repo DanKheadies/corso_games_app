@@ -92,6 +92,7 @@ class CorsoGames extends StatelessWidget {
               ..add(
                 LoadHoneygramBoard(
                   context: context,
+                  loadFromFile: true,
                 ),
               ),
           ),

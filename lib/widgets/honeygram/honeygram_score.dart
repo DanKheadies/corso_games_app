@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 class Score extends StatelessWidget {
   final List<String> wordsInOrderFound;
 
-  const Score({super.key, required this.wordsInOrderFound});
+  const Score({
+    super.key,
+    required this.wordsInOrderFound,
+  });
 
   int computeScore(List<String> words) {
     return words.fold(
@@ -15,6 +18,6 @@ class Score extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Score: ${computeScore(wordsInOrderFound)}");
+    return Text('Score: ${computeScore(wordsInOrderFound)}');
   }
 }

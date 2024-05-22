@@ -10,7 +10,6 @@ export 'honeygram/honeygram_letter_cluster.dart';
 export 'honeygram/honeygram_manifest.dart';
 export 'honeygram/honeygram_word_count.dart';
 export 'honeygram/honeygram_word_frequencies.dart';
-export 'honeygram/honeygram_word_list.dart';
 export 'numbers_and_draggin/nad_grid_unit.dart';
 export 'minesweeper/mine_board_square.dart';
 export 'puzzles_and_draggin/grid_unit.dart';
