@@ -22,19 +22,6 @@ class FoundWord extends HoneygramEvent {
 
 class GetNewHoneygramBoard extends HoneygramEvent {}
 
-class LoadBoardsFromFile extends HoneygramEvent {
-  final dynamic data;
-
-  const LoadBoardsFromFile({
-    required this.data,
-  });
-
-  @override
-  List<Object> get props => [
-        data,
-      ];
-}
-
 class LoadHoneygramBoard extends HoneygramEvent {
   final bool loadFromFile;
   final BuildContext context;
@@ -50,7 +37,5 @@ class LoadHoneygramBoard extends HoneygramEvent {
         loadFromFile,
       ];
 }
-
-// class SaveBoardsToJSON extends HoneygramEvent {}
 
 class UpdateBoard extends HoneygramEvent {}

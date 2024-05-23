@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class HoneygramBoard extends Equatable implements Comparable<HoneygramBoard> {
-// class HoneygramBoard extends Equatable {
   final double? difficultyPercentile;
   final int difficultyScore;
   final List<String> otherLetters;
@@ -12,7 +11,7 @@ class HoneygramBoard extends Equatable implements Comparable<HoneygramBoard> {
     required this.center,
     this.difficultyPercentile,
     this.difficultyScore = 0,
-    required this.otherLetters, // TODO: sort this later (bloc?) for reasons
+    required this.otherLetters,
     required this.validWords,
   });
 

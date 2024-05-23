@@ -1,4 +1,5 @@
 import 'package:corso_games_app/blocs/blocs.dart';
+import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -82,92 +83,104 @@ class HoneygramScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<HoneygramBloc, HoneygramState>(
-              builder: (context, state) {
-                if (state.status == HoneygramStatus.initial ||
-                    state.status == HoneygramStatus.loading) {
-                  // print('loading honeygram...');
-                  return const CustomCenter(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 25),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
-                          ),
-                          child: Text(
-                            'Please wait..',
-                          ),
+            BlocBuilder<HoneygramBoardsCubit, HoneygramBoardsState>(
+              builder: (context, cubit) {
+                return BlocBuilder<HoneygramBloc, HoneygramState>(
+                  builder: (context, state) {
+                    if ((state.status == HoneygramStatus.initial ||
+                            state.status == HoneygramStatus.loading) &&
+                        (cubit.status == HoneygramBoardsStatus.initial ||
+                            cubit.status == HoneygramBoardsStatus.loading)) {
+                      return const CustomCenter(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 25),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 5,
+                              ),
+                              child: Text(
+                                'Please wait..',
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 5,
+                              ),
+                              child: Text(
+                                'Honey can be slow to pour...',
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 5,
+                              ),
+                              child: Text(
+                                'Don\'t worry, honey won\'t freeze.',
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 5,
+                              ),
+                              child: Text(
+                                'The screen isn\'t frozen.',
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 5,
+                              ),
+                              child: Text(
+                                'The bees are working overtime right now.',
+                              ),
+                            ),
+                            SizedBox(height: 25),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
-                          ),
+                      );
+                    }
+                    if (state.status == HoneygramStatus.loaded &&
+                        cubit.status == HoneygramBoardsStatus.loaded) {
+                      if (state.board != HoneygramBoard.emptyHoneygramBoard) {
+                        return HoneygramGame(
+                          honeygram: state,
+                        );
+                      } else {
+                        return const CustomCenter(
                           child: Text(
-                            'Honey can be slow to pour...',
+                            'There was an error with the bees. Please refresh and try again.',
                           ),
+                        );
+                      }
+                    }
+                    if (state.status == HoneygramStatus.hasWon) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('A winner is you 🎉'),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
-                          ),
-                          child: Text(
-                            'Don\'t worry, honey won\'t freeze.',
-                          ),
+                      );
+                      return const CustomCenter(
+                        child: Text(
+                          'Huzzah! You were a busy, little bee!',
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
-                          ),
-                          child: Text(
-                            'The screen isn\'t frozen.',
-                          ),
+                      );
+                    } else {
+                      return const CustomCenter(
+                        child: Text(
+                          'Something went wrong.',
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
-                          ),
-                          child: Text(
-                            'The bees are working overtime right now.',
-                          ),
-                        ),
-                        SizedBox(height: 25),
-                      ],
-                    ),
-                  );
-                }
-                if (state.status == HoneygramStatus.loaded) {
-                  // print('loaded honeygram!');
-                  // print(state.board);
-                  if (state.board != HoneygramBoard.emptyHoneygramBoard) {
-                    return HoneygramGame(
-                      honeygram: state,
-                    );
-                  } else {
-                    return const CustomCenter(
-                      child: Text(
-                        'There was an error with the bees. Please refresh and try again.',
-                      ),
-                    );
-                  }
-                }
-                if (state.status == HoneygramStatus.hasWon) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('A winner is you 🎉'),
-                    ),
-                  );
-                  return const Text('Huzzah! You were a busy, little bee!');
-                } else {
-                  return const Text('Something went wrong.');
-                }
+                      );
+                    }
+                  },
+                );
               },
             ),
           ],

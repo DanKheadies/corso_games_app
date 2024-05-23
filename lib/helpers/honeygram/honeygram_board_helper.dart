@@ -4,7 +4,6 @@ Future<List<HoneygramBoard>> generateHoneygramBoards({
   required List<String> wordList,
   required HoneygramWordFrequencies frequencies,
 }) async {
-  print('generating boards');
   int maxDifficulty = 0;
   List<HoneygramBoard> allBoards = [];
   List<HoneygramLetterCluster> clusters = await computeLetterClusters(
@@ -44,35 +43,31 @@ Future<List<HoneygramBoard>> generateHoneygramBoards({
   }
 
   // Normalize difficulty scores:
-  print("Normalizing board difficulties from max $maxDifficulty");
+  // print("Normalizing board difficulties from max $maxDifficulty");
   // FIXME: Max is 11790!? So presumably this should be weighted somehow?
   // Or outlier boards e.g. exceptionally large numbers of words, should
   // just be discarded?
-  // for (HoneygramBoard board in allBoards) {
-  //   board.copyWith(
-  //     difficultyPercentile: board.difficultyScore / maxDifficulty,
-  //   );
-  // }
   // TODO: this always returns null (with temp word bank)
   // Try using all words and see
+  // Update: still didn't show the correct end result; not sure if this is the
+  // hang up or if it's further down the chain.
   for (int i = 0; i < allBoards.length; i++) {
     allBoards[i].copyWith(
       difficultyPercentile: allBoards[i].difficultyScore / maxDifficulty,
     );
   }
-  // TODO: run this and export it to a json to call / use when the app runs
-  print('g2g');
+
   return allBoards;
 }
 
 Future<List<HoneygramLetterCluster>> computeLetterClusters({
   required List<String> wordList,
 }) async {
-  print('Getting legal words from list of ${wordList.length} words');
+  // print('Getting legal words from list of ${wordList.length} words');
   List<String> legalWords = wordList
       .where((word) => (word.length >= 4 && !word.contains('s')))
       .toList();
-  print("Creating clusters from ${legalWords.length} legal words");
+  // print("Creating clusters from ${legalWords.length} legal words");
   await Future.delayed(const Duration(milliseconds: 100));
   Set<String> letterSets = {};
 
@@ -109,7 +104,7 @@ Future<List<HoneygramLetterCluster>> computeLetterClusters({
     );
   }
 
-  print("Adding words to ${clusters.length} clusters");
+  // print("Adding words to ${clusters.length} clusters");
   // TODO: find a way to avoid this it takes too much time / processing power
   for (String word in legalWords) {
     // Could have cached this from first walk.
@@ -126,13 +121,7 @@ Future<List<HoneygramLetterCluster>> computeLetterClusters({
   }
 
   await Future.delayed(const Duration(milliseconds: 100));
-  // print('clusters');
-  // var toJson = {};
-  // for (HoneygramLetterCluster cluster in clusters) {
-  //   print(cluster.letterSet);
-  //   print(cluster.letters);
-  //   print(cluster.words);
-  // }
+
   return clusters;
 }
 

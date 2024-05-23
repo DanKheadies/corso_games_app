@@ -7,14 +7,14 @@ Good luck, have fun!
 
 
 Promotional:
-The 2.1.0 release of "Corso Games."
-We've cleaned house and given the app some new infrastructure. Enjoy Corso Games on the web and macOS. Stay tuned for more fun and games coming soon..
+The 2.1.1 release of "Corso Games."
+New game: Honeygram! Based on NYT's SpellingBee game. 
 
 
 What's New:
-Internals and a few externals. More coming soon.
+Honeygram: words on words on words..
 
 
 Release notes
-17 (2.1.0)
+18 (2.1.1)
 Good luck, have fun!

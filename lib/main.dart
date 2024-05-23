@@ -26,8 +26,6 @@ Future<void> main() async {
         : await getTemporaryDirectory(),
   );
 
-  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // Bloc.observer = SimpleBlocObserver();
 
@@ -63,6 +61,9 @@ class CorsoGames extends StatelessWidget {
             create: (context) => BrightnessCubit(),
           ),
           BlocProvider(
+            create: (context) => HoneygramBoardsCubit(),
+          ),
+          BlocProvider(
             create: (context) => NavCubit(),
           ),
           BlocProvider(
@@ -88,8 +89,9 @@ class CorsoGames extends StatelessWidget {
             create: (context) => ElWordBloc()..add(LoadElWord()),
           ),
           BlocProvider(
-            create: (context) => HoneygramBloc()
-              ..add(
+            create: (context) => HoneygramBloc(
+              honeygramCubit: context.read<HoneygramBoardsCubit>(),
+            )..add(
                 LoadHoneygramBoard(
                   context: context,
                   loadFromFile: true,

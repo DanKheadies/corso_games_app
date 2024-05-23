@@ -16,18 +16,11 @@ A list of TODOs to improve Corso Games for all.
 5. Solo Noble
     1. Win/lose popup
 6. User Account
-    1. Subscribe to notifications (why?)
-    2. Show, Share, Reset High Scores
-7. Solitare
-    1. Figure out why the state is auto updated; am saving todoTicker as a work-around (similar issue w/ Snake?)
-8. User
-    1. Put user on the screen wrapper 
-    2. User repository (and auth?) StreamSub runs too often on updates
-    3. Show user email on ConvertWithEmail
-9. El Word
+    1. Show, Share, Reset High Scores
+7. El Word
     1. Right letter, wrong spot -- don't show duplicates, etc
         1. ex: Word is UTTER; user guess NEEDY; only first E is colored
 
 ---
 
-Compliments of DTFun LLC 2023
+Compliments of DTFun LLC 2024

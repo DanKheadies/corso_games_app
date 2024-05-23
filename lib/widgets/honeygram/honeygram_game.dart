@@ -7,6 +7,7 @@ import 'package:corso_games_app/widgets/widgets.dart';
 // import 'package:file_picker/file_picker.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -77,7 +78,9 @@ class _HoneygramGameState extends State<HoneygramGame> {
 
     setState(() {
       textController.text = "";
+      textController.clear();
     });
+    FocusScope.of(context).unfocus();
 
     String? errorMessage = validateGuessedWord(guessedWord);
 
@@ -133,24 +136,26 @@ class _HoneygramGameState extends State<HoneygramGame> {
       child: Column(
         children: [
           const SizedBox(height: 25),
-          GestureDetector(
-            onLongPress: () async {
-              context.read<HoneygramBloc>().add(
-                    UpdateBoard(),
-                  );
-              Future.delayed(const Duration(milliseconds: 300));
-              context.read<HoneygramBloc>().add(
-                    LoadHoneygramBoard(
-                      context: context,
-                      loadFromFile: false,
-                    ),
-                  );
-            },
-            child: HoneygramDifficulty(
-              difficultyPercentile: widget.honeygram.board.difficultyPercentile,
-            ),
-          ),
-          const SizedBox(height: 15),
+          // TODO: implement when we can get the difficulty working
+          // Note: prob don't need to load boards manually anymore
+          // GestureDetector(
+          //   onLongPress: () async {
+          //     context.read<HoneygramBloc>().add(
+          //           UpdateBoard(),
+          //         );
+          //     Future.delayed(const Duration(milliseconds: 300));
+          //     context.read<HoneygramBloc>().add(
+          //           LoadHoneygramBoard(
+          //             context: context,
+          //             loadFromFile: false,
+          //           ),
+          //         );
+          //   },
+          //   child: HoneygramDifficulty(
+          //     difficultyPercentile: widget.honeygram.board.difficultyPercentile,
+          //   ),
+          // ),
+          // const SizedBox(height: 15),
           HoneygramProgress(
             validWords: widget.honeygram.board.validWords,
             wordsInOrderFound: widget.honeygram.wordsInOrderFound,
@@ -162,8 +167,11 @@ class _HoneygramGameState extends State<HoneygramGame> {
           ),
           const SizedBox(height: 20),
           TextField(
-            autofocus: true,
+            // TODO: add a focus scope to avoid keyboard shenanigans
             controller: textController,
+            onSubmitted: (value) {
+              SystemChannels.textInput.invokeMethod('TextInput.hide');
+            },
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
@@ -185,100 +193,69 @@ class _HoneygramGameState extends State<HoneygramGame> {
             typeLetter: handleLetterPressed,
           ),
           const SizedBox(height: 30),
-          GameButton(
-            icon: Icons.abc,
-            isIconic: false,
-            title: 'Scramble',
-            onPress: handleScamble,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              textController.text != ''
+                  ? GameButton(
+                      forHoneygram: true,
+                      icon: Icons.backspace,
+                      isIconic: true,
+                      title: 'Delete',
+                      onPress: textController.text == '' ? null : handleDelete,
+                    )
+                  : const SizedBox(),
+              // const SizedBox(width: 20),
+              GameButton(
+                forHoneygram: true,
+                icon: Icons.shuffle,
+                isIconic: true,
+                title: 'Scramble',
+                onPress: handleScamble,
+              ),
+              // const SizedBox(width: 20),
+              textController.text != ''
+                  ? GameButton(
+                      forHoneygram: true,
+                      icon: Icons.check,
+                      isIconic: true,
+                      title: 'Enter',
+                      onPress: (textController.text == "" ||
+                              widget.honeygram.status == HoneygramStatus.hasWon)
+                          ? null
+                          : handleEnter,
+                    )
+                  : const SizedBox(),
+            ],
           ),
-          const SizedBox(height: 20),
-          textController.text != ''
-              ? GameButton(
-                  icon: Icons.abc,
-                  isIconic: false,
-                  title: 'Delete',
-                  onPress: textController.text == '' ? null : handleDelete,
-                )
-              : const SizedBox(),
-          const SizedBox(height: 20),
-          textController.text != ''
-              ? GameButton(
-                  icon: Icons.abc,
-                  isIconic: false,
-                  title: 'Enter',
-                  onPress: (textController.text == "" ||
-                          widget.honeygram.status == HoneygramStatus.hasWon)
-                      ? null
-                      : handleEnter,
-                )
-              : const SizedBox(),
-          // const SizedBox(height: 50),
           // GameButton(
-          //   isIconic: false,
           //   icon: Icons.abc,
-          //   onPress: () {
-          //     // var toJson = context.read<HoneygramBloc>().state.toJson();
-          //     var hgState = context.read<HoneygramBloc>().state;
-          //     var boardsList = [];
-          //     for (int i = 0; i < hgState.boards.length; i++) {
-          //       boardsList.add(hgState.boards[i].toJson());
-          //     }
-          //     var toJson = jsonEncode(boardsList);
-          //     var blob = webFile.Blob([toJson], 'text/plain', 'native');
-
-          //     webFile.AnchorElement(
-          //       href: webFile.Url.createObjectUrlFromBlob(blob).toString(),
-          //     )
-          //       ..setAttribute("download", "precompiled-boards.txt")
-          //       ..click();
-          //   },
-          //   title: 'toJSON',
-          // ),
-          // const SizedBox(height: 25),
-          // GameButton(
           //   isIconic: false,
-          //   icon: Icons.abc,
-          //   onPress: () async {
-          //     var hgBlocCont = context.read<HoneygramBloc>();
-          //     FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-          //     print('done picking');
-          //     if (result != null) {
-          //       print('not null');
-          //       // print(result.files.first);
-          //       // print(result.files.first.path!);
-          //       final Uint8List fileBytes = result.files.first.bytes!;
-          //       //   final String fileName = image.files.first.name;
-          //       // File file = File().openRead().transform(fileBytes);
-          //       var decoder = utf8.decode(fileBytes);
-          //       print('we haz file');
-          //       print(decoder);
-          //       // Map mapValue = jsonDecode(decoder);
-          //       print('**************** DACO **************');
-          //       // var derp = jsonEncode(decoder);
-          //       // print(derp);
-          //       // print(mapValue);
-          //       print('**************** TACO **************');
-          //       // hgBlocCont.fromJson(mapValue as Map<String, dynamic>);
-          //       // hgBlocCont.fromJson(decoder);
-          //       var derpDeDerp = jsonDecode(decoder);
-          //       print(derpDeDerp);
-          //       // hgBlocCont.fromJson(derpDeDerp);
-          //       print('**************** FLAME **************');
-          //       print(derpDeDerp[0]);
-
-          //       hgBlocCont.add(
-          //         LoadBoardsFromFile(
-          //           data: derpDeDerp,
-          //         ),
-          //       );
-          //     } else {
-          //       // User canceled the picker
-          //     }
-          //   },
-          //   title: 'fromJson',
+          //   title: 'Scramble',
+          //   onPress: handleScamble,
           // ),
-          const SizedBox(height: 50),
+          // const SizedBox(height: 20),
+          // textController.text != ''
+          //     ? GameButton(
+          //         icon: Icons.abc,
+          //         isIconic: false,
+          //         title: 'Delete',
+          //         onPress: textController.text == '' ? null : handleDelete,
+          //       )
+          //     : const SizedBox(),
+          // const SizedBox(height: 20),
+          // textController.text != ''
+          //     ? GameButton(
+          //         icon: Icons.abc,
+          //         isIconic: false,
+          //         title: 'Enter',
+          //         onPress: (textController.text == "" ||
+          //                 widget.honeygram.status == HoneygramStatus.hasWon)
+          //             ? null
+          //             : handleEnter,
+          //       )
+          //     : const SizedBox(),
+          const SizedBox(height: 75),
         ],
       ),
     );

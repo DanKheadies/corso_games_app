@@ -24,27 +24,8 @@ class HoneygramWordFrequencies {
   }
 
   double rarityPercentile(String word) {
-    // print('rarity percentile');
-    // print(word);
-    // print(wordToFrequency[word]);
     // FIXME: Should this use minFrequency somewhere?
     int frequency = wordToFrequency[word] ?? 0;
-    // print(frequency);
     return 1.0 - (frequency / maxFrequency);
   }
 }
-
-// void printLongestWords(HoneygramWordList wordList) {
-//   int longestWordLength = wordList.legalWords.fold(
-//       0,
-//       (previous, element) =>
-//           previous > element.length ? previous : element.length);
-//   print("Longest word length: $longestWordLength");
-//   List<String> longestWords = [];
-//   for (String word in wordList.legalWords) {
-//     if (word.length > 15) {
-//       longestWords.add(word);
-//     }
-//   }
-//   print(longestWords);
-// }

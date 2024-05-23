@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class GameButton extends StatefulWidget {
+  final bool? forHoneygram;
   final bool? isIconic;
   final Function()? onPress;
   final IconData icon;
@@ -15,6 +16,7 @@ class GameButton extends StatefulWidget {
     required this.icon,
     required this.onPress,
     required this.title,
+    this.forHoneygram = false,
     this.isIconic = false,
   });
 
@@ -88,6 +90,7 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTapDown: (details) => {
@@ -143,68 +146,64 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
                   widget.onPress != null ? () => widget.onPress!() : () {},
                 );
               },
-              child: widget.isIconic!
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(
-                          widget.icon,
-                          size: 0.1 * height,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        Text(
-                          widget.title,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 0.01875 * height,
-                          ),
-                        ),
-                      ],
+              child: widget.forHoneygram!
+                  ? SizedBox(
+                      height: width / 6,
+                      width: width / 6,
+                      child: Icon(
+                        widget.icon,
+                        // size: 0.1 * height,
+                        size: width / 10,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     )
-                  : widget.icon == Icons.arrow_back
-                      ? SizedBox(
-                          // width: MediaQuery.of(context).size.width * 0.5,
-                          // decoration: BoxDecoration(
-                          //   shape: BoxShape.circle,
-                          //   // borderRadius: BorderRadius.circular(50),
-                          //   // border: Border.all(width: 1),
-                          // ),
-                          width: MediaQuery.of(context).size.width * 0.125,
-                          height: MediaQuery.of(context).size.width * 0.125,
-                          // height: 50,
-                          child: Icon(
-                            widget.icon,
-                            size: MediaQuery.of(context).size.width * 0.075,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          // child: Text(
-                          //   widget.title,
-                          //   textAlign: TextAlign.center,
-                          //   style: TextStyle(
-                          //     color: Theme.of(context).colorScheme.primary,
-                          //     fontSize: 0.0275 * height,
-                          //   ),
-                          // ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Text(
+                  : widget.isIconic!
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              widget.icon,
+                              size: 0.1 * height,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            Text(
                               widget.title,
-                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
-                                fontSize: 0.0275 * height,
+                                fontSize: 0.01875 * height,
                               ),
                             ),
-                          ),
-                        ),
+                          ],
+                        )
+                      : widget.icon == Icons.arrow_back
+                          ? SizedBox(
+                              width: width * 0.125,
+                              height: width * 0.125,
+                              child: Icon(
+                                widget.icon,
+                                size: width * 0.075,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: SizedBox(
+                                width: width * 0.5,
+                                child: Text(
+                                  widget.title,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 0.0275 * height,
+                                  ),
+                                ),
+                              ),
+                            ),
             );
           },
         ),
       ),
     );
-    // return const SizedBox();
   }
 }
