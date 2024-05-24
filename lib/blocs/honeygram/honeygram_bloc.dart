@@ -48,12 +48,6 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
     GetNewHoneygramBoard event,
     Emitter<HoneygramState> emit,
   ) {
-    print('flame');
-    if (event.honeygramBoards != null) {
-      print('do it');
-      print(event.honeygramBoards!.length);
-    }
-    print(_honeygramCubit.state.honeygramBoards.length);
     List<HoneygramBoard> honeygramBoards =
         (event.honeygramBoards != null && event.honeygramBoards!.isNotEmpty)
             ? event.honeygramBoards!

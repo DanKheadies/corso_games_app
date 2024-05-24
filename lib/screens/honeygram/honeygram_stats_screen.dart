@@ -1,6 +1,6 @@
 import 'dart:convert';
 // ignore: avoid_web_libraries_in_flutter
-// TODO: uncomment when we need a new boards.txt file
+// Note: switch out when we need a new boards.txt file
 // import 'dart:html';
 
 import 'package:corso_games_app/blocs/blocs.dart';
@@ -10,7 +10,6 @@ import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HoneygramStatsScreen extends StatelessWidget {
@@ -43,8 +42,6 @@ class HoneygramStatsScreen extends StatelessWidget {
     List<HoneygramBoard> honeygramBoards = await hgbCont.loadBoardsFromFile(
       data: boardsJsonList,
     );
-    print('daco');
-    print(honeygramBoards.length);
     hgCont.add(
       GetNewHoneygramBoard(
         honeygramBoards: honeygramBoards,
@@ -88,8 +85,7 @@ class HoneygramStatsScreen extends StatelessWidget {
                   icon: Icons.abc,
                   onPress: () {
                     resetHoneygram(context);
-                    // print('Disabled atm');
-                    // TODO: uncomment when we need a new boards.txt file
+                    // Note: switch out when we need a new boards.txt file
                     // var hgbState = context.read<HoneygramBoardsCubit>().state;
                     // var boardsList = [];
 

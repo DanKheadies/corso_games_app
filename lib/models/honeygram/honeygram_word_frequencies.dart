@@ -11,7 +11,7 @@ class HoneygramWordFrequencies {
 
   // TODO: when is this used
   void wordFrequencies(List<String> lines) {
-    print('word frequencies...');
+    // print('word frequencies...');
     for (String line in lines) {
       // Format: word length frequency article_count
       List<String> parts = line.split(" ");

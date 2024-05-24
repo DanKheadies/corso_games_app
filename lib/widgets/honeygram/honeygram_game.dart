@@ -47,7 +47,6 @@ class _HoneygramGameState extends State<HoneygramGame> {
   }
 
   String? validateGuessedWord(String guessedWord) {
-    print('validate guess');
     if (guessedWord.length < 4) {
       return 'Words must be at least 4 letters.';
     }
@@ -61,7 +60,6 @@ class _HoneygramGameState extends State<HoneygramGame> {
     }
 
     if (!widget.honeygram.board.validWords.contains(guessedWord)) {
-      print('guessWord: $guessedWord');
       return '"$guessedWord" is not a valid word';
     }
     return null;
@@ -73,7 +71,6 @@ class _HoneygramGameState extends State<HoneygramGame> {
   }
 
   void handleEnter() {
-    print('handle eenter');
     var guessedWord = textController.text.toLowerCase();
 
     setState(() {
@@ -85,7 +82,6 @@ class _HoneygramGameState extends State<HoneygramGame> {
     String? errorMessage = validateGuessedWord(guessedWord);
 
     if (errorMessage != null) {
-      print('show message');
       final snackBar = SnackBar(content: Text(errorMessage));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
@@ -96,7 +92,6 @@ class _HoneygramGameState extends State<HoneygramGame> {
             word: guessedWord,
           ),
         );
-    print('enter handled');
   }
 
   void handleLetterPressed(String letter) {

@@ -300,17 +300,9 @@ class ElWordBloc extends HydratedBloc<ElWordEvent, ElWordState> {
   Future<String> loadDictionary(
     ElWordDifficulty difficulty,
   ) async {
-    print('load dictionary bloc');
-    print(state.difficulty);
-    // TODO: double check this
-    // String platformLocation = kIsWeb ? 'data/' : 'assets/data/';
     if (difficulty == ElWordDifficulty.normal) {
-      // return await rootBundle
-      //     .loadString('${platformLocation}el_word/words_2316.txt');
       return await rootBundle.loadString('assets/data/el_word/words_2316.txt');
     } else {
-      // return await rootBundle
-      //     .loadString('${platformLocation}el_word/words_14855.txt');
       return await rootBundle.loadString('assets/data/el_word/words_14855.txt');
     }
   }

@@ -63,9 +63,9 @@ class SnakeBloc extends HydratedBloc<SnakeEvent, SnakeState> {
     UpdateSnakeBoard event,
     Emitter<SnakeState> emit,
   ) {
-    if (event.gameSpeed != null) {
-      print('speed updated to ${event.gameSpeed}');
-    }
+    // if (event.gameSpeed != null) {
+    //   print('speed updated to ${event.gameSpeed}');
+    // }
     emit(
       SnakeState(
         colNum: event.colNum ?? state.colNum,
