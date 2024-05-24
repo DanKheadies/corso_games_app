@@ -49,6 +49,8 @@ class HoneygramBoardsCubit extends HydratedCubit<HoneygramBoardsState> {
         status: HoneygramBoardsStatus.loaded,
       ),
     );
+    print('returing baords:');
+    print(boardsList.length);
 
     return boardsList;
   }

@@ -20,7 +20,18 @@ class FoundWord extends HoneygramEvent {
       ];
 }
 
-class GetNewHoneygramBoard extends HoneygramEvent {}
+class GetNewHoneygramBoard extends HoneygramEvent {
+  final List<HoneygramBoard>? honeygramBoards;
+
+  const GetNewHoneygramBoard({
+    this.honeygramBoards = const [],
+  });
+
+  @override
+  List<Object?> get props => [
+        honeygramBoards,
+      ];
+}
 
 class LoadHoneygramBoard extends HoneygramEvent {
   final bool loadFromFile;
@@ -38,4 +49,4 @@ class LoadHoneygramBoard extends HoneygramEvent {
       ];
 }
 
-class UpdateBoard extends HoneygramEvent {}
+class ResetBoard extends HoneygramEvent {}

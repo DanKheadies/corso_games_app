@@ -148,15 +148,34 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
               },
               child: widget.forHoneygram!
                   ? SizedBox(
-                      height: width / 6,
-                      width: width / 6,
-                      child: Icon(
-                        widget.icon,
-                        // size: 0.1 * height,
-                        size: width / 10,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    )
+                      // height: width / 6,
+                      height: 69,
+                      // width: width / 6,
+                      width: 69,
+                      // child: Icon(
+                      //   widget.icon,
+                      //   // size: 0.1 * height,
+                      //   // size: width / 10,
+                      //   size: 50,
+                      //   color: Theme.of(context).colorScheme.primary,
+                      // ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(
+                            widget.icon,
+                            size: 45,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          Text(
+                            widget.title,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ))
                   : widget.isIconic!
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

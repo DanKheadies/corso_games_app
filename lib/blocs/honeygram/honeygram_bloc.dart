@@ -6,7 +6,7 @@ import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:csv/csv.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +24,7 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
     on<FoundWord>(_onFoundWord);
     on<GetNewHoneygramBoard>(_onGetNewHoneygramBoard);
     on<LoadHoneygramBoard>(_onLoadHoneygramBoard);
-    on<UpdateBoard>(_onUpdateBoard);
+    on<ResetBoard>(_onResetBoard);
   }
 
   void _onFoundWord(
@@ -48,12 +48,22 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
     GetNewHoneygramBoard event,
     Emitter<HoneygramState> emit,
   ) {
-    int randomNumber =
-        Random().nextInt(_honeygramCubit.state.honeygramBoards.length);
+    print('flame');
+    if (event.honeygramBoards != null) {
+      print('do it');
+      print(event.honeygramBoards!.length);
+    }
+    print(_honeygramCubit.state.honeygramBoards.length);
+    List<HoneygramBoard> honeygramBoards =
+        (event.honeygramBoards != null && event.honeygramBoards!.isNotEmpty)
+            ? event.honeygramBoards!
+            : _honeygramCubit.state.honeygramBoards;
+    int randomNumber = Random().nextInt(honeygramBoards.length);
 
     emit(
       state.copyWith(
-        board: _honeygramCubit.state.honeygramBoards[randomNumber],
+        board: honeygramBoards[randomNumber],
+        status: HoneygramStatus.loaded,
         wordsInOrderFound: [],
       ),
     );
@@ -72,9 +82,11 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
     );
 
     if (event.loadFromFile && _honeygramCubit.state.honeygramBoards.isEmpty) {
-      String platformLocation = kIsWeb ? 'data/' : 'assets/data/';
-      final ByteData boardsBytes = await rootBundle
-          .load('${platformLocation}honeygram/precompiled-boards.txt');
+      // String platformLocation = kIsWeb ? 'assets/data/' : 'assets/data/';
+      // final ByteData boardsBytes = await rootBundle
+      //     .load('${platformLocation}honeygram/precompiled-boards.txt');
+      final ByteData boardsBytes =
+          await rootBundle.load('assets/data/honeygram/precompiled-boards.txt');
       final Uint8List boardsIntsList = boardsBytes.buffer.asUint8List();
       var boardsStringList = utf8.decode(boardsIntsList);
       var boardsJsonList = jsonDecode(boardsStringList);
@@ -94,13 +106,15 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
         ),
       );
     } else if (_honeygramCubit.state.honeygramBoards.isEmpty) {
-      String platformLocation = kIsWeb ? 'data/' : 'assets/data/';
+      // String platformLocation = kIsWeb ? 'data/' : 'assets/data/';
       var defAssetBundle = DefaultAssetBundle.of(event.context);
 
       await Future.delayed(const Duration(milliseconds: 300));
 
+      // String wordListString =
+      //     await rootBundle.loadString('${platformLocation}honeygram/words.txt');
       String wordListString =
-          await rootBundle.loadString('${platformLocation}honeygram/words.txt');
+          await rootBundle.loadString('assets/data/honeygram/words.txt');
       List<String> words = wordListString.trim().split('\n');
 
       // Remove whitespace to avoid issues down the line
@@ -109,8 +123,11 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
         wordList.add(word.trim());
       }
 
+      // var wordFrequenciesCSV = await defAssetBundle.loadString(
+      //   '${platformLocation}honeygram/frequencies.csv',
+      // );
       var wordFrequenciesCSV = await defAssetBundle.loadString(
-        '${platformLocation}honeygram/frequencies.csv',
+        'assets/data/honeygram/frequencies.csv',
       );
       List<List<dynamic>> wordFrequencies = const CsvToListConverter().convert(
         wordFrequenciesCSV,
@@ -155,8 +172,8 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
     }
   }
 
-  void _onUpdateBoard(
-    UpdateBoard event,
+  void _onResetBoard(
+    ResetBoard event,
     Emitter<HoneygramState> emit,
   ) {
     emit(

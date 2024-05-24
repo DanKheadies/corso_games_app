@@ -57,7 +57,7 @@ class HoneygramScreen extends StatelessWidget {
       flactionButton: FloatingActionButton(
         onPressed: () {
           context.read<HoneygramBloc>().add(
-                GetNewHoneygramBoard(),
+                const GetNewHoneygramBoard(),
               );
         },
         tooltip: 'New Board',
@@ -71,7 +71,7 @@ class HoneygramScreen extends StatelessWidget {
           ),
           onPressed: () {
             context.read<HoneygramBloc>().add(
-                  GetNewHoneygramBoard(),
+                  const GetNewHoneygramBoard(),
                 );
           },
         ),

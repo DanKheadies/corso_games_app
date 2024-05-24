@@ -2,7 +2,7 @@
 // import 'dart:io';
 
 import 'package:corso_games_app/blocs/blocs.dart';
-import 'package:corso_games_app/blocs/honeygram/honeygram_bloc.dart';
+// import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 // import 'package:file_picker/file_picker.dart';
 // import 'package:flutter/foundation.dart';
@@ -228,33 +228,6 @@ class _HoneygramGameState extends State<HoneygramGame> {
                   : const SizedBox(),
             ],
           ),
-          // GameButton(
-          //   icon: Icons.abc,
-          //   isIconic: false,
-          //   title: 'Scramble',
-          //   onPress: handleScamble,
-          // ),
-          // const SizedBox(height: 20),
-          // textController.text != ''
-          //     ? GameButton(
-          //         icon: Icons.abc,
-          //         isIconic: false,
-          //         title: 'Delete',
-          //         onPress: textController.text == '' ? null : handleDelete,
-          //       )
-          //     : const SizedBox(),
-          // const SizedBox(height: 20),
-          // textController.text != ''
-          //     ? GameButton(
-          //         icon: Icons.abc,
-          //         isIconic: false,
-          //         title: 'Enter',
-          //         onPress: (textController.text == "" ||
-          //                 widget.honeygram.status == HoneygramStatus.hasWon)
-          //             ? null
-          //             : handleEnter,
-          //       )
-          //     : const SizedBox(),
           const SizedBox(height: 75),
         ],
       ),
