@@ -20,6 +20,8 @@ A list of TODOs to improve Corso Games for all.
 7. El Word
     1. Right letter, wrong spot -- don't show duplicates, etc
         1. ex: Word is UTTER; user guess NEEDY; only first E is colored
+8. Honegram
+    1. Loading the screen is slow when there's data in the cubit
 
 ---
 

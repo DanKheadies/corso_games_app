@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:corso_games_app/helpers/device_info_helper.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -51,9 +52,13 @@ class AuthRepository {
     try {
       final userCredentials = await _firebaseAuth.signInAnonymously();
 
+      Map<String, String> deviceInfo = await getDeviceInfoHelper();
+
       await _userRepository.createUser(
         user: User.emptyUser.copyWith(
           createdAt: userCredentials.user!.metadata.creationTime,
+          deviceOS: deviceInfo['deviceOS'],
+          deviceType: deviceInfo['deviceType'],
           email: 'anon@mous.ly',
           id: userCredentials.user!.uid,
           name: 'Anon',
@@ -81,9 +86,13 @@ class AuthRepository {
         password: password,
       );
 
+      Map<String, String> deviceInfo = await getDeviceInfoHelper();
+
       await _userRepository.createUser(
         user: User.emptyUser.copyWith(
           createdAt: userCredentials.user!.metadata.creationTime,
+          deviceOS: deviceInfo['deviceOS'],
+          deviceType: deviceInfo['deviceType'],
           email: email,
           id: userCredentials.user!.uid,
           name: name,

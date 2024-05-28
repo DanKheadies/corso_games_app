@@ -1,3 +1,4 @@
+import 'package:corso_games_app/helpers/device_info_helper.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:equatable/equatable.dart';
@@ -42,8 +43,12 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
       ),
     );
 
+    Map<String, String> deviceInfo = await getDeviceInfoHelper();
+
     if (!event.accountCreation) {
       updatedUser = event.user.copyWith(
+        deviceOS: deviceInfo['deviceOS'],
+        deviceType: deviceInfo['deviceType'],
         updatedAt: DateTime.now(),
       );
     } else {

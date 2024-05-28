@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
+import 'package:corso_games_app/helpers/device_info_helper.dart';
 import 'package:corso_games_app/models/models.dart';
 import 'package:corso_games_app/repositories/repositories.dart';
 import 'package:equatable/equatable.dart';
@@ -137,12 +138,16 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     try {
       var authUser = await _authRepository.registerAnon();
 
+      Map<String, String> deviceInfo = await getDeviceInfoHelper();
+
       _userBloc.add(
         UpdateUser(
           accountCreation: true,
           updateFirebase: false,
           user: User.emptyUser.copyWith(
             createdAt: authUser!.metadata.creationTime,
+            deviceOS: deviceInfo['deviceOS'],
+            deviceType: deviceInfo['deviceType'],
             email: 'anon@mous.ly',
             name: 'Anon',
             id: authUser.uid,
@@ -192,12 +197,16 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
         password: event.password,
       );
 
+      Map<String, String> deviceInfo = await getDeviceInfoHelper();
+
       _userBloc.add(
         UpdateUser(
           accountCreation: true,
           updateFirebase: false,
           user: User.emptyUser.copyWith(
             createdAt: authUser!.metadata.creationTime,
+            deviceOS: deviceInfo['deviceOS'],
+            deviceType: deviceInfo['deviceType'],
             email: event.email,
             name: event.name,
             id: authUser.uid,
