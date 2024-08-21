@@ -1,4 +1,5 @@
 export 'authentication/widgetes.dart';
+export 'ball_bounce/widgets.dart';
 export 'colors_slide/widgets.dart';
 export 'dino_dash/widgets.dart';
 export 'el_word/widgets.dart';
@@ -19,8 +20,6 @@ export 'custom_center.dart';
 export 'custom_text_form_field.dart';
 export 'game_button.dart';
 export 'games_drawer.dart';
-export 'padded_button.dart';
-export 'padded_spinner_button.dart';
 export 'password_input.dart';
 export 'registration.dart';
 export 'screen_info.dart';

@@ -30,7 +30,8 @@ Future<Map<String, String>> getDeviceInfoHelper() async {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
       var systemName = iosInfo.systemName;
       var version = iosInfo.systemVersion;
-      var name = iosInfo.data['utsname']['nodename']; // iosInfo.name;
+      // var name = iosInfo.data['utsname']['nodename']; // iosInfo.name;
+      var name = iosInfo.name;
       var model = iosInfo.model;
       deviceOS = '$systemName $version';
       deviceType = '$name\'s $model';

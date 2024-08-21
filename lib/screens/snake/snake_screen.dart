@@ -60,7 +60,7 @@ class _SnakeScreenState extends State<SnakeScreen> {
               tooltip: 'Settings',
               icon: Icon(
                 Icons.settings,
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.onSurface,
                 size: 30,
               ),
               onPressed: () {
@@ -109,7 +109,7 @@ class _SnakeScreenState extends State<SnakeScreen> {
                   state.snakeStatus != SnakeStatus.play
                       ? Icons.play_arrow
                       : Icons.settings_backup_restore_rounded,
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.onSurface,
                   size: 30,
                 ),
                 onPressed: () {
@@ -134,7 +134,7 @@ class _SnakeScreenState extends State<SnakeScreen> {
               child: IconButton(
                 icon: Icon(
                   Icons.error,
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.onSurface,
                   size: 30,
                 ),
                 onPressed: () => print('Error'),

@@ -23,6 +23,18 @@ class GamesScreen extends StatelessWidget {
         children: [
           GameButton(
             isIconic: true,
+            icon: Icons.border_bottom,
+            title: 'Ball Bounce',
+            onPress: () => context.goNamed('ballBounce'),
+          ),
+          GameButton(
+            isIconic: true,
+            icon: Icons.filter_list,
+            title: 'Breakup',
+            onPress: () => context.goNamed('breakup'),
+          ),
+          GameButton(
+            isIconic: true,
             icon: Icons.blur_linear_rounded,
             title: 'Colors Slide',
             onPress: () => context.goNamed('colorsSlide'),

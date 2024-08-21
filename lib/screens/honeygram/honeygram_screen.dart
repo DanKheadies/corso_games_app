@@ -27,7 +27,7 @@ class HoneygramScreen extends StatelessWidget {
                 tooltip: 'Stats',
                 icon: Icon(
                   Icons.stacked_bar_chart,
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.onSurface,
                   size: 30,
                 ),
                 onPressed: () {
@@ -40,7 +40,7 @@ class HoneygramScreen extends StatelessWidget {
                 tooltip: 'Words',
                 icon: Icon(
                   Icons.list,
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.onSurface,
                   size: 30,
                 ),
                 onPressed: () {
@@ -66,7 +66,7 @@ class HoneygramScreen extends StatelessWidget {
         child: IconButton(
           icon: Icon(
             Icons.hexagon,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             size: 30,
           ),
           onPressed: () {

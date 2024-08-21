@@ -130,9 +130,9 @@ class _GameButtonState extends State<GameButton> with TickerProviderStateMixin {
                           state == Brightness.dark ? 0.275 : 0.5,
                         ),
                 shadowLightColor:
-                    Theme.of(context).colorScheme.background.withOpacity(1),
+                    Theme.of(context).colorScheme.onSurface.withOpacity(1),
                 shadowLightColorEmboss:
-                    Theme.of(context).colorScheme.background.withOpacity(1),
+                    Theme.of(context).colorScheme.onSurface.withOpacity(1),
                 shape: NeumorphicShape.flat,
                 boxShape: widget.icon == Icons.arrow_back
                     ? const NeumorphicBoxShape.circle()

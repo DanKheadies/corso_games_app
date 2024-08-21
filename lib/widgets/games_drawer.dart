@@ -66,6 +66,40 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
+              'Ball Bounce',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.border_bottom,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              context.goNamed('ballBounce');
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Breakup',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.filter_list,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              context.goNamed('breakup');
+            },
+          ),
+          ListTile(
+            title: Text(
               'Colors Slide',
               style: TextStyle(
                 fontSize: 18,

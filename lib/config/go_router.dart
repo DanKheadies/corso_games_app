@@ -23,8 +23,40 @@ final GoRouter goRouter = GoRouter(
         ),
       ),
     ),
-    // case ColorsSlideScreen.routeName:
-    //   return ColorsSlideScreen.route();
+    GoRoute(
+      path: '/ballBounce',
+      name: 'ballBounce',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const BallBounceScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
+    GoRoute(
+      path: '/breakup',
+      name: 'breakup',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const BreakupScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
     GoRoute(
       path: '/colorsSlide',
       name: 'colorsSlide',
@@ -42,8 +74,6 @@ final GoRouter goRouter = GoRouter(
         state,
       ),
     ),
-    // case CSSettingsScreen.routeName:
-    //   return CSSettingsScreen.route();
     GoRoute(
       path: '/colorsSlideSettings',
       name: 'colorsSlideSettings',

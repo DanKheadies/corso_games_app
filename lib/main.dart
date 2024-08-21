@@ -58,6 +58,9 @@ class CorsoGames extends StatelessWidget {
             ),
           ),
           BlocProvider(
+            create: (context) => BallBounceCubit(),
+          ),
+          BlocProvider(
             create: (context) => BrightnessCubit(),
           ),
           BlocProvider(

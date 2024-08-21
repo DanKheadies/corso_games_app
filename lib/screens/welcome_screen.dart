@@ -29,12 +29,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   bool imageLinkVisible = false;
 
   late AnimationController controller;
+  late Timer authenticationTimer;
   late Timer showContentTimer;
   late Timer showImageLinkTimer;
 
   @override
   void initState() {
     super.initState();
+
+    authenticationTimer = Timer(Duration.zero, () {});
 
     controller = AnimationController(
       duration: const Duration(
@@ -104,6 +107,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   void dispose() {
+    authenticationTimer.cancel();
     controller.dispose();
     showContentTimer.cancel();
     showImageLinkTimer.cancel();
@@ -165,6 +169,19 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ),
             );
           } else if (state.status == AuthStatus.authenticated) {
+            if (!authenticationTimer.isActive) {
+              print('not active so setting');
+              authenticationTimer = Timer(
+                const Duration(seconds: 3),
+                () async {
+                  print('its been 3 seconds and still here, sign out');
+                  context.read<AuthBloc>().add(
+                        SignOut(),
+                      );
+                },
+              );
+            }
+
             return CustomCenter(
               child: GestureDetector(
                 onLongPress: () {
@@ -176,7 +193,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   Icons.thumb_up_alt_outlined,
                   color: method != AuthMethod.tbd
                       ? Theme.of(context).colorScheme.surface
-                      : Theme.of(context).colorScheme.surfaceVariant,
+                      : Theme.of(context).colorScheme.primary,
                   size: 50,
                 ),
               ),

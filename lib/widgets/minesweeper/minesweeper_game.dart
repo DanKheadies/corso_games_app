@@ -421,7 +421,7 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         child: Icon(
           Icons.tag_faces,
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.onSurface,
           size: 40,
         ),
       ),

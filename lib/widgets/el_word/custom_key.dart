@@ -42,7 +42,7 @@ class CustomKey extends StatelessWidget {
         color: color,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             blurRadius: 1,
             spreadRadius: 1,
           ),

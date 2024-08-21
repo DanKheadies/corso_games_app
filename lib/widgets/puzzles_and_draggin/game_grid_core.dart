@@ -52,7 +52,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '1')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '1',
             canAccept:
                 widget.selectedGridUnit != '1' && widget.selectedGridUnit != '',
@@ -84,7 +84,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '3')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '3',
             canAccept:
                 widget.selectedGridUnit != '3' && widget.selectedGridUnit != '',
@@ -100,7 +100,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '4')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '4',
             canAccept:
                 widget.selectedGridUnit != '4' && widget.selectedGridUnit != '',
@@ -116,7 +116,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '5')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '5',
             canAccept:
                 widget.selectedGridUnit != '5' && widget.selectedGridUnit != '',
@@ -148,7 +148,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '7')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '7',
             canAccept:
                 widget.selectedGridUnit != '7' && widget.selectedGridUnit != '',
@@ -164,7 +164,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '8')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '8',
             canAccept:
                 widget.selectedGridUnit != '8' && widget.selectedGridUnit != '',
@@ -196,7 +196,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '10')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '10',
             canAccept: widget.selectedGridUnit != '10' &&
                 widget.selectedGridUnit != '',
@@ -212,7 +212,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '11')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '11',
             canAccept: widget.selectedGridUnit != '11' &&
                 widget.selectedGridUnit != '',
@@ -228,7 +228,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '12')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '12',
             canAccept: widget.selectedGridUnit != '12' &&
                 widget.selectedGridUnit != '',
@@ -244,7 +244,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '13')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '13',
             canAccept: widget.selectedGridUnit != '13' &&
                 widget.selectedGridUnit != '',
@@ -260,7 +260,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '14')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '14',
             canAccept: widget.selectedGridUnit != '14' &&
                 widget.selectedGridUnit != '',
@@ -292,7 +292,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '16')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '16',
             canAccept: widget.selectedGridUnit != '16' &&
                 widget.selectedGridUnit != '',
@@ -308,7 +308,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '17')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '17',
             canAccept: widget.selectedGridUnit != '17' &&
                 widget.selectedGridUnit != '',
@@ -324,7 +324,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '18')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '18',
             canAccept: widget.selectedGridUnit != '18' &&
                 widget.selectedGridUnit != '',
@@ -340,7 +340,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '19')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '19',
             canAccept: widget.selectedGridUnit != '19' &&
                 widget.selectedGridUnit != '',
@@ -356,7 +356,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '20')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '20',
             canAccept: widget.selectedGridUnit != '20' &&
                 widget.selectedGridUnit != '',
@@ -372,7 +372,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '21')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '21',
             canAccept: widget.selectedGridUnit != '21' &&
                 widget.selectedGridUnit != '',
@@ -388,7 +388,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '22')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '22',
             canAccept: widget.selectedGridUnit != '22' &&
                 widget.selectedGridUnit != '',
@@ -404,7 +404,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '23')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '23',
             canAccept: widget.selectedGridUnit != '23' &&
                 widget.selectedGridUnit != '',
@@ -436,7 +436,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '25')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '25',
             canAccept: widget.selectedGridUnit != '25' &&
                 widget.selectedGridUnit != '',
@@ -452,7 +452,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '26')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '26',
             canAccept: widget.selectedGridUnit != '26' &&
                 widget.selectedGridUnit != '',
@@ -484,7 +484,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '28')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '28',
             canAccept: widget.selectedGridUnit != '28' &&
                 widget.selectedGridUnit != '',
@@ -500,7 +500,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '29')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '29',
             canAccept: widget.selectedGridUnit != '29' &&
                 widget.selectedGridUnit != '',
@@ -516,7 +516,7 @@ class _GameGridCoreState extends State<GameGridCore> {
             top: widget
                 .grid[widget.grid.indexWhere((unit) => unit.id == '30')].top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '30',
             canAccept: widget.selectedGridUnit != '30' &&
                 widget.selectedGridUnit != '',

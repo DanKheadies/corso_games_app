@@ -281,7 +281,7 @@ class _DinoDashScreenState extends State<DinoDashScreen>
             child: IconButton(
               icon: Icon(
                 Icons.settings_backup_restore_rounded,
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.onSurface,
                 size: 30,
               ),
               onPressed: () {

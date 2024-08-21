@@ -82,12 +82,12 @@ class _ProfileDetailRowState extends State<ProfileDetailRow> {
                   ),
                   filled: true,
                   fillColor: isEditing
-                      ? Theme.of(context).colorScheme.background
+                      ? Theme.of(context).colorScheme.onSurface
                       : Theme.of(context).scaffoldBackgroundColor,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onSurface,
                       width: 1,
                     ),
                   ),
@@ -108,7 +108,7 @@ class _ProfileDetailRowState extends State<ProfileDetailRow> {
                   disabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onSurface,
                       width: 0,
                     ),
                   ),

@@ -85,9 +85,9 @@ class _ColorsGameBoardState extends State<ColorsGameBoard> {
               shadowDarkColorEmboss:
                   Theme.of(context).colorScheme.surface.withOpacity(0.575),
               shadowLightColor:
-                  Theme.of(context).colorScheme.background.withOpacity(0.575),
+                  Theme.of(context).colorScheme.onSurface.withOpacity(0.575),
               shadowLightColorEmboss:
-                  Theme.of(context).colorScheme.background.withOpacity(0.575),
+                  Theme.of(context).colorScheme.onSurface.withOpacity(0.575),
             ),
             child: SizedBox(
               width:

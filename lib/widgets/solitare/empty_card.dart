@@ -62,11 +62,11 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
                         color: state == Brightness.dark
                             ? Theme.of(context)
                                 .colorScheme
-                                .background
+                                .onSurface
                                 .withBlue(175)
                                 .withGreen(175)
                                 .withRed(175)
-                            : Theme.of(context).colorScheme.background,
+                            : Theme.of(context).colorScheme.onSurface,
                       ),
                       // height: 60,
                       height: Responsive.isMobile(context)

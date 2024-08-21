@@ -281,7 +281,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     SignOut event,
     Emitter<AuthState> emit,
   ) {
-    if (state.status == AuthStatus.submitting || state.authUser == null) {
+    if (state.status == AuthStatus.submitting) {
       return;
     }
 

@@ -103,7 +103,7 @@ class ScreenWrapper extends StatelessWidget {
                   title: Text(
                     screen,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   backgroundColor: Theme.of(context).colorScheme.secondary,

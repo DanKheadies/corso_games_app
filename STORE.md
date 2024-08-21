@@ -7,7 +7,7 @@ Good luck, have fun!
 
 
 Promotional:
-The 2.1.1 release of "Corso Games."
+The 2.1.2 release of "Corso Games."
 New game: Honeygram! Based on NYT's SpellingBee game. 
 
 
@@ -16,5 +16,5 @@ Honeygram: words on words on words..
 
 
 Release notes
-18 (2.1.1)
+19 (2.1.2)
 Good luck, have fun!

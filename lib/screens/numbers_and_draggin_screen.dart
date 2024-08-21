@@ -139,7 +139,7 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
         child: IconButton(
           icon: Icon(
             Icons.settings_backup_restore_rounded,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             size: 30,
           ),
           onPressed: resetGameBoard,

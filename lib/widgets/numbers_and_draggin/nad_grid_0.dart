@@ -156,7 +156,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '1')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '1',
             canAccept: selectedGridUnit != '1' && selectedGridUnit != '',
             canDrag: false,
@@ -172,7 +172,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '2')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '2',
             canAccept: selectedGridUnit != '2' && selectedGridUnit != '',
             canDrag: false,
@@ -188,7 +188,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '3')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '3',
             canAccept: selectedGridUnit != '3' && selectedGridUnit != '',
             canDrag: false,
@@ -204,7 +204,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '4')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '4',
             canAccept: selectedGridUnit != '4' && selectedGridUnit != '',
             canDrag: false,
@@ -220,7 +220,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '5')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '5',
             canAccept: selectedGridUnit != '5' && selectedGridUnit != '',
             canDrag: false,
@@ -236,7 +236,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '6')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '6',
             canAccept: selectedGridUnit != '6' && selectedGridUnit != '',
             canDrag: false,
@@ -252,7 +252,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '7')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '7',
             canAccept: selectedGridUnit != '7' && selectedGridUnit != '',
             canDrag: false,
@@ -268,7 +268,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '8')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '8',
             canAccept: selectedGridUnit != '8' && selectedGridUnit != '',
             canDrag: false,
@@ -284,7 +284,7 @@ class _NadGrid0State extends State<NadGrid0> {
             top: nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '9')]
                 .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '9',
             canAccept: selectedGridUnit != '9' && selectedGridUnit != '',
             canDrag: false,
@@ -301,7 +301,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '10')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '10',
             canAccept: selectedGridUnit != '10' && selectedGridUnit != '',
             canDrag: false,
@@ -318,7 +318,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '11')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '11',
             canAccept: selectedGridUnit != '11' && selectedGridUnit != '',
             canDrag: false,
@@ -335,7 +335,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '12')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '12',
             canAccept: selectedGridUnit != '12' && selectedGridUnit != '',
             canDrag: false,
@@ -352,7 +352,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '13')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '13',
             canAccept: selectedGridUnit != '13' && selectedGridUnit != '',
             canDrag: false,
@@ -369,7 +369,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '14')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '14',
             canAccept: selectedGridUnit != '14' && selectedGridUnit != '',
             canDrag: false,
@@ -386,7 +386,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '15')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '15',
             canAccept: selectedGridUnit != '15' && selectedGridUnit != '',
             canDrag: false,
@@ -403,7 +403,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '16')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '16',
             canAccept: selectedGridUnit != '16' && selectedGridUnit != '',
             canDrag: false,
@@ -420,7 +420,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '17')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '17',
             canAccept: selectedGridUnit != '17' && selectedGridUnit != '',
             canDrag: false,
@@ -437,7 +437,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '18')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '18',
             canAccept: selectedGridUnit != '18' && selectedGridUnit != '',
             canDrag: false,
@@ -454,7 +454,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '19')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '19',
             canAccept: selectedGridUnit != '19' && selectedGridUnit != '',
             canDrag: false,
@@ -471,7 +471,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '20')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '20',
             canAccept: selectedGridUnit != '20' && selectedGridUnit != '',
             canDrag: false,
@@ -488,7 +488,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '21')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '21',
             canAccept: selectedGridUnit != '21' && selectedGridUnit != '',
             canDrag: false,
@@ -505,7 +505,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '22')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '22',
             canAccept: selectedGridUnit != '22' && selectedGridUnit != '',
             canDrag: false,
@@ -522,7 +522,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '23')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '23',
             canAccept: selectedGridUnit != '23' && selectedGridUnit != '',
             canDrag: false,
@@ -539,7 +539,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '24')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '24',
             canAccept: selectedGridUnit != '24' && selectedGridUnit != '',
             canDrag: false,
@@ -556,7 +556,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '25')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '25',
             canAccept: selectedGridUnit != '25' && selectedGridUnit != '',
             canDrag: false,
@@ -573,7 +573,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '26')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '26',
             canAccept: selectedGridUnit != '26' && selectedGridUnit != '',
             canDrag: false,
@@ -590,7 +590,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '27')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '27',
             canAccept: selectedGridUnit != '27' && selectedGridUnit != '',
             canDrag: false,
@@ -607,7 +607,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '28')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '28',
             canAccept: selectedGridUnit != '28' && selectedGridUnit != '',
             canDrag: false,
@@ -624,7 +624,7 @@ class _NadGrid0State extends State<NadGrid0> {
                 nadGridUnits[nadGridUnits.indexWhere((unit) => unit.id == '29')]
                     .top,
             size: widget.squareSize,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             text: '29',
             canAccept: selectedGridUnit != '29' && selectedGridUnit != '',
             canDrag: false,

@@ -90,8 +90,8 @@ class _TransformedCardState extends State<TransformedCard> {
             decoration: BoxDecoration(
               border: Border.all(
                 color: state == Brightness.dark
-                    ? Theme.of(context).colorScheme.background
-                    : Theme.of(context).colorScheme.onBackground,
+                    ? Theme.of(context).colorScheme.onSurface
+                    : Theme.of(context).colorScheme.surface,
               ),
               // borderRadius: BorderRadius.circular(8),
               borderRadius: BorderRadius.circular(
@@ -126,8 +126,8 @@ class _TransformedCardState extends State<TransformedCard> {
           border: Border.all(
             // color: Colors.black,
             color: state == Brightness.dark
-                ? Theme.of(context).colorScheme.background
-                : Theme.of(context).colorScheme.onBackground,
+                ? Theme.of(context).colorScheme.onSurface
+                : Theme.of(context).colorScheme.surface,
           ),
           borderRadius: BorderRadius.circular(
             // 8,
@@ -161,8 +161,8 @@ class _TransformedCardState extends State<TransformedCard> {
                       _cardTypeToString(),
                       style: TextStyle(
                         color: state == Brightness.dark
-                            ? Theme.of(context).colorScheme.background
-                            : Theme.of(context).colorScheme.onBackground,
+                            ? Theme.of(context).colorScheme.onSurface
+                            : Theme.of(context).colorScheme.surface,
                         // fontSize: 16,
                         fontSize: Responsive.isMobile(context)
                             ? 16
@@ -195,8 +195,8 @@ class _TransformedCardState extends State<TransformedCard> {
                       _cardTypeToString(),
                       style: TextStyle(
                         color: state == Brightness.dark
-                            ? Theme.of(context).colorScheme.background
-                            : Theme.of(context).colorScheme.onBackground,
+                            ? Theme.of(context).colorScheme.onSurface
+                            : Theme.of(context).colorScheme.surface,
                         // fontSize: 10,
                         fontSize: Responsive.isMobile(context)
                             ? 10

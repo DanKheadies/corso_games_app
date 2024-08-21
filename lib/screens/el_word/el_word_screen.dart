@@ -28,7 +28,7 @@ class ElWordScreen extends StatelessWidget {
                 tooltip: 'Settings',
                 icon: Icon(
                   Icons.settings,
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.onSurface,
                   size: 30,
                 ),
                 onPressed: () {
@@ -56,7 +56,7 @@ class ElWordScreen extends StatelessWidget {
         child: IconButton(
           icon: Icon(
             Icons.settings_backup_restore_rounded,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.onSurface,
             size: 30,
           ),
           onPressed: () {

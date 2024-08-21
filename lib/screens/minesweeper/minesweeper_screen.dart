@@ -20,7 +20,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
     return ScreenWrapper(
       screen: 'Minesweeper',
       backgroundColor:
-          Theme.of(context).colorScheme.background.withOpacity(0.825),
+          Theme.of(context).colorScheme.onSurface.withOpacity(0.825),
       bottomBar: BottomAppBar(
         color: Theme.of(context).colorScheme.secondary,
         elevation: 0,
@@ -36,7 +36,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                     tooltip: 'Settings',
                     icon: Icon(
                       Icons.settings,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onSurface,
                       size: 30,
                     ),
                     onPressed: () {
@@ -47,7 +47,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                   return IconButton(
                     icon: Icon(
                       Icons.warning,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onSurface,
                       size: 30,
                     ),
                     onPressed: () {
@@ -66,7 +66,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
             //   tooltip: 'Share',
             //   icon: Icon(
             //     Icons.ios_share_outlined,
-            //     color: Theme.of(context).colorScheme.background,
+            //     color: Theme.of(context).colorScheme.onSurface,
             //     size: 30,
             //   ),
             //   onPressed: () => showScreenInfo(
@@ -85,7 +85,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                     tooltip: 'Share',
                     icon: Icon(
                       Icons.ios_share_outlined,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onSurface,
                       size: 30,
                     ),
                     onPressed: () async {
@@ -106,7 +106,7 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
                   return IconButton(
                     icon: Icon(
                       Icons.warning,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onSurface,
                       size: 30,
                     ),
                     onPressed: () {
