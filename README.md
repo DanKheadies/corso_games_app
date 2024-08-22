@@ -42,9 +42,15 @@ A collection of Flutter games. GLHF!
 > [Pangram](https://github.com/RubberDuckEng/pangram)
 > via Eric Seidel
 
+> [Bricks Breaker](https://github.com/offlineprogrammer/bricks_breaker/)
+> via Mo Malaka
+
+> [Brick Breaker](https://www.youtube.com/watch?v=0V3oHwb0I_A)
+> via DevKage
+
 
 ### Special Thanks:
-- [Flutter](https://docs.flutter.dev/)
+- [Flutter](https://flutter.dev/)
 - [Flutter Mapp](https://www.youtube.com/c/FlutterMapp)
 - Stack Overflow
 - GitHub

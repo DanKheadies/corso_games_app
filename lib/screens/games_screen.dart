@@ -23,7 +23,7 @@ class GamesScreen extends StatelessWidget {
         children: [
           GameButton(
             isIconic: true,
-            icon: Icons.border_bottom,
+            icon: Icons.animation,
             title: 'Ball Bounce',
             onPress: () => context.goNamed('ballBounce'),
           ),

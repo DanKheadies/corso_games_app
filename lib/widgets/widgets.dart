@@ -1,5 +1,6 @@
 export 'authentication/widgetes.dart';
 export 'ball_bounce/widgets.dart';
+export 'breakup/widgets.dart';
 export 'colors_slide/widgets.dart';
 export 'dino_dash/widgets.dart';
 export 'el_word/widgets.dart';

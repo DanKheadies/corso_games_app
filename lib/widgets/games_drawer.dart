@@ -73,7 +73,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
             ),
             leading: Icon(
-              Icons.border_bottom,
+              Icons.animation,
               color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {

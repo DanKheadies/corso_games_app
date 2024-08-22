@@ -93,7 +93,7 @@ class _BallBounceScreenState extends State<BallBounceScreen> {
       flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
       infoTitle: 'Ball Bounce',
       infoDetails:
-          'Ball the ball against the blocks. Don\'t let them reach the bottom of the screen.',
+          'Shoot the ball against the blocks. Don\'t let them reach the bottom of the screen. Hit the bolt button to speed up the ball.',
       screenFunction: (String string) {
         if (string == 'drawerOpen') {
           setState(() {
