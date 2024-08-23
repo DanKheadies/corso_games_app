@@ -20,8 +20,14 @@ A list of TODOs to improve Corso Games for all.
 7. El Word
     1. Right letter, wrong spot -- don't show duplicates, etc
         1. ex: Word is UTTER; user guess NEEDY; only first E is colored
-8. Honegram
+8. Honeygram
     1. Loading the screen is slow when there's data in the cubit
+9. Ball Bounce
+    1. Theme doesn't update on change
+10. Breakup
+    1. Update theme / colors; theme doesn't update on change
+    2. Track scores via state
+    3. Web => draggable with mouse
 
 ---
 

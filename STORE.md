@@ -7,14 +7,14 @@ Good luck, have fun!
 
 
 Promotional:
-The 2.1.2 release of "Corso Games."
-New game: Honeygram! Based on NYT's SpellingBee game. 
+The 2.1.3 release of "Corso Games."
+New games: Ball Bounce and Breakup! Classic Ball Breaker type games using the Flutter Flame engine. A sign of things to come..
 
 
 What's New:
-Honeygram: words on words on words..
+Ball Bounce and Breakup, classic Ball Breaker games.
 
 
 Release notes
-19 (2.1.2)
+20 (2.1.3)
 Good luck, have fun!
