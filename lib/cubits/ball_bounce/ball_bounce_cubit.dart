@@ -29,8 +29,13 @@ class BallBounceCubit extends HydratedCubit<BallBounceState> {
   }
 
   void increaseScore() {
+    int highScore = state.score + 1 > state.highestScore
+        ? state.score + 1
+        : state.highestScore;
+
     emit(
       state.copyWith(
+        highestScore: highScore,
         score: state.score + 1,
       ),
     );
@@ -48,6 +53,14 @@ class BallBounceCubit extends HydratedCubit<BallBounceState> {
     emit(
       state.copyWith(
         highestScore: highScore,
+      ),
+    );
+  }
+
+  void setScore(int score) {
+    emit(
+      state.copyWith(
+        score: score,
       ),
     );
   }

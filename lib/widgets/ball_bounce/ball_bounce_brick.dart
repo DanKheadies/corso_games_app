@@ -4,6 +4,7 @@ import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
@@ -89,9 +90,17 @@ class BallBounceBrick extends PositionComponent
 
   String generateBrickText() {
     if (generateWithProbability(15)) {
-      return '💣';
+      if (kIsWeb) {
+        return '<>';
+      } else {
+        return '💣';
+      }
     } else if (generateWithProbability(15)) {
-      return '🧨';
+      if (kIsWeb) {
+        return '||';
+      } else {
+        return '🧨';
+      }
     } else {
       return '$brickValue';
     }
@@ -113,13 +122,21 @@ class BallBounceBrick extends PositionComponent
   }
 
   void handleCollision() {
-    if (brickText.text == '💣') {
+    if (kIsWeb && brickText.text == '<>') {
+      gameRef.removeBrickLayerRow(brickRow);
+      // FlameAudio.play(brickRowRemoverAudio); // TODO
+      return;
+    } else if (brickText.text == '💣') {
       gameRef.removeBrickLayerRow(brickRow);
       // FlameAudio.play(brickRowRemoverAudio); // TODO
       return;
     }
 
-    if (brickText.text == '🧨') {
+    if (kIsWeb && brickText.text == '||') {
+      gameRef.removeBrickLayerColumn(brickColumn);
+      // FlameAudio.play(brickRowRemoverAudio); // TODO
+      return;
+    } else if (brickText.text == '🧨') {
       gameRef.removeBrickLayerColumn(brickColumn);
       // FlameAudio.play(brickRowRemoverAudio); // TODO
       return;

@@ -16,8 +16,6 @@ class BreakupWalls extends BodyComponent {
                   gameSize.x * 0.5,
                   wallThickness * 0.5,
                   Vector2(
-                    // gameSize.x * 0.5,
-                    // wallThickness * 0.5,
                     0,
                     -gameSize.y * 0.5,
                   ),
@@ -32,8 +30,6 @@ class BreakupWalls extends BodyComponent {
                   wallThickness * 0.5,
                   gameSize.y * 0.5,
                   Vector2(
-                    // wallThickness * 0.5,
-                    // gameSize.y * 0.5,
                     -gameSize.x * 0.5,
                     0,
                   ),
@@ -62,8 +58,6 @@ class BreakupWalls extends BodyComponent {
                   gameSize.x * 0.5,
                   wallThickness * 0.5,
                   Vector2(
-                    // 0,
-                    // gameSize.y - wallThickness * 0.5,
                     0,
                     gameSize.y * 0.5,
                   ),
@@ -72,5 +66,7 @@ class BreakupWalls extends BodyComponent {
               isSensor: true,
             ),
           ],
-        );
+        ) {
+    bodyDef?.userData = this;
+  }
 }

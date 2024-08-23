@@ -51,6 +51,22 @@ class BallBouncePause extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20),
+              Text(
+                'HIGHEST SCORE',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.surface,
+                ),
+              ),
+              const SizedBox(height: 10),
+              BlocBuilder<BallBounceCubit, BallBounceState>(
+                builder: (context, state) {
+                  return BallBounceScore(
+                    score: state.highestScore,
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
               BallBounceButton(
                 onPressed: () {
                   (game as BallBounceGame).togglePauseState();

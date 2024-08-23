@@ -91,6 +91,7 @@ class BallBounceBall extends CircleComponent
 
     super.onCollisionStart(intersectionPoints, other);
 
+    // TODO: ball can disappear in the top left corner
     if (other is BallBounceBoard) {
       reflectFromBoard(intersectionPoints);
       ballState = BallState.release;

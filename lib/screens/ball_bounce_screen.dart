@@ -93,7 +93,7 @@ class _BallBounceScreenState extends State<BallBounceScreen> {
       flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
       infoTitle: 'Ball Bounce',
       infoDetails:
-          'Shoot the ball against the blocks. Don\'t let them reach the bottom of the screen. Hit the bolt button to speed up the ball.',
+          'Shoot the ball against the blocks and see how many rounds you can survive. Don\'t let the blocks reach the bottom of the screen. Hit the bolt button to speed up the ball.',
       screenFunction: (String string) {
         if (string == 'drawerOpen') {
           setState(() {
@@ -106,6 +106,8 @@ class _BallBounceScreenState extends State<BallBounceScreen> {
             });
           }
         } else if (string == 'drawerNavigate') {
+          context.read<BallBounceCubit>().setScore(0);
+
           setState(() {
             hasLeft = true;
           });
