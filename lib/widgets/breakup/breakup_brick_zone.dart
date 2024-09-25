@@ -1,5 +1,6 @@
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 
 class BreakupBrickZone extends PositionComponent {
   BreakupBrickZone({
@@ -9,6 +10,7 @@ class BreakupBrickZone extends PositionComponent {
     required this.numBricksY,
     required this.spacingX,
     required this.spacingY,
+    required this.color,
   }) {
     brickSize = Vector2(
       (size.x - (numBricksX - 1) * spacingX) / numBricksX,
@@ -21,6 +23,7 @@ class BreakupBrickZone extends PositionComponent {
   final double spacingX;
   final double spacingY;
   late final Vector2 brickSize;
+  final Color color;
 
   @override
   void onMount() {
@@ -34,6 +37,7 @@ class BreakupBrickZone extends PositionComponent {
               brickSize.y * 0.5 + row * (brickSize.y + spacingY),
             );
         final brick = BreakupBrick(
+          color: color,
           position: brickPosition,
           size: brickSize,
         );

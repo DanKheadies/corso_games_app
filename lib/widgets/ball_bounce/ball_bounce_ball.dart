@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flame/collisions.dart';
@@ -20,7 +19,7 @@ class BallBounceBall extends CircleComponent
   BallBounceBall({
     required this.context,
   }) : super(
-          paint: Paint()..color = cgPink1,
+          paint: Paint()..color = Theme.of(context).colorScheme.secondary,
           radius: 10,
           children: [CircleHitbox()],
         );

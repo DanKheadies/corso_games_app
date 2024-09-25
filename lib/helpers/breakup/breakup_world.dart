@@ -5,16 +5,21 @@ import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/material.dart';
 
 class BreakupWorld extends Forge2DWorld
     with HasGameReference<BreakupGame>, DragCallbacks {
-  BreakupWorld() : super(gravity: Vector2.zero());
+  BreakupWorld({
+    required this.context,
+  }) : super(gravity: Vector2.zero());
 
   late BreakupPaddle paddle;
+  BuildContext context;
 
   @override
   FutureOr<void> onLoad() async {
-    await _start();
+    await _start(context);
+
     return super.onLoad();
   }
 
@@ -50,13 +55,19 @@ class BreakupWorld extends Forge2DWorld
     removeAll(children);
     Future.delayed(
       const Duration(seconds: 1),
-      () => _start(),
+      () => _start(context),
     );
   }
 
-  Future<void> _start() async {
+  Future<void> _start(BuildContext context) async {
+    Color primary = Theme.of(context).colorScheme.primary;
+    Color secondary = Theme.of(context).colorScheme.secondary;
+    Color surface = Theme.of(context).colorScheme.surface;
+    Color tertiary = Theme.of(context).colorScheme.tertiary;
+
     await add(
       BreakupWalls(
+        surface,
         game.camera.viewport.virtualSize,
         5 * BreakupGame.lengthFactor,
       ),
@@ -64,6 +75,7 @@ class BreakupWorld extends Forge2DWorld
 
     await add(
       BreakupBall(
+        color: secondary,
         radius: 4 * BreakupGame.lengthFactor,
         position: Vector2(
           0,
@@ -74,6 +86,7 @@ class BreakupWorld extends Forge2DWorld
 
     await add(
       paddle = BreakupPaddle(
+        color: primary,
         size: Vector2(30, 6)..scale(BreakupGame.lengthFactor),
         position: Vector2(
           0,
@@ -96,6 +109,7 @@ class BreakupWorld extends Forge2DWorld
         numBricksY: 9,
         spacingX: 1.875,
         spacingY: 1.25,
+        color: tertiary,
       ),
     );
   }

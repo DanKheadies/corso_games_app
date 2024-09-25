@@ -2,15 +2,19 @@
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/palette.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/services/hardware_keyboard.dart';
 
 class BreakupPaddle extends BodyComponent with KeyboardHandler, TapCallbacks {
   BreakupPaddle({
     required this.size,
+    required Color color,
     Vector2? position,
-    bool? isDragging,
+    // bool? isDragging,
   }) : super(
+          paint: PaletteEntry(color).paint(),
           bodyDef: BodyDef(
             type: BodyType.kinematic,
             position: position,
@@ -46,17 +50,17 @@ class BreakupPaddle extends BodyComponent with KeyboardHandler, TapCallbacks {
               restitution: 1,
               friction: 0.25,
             ),
-            isDragging != null
-                ? FixtureDef(
-                    PolygonShape()
-                      ..setAsBoxXY(
-                        size.x,
-                        size.y,
-                      ),
-                  )
-                : FixtureDef(
-                    CircleShape(),
-                  ),
+            // isDragging != null
+            //     ? FixtureDef(
+            //         PolygonShape()
+            //           ..setAsBoxXY(
+            //             size.x,
+            //             size.y,
+            //           ),
+            //       )
+            //     : FixtureDef(
+            //         CircleShape(),
+            //       ),
           ],
         );
 

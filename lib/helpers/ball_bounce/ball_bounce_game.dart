@@ -4,6 +4,8 @@ import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+// ignore: implementation_imports
+import 'package:flame/src/components/core/component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +27,16 @@ class BallBounceGame extends FlameGame
   final int brickPadding = 8;
   final int maxValueOfBrick = 10;
   final int minValueOfBrick = -5;
+
+  @override
+  void onChildrenChanged(Component child, ChildrenChangeType type) {
+    super.onChildrenChanged(child, type);
+
+    // print('changed');
+    ball.aimPainter.color = Theme.of(context).colorScheme.surface;
+    ball.paint.color = Theme.of(context).colorScheme.secondary;
+    board.dividerPainter.color = Theme.of(context).colorScheme.secondary;
+  }
 
   @override
   Future<void> onLoad() async {
@@ -51,6 +63,10 @@ class BallBounceGame extends FlameGame
     });
 
     context.read<BallBounceCubit>().reset();
+
+    // ball.aimPainter.color = Theme.of(context).colorScheme.surface;
+    // ball.paint.color = Theme.of(context).colorScheme.secondary;
+    // board.dividerPainter.color = Theme.of(context).colorScheme.secondary;
 
     ball.resetBall();
     board.resetBoard();

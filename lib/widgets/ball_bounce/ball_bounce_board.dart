@@ -15,7 +15,7 @@ class BallBounceBoard extends RectangleComponent
   BallBounceBoard({
     required this.context,
   }) : super(
-          paint: Paint()..color = Theme.of(context).scaffoldBackgroundColor,
+          paint: Paint()..color = Colors.black.withOpacity(0),
         );
 
   double dragLineSlope = 0;

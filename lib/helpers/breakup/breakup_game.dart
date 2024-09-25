@@ -4,12 +4,16 @@ import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/material.dart';
 
 class BreakupGame extends Forge2DGame<BreakupWorld>
     with HasKeyboardHandlerComponents, PanDetector, DragCallbacks {
-  BreakupGame()
-      : super(
-          world: BreakupWorld(),
+  BreakupGame({
+    required BuildContext context,
+  }) : super(
+          world: BreakupWorld(
+            context: context,
+          ),
           camera: CameraComponent.withFixedResolution(
             width: 180 * lengthFactor,
             height: 320 * lengthFactor,

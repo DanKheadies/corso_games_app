@@ -94,8 +94,26 @@ class _BreakupScreenState extends State<BreakupScreen> {
           });
         }
       },
-      child: const GameWidget.controlled(
-        gameFactory: BreakupGame.new,
+      // child: const GameWidget.controlled(
+      //   gameFactory: BreakupGame.new,
+      // ),
+      // child: GameWidget.controlled(
+      //   gameFactory: BreakupGame.new,
+      //   overlayBuilderMap: <String, Widget Function(BuildContext, Game)>{
+      //       'gameOverOverlay': (context, game) => BallBounceOver(
+      //             game: game,
+      //           ),
+      //       'gamePauseOverlay': (context, game) => BallBouncePause(
+      //             game: game,
+      //           ),
+      //     },
+      // ),
+      // TODO: this option refreshes the entire game when the context (theme) updates
+      child: GameWidget(
+        game: BreakupGame(context: context),
+        backgroundBuilder: (context) => Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
       ),
     );
   }

@@ -3,14 +3,17 @@ import 'dart:math';
 import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flame/components.dart';
+import 'package:flame/palette.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 
 class BreakupBall extends BodyComponent
     with ContactCallbacks, ParentIsA<BreakupWorld> {
   BreakupBall({
+    required Color color,
     double radius = 0,
     Vector2? position,
   }) : super(
+          paint: PaletteEntry(color).paint(),
           bodyDef: BodyDef(
             type: BodyType.dynamic,
             position: position,

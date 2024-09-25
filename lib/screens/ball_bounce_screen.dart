@@ -25,7 +25,8 @@ class _BallBounceScreenState extends State<BallBounceScreen> {
     game = BallBounceGame(context: context);
   }
 
-  void test() {
+  void test(BuildContext context) {
+    print('test');
     game = BallBounceGame(context: context);
   }
 
@@ -66,6 +67,7 @@ class _BallBounceScreenState extends State<BallBounceScreen> {
               ),
               onPressed: () {
                 (game as BallBounceGame).resetGame(context);
+                // test(context);
               },
             ),
           ],
@@ -91,6 +93,37 @@ class _BallBounceScreenState extends State<BallBounceScreen> {
         ),
       ),
       flactionButtonLoc: FloatingActionButtonLocation.centerDocked,
+      actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.info_outline,
+          ),
+          onPressed: () => showScreenInfo(
+            context,
+            'Ball Bounce',
+            'Shoot the ball against the blocks and see how many rounds you can survive. Don\'t let the blocks reach the bottom of the screen. Hit the bolt button to speed up the ball.',
+            false,
+            TextAlign.left,
+            'GLHF',
+          ),
+        ),
+        BlocBuilder<BrightnessCubit, Brightness>(
+          builder: (context, state) {
+            return IconButton(
+                icon: Icon(
+                  state == Brightness.dark ? Icons.dark_mode : Icons.light_mode,
+                ),
+                onPressed: () async {
+                  context.read<BrightnessCubit>().toggleBrightness();
+                  await Future.delayed(const Duration(milliseconds: 300));
+                  var newReset = (game as BallBounceGame).resetGame(context);
+                  // TODO: needs this context afterwards to work right, but this isn't right..
+                  newReset;
+                });
+          },
+        ),
+        const SizedBox(width: 10),
+      ],
       infoTitle: 'Ball Bounce',
       infoDetails:
           'Shoot the ball against the blocks and see how many rounds you can survive. Don\'t let the blocks reach the bottom of the screen. Hit the bolt button to speed up the ball.',
@@ -117,6 +150,12 @@ class _BallBounceScreenState extends State<BallBounceScreen> {
         padding: const EdgeInsets.only(bottom: 40),
         child: GameWidget(
           game: game,
+          // game: BallBounceGame(
+          //   context: context,
+          // ),
+          backgroundBuilder: (context) => Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+          ),
           overlayBuilderMap: <String, Widget Function(BuildContext, Game)>{
             'gameOverOverlay': (context, game) => BallBounceOver(
                   game: game,

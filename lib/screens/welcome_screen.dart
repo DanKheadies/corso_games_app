@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
-// import 'package:corso_games_app/screens/screens.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum AuthMethod {
@@ -296,7 +294,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                           vertical: 10,
                                         ),
                                         child: ActionLink(
-                                          text: 'Maybe Later',
+                                          text: 'Maybe Later, Play Now',
                                           resetLink: false,
                                           isDisable: false,
                                           onTap: () {

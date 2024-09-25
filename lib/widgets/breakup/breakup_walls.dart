@@ -1,10 +1,13 @@
+import 'package:flame/palette.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 
 class BreakupWalls extends BodyComponent {
   BreakupWalls(
+    Color color,
     Vector2 gameSize,
     double wallThickness,
   ) : super(
+          paint: PaletteEntry(color).paint(),
           bodyDef: BodyDef(
             type: BodyType.static,
           ),

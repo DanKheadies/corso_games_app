@@ -11,7 +11,7 @@ class _PuzzleSimple extends Puzzle {
   final Uint8List _source;
 
   _PuzzleSimple(this.width, List<int> source)
-      : _source = UnmodifiableUint8ListView(Uint8List.fromList(source)),
+      : _source = Uint8List.view(Uint8List.fromList(source).buffer),
         super._();
 
   @override
