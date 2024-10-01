@@ -9,14 +9,20 @@ class StackStacksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    double gameAreaHeight =
+        MediaQuery.of(context).size.height - // Screen height
+            MediaQuery.of(context).padding.top - // AppBar height
+            45; // BottomAppBar height
 
     return ChangeNotifierProvider(
       create: (context) => StackStacksProvider(),
       child: Consumer<StackStacksProvider>(
         builder: (context, stacksProvider, child) {
           List<StacksStackWidget> stacksStackWidgets =
-              stacksProvider.createBrickStackWidgetList(context, height);
+              stacksProvider.createBrickStackWidgetList(
+            context,
+            gameAreaHeight,
+          );
 
           return ScreenWrapper(
             screen: 'Stacks on Stacks',

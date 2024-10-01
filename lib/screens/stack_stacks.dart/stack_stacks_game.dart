@@ -39,6 +39,8 @@ class _StackStacksGameState extends State<StackStacksGame> {
   List<Widget> getGameElements(List<StacksStackWidget> brickStackWidgets) {
     const int rowFlex = 3;
     return [
+      // const Spacer(),
+      const SizedBox(height: 20),
       Flexible(
         flex: rowFlex,
         child: Row(
