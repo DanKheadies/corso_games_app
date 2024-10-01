@@ -27,15 +27,20 @@ class StackStacksProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<StacksStackWidget> createBrickStackWidgetList(BuildContext context) {
+  List<StacksStackWidget> createBrickStackWidgetList(
+    BuildContext context,
+    double height,
+  ) {
     return List.generate(
       brickStacks.length,
       (stackIndex) => StacksStackWidget(
         index: stackIndex,
+        height: height,
         bricks: List.generate(
           brickStacks[stackIndex].bricks.length,
           (brickIndex) => StacksBrickWidget(
             colorIndex: brickStacks[stackIndex].bricks[brickIndex].colorIndex,
+            height: height,
           ),
         ),
         onTap: () => _handleTap(context, stackIndex),

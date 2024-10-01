@@ -28,8 +28,6 @@ A list of TODOs to improve Corso Games for all.
     1. Update theme / colors; theme doesn't update on change
     2. Track scores via state
     3. Web => draggable with mouse
-11. Stack Stacks
-    1. Responsive sizing on bricks / stacks
 
 ---
 

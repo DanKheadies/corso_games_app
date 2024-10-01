@@ -7,14 +7,14 @@ Good luck, have fun!
 
 
 Promotional:
-The 2.1.3 release of "Corso Games."
-New games: Ball Bounce and Breakup! Classic Ball Breaker type games using the Flutter Flame engine. A sign of things to come..
+The 2.1.4 release of "Corso Games."
+New game: Stack Stacks aka Water Sort puzzle.
 
 
 What's New:
-Ball Bounce and Breakup, classic Ball Breaker games.
+Stack Stacks aka Water Sort puzzle.
 
 
 Release notes
-20 (2.1.3)
+21 (2.1.4)
 Good luck, have fun!

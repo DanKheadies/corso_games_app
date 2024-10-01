@@ -4,24 +4,19 @@ import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class StackStacksScreen extends StatefulWidget {
+class StackStacksScreen extends StatelessWidget {
   const StackStacksScreen({super.key});
 
   @override
-  State<StackStacksScreen> createState() => _StackStacksScreenState();
-}
-
-class _StackStacksScreenState extends State<StackStacksScreen> {
-  bool resetGame = false;
-
-  @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     return ChangeNotifierProvider(
       create: (context) => StackStacksProvider(),
       child: Consumer<StackStacksProvider>(
         builder: (context, stacksProvider, child) {
           List<StacksStackWidget> stacksStackWidgets =
-              stacksProvider.createBrickStackWidgetList(context);
+              stacksProvider.createBrickStackWidgetList(context, height);
 
           return ScreenWrapper(
             screen: 'Stacks on Stacks',
