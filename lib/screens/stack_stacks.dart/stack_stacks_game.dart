@@ -1,10 +1,13 @@
-import 'package:corso_games_app/providers/providers.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class StackStacksGame extends StatefulWidget {
-  const StackStacksGame({super.key});
+  final List<StacksStackWidget> stacksStackWidgets;
+
+  const StackStacksGame({
+    super.key,
+    required this.stacksStackWidgets,
+  });
 
   @override
   State<StackStacksGame> createState() => _StackStacksGameState();
@@ -14,31 +17,21 @@ class _StackStacksGameState extends State<StackStacksGame> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFF1d2d44),
-            Color(0xFF0d1321),
+            Theme.of(context).colorScheme.tertiary,
+            Theme.of(context).scaffoldBackgroundColor,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
-      child: ChangeNotifierProvider(
-        create: (context) => StackStacksProvider(),
-        child: Consumer<StackStacksProvider>(
-          builder: (context, stacksProvider, child) {
-            List<StacksStackWidget> stacksStackWidgets =
-                stacksProvider.createBrickStackWidgetList(context);
-
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ...getGameElements(stacksStackWidgets),
-              ],
-            );
-          },
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ...getGameElements(widget.stacksStackWidgets),
+        ],
       ),
     );
   }

@@ -260,7 +260,7 @@ class _GamesDrawerState extends State<GamesDrawer> {
               ),
             ),
             leading: Icon(
-              Icons.stacked_bar_chart,
+              Icons.auto_awesome_motion,
               color: Theme.of(context).colorScheme.primary,
             ),
             onTap: () {

@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
 
+// const Color stacksBgColorPrimary = Color(0xFF1d2d44);
+// const Color stacksBgColorSecondary = Color(0xFF0d1321);
+
+// const BoxDecoration backgroundDecoration = BoxDecoration(
+//   gradient: LinearGradient(
+//     colors: [stacksBgColorPrimary, stacksBgColorSecondary],
+//     begin: Alignment.topLeft,
+//     end: Alignment.bottomRight,
+//   ),
+// );
+
 Color indexToColor(int index) {
   switch (index) {
     case 1:

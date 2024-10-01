@@ -1,6 +1,5 @@
 import 'package:corso_games_app/helpers/helpers.dart';
 import 'package:corso_games_app/models/models.dart';
-import 'package:corso_games_app/widgets/stack_stacks/stacks_game_dialog.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +12,14 @@ class StackStacksProvider extends ChangeNotifier {
   StackStacksProvider() {
     // brickStacks = TestLevel().stacksBrickStacks;
     brickStacks = StacksGenerator().generateLevel();
+  }
+
+  void resetGame() {
+    brickStacks = StacksGenerator().generateLevel();
+    stackIndex = -1;
+    hasWon = false;
+    hasLost = false;
+    notifyListeners();
   }
 
   void setIndex(int index) {
@@ -37,19 +44,22 @@ class StackStacksProvider extends ChangeNotifier {
   }
 
   void _handleTap(BuildContext context, int currentStackIndex) {
-    if (stackIndex == currentStackIndex) {
-      setIndex(-1);
-    } else {
-      if (stackIndex == -1) {
-        setIndex(currentStackIndex);
-      } else {
-        performAction(giverIndex: stackIndex, receiverIndex: currentStackIndex);
+    if (!hasWon && !hasLost) {
+      if (stackIndex == currentStackIndex) {
         setIndex(-1);
+      } else {
+        if (stackIndex == -1) {
+          setIndex(currentStackIndex);
+        } else {
+          performAction(
+              giverIndex: stackIndex, receiverIndex: currentStackIndex);
+          setIndex(-1);
+        }
       }
     }
 
     if (hasWon || hasLost) {
-      StacksGameDialog.openStacksGameDialog(context, hasWon);
+      StacksGameDialog.openStacksGameDialog(context, hasWon, resetGame);
     }
   }
 

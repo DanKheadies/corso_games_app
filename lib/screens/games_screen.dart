@@ -89,7 +89,7 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             isIconic: true,
-            icon: Icons.stacked_bar_chart,
+            icon: Icons.auto_awesome_motion,
             title: 'Solitare',
             onPress: () => context.goNamed('solitare'),
           ),
