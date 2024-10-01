@@ -101,6 +101,12 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             isIconic: true,
+            icon: Icons.stacked_bar_chart,
+            title: 'Stack Stacks',
+            onPress: () => context.goNamed('stackStacks'),
+          ),
+          GameButton(
+            isIconic: true,
             icon: Icons.airline_stops,
             title: 'Tappy Bird',
             onPress: () => context.goNamed('tappyBird'),

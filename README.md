@@ -48,6 +48,9 @@ A collection of Flutter games. GLHF!
 > [Brick Breaker](https://www.youtube.com/watch?v=0V3oHwb0I_A)
 > via DevKage
 
+> [Brick Sort](https://github.com/FlorianPruemer/brick_sort_puzzle)
+> via Florian Prümer
+
 
 ### Special Thanks:
 - [Flutter](https://flutter.dev/)

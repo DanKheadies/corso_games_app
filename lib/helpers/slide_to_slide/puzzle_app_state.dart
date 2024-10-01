@@ -6,7 +6,7 @@
 import 'package:corso_games_app/models/models.dart';
 import 'package:flutter/foundation.dart';
 
-abstract class AppState {
+abstract class PuzzleAppState {
   PuzzleProxy get puzzle;
 
   Listenable get animationNotifier;

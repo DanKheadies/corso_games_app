@@ -42,7 +42,8 @@ class _PuzzleControls extends ChangeNotifier implements PuzzleControls {
 }
 
 class PuzzleHomeState extends State
-    with SingleTickerProviderStateMixin, AppState {
+    with SingleTickerProviderStateMixin
+    implements PuzzleAppState {
   @override
   final PuzzleAnimator puzzle;
 
@@ -86,7 +87,7 @@ class PuzzleHomeState extends State
   @override
   Widget build(BuildContext context) => MultiProvider(
         providers: [
-          Provider<AppState>.value(value: this),
+          Provider<PuzzleAppState>.value(value: this),
           ListenableProvider<PuzzleControls>.value(
             value: _autoPlayListenable,
           )
@@ -209,7 +210,7 @@ Widget _doBuildCore(bool small) => ValueTabController<SharedTheme>(
               small,
               SizedBox(
                 width: 580,
-                child: Consumer<AppState>(
+                child: Consumer<PuzzleAppState>(
                   builder: (context, appState, _) => Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,

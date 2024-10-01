@@ -287,6 +287,23 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
+              'Stack Stacks',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.stacked_bar_chart,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              context.goNamed('stackStacks');
+            },
+          ),
+          ListTile(
+            title: Text(
               'Tappy Bird',
               style: TextStyle(
                 fontSize: 18,
