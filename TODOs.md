@@ -28,6 +28,8 @@ A list of TODOs to improve Corso Games for all.
     1. Update theme / colors; theme doesn't update on change
     2. Track scores via state
     3. Web => draggable with mouse
+11. Android
+    1. Icon is off, i.e. it's a square in a circle (see CruiseCalls)
 
 ---
 

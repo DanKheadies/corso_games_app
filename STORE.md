@@ -7,7 +7,7 @@ Good luck, have fun!
 
 
 Promotional:
-The 2.1.4 release of "Corso Games."
+The 2.1.5 release of "Corso Games."
 New game: Stack Stacks aka Water Sort puzzle. Also check out Ball Bounce and Breakup if you haven't. Flutter Flame is fire.
 
 
@@ -16,5 +16,5 @@ Stack Stacks aka Water Sort puzzle, Ball Bounce, and Breakup.
 
 
 Release notes
-21 (2.1.4)
+22 (2.1.5)
 Good luck, have fun!
