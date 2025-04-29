@@ -1,35 +1,35 @@
 {
-  "name": "corso_games_app",
-  "short_name": "corso_games_app",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#FFFFF8",
-  "theme_color": "#FFFFF8",
-  "description": "A new Flutter project.",
-  "orientation": "portrait-primary",
-  "prefer_related_applications": false,
-  "icons": [
-    {
-      "src": "icons/Icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/Icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/Icon-maskable-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "icons/Icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
+    "name": "corso_games_app",
+    "short_name": "corso_games_app",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff8e1",
+    "theme_color": "#ff7d81",
+    "description": "A new Flutter project.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
 }

@@ -23,7 +23,7 @@ enum ImageType {
 
 class MinesweeperGame extends StatefulWidget {
   const MinesweeperGame({
-    Key? key,
+    super.key,
     required this.resetMinesweeper,
     required this.showMineTimer,
     required this.mineDifficulty,
@@ -37,7 +37,7 @@ class MinesweeperGame extends StatefulWidget {
     required this.board,
     required this.openedSquares,
     required this.flaggedSquares,
-  }) : super(key: key);
+  });
 
   final bool resetMinesweeper;
   final bool showMineTimer;
@@ -289,6 +289,7 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
               child: const Text('Play Again'),
             ),
           ],
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         );
       },
     );
@@ -314,6 +315,7 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
               child: const Text('Play Again'),
             ),
           ],
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         );
       },
     );
@@ -367,19 +369,18 @@ class _MinesweeperGameState extends State<MinesweeperGame> {
         return Image.asset(isDarkMode
             ? 'assets/images/minesweeper/_bomb.png'
             : 'assets/images/minesweeper/bomb.png');
-      case ImageType.facingDown:
-        return Image.asset(isDarkMode
-            ? 'assets/images/minesweeper/_facingDown.png'
-            : 'assets/images/minesweeper/facingDown.png');
       case ImageType.flagged:
         return Image.asset(isDarkMode
             ? 'assets/images/minesweeper/_flagged.png'
             : 'assets/images/minesweeper/flagged.png');
-
-      default:
+      case ImageType.facingDown:
         return Image.asset(isDarkMode
             ? 'assets/images/minesweeper/_facingDown.png'
             : 'assets/images/minesweeper/facingDown.png');
+      // default:
+      //   return Image.asset(isDarkMode
+      //       ? 'assets/images/minesweeper/_facingDown.png'
+      //       : 'assets/images/minesweeper/facingDown.png');
     }
   }
 

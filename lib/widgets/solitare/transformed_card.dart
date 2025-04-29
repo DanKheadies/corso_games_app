@@ -56,8 +56,8 @@ class _TransformedCardState extends State<TransformedCard> {
         return "Q";
       case CardType.king:
         return "K";
-      default:
-        return "";
+      // default:
+      //   return "";
     }
   }
 
@@ -71,8 +71,8 @@ class _TransformedCardState extends State<TransformedCard> {
         return Image.asset('assets/images/solitare/clubs.png');
       case CardSuit.spades:
         return Image.asset('assets/images/solitare/spades.png');
-      default:
-        return Image.asset('assets/images/solitare/back_side.png');
+      // default:
+      //   return Image.asset('assets/images/solitare/back_side.png');
     }
   }
 

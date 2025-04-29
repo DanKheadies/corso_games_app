@@ -288,6 +288,7 @@ class _SnakeBoardState extends State<SnakeBoard> {
               },
             ),
           ],
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         );
       },
     );

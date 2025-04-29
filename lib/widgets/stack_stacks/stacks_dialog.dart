@@ -16,6 +16,7 @@ class StacksDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.only(
           left: outerPadding,

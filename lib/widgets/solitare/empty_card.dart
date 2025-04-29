@@ -36,8 +36,8 @@ class _EmptyCardDeckState extends State<EmptyCardDeck> {
         return Image.asset('assets/images/solitare/clubs.png');
       case CardSuit.spades:
         return Image.asset('assets/images/solitare/spades.png');
-      default:
-        return Image.asset('assets/images/solitare/back_side.png');
+      // default:
+      //   return Image.asset('assets/images/solitare/back_side.png');
     }
   }
 

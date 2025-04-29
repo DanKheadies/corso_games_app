@@ -114,6 +114,7 @@ class GameProvider extends ChangeNotifier {
                 },
               ),
             ],
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           );
         },
       );

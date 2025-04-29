@@ -1,14 +1,13 @@
 name: corso_games_app
 description: A collection of flutter games. Good luck, have fun.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.1.5+22
+version: 2.1.6+23
 
 environment:
   sdk: ^3.5.1
   # sdk: ">=2.18.4 <3.0.0"
-  
 
 dependencies:
   flutter:
@@ -33,7 +32,7 @@ dependencies:
   flutter_animate: ^4.5.0
   flutter_bloc: ^8.1.3
   flutter_local_notifications: ^17.2.3
-  flutter_neumorphic: 
+  flutter_neumorphic:
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
@@ -58,20 +57,22 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.1
 
 flutter_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
-  remove_alpha_ios: true
   image_path: "assets/images/main/cg-1.png"
-  min_sdk_android: 21 
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  adaptive_icon_background: "#fff8e1"
+  adaptive_icon_foreground: "assets/images/main/cg-0.png"
   web:
     generate: true
-    image_path: "assets/images/main/cg-1.png"
-    background_color: "#FFFFF8"
-    theme_color: "#FFFFF8"
+    image_path: "assets/images/main/cg-web.png"
+    background_color: "#fff8e1"
+    theme_color: "#ff7d81"
   windows:
     generate: true
     image_path: "assets/images/main/cg-1.png"
-    icon_size: 48 
+    icon_size: 48
 
 flutter:
   uses-material-design: true

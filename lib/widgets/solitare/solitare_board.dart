@@ -288,6 +288,7 @@ class _SolitareBoardState extends State<SolitareBoard> {
               child: const Text('Play again'),
             ),
           ],
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         );
       },
     );

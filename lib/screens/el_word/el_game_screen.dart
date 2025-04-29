@@ -128,7 +128,9 @@ class ElGameScreen extends StatelessWidget {
                   SizedBox(height: height * 0.05),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(15)),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      padding: const EdgeInsets.all(15),
+                    ),
                     child: Text(
                       'Play Again',
                       style: TextStyle(
@@ -187,7 +189,7 @@ class ElGameScreen extends StatelessWidget {
                   SizedBox(height: height * 0.05),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       padding: const EdgeInsets.all(15),
                     ),
                     child: Text(

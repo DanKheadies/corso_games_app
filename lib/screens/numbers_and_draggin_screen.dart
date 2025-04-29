@@ -44,6 +44,7 @@ class _NumbersAndDragginScreenState extends State<NumbersAndDragginScreen> {
               child: const Text('No Thanks'),
             ),
           ],
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         );
       },
     );

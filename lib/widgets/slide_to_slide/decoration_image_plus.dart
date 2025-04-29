@@ -134,9 +134,17 @@ class DecorationImagePlus implements DecorationImage {
   //       matchTextDirection == other.matchTextDirection;
   // }
 
-  @override
-  int get hashCode => hashValues(image, colorFilter, fit, alignment,
-      centerSlice, repeat, matchTextDirection);
+  // TODO: did this break anything by commenting it out?
+  // @override
+  // int get hashCode => hashValues(
+  //       image,
+  //       colorFilter,
+  //       fit,
+  //       alignment,
+  //       centerSlice,
+  //       repeat,
+  //       matchTextDirection,
+  //     );
 
   @override
   String toString() {
