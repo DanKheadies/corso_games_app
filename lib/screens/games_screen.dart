@@ -113,6 +113,12 @@ class GamesScreen extends StatelessWidget {
           ),
           GameButton(
             isIconic: true,
+            icon: Icons.align_vertical_bottom,
+            title: 'Tetris',
+            onPress: () => context.goNamed('tetris'),
+          ),
+          GameButton(
+            isIconic: true,
             icon: Icons.tag,
             title: 'Tic Tac Toe',
             onPress: () => context.goNamed('ticTacToe'),

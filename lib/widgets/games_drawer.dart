@@ -5,9 +5,9 @@ import 'package:go_router/go_router.dart';
 
 class GamesDrawer extends StatefulWidget {
   const GamesDrawer({
-    Key? key,
+    super.key,
     required this.handler,
-  }) : super(key: key);
+  });
 
   final Function(String) handler;
 
@@ -317,6 +317,23 @@ class _GamesDrawerState extends State<GamesDrawer> {
             onTap: () {
               widget.handler('drawerNavigate');
               context.goNamed('tappyBird');
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Tetris',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.align_vertical_bottom,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              context.goNamed('tetris');
             },
           ),
           ListTile(

@@ -1,5 +1,6 @@
 export 'authentication/widgetes.dart';
 export 'ball_bounce/widgets.dart';
+export 'baeb/widgets.dart';
 export 'breakup/widgets.dart';
 export 'colors_slide/widgets.dart';
 export 'dino_dash/widgets.dart';
@@ -15,6 +16,7 @@ export 'solitare/widgets.dart';
 export 'solo_noble/widgets.dart';
 export 'stack_stacks/widgets.dart';
 export 'tappy_bird/widgets.dart';
+export 'tetris/widgets.dart';
 export 'tic_tac_toe/widgets.dart';
 export 'action_link.dart';
 export 'coming_soon.dart';

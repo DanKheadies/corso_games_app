@@ -3,6 +3,7 @@
 A collection of Flutter games. GLHF!
 
 ## Credits:
+
 > [2048 Color Slider Puzzle Game](https://github.com/kenreilly/flutter-puzzle-game-demo)
 > via Ken Reilly
 
@@ -51,8 +52,11 @@ A collection of Flutter games. GLHF!
 > [Brick Sort](https://github.com/FlorianPruemer/brick_sort_puzzle)
 > via Florian Prümer
 
+> [Tetris](https://www.youtube.com/watch?v=4sCSJW3hamE)
+> via Mitch Koko
 
 ### Special Thanks:
+
 - [Flutter](https://flutter.dev/)
 - [Flutter Mapp](https://www.youtube.com/c/FlutterMapp)
 - Stack Overflow
@@ -61,4 +65,4 @@ A collection of Flutter games. GLHF!
 
 ---
 
-Compliments of DTFun LLC 2024
+Compliments of DTFun LLC 2025

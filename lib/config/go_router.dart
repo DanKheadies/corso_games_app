@@ -24,6 +24,23 @@ final GoRouter goRouter = GoRouter(
       ),
     ),
     GoRoute(
+      path: '/baeb',
+      name: 'baeb',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const BaebScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
+    GoRoute(
       path: '/ballBounce',
       name: 'ballBounce',
       pageBuilder: (context, state) => CustomTransitionPage(
@@ -407,6 +424,23 @@ final GoRouter goRouter = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: const TappyBirdScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
+    GoRoute(
+      path: '/tetris',
+      name: 'tetris',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const TetrisScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(
           opacity: animation,

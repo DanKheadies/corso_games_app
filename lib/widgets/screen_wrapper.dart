@@ -77,9 +77,11 @@ class ScreenWrapper extends StatelessWidget {
           if (context.read<NavCubit>().state != '/welcome') {
             // print('go to cache');
             await Future.delayed(const Duration(milliseconds: 300), () {
-              goRouter.go(
-                context.read<NavCubit>().state,
-              );
+              if (context.mounted) {
+                goRouter.go(
+                  context.read<NavCubit>().state,
+                );
+              }
             });
           } else {
             // print('go to arrivals');
@@ -100,10 +102,13 @@ class ScreenWrapper extends StatelessWidget {
         child: Scaffold(
           appBar: hasAppBar
               ? AppBar(
-                  title: Text(
-                    screen,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                  title: GestureDetector(
+                    onDoubleTap: () => context.goNamed('baeb'),
+                    child: Text(
+                      screen,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                   backgroundColor: Theme.of(context).colorScheme.secondary,

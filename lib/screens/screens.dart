@@ -1,4 +1,5 @@
 export 'ball_bounce_screen.dart';
+export 'baeb_screen.dart';
 export 'breakup_screen.dart';
 export 'colors_slide/colors_slide_screen.dart';
 export 'colors_slide/cs_settings_screen.dart';
@@ -24,5 +25,6 @@ export 'splash_screen.dart';
 export 'stack_stacks.dart/stack_stacks_game.dart';
 export 'stack_stacks.dart/stack_stacks_screen.dart';
 export 'tappy_bird_screen.dart';
+export 'tetris_screen.dart';
 export 'tic_tac_toe_screen.dart';
 export 'welcome_screen.dart';
