@@ -25,6 +25,8 @@ ThemeData lightTheme() {
       onTertiary: cgGreen2,
       onError: const Color(0xFFffffff),
       onSurface: cgWhite,
+      onInverseSurface: cgBlack2,
+      inverseSurface: cgBlack,
     ),
     scaffoldBackgroundColor: cgYellow,
     snackBarTheme: SnackBarThemeData(
@@ -57,6 +59,8 @@ ThemeData darkTheme() {
       onTertiary: cgGreen1,
       onError: const Color(0xFF000000),
       onSurface: cgBlack,
+      onInverseSurface: cgBlack2,
+      inverseSurface: cgBlack,
     ),
     scaffoldBackgroundColor: cgBlack2,
     snackBarTheme: SnackBarThemeData(

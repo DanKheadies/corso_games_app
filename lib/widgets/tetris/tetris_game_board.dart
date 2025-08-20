@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -14,7 +15,12 @@ List<List<Tetromino?>> gameBoard = List.generate(
 /// A 2x2 grid with null representing an empty space.
 /// A non empty space will have the color to represent landed pieces.
 class TetrisGameBoard extends StatefulWidget {
-  const TetrisGameBoard({super.key});
+  final double screenHeight;
+
+  const TetrisGameBoard({
+    super.key,
+    required this.screenHeight,
+  });
 
   @override
   State<TetrisGameBoard> createState() => _TetrisGameBoardState();
@@ -22,6 +28,8 @@ class TetrisGameBoard extends StatefulWidget {
 
 class _TetrisGameBoardState extends State<TetrisGameBoard> {
   bool gameOver = false;
+  double bottomBar = 60;
+  double topBar = 100;
   int currentScore = 0;
   int speedNormal = 400;
   int speedUp = 100;
@@ -35,8 +43,148 @@ class _TetrisGameBoardState extends State<TetrisGameBoard> {
   void initState() {
     super.initState();
 
+    if (Platform.isAndroid) {
+      topBar = 120;
+    }
+
     // Start game on app start
     startGame();
+  }
+
+  @override
+  void dispose() {
+    gameLoopTimer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      // Note: constantly tapping "pauses" movement (bug vs feature)
+      // Somewhere is responding to the tap and preventing the timer from going.
+      body: GestureDetector(
+        onTap: gameOver ? () => showGameOverDialog() : () {},
+        onLongPress: gameOver
+            ? () {}
+            : () {
+                // print('long press start');
+                gameLoopTimer.cancel();
+                gameLoop(speedUp);
+              },
+        onLongPressEnd: gameOver
+            ? (_) {}
+            : (details) {
+                // print('long press end');
+                gameLoopTimer.cancel();
+                gameLoop(speedNormal);
+              },
+        onLongPressCancel: gameOver
+            ? () {}
+            : () {
+                // print('long press cancel');
+                gameLoopTimer.cancel();
+                gameLoop(speedNormal);
+              },
+        child: Column(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onDoubleTap: gameOver
+                    ? () {}
+                    : () {
+                        gameLoopTimer.cancel();
+                        showPauseDialog();
+                      },
+                child: SizedBox(
+                  // color: Colors.red,
+                  width: 0.5575 * (widget.screenHeight - bottomBar - topBar),
+                  child: Center(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: tetrisRowLength,
+                      ),
+                      itemCount: tetrisRowLength * tetrisColLength,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        // Get row and col of each index
+                        int row = (index / tetrisRowLength).floor();
+                        int col = index % tetrisRowLength;
+
+                        if (currentTetrisPiece.position.contains(index)) {
+                          // Current piece
+                          return TetrisPixel(
+                            color: currentTetrisPiece.color,
+                            // child: index.toString(),
+                          );
+                        } else if (gameBoard[row][col] != null) {
+                          // Landed pieces
+                          final Tetromino? tetrominoType = gameBoard[row][col];
+                          return TetrisPixel(
+                            color: tetrominoColors[tetrominoType]!,
+                            // child: index.toString(),
+                          );
+                        } else {
+                          // Blank pixel
+                          return TetrisPixel(
+                              // color: Colors.grey[900]!,
+                              color:
+                                  Theme.of(context).colorScheme.inverseSurface
+                              // child: index.toString(),
+                              );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // GestureDetector(
+            //   onDoubleTap: () {
+            //     gameLoopTimer.cancel();
+            //     showPauseDialog();
+            //   },
+            //   child: Text(
+            //     'Score: $currentScore',
+            //     style: TextStyle(color: Colors.white),
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                'Score: $currentScore',
+                style: TextStyle(color: Theme.of(context).colorScheme.surface),
+              ),
+            ),
+            GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 40, top: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TetrisButton(
+                      icon: Icons.arrow_back_ios,
+                      iconOffset: 10,
+                      onTap: moveLeft,
+                    ),
+                    TetrisButton(
+                      icon: Icons.rotate_right,
+                      onTap: rotateTetrisPiece,
+                    ),
+                    TetrisButton(
+                      icon: Icons.arrow_forward_ios,
+                      iconOffset: 2,
+                      onTap: moveRight,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void startGame() {
@@ -49,22 +197,28 @@ class _TetrisGameBoardState extends State<TetrisGameBoard> {
   // Loop that keeps the pieces moving
   void gameLoop(int frameRate) {
     gameLoopTimer = Timer.periodic(Duration(milliseconds: frameRate), (timer) {
-      setState(() {
-        // Clear lines
-        clearLines();
+      if (!gameOver) {
+        setState(() {
+          // Clear lines
+          clearLines();
 
-        // Check landing
-        checkLanding();
+          // Check landing
+          checkLanding();
 
-        // Check for game over
-        if (gameOver) {
-          timer.cancel();
-          showGameOverDialog();
-        }
+          // Check for game over
+          if (gameOver) {
+            gameLoopTimer.cancel();
+            timer.cancel();
+            showGameOverDialog();
+          }
 
-        // Move the current piece down
-        currentTetrisPiece.moveTetrisPiece(TetrisDirection.down);
-      });
+          // Move the current piece down
+          currentTetrisPiece.moveTetrisPiece(TetrisDirection.down);
+        });
+      } else {
+        gameLoopTimer.cancel();
+        timer.cancel();
+      }
     });
   }
 
@@ -72,8 +226,19 @@ class _TetrisGameBoardState extends State<TetrisGameBoard> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Game Over'),
-        content: Text('Your score is: $currentScore'),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text(
+          'Game Over',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+        ),
+        content: Text(
+          'Your score is: $currentScore',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => context.goNamed('games'),
@@ -96,8 +261,19 @@ class _TetrisGameBoardState extends State<TetrisGameBoard> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text('Pause'),
-        content: Text('Your score is: $currentScore'),
+        title: Text(
+          'Pause',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+        ),
+        content: Text(
+          'Your score is: $currentScore',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+        ),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           TextButton(
             onPressed: () => context.goNamed('games'),
@@ -281,106 +457,5 @@ class _TetrisGameBoardState extends State<TetrisGameBoard> {
 
     // If the top row is empty, game is still going.
     return false;
-  }
-
-  @override
-  void dispose() {
-    gameLoopTimer.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      // Note: constantly tapping "pauses" movement (bug vs feature)
-      // Somewhere is responding to the tap and preventing the timer from going.
-      body: GestureDetector(
-        onLongPress: () {
-          // print('long press start');
-          gameLoopTimer.cancel();
-          gameLoop(speedUp);
-        },
-        onLongPressEnd: (details) {
-          // print('long press end');
-          gameLoopTimer.cancel();
-          gameLoop(speedNormal);
-        },
-        onLongPressCancel: () {
-          // print('long press cancel');
-          gameLoopTimer.cancel();
-          gameLoop(speedNormal);
-        },
-        child: Column(
-          children: [
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: tetrisRowLength,
-                ),
-                itemCount: tetrisRowLength * tetrisColLength,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  // Get row and col of each index
-                  int row = (index / tetrisRowLength).floor();
-                  int col = index % tetrisRowLength;
-
-                  if (currentTetrisPiece.position.contains(index)) {
-                    // Current piece
-                    return TetrisPixel(
-                      color: currentTetrisPiece.color,
-                      // child: index.toString(),
-                    );
-                  } else if (gameBoard[row][col] != null) {
-                    // Landed pieces
-                    final Tetromino? tetrominoType = gameBoard[row][col];
-                    return TetrisPixel(
-                      color: tetrominoColors[tetrominoType]!,
-                      // child: index.toString(),
-                    );
-                  } else {
-                    // Blank pixel
-                    return TetrisPixel(
-                      color: Colors.grey[900]!,
-                      // child: index.toString(),
-                    );
-                  }
-                },
-              ),
-            ),
-            GestureDetector(
-              onDoubleTap: () {
-                gameLoopTimer.cancel();
-                showPauseDialog();
-              },
-              child: Text(
-                'Score: $currentScore',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 50, top: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TetrisButton(
-                    icon: Icons.arrow_back_ios,
-                    iconOffset: 10,
-                    onTap: moveLeft,
-                  ),
-                  TetrisButton(
-                      icon: Icons.rotate_right, onTap: rotateTetrisPiece),
-                  TetrisButton(
-                    icon: Icons.arrow_forward_ios,
-                    iconOffset: 2,
-                    onTap: moveRight,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

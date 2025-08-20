@@ -23,10 +23,12 @@ class TetrisButton extends StatelessWidget {
         height: 75,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.white, width: 1),
+          border: Border.all(
+              color: Theme.of(context).colorScheme.primary, width: 1),
         ),
         alignment: Alignment.center,
-        child: Icon(icon, color: Colors.white, size: 30),
+        child:
+            Icon(icon, color: Theme.of(context).colorScheme.primary, size: 30),
       ),
     );
   }

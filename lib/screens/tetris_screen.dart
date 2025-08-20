@@ -14,7 +14,7 @@ class _TetrisScreenState extends State<TetrisScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // double height = MediaQuery.of(context).size.height;
+    double height = MediaQuery.of(context).size.height;
 
     return ScreenWrapper(
       screen: 'Tetris',
@@ -39,7 +39,9 @@ class _TetrisScreenState extends State<TetrisScreen> {
           });
         }
       },
-      child: TetrisGameBoard(),
+      child: TetrisGameBoard(
+        screenHeight: height,
+      ),
     );
   }
 }

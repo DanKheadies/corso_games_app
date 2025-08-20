@@ -102,15 +102,22 @@ class ScreenWrapper extends StatelessWidget {
         child: Scaffold(
           appBar: hasAppBar
               ? AppBar(
-                  title: GestureDetector(
-                    onDoubleTap: () => context.goNamed('baeb'),
-                    child: Text(
-                      screen,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                  // title: GestureDetector(
+                  //   onDoubleTap: () => context.goNamed('baeb'),
+                  //   child: Text(
+                  //     screen,
+                  //     style: TextStyle(
+                  //       color: Theme.of(context).colorScheme.onSurface,
+                  //     ),
+                  //   ),
+                  // ),
+                  title: Text(
+                    screen,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
+                  // toolbarHeight: 0,
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   actions: actions ??
                       [

@@ -335,6 +335,10 @@ class _GamesDrawerState extends State<GamesDrawer> {
               widget.handler('drawerNavigate');
               context.goNamed('tetris');
             },
+            onLongPress: () {
+              widget.handler('drawerNavigate');
+              context.goNamed('baeb');
+            },
           ),
           ListTile(
             title: Text(

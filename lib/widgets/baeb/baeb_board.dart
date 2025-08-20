@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
@@ -36,6 +37,7 @@ class _BaebBoardState extends State<BaebBoard> {
   bool isOver = false;
   double bottomBar = 60;
   double topBar = 100;
+  double topPadding = 20;
   int frameRate = 1000;
   int speedNormal = 1000;
   int speedFast = 500;
@@ -49,6 +51,10 @@ class _BaebBoardState extends State<BaebBoard> {
   void initState() {
     super.initState();
 
+    if (Platform.isAndroid) {
+      topBar = 120;
+    }
+
     currentPiece = Piece(
       type: BaebPixelArt.three,
       colLength: widget.colLength,
@@ -61,6 +67,172 @@ class _BaebBoardState extends State<BaebBoard> {
 
     // Start animation w/ specified frame refresh rate.
     animater(speedNormal);
+  }
+
+  @override
+  void dispose() {
+    animaterTimer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      // onTap: () => nextSequence(),
+      // onLongPress: () => animaterTimer.cancel(),
+      // onDoubleTap: () => Navigator.of(context).pop(),
+      // onLongPress: () => Navigator.of(context).pop(),
+      child: widget.isVertical
+          ? Padding(
+              padding: EdgeInsets.only(top: topPadding),
+              child: Column(
+                children: [
+                  // Container(
+                  //   color: Colors.black,
+                  //   height: topBar,
+                  //   padding: const EdgeInsets.only(top: 35),
+                  //   width: double.infinity,
+                  //   child: Opacity(
+                  //     opacity:
+                  //         sequenceFrame >= (widget.colLength * 0.8).floor() + 5
+                  //             ? 1
+                  //             : 0,
+                  //     child: TextButton(
+                  //       onPressed: () {
+                  //         Navigator.of(context).pop();
+                  //       },
+                  //       child: Text(
+                  //         'i like you',
+                  //         style: TextStyle(color: Colors.white, fontSize: 24),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Expanded(
+                    child: SizedBox(
+                      // color: Colors.teal,
+                      width: 0.428 *
+                          (widget.screenHeight -
+                              bottomBar -
+                              topBar -
+                              topPadding * 2),
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: widget.rowLength,
+                          childAspectRatio: 1,
+                        ),
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: widget.rowLength * widget.colLength,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          // Get row and col of each index
+                          int row = (index / widget.rowLength).floor();
+                          int col = index % widget.rowLength;
+
+                          if (currentPiece.position.contains(index)) {
+                            // Main piece
+                            return BaebPixel(
+                              color: currentPiece.color,
+                              // child: index.toString(),
+                            );
+                          } else if (widget.gameBoard[row][col] != null) {
+                            // Background pieces
+                            final BaebPixelArt? pixelType =
+                                widget.gameBoard[row][col];
+                            return BaebPixel(
+                              color: pixelColors[pixelType]!,
+                              // child: index.toString(),
+                            );
+                          } else {
+                            // Blank pixel
+                            return BaebPixel(
+                              // color: Colors.grey[900]!,
+                              // color: Colors.black,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onInverseSurface,
+                              // child: index.toString(),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // color: Colors.black,
+                    color: Theme.of(context).colorScheme.onInverseSurface,
+                    height: bottomBar,
+                    // height: widget.screenHeight * 0.05,
+                    width: double.infinity,
+                  ),
+                ],
+              ),
+            )
+          : Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    // color: Colors.black,
+                    color: Theme.of(context).colorScheme.onInverseSurface,
+                    child: IconButton(
+                      icon: Icon(Icons.chevron_left, color: Colors.white),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 10,
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: widget.rowLength,
+                    ),
+                    shrinkWrap: true,
+                    itemCount: widget.rowLength * widget.colLength,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      // Get row and col of each index
+                      int row = (index / widget.rowLength).floor();
+                      int col = index % widget.rowLength;
+
+                      if (currentPiece.position.contains(index)) {
+                        // Main piece
+                        return BaebPixel(
+                          color: currentPiece.color,
+                          // child: index.toString(),
+                        );
+                      } else if (widget.gameBoard[row][col] != null) {
+                        // Background pieces
+                        final BaebPixelArt? pixelType =
+                            widget.gameBoard[row][col];
+                        return BaebPixel(
+                          color: pixelColors[pixelType]!,
+                          // child: index.toString(),
+                        );
+                      } else {
+                        // Blank pixel
+                        return BaebPixel(
+                          // color: Colors.grey[900]!,
+                          // color: Colors.black,
+                          color: Theme.of(context).colorScheme.onInverseSurface,
+                          // child: index.toString(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Flexible(
+                    flex: 1,
+                    child: Container(
+                      color: Theme.of(context).colorScheme.onInverseSurface,
+                      // color: Colors.black,
+                    )),
+              ],
+            ),
+    );
   }
 
   // void startAnimation() {
@@ -377,157 +549,5 @@ class _BaebBoardState extends State<BaebBoard> {
 
     // // If the top row is empty, game is still going.
     return false;
-  }
-
-  @override
-  void dispose() {
-    animaterTimer.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: Colors.black,
-      body: GestureDetector(
-        // onTap: () => nextSequence(),
-        // onLongPress: () => animaterTimer.cancel(),
-        onDoubleTap: () => Navigator.of(context).pop(),
-        onLongPress: () => Navigator.of(context).pop(),
-        child: widget.isVertical
-            ? Column(
-                children: [
-                  Container(
-                    color: Colors.black,
-                    height: topBar,
-                    padding: const EdgeInsets.only(top: 35),
-                    width: double.infinity,
-                    child: Opacity(
-                      opacity:
-                          sequenceFrame >= (widget.colLength * 0.8).floor() + 5
-                              ? 1
-                              : 0,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          'i like you',
-                          style: TextStyle(color: Colors.white, fontSize: 24),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      // color: Colors.teal,
-                      width: 0.428 * (widget.screenHeight - bottomBar - topBar),
-                      // (120 + widget.statusBarHeight)),
-                      child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: widget.rowLength,
-                          childAspectRatio: 1,
-                        ),
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemCount: widget.rowLength * widget.colLength,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          // Get row and col of each index
-                          int row = (index / widget.rowLength).floor();
-                          int col = index % widget.rowLength;
-
-                          if (currentPiece.position.contains(index)) {
-                            // Main piece
-                            return BaebPixel(
-                              color: currentPiece.color,
-                              // child: index.toString(),
-                            );
-                          } else if (widget.gameBoard[row][col] != null) {
-                            // Background pieces
-                            final BaebPixelArt? pixelType =
-                                widget.gameBoard[row][col];
-                            return BaebPixel(
-                              color: pixelColors[pixelType]!,
-                              // child: index.toString(),
-                            );
-                          } else {
-                            // Blank pixel
-                            return BaebPixel(
-                              // color: Colors.grey[900]!,
-                              color: Colors.black,
-                              // child: index.toString(),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.black,
-                    height: bottomBar,
-                    // height: widget.screenHeight * 0.05,
-                    width: double.infinity,
-                  ),
-                ],
-              )
-            : Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.black,
-                      child: IconButton(
-                        icon: Icon(Icons.chevron_left, color: Colors.white),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 10,
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: widget.rowLength,
-                      ),
-                      shrinkWrap: true,
-                      itemCount: widget.rowLength * widget.colLength,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        // Get row and col of each index
-                        int row = (index / widget.rowLength).floor();
-                        int col = index % widget.rowLength;
-
-                        if (currentPiece.position.contains(index)) {
-                          // Main piece
-                          return BaebPixel(
-                            color: currentPiece.color,
-                            // child: index.toString(),
-                          );
-                        } else if (widget.gameBoard[row][col] != null) {
-                          // Background pieces
-                          final BaebPixelArt? pixelType =
-                              widget.gameBoard[row][col];
-                          return BaebPixel(
-                            color: pixelColors[pixelType]!,
-                            // child: index.toString(),
-                          );
-                        } else {
-                          // Blank pixel
-                          return BaebPixel(
-                            // color: Colors.grey[900]!,
-                            color: Colors.black,
-                            // child: index.toString(),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  Flexible(flex: 1, child: Container(color: Colors.black)),
-                ],
-              ),
-      ),
-    );
   }
 }

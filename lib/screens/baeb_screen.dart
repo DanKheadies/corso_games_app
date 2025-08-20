@@ -21,8 +21,9 @@ class _BaebScreenState extends State<BaebScreen> {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     return ScreenWrapper(
-      screen: 'I Love',
+      screen: 'My',
       bottomBar: const SizedBox(),
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       infoTitle: 'Baeb',
       infoDetails: 'You\'re the best baeb.',
       screenFunction: (String string) {
