@@ -31,9 +31,9 @@ class NadGrid0 extends StatefulWidget {
 }
 
 class _NadGrid0State extends State<NadGrid0> {
-  double touchOpac = 1;
+  // double touchOpac = 1;
   String selectedGridUnit = '';
-  bool isNumbers = true;
+  // bool isNumbers = true;
 
   List<NadDragObject> nadGridDrags = [];
   List<NadGridUnit> nadGridUnits = [];
