@@ -3,7 +3,8 @@ import 'dart:math';
 
 import 'package:corso_games_app/config/config.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+// import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
 class ColorsGameBoard extends StatefulWidget {
   const ColorsGameBoard({

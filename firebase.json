@@ -1,14 +1,1 @@
-{
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
-  "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
-}
+{"firestore":{"rules":"firestore.rules","indexes":"firestore.indexes.json"},"hosting":{"public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"]},"flutter":{"platforms":{"android":{"default":{"projectId":"corso-games-app","appId":"1:203252424155:android:4935632c93e96ce0db9bfe","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"corso-games-app","appId":"1:203252424155:ios:69b2e3581e6386bddb9bfe","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"corso-games-app","configurations":{"android":"1:203252424155:android:4935632c93e96ce0db9bfe","ios":"1:203252424155:ios:69b2e3581e6386bddb9bfe","web":"1:203252424155:web:fcd3a9cf4ab4d2eddb9bfe"}}}}}}

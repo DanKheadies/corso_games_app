@@ -1,6 +1,7 @@
 export 'ball_bounce/ball_bounce_game.dart';
 export 'breakup/breakup_game.dart';
 export 'breakup/breakup_world.dart';
+export 'fox_and_geese/feese_factory.dart';
 export 'honeygram/honeygram_board_helper.dart';
 export 'slide_to_slide/puzzle_app_state.dart';
 export 'slide_to_slide/puzzle_controls.dart';

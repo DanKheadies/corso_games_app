@@ -117,15 +117,12 @@ class HoneygramBloc extends HydratedBloc<HoneygramEvent, HoneygramState> {
         wordList.add(word.trim());
       }
 
-      // var wordFrequenciesCSV = await defAssetBundle.loadString(
-      //   '${platformLocation}honeygram/frequencies.csv',
-      // );
       var wordFrequenciesCSV = await defAssetBundle.loadString(
         'assets/data/honeygram/frequencies.csv',
       );
-      List<List<dynamic>> wordFrequencies = const CsvToListConverter().convert(
+      List<List<dynamic>> wordFrequencies = const CsvDecoder().convert(
         wordFrequenciesCSV,
-        eol: '\n',
+        // eol: '\n',
       );
       Map<String, int> wordFrequenciesMap = Map.fromEntries(
         wordFrequencies.map(

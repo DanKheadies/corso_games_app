@@ -164,6 +164,23 @@ final GoRouter goRouter = GoRouter(
       ),
     ),
     GoRoute(
+      path: '/foxAndGeese',
+      name: 'foxAndGeese',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const FoxAndGeeseScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      ),
+      redirect: (context, state) => newRedirect(
+        context,
+        state,
+      ),
+    ),
+    GoRoute(
       path: '/honeygram',
       name: 'honeygram',
       pageBuilder: (context, state) => CustomTransitionPage(

@@ -151,6 +151,23 @@ class _GamesDrawerState extends State<GamesDrawer> {
           ),
           ListTile(
             title: Text(
+              'Fox & Geese',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            leading: Icon(
+              Icons.workspaces,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () {
+              widget.handler('drawerNavigate');
+              context.goNamed('foxAndGeese');
+            },
+          ),
+          ListTile(
+            title: Text(
               'Honeygram',
               style: TextStyle(
                 fontSize: 18,

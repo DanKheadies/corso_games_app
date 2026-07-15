@@ -90,146 +90,6 @@ class _BirdGameState extends State<BirdGame> {
     );
   }
 
-  bool isBirdDead() {
-    if (birdY < -1 || birdY > 1) {
-      return true;
-    }
-
-    for (int i = 0; i < barrierX.length; i++) {
-      if (barrierX[i] <= birdWidth &&
-          barrierX[i] + barrierWidth >= -birdWidth &&
-          (birdY <= -1 + barrierHeight[i][0] ||
-              birdY + birdHeight >= 1 - barrierHeight[i][1])) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  void gameOverPrompt() {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Center(
-              child: Text(
-                'G A M E  O V E R',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.surface,
-                ),
-              ),
-            ),
-            actionsAlignment: MainAxisAlignment.center,
-            actions: [
-              GestureDetector(
-                onTap: resetGame,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    padding: const EdgeInsets.all(7),
-                    color: Theme.of(context).colorScheme.surface,
-                    child: Text(
-                      'PLAY AGAIN',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
-  }
-
-  void jump() {
-    setState(() {
-      time = 0;
-      birdInitialPos = birdY;
-    });
-  }
-
-  void moveMap() {
-    for (int i = 0; i < barrierX.length; i++) {
-      setState(() {
-        barrierX[i] -= 0.01;
-      });
-
-      // if (barrierX[i] < -1.5) {
-      if (barrierX[i] < -11) {
-        // barrierX[i] += 3;
-        barrierX[i] += 12.5;
-      }
-    }
-  }
-
-  void resetGame() {
-    Navigator.pop(context);
-
-    setState(() {
-      birdY = 0;
-      birdInitialPos = birdY;
-      hasGameStarted = false;
-      score = 0;
-      time = 0;
-
-      barrierX = [
-        2,
-        3.5,
-        5,
-        7,
-        8.5,
-        10,
-        11,
-        12.5,
-      ];
-    });
-  }
-
-  void initializeTimer() {
-    tapTimer = Timer.periodic(
-      const Duration(milliseconds: 10),
-      (timer) {
-        height = gravity * (time * time) + velocity * time;
-
-        setState(() {
-          birdY = birdInitialPos - height;
-          score += time * .1;
-        });
-
-        if (isBirdDead()) {
-          tapTimer.cancel();
-          timer.cancel();
-          gameOverPrompt();
-          context.read<TappyBirdCubit>().updateScore(score.toInt());
-        }
-
-        moveMap();
-
-        time += 0.01;
-      },
-    );
-  }
-
-  void startGame() {
-    hasGameStarted = true;
-
-    initializeTimer();
-  }
-
-  void cancelTimer() {
-    tapTimer.cancel();
-  }
-
-  @override
-  void dispose() {
-    cancelTimer();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.pauseGame && !isPaused) {
@@ -468,5 +328,145 @@ class _BirdGameState extends State<BirdGame> {
         ],
       ),
     );
+  }
+
+  bool isBirdDead() {
+    if (birdY < -1 || birdY > 1) {
+      return true;
+    }
+
+    for (int i = 0; i < barrierX.length; i++) {
+      if (barrierX[i] <= birdWidth &&
+          barrierX[i] + barrierWidth >= -birdWidth &&
+          (birdY <= -1 + barrierHeight[i][0] ||
+              birdY + birdHeight >= 1 - barrierHeight[i][1])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  void gameOverPrompt() {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            title: Center(
+              child: Text(
+                'G A M E  O V E R',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.surface,
+                ),
+              ),
+            ),
+            actionsAlignment: MainAxisAlignment.center,
+            actions: [
+              GestureDetector(
+                onTap: resetGame,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Container(
+                    padding: const EdgeInsets.all(7),
+                    color: Theme.of(context).colorScheme.surface,
+                    child: Text(
+                      'PLAY AGAIN',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  void jump() {
+    setState(() {
+      time = 0;
+      birdInitialPos = birdY;
+    });
+  }
+
+  void moveMap() {
+    for (int i = 0; i < barrierX.length; i++) {
+      setState(() {
+        barrierX[i] -= 0.01;
+      });
+
+      // if (barrierX[i] < -1.5) {
+      if (barrierX[i] < -11) {
+        // barrierX[i] += 3;
+        barrierX[i] += 12.5;
+      }
+    }
+  }
+
+  void resetGame() {
+    Navigator.pop(context);
+
+    setState(() {
+      birdY = 0;
+      birdInitialPos = birdY;
+      hasGameStarted = false;
+      score = 0;
+      time = 0;
+
+      barrierX = [
+        2,
+        3.5,
+        5,
+        7,
+        8.5,
+        10,
+        11,
+        12.5,
+      ];
+    });
+  }
+
+  void initializeTimer() {
+    tapTimer = Timer.periodic(
+      const Duration(milliseconds: 10),
+      (timer) {
+        height = gravity * (time * time) + velocity * time;
+
+        setState(() {
+          birdY = birdInitialPos - height;
+          score += time * .1;
+        });
+
+        if (isBirdDead()) {
+          tapTimer.cancel();
+          timer.cancel();
+          gameOverPrompt();
+          context.read<TappyBirdCubit>().updateScore(score.toInt());
+        }
+
+        moveMap();
+
+        time += 0.01;
+      },
+    );
+  }
+
+  void startGame() {
+    hasGameStarted = true;
+
+    initializeTimer();
+  }
+
+  void cancelTimer() {
+    tapTimer.cancel();
+  }
+
+  @override
+  void dispose() {
+    cancelTimer();
+    super.dispose();
   }
 }

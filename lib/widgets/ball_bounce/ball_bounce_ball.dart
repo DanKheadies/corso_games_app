@@ -15,7 +15,7 @@ enum BallState {
 }
 
 class BallBounceBall extends CircleComponent
-    with HasGameRef<BallBounceGame>, CollisionCallbacks {
+    with HasGameReference<BallBounceGame>, CollisionCallbacks {
   BallBounceBall({
     required this.context,
   }) : super(
@@ -48,16 +48,17 @@ class BallBounceBall extends CircleComponent
       ..color = Theme.of(context).colorScheme.surface
       ..style = PaintingStyle.fill;
     resetBall();
-    return super.onLoad();
+    // return super.onLoad();
+    return onLoad();
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    if (position.y >= gameRef.board.size.y - size.y) {
-      position.setFrom(
-          Vector2(position.x, (gameRef.board.size.y - radius * 2) - 2));
+    if (position.y >= game.board.size.y - size.y) {
+      position
+          .setFrom(Vector2(position.x, (game.board.size.y - radius * 2) - 2));
       ballState = BallState.completed;
       speed = 1;
     }
@@ -103,14 +104,12 @@ class BallBounceBall extends CircleComponent
   }
 
   void reflectFromBoard(Set<Vector2> intersectionPoints) {
-    final isTopHit = intersectionPoints.first.y <= gameRef.board.position.y;
-    final isLeftHit = intersectionPoints.first.x <= gameRef.board.position.x ||
-        intersectionPoints.first.y <=
-            gameRef.board.position.y + gameRef.board.size.y;
+    final isTopHit = intersectionPoints.first.y <= game.board.position.y;
+    final isLeftHit = intersectionPoints.first.x <= game.board.position.x ||
+        intersectionPoints.first.y <= game.board.position.y + game.board.size.y;
     final isRightHit = intersectionPoints.first.x >=
-            gameRef.board.position.x + gameRef.board.size.x ||
-        intersectionPoints.first.y <=
-            gameRef.board.position.y + gameRef.board.size.y;
+            game.board.position.x + game.board.size.x ||
+        intersectionPoints.first.y <= game.board.position.y + game.board.size.y;
 
     if (isTopHit) {
       yDirection *= -1;
@@ -185,8 +184,8 @@ class BallBounceBall extends CircleComponent
 
   void resetBall() {
     position = Vector2(
-      gameRef.board.size.x / 2,
-      (gameRef.board.size.y - 2 * radius) - 2,
+      game.board.size.x / 2,
+      (game.board.size.y - 2 * radius) - 2,
     );
     speed = 1;
     ballState = BallState.ideal;

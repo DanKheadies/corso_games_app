@@ -1,8 +1,9 @@
 import 'package:corso_games_app/blocs/blocs.dart';
 import 'package:corso_games_app/cubits/cubits.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
+// import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
 class CSSettingsScreen extends StatefulWidget {
   const CSSettingsScreen({super.key});
@@ -12,17 +13,6 @@ class CSSettingsScreen extends StatefulWidget {
 }
 
 class _CSSettingsScreenState extends State<CSSettingsScreen> {
-  NeumorphicRadioStyle _neumorphRadioStyle(Brightness state) {
-    return NeumorphicRadioStyle(
-      unselectedColor: Theme.of(context).scaffoldBackgroundColor,
-      selectedDepth: state == Brightness.dark ? 2 : 4,
-      unselectedDepth: state == Brightness.dark ? -2 : -4,
-      intensity: 2.5,
-      shape: NeumorphicShape.concave,
-      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
@@ -196,6 +186,17 @@ class _CSSettingsScreenState extends State<CSSettingsScreen> {
           }
         },
       ),
+    );
+  }
+
+  NeumorphicRadioStyle _neumorphRadioStyle(Brightness state) {
+    return NeumorphicRadioStyle(
+      unselectedColor: Theme.of(context).scaffoldBackgroundColor,
+      selectedDepth: state == Brightness.dark ? 2 : 4,
+      unselectedDepth: state == Brightness.dark ? -2 : -4,
+      intensity: 2.5,
+      shape: NeumorphicShape.concave,
+      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
     );
   }
 }

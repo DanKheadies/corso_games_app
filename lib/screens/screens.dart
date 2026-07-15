@@ -8,6 +8,7 @@ export 'el_word/el_game_screen.dart';
 export 'el_word/el_settings_screen.dart';
 export 'el_word/el_word_screen.dart';
 export 'errors_screen.dart';
+export 'fox_and_geese_screen.dart';
 export 'games_screen.dart';
 export 'honeygram/screens.dart';
 export 'minesweeper/minesweeper_screen.dart';

@@ -31,6 +31,7 @@ ThemeData lightTheme() {
     scaffoldBackgroundColor: cgYellow,
     snackBarTheme: SnackBarThemeData(
       backgroundColor: cgBlack,
+      contentTextStyle: TextStyle(color: cgWhite),
     ),
     iconTheme: IconThemeData(
       color: cgWhite,
@@ -65,6 +66,7 @@ ThemeData darkTheme() {
     scaffoldBackgroundColor: cgBlack2,
     snackBarTheme: SnackBarThemeData(
       backgroundColor: cgWhite,
+      contentTextStyle: TextStyle(color: cgBlack),
     ),
     iconTheme: IconThemeData(
       color: cgBlack,

@@ -1,6 +1,7 @@
 export 'dino_dash/sprite.dart';
 export 'el_word/letter.dart';
 export 'el_word/word.dart';
+export 'fox_and_geese/models.dart';
 export 'honeygram/models.dart';
 export 'numbers_and_draggin/nad_grid_unit.dart';
 export 'minesweeper/mine_board_square.dart';

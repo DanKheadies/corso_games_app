@@ -22,8 +22,9 @@ Future<void> main() async {
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
-        ? HydratedStorage.webStorageDirectory
-        : await getTemporaryDirectory(),
+        // ? HydratedStorage.webStorageDirectory
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
 
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

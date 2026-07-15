@@ -66,9 +66,11 @@ class _SplashScreenState extends State<SplashScreen>
                   return Image(
                     image: state == Brightness.dark
                         ? const AssetImage(
-                            'assets/images/main/corso-games-2.png')
+                            'assets/images/main/corso-games-2.png',
+                          )
                         : const AssetImage(
-                            'assets/images/main/corso-games-1.png'),
+                            'assets/images/main/corso-games-1.png',
+                          ),
                   );
                 },
               ),

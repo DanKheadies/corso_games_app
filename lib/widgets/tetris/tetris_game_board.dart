@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:corso_games_app/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -43,7 +44,7 @@ class _TetrisGameBoardState extends State<TetrisGameBoard> {
   void initState() {
     super.initState();
 
-    if (Platform.isAndroid) {
+    if (!kIsWeb && Platform.isAndroid) {
       topBar = 120;
     }
 
